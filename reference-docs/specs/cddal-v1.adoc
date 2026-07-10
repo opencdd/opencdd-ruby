@@ -1,0 +1,605 @@
+= OpenCDD 1: CDD Authoring Language (CDDAL) specification
+:docnumber: 1
+:edition: 1
+:revdate: 2026-06-23
+:copyright-year: 2026
+:language: en
+:title-main-en: CDD Authoring Language (CDDAL) specification
+:doctype: standard
+:status: draft
+:mn-document-class: ribose
+:mn-output-extensions: xml,html,pdf,rxl
+:local-cache-only:
+
+[[introduction]]
+== Introduction
+
+This specification defines the CDD Authoring Language (CDDAL, pronounced
+"coddle"), a declarative plain-text language for authoring and serializing
+Common Data Dictionary (CDD) content as defined by IEC 61360 series and
+IEC 62656-1.
+
+CDDAL addresses these challenges with:
+
+. platform-independent, plain-text representation that is readable and
+writable by humans without spreadsheet software;
+. faithful representation of CDD's defining feature — *power-type modelling*,
+in which instances of meta-classes are themselves classes that can be further
+specialized;
+. bidirectional and round-trip stable conversion against the canonical Parcel
+Excel format defined by IEC 62656-1;
+. clear separation between the entity model, the property graph, and the
+serialization syntax;
+. support for the full set of CDD property relationships, including
+multi-valued sets, conditional properties, class references, and
+cross-tree imports (`is_case_of`);
+. first-class internationalization: every translatable field accepts a
+language tag.
+
+CDDAL enables dictionary authors, standards developers, and downstream tool
+vendors to author, review, version-control, and exchange CDD content using
+ordinary text tooling, while preserving the full semantic richness of the
+canonical CDD model.
+
+NOTE: CDDAL is intended as a peer of the Parcel Excel format, not a
+replacement. The two formats are information-equivalent; conversion between
+them is lossless.
+
+[[scope]]
+== Scope
+
+This document defines a serialization language called the "CDD Authoring
+Language" (CDDAL) for representing CDD entities in plain text.
+
+It also defines requirements for parsers, serializers, and runtimes that
+convert between CDDAL and the in-memory CDD entity model.
+
+It is a format-independent, language-agnostic model, allowing defined
+schemes to be deployed towards various target formats (Parcel xlsx, JSON,
+RDF/OWL, ISO 10303-21).
+
+[[conformance]]
+== Conformance
+
+A conforming CDDAL document shall satisfy all syntactic and semantic
+requirements of this specification.
+
+A conforming parser shall accept any conforming CDDAL document and produce
+a semantically equivalent in-memory model.
+
+A conforming serializer shall accept any valid in-memory CDD model and
+produce a conforming CDDAL document that, when re-parsed, yields a
+semantically equivalent model (round-trip stability).
+
+[[references]]
+== Normative references
+
+[[terms-and-definitions]]
+== Terms and definitions
+
+=== meta-class
+class whose instances are themselves classes or other entities in the CDD
+dictionary; the canonical meta-classes are defined by IEC 61360-1 §5.2 and
+are identified by IRDI codes `MDC_C002` (Class), `MDC_C003` (Property),
+`MDC_C005` (Enumeration), `MDC_C006` (Relation), `MDC_C009` (Unit of
+measure), `MDC_C010` (Term), `MDC_C011` (View control)
+
+[example]
+====
+The `MDC_C002` meta-class is itself a class. Its instances (e.g., "Vehicle",
+"Boat") are the classes that populate the dictionary. Those classes can in
+turn be specialized by their own instances when declared
+`class_type=CATEGORICAL_CLASS`.
+====
+
+=== instance
+specific entity that is a member of a meta-class
+
+=== IRDI
+<<IRDI, International Registration Data Identifier>> as defined by
+ISO/IEC 11179-6:2017; the globally unique identifier of every CDD entity
+
+=== property identifier
+symbol of the form `MDC_Pxxx[_n]` that names a property of a meta-class
+(e.g., `MDC_P010` names the "superclass" property of `MDC_C002`)
+
+=== property alias
+human-readable name bound to a property identifier via an `alias` directive
+(e.g., `superclass` is bound to `MDC_P010`)
+
+=== declaration
+top-level construct in a CDDAL document: `meta-class`, `instance`, `alias`,
+or `import`
+
+=== property assignment
+binding of a property identifier (or alias) to one or more values within an
+instance declaration
+
+=== value
+right-hand side of a property assignment; one of: literal, identifier
+reference, set, list, conditional expression, or class reference
+
+=== block
+brace-delimited group of property assignments belonging to a single
+declaration
+
+[[principles]]
+== Principles and requirements
+
+=== Purpose
+
+CDDAL exists to make CDD content:
+
+* *Authorable* in any text editor, with no specialized tooling required
+* *Reviewable* in standard code-review workflows
+* *Version-controllable* in any version control system, with meaningful
+line-oriented diffs
+* *Round-trippable* against the Parcel Excel format without semantic loss
+
+=== Principles
+
+CDDAL follows these fundamental design principles:
+
+Power-type faithful::
+The format must preserve CDD's defining feature — that instances of
+meta-classes are themselves classes that can be further specialized. The
+syntax must make this two-level capability first-class, not an edge case.
+
+Human-readable::
+The format must be readable and writable by humans without specialized
+tooling. Every construct that can be expressed syntactically should be
+expressible in a way that is self-explanatory to a reader familiar with
+the domain.
+
+Round-trip stable::
+Serialization followed by deserialization, and deserialization followed by
+serialization, must produce semantically equivalent output. Order of
+declarations and property assignments is not semantically significant but
+should be preserved by serializers for diff stability.
+
+Parcel-equivalent::
+Every concept expressible in the Parcel Excel format shall have a CDDAL
+representation, and vice versa. The two formats are information-equivalent.
+
+Implementation-free::
+The format must not depend on any specific parser, serializer, runtime,
+programming language, or platform outside of CDDAL itself.
+
+Internationalization support::
+Multilingual labels, definitions, notes, and remarks shall be fully
+expressible via language-tagged property assignments.
+
+Extensible::
+The format shall allow new property identifiers and meta-classes to be
+added without breaking existing parsers. Property identifiers not known
+to a given parser shall be preserved verbatim through round-trip.
+
+Single source of truth::
+Each property identifier has exactly one canonical alias. Property aliases
+are declared once per document and used throughout. Conflicting alias
+bindings are an error.
+
+[[architecture]]
+== Architecture
+
+=== General
+
+The CDDAL architecture consists of:
+
+* *Document model*: a sequence of declarations
+* *Declaration types*: `meta-class`, `instance`, `alias`, `import`
+* *Property assignment model*: identifier (or alias) bound to a value
+* *Value model*: literal, reference, set, list, condition, class reference
+* *Resolution model*: late binding of identifiers to IRDIs
+
+The runtime that processes CDDAL is responsible for:
+
+* Lexing and parsing the document into an abstract syntax tree
+* Resolving aliases to canonical property identifiers
+* Resolving identifier references to IRDIs via the document's symbol table
+* Constructing the in-memory CDD entity model
+* Reporting unresolved references and semantic violations
+
+=== Three model trees
+
+A CDDAL document describes three interconnected trees, mirroring the CDD
+entity model:
+
+* *Meta-class tree*: declares the meta-classes and their allowed properties
+* *Instance tree*: declares the entities (instances of meta-classes)
+* *Property graph*: the cross-cutting relationships between entities
+(superclass, is_case_of, condition, applicable_properties)
+
+[[core-models]]
+== Core models
+
+=== General
+
+The core syntactic models in CDDAL are:
+
+* `MetaClassDecl`: declares a meta-class and its allowed property identifiers
+* `InstanceDecl`: declares an instance of a meta-class, with property assignments
+* `AliasDecl`: binds a human-readable name to a property identifier
+* `ImportDecl`: imports another CDDAL document by URL or path
+* `PropertyAssignment`: binds a property to a value
+* `Value`: one of `Literal`, `IdentifierRef`, `Set`, `List`,
+`ClassReference`, `Condition`
+
+=== MetaClassDecl
+
+[source,cddal]
+----
+meta-class MDC_C002 {
+  MDC_P001_5        // code
+  MDC_P004          // preferred_name (multilingual)
+  MDC_P010          // superclass
+  MDC_P011          // class_type
+  MDC_P014          // applicable_properties (set)
+  MDC_P013          // is_case_of (set)
+  MDC_P040          // imported_properties (set)
+}
+----
+
+A `meta-class` declaration names a meta-class by IRDI and lists the property
+identifiers that instances of that meta-class may carry. The body is a
+whitespace-separated list of property identifiers; trailing comments are
+permitted.
+
+Multiple `meta-class` declarations for the same IRDI shall be merged by
+union of their property lists. A parser shall treat the union as the
+definitive allowed-property set for that meta-class.
+
+=== InstanceDecl
+
+[source,cddal]
+----
+instance Vehicle < MDC_C002 {
+  code: AAA001
+  preferred_name.en: "Vehicle"
+  definition.en: "device that transports people or goods"
+  superclass: UNIVERSE
+  class_type: ITEM_CLASS
+  applicable_properties: { vehicle_length, vehicle_weight, vehicle_capacity }
+}
+----
+
+An `instance` declaration has the form:
+
+....
+instance <name> < <meta-class-name> {
+  <property-assignment>...
+}
+....
+
+`<name>`::
+Optional symbolic name for the instance. Used by other declarations to
+refer to this instance by symbol rather than IRDI. If omitted, the
+instance is anonymous and must be referenced by its `code` property.
+
+`<meta-class-name>`::
+IRDI or symbolic name of the meta-class this instance belongs to.
+
+`<property-assignment>`::
+Zero or more property assignments.
+
+=== AliasDecl
+
+[source,cddal]
+----
+alias code:                 MDC_P001_5
+alias preferred_name:       MDC_P004
+alias definition:           MDC_P006
+alias superclass:           MDC_P010
+alias class_type:           MDC_P011
+alias is_case_of:           MDC_P013
+alias applicable_properties: MDC_P014
+alias imported_properties:  MDC_P040
+alias sub_class_selection:  MDC_P033
+alias condition:            MDC_P028
+alias data_type:            MDC_P022
+----
+
+Aliases are document-scoped. After an alias is declared, both the alias and
+the underlying property identifier may be used interchangeably in property
+assignments within that document.
+
+A CDDAL runtime shall provide the above aliases as built-in defaults; a
+document may override them.
+
+=== PropertyAssignment
+
+A property assignment has the form:
+
+....
+<identifier-or-alias>[:.<language-tag>]: <value>
+....
+
+The optional `.<language-tag>` suffix marks the assignment as
+language-specific. The language tag shall conform to RFC 5646.
+
+If a property is assigned multiple times within the same instance, the
+assignments are merged. For language-tagged assignments, each language
+contributes one entry. For non-language-tagged assignments, the last
+assignment wins.
+
+=== Value types
+
+==== Literal
+
+Numeric, string, date, or boolean.
+
+[source,cddal]
+----
+length: 9.5
+unit_sign: "m"
+manufacturing_date: 2026-06-23
+is_amphibious: true
+----
+
+==== IdentifierRef
+
+A reference to another entity by symbolic name, code, or IRDI.
+
+[source,cddal]
+----
+superclass: Vehicle               # by symbolic name
+superclass: AAA001                # by code
+superclass: 0112/2///61360_4#AAA001  # by IRDI
+----
+
+All three forms are equivalent if `Vehicle`, `AAA001`, and the full IRDI
+resolve to the same entity. A runtime shall attempt resolution in the
+order: symbolic name, code, IRDI.
+
+==== Set
+
+An unordered collection of IdentifierRefs, enclosed in braces.
+
+[source,cddal]
+----
+applicable_properties: { vehicle_length, vehicle_weight, vehicle_capacity }
+is_case_of: { Boat, Car, Submarine }
+imported_properties: { Boat.hull_length, Car.engine_power }
+----
+
+A `MetaClass.Property` form (e.g., `Boat.hull_length`) qualifies a property
+reference with its owning class. This is required when importing a property
+that is declared on a class other than the immediate `is_case_of` target.
+
+==== ClassReference
+
+A typed reference whose value is constrained to be an instance of a named
+class. Used in `data_type` assignments.
+
+[source,cddal]
+----
+data_type: CLASS_REFERENCE(EngineType)
+data_type: ENUM_STRING_TYPE(vehicle_mode_enum)
+data_type: INT_TYPE
+----
+
+The runtime shall interpret the argument of `CLASS_REFERENCE(...)` and
+`ENUM_STRING_TYPE(...)` as an IdentifierRef to be resolved against the
+document's symbol table.
+
+==== Condition
+
+A conditional binding used in `condition` properties on
+`DEPENDENT_P_DET` properties.
+
+[source,cddal]
+----
+condition: vehicle_kind == "swimming_car"
+condition: operating_mode == { surface_water, underwater }
+----
+
+=== ImportDecl
+
+[source,cddal]
+----
+import "https://cdd.opencdd.org/dictionaries/iec61360-7.cddal"
+import "../base/units.cddal"
+----
+
+An `import` declaration pulls in another CDDAL document by URL or relative
+path. The runtime shall resolve imported declarations as if they were
+inlined at the point of import. Circular imports shall be reported as
+errors.
+
+[[syntax]]
+== Syntax
+
+=== Lexical structure
+
+* Whitespace (space, tab, newline) is insignificant except as a token
+separator.
+* Comments begin with `#` and continue to end of line.
+* Identifiers consist of letters, digits, underscores, and dots; shall not
+begin with a digit.
+* IRDIs contain forward slashes and `#`; they are recognized by pattern.
+* String literals are double-quoted; escape sequences follow JSON conventions.
+* Numeric literals follow JSON number grammar.
+* Date literals follow ISO 8601 calendar date form (`YYYY-MM-DD`).
+* Boolean literals are `true` and `false`.
+
+=== Keywords
+
+The following identifiers are reserved as keywords:
+
+....
+meta-class  instance  alias  import  true  false  null
+....
+
+=== Property identifier grammar
+
+Property identifiers have one of the forms:
+
+....
+MDC_Pxxx
+MDC_Pxxx_n
+MDC_Pxxx_n.<language-tag>
+<alias>
+<alias>.<language-tag>
+....
+
+=== Value grammar
+
+....
+value := literal | identifier_ref | set | class_reference | condition
+literal := number | string | date | boolean | null
+identifier_ref := name | code | irdi | name "." name
+set := "{" value *"," "}"
+class_reference := type_name "(" identifier_ref ")"
+condition := identifier_ref ("==" | "!=") (literal | set)
+....
+
+[[resolution]]
+== Reference resolution
+
+=== Symbol table
+
+Every named declaration in a CDDAL document contributes entries to a
+document-scoped symbol table. The symbol table maps:
+
+* Symbolic name → entity IRDI
+* Code → entity IRDI
+* IRDI → entity
+
+=== Resolution algorithm
+
+Given an IdentifierRef, the runtime shall attempt resolution in this order:
+
+. If the reference is a full IRDI, look it up directly.
+. Otherwise, look up the reference as a symbolic name.
+. Otherwise, look up the reference as a code.
+. Otherwise, report an unresolved reference error.
+
+A runtime may optionally defer reference resolution until all declarations
+have been parsed, allowing forward references.
+
+[[round-trip]]
+== Round-trip stability
+
+A CDDAL serializer shall produce output that satisfies the following
+properties when round-tripped through a conforming parser:
+
+. Every entity present in the input shall be present in the output, with
+the same IRDI, code, and meta-class membership.
+. Every property assignment shall be preserved, including language-tagged
+variants.
+. Every set-valued property shall preserve its membership (order is not
+significant).
+. Every cross-reference (superclass, is_case_of, imported_properties,
+condition, applicable_properties) shall resolve to the same target entity.
+
+Order of declarations in the output is not semantically significant.
+A serializer should produce stable ordering (e.g., depth-first traversal
+of the superclass tree, then by code) to maximize diff stability across
+runs.
+
+[[usage]]
+== Usage
+
+=== Authoring a new dictionary
+
+A typical CDDAL document has the following structure:
+
+. Optional `alias` declarations to override built-in aliases
+. `meta-class` declarations establishing the schema (often just the
+canonical IEC 61360 set, which a runtime provides as built-ins)
+. `instance` declarations, grouped by meta-class or by domain, in any order
+. Comments documenting intent and provenance
+
+=== Mixing with Parcel
+
+A document may be authored in CDDAL, serialized to Parcel Excel for
+distribution, and re-parsed from Parcel Excel back into CDDAL. The two
+representations are information-equivalent for all entities and properties
+defined by IEC 61360-1.
+
+[[algorithm]]
+== Algorithm to deserialize
+
+=== General
+
+The following algorithm describes how a conforming runtime deserializes a
+CDDAL document into the in-memory CDD entity model.
+
+=== Prerequisites
+
+. The runtime has loaded any built-in `meta-class` and `alias` declarations.
+. The runtime has access to an entity factory that can instantiate classes,
+properties, units, value lists, value terms, and relations.
+
+=== Algorithm
+
+. Lex the document into tokens.
+. Parse tokens into declarations (MetaClassDecl, InstanceDecl, AliasDecl,
+ImportDecl).
+. Resolve imports by recursively parsing imported documents.
+. Build the symbol table from all named declarations.
+. For each InstanceDecl:
+. Resolve the meta-class reference.
+. Instantiate the appropriate entity via the entity factory.
+. For each PropertyAssignment:
+. Resolve the property identifier (alias → MDC_Pxxx).
+. Resolve the value (IdentifierRef → IRDI; Set → list of IRDIs; etc.).
+. Assign the resolved value to the entity.
+. After all instances are created, perform a second pass to resolve
+cross-references (superclass, is_case_of, condition, applicable_properties).
+. Validate the resulting model: required properties are present, references
+resolve, cardinalities are respected.
+. Done.
+
+[[examples-annex]]
+[appendix]
+== Worked example: OceanRunner transmedium vehicle
+
+The following example demonstrates power-type modelling for a submersible
+boat-car brand with two product lines (ORCA 30 and ORCA 50), each
+configurable via categorical option classes.
+
+The example exercises:
+
+* `is_case_of` for cross-tree property import (Boat + Car + Submarine)
+* `class_type=CATEGORICAL_CLASS` for option-type discrimination
+* `CLASS_REFERENCE` data type for configurable properties
+* Configured product subclasses that nail down option values
+* An individual serial-numbered unit instance
+
+The full example is in `examples/oceanrunner.cddal`.
+
+[appendix]
+== Built-in property aliases
+
+The following aliases shall be provided by every conforming runtime.
+A document may override any of them via an `alias` declaration.
+
+[cols="1,1,1", options="header"]
+|===
+|Alias |Property ID |Applies to
+
+|`code`               |`MDC_P001_5`           |all
+|`preferred_name`     |`MDC_P004`             |all
+|`definition`         |`MDC_P006`             |all
+|`short_name`         |`MDC_P005`             |all
+|`synonym`            |`MDC_P007`             |all
+|`note`               |`MDC_P008`             |all
+|`remark`             |`MDC_P009`             |all
+|`superclass`         |`MDC_P010`             |class
+|`class_type`         |`MDC_P011`             |class
+|`is_case_of`         |`MDC_P013`             |class
+|`applicable_properties` |`MDC_P014`          |class
+|`sub_class_selection`   |`MDC_P033`          |class
+|`imported_properties`   |`MDC_P040`          |class
+|`property_data_element_type` |`MDC_P020`     |property
+|`definition_class`   |`MDC_P017`             |property
+|`data_type`          |`MDC_P018`             |property
+|`unit`               |`MDC_P030`             |property
+|`condition`          |`MDC_P028`             |property
+|`enumerated_terms`   |`MDC_P043`             |value_list
+|`enumerated_values`  |`MDC_P044`             |value_list
+|===
+
+[appendix]
+include::../examples/oceanrunner.cddal[]
