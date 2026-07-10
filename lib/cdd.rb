@@ -51,4 +51,6 @@ module Cdd
   autoload :Cddal, "cdd/cddal"
 
   autoload :Codegen, "cdd/codegen"
+
+  autoload :Languages, "cdd/languages"
 end
