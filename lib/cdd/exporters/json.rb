@@ -174,6 +174,9 @@ module Cdd
           hash = value.to_h.transform_values { |v| serialize_basic(v) }
           hash.compact!
           hash.empty? ? nil : hash
+        when Cdd::Entity::VersionHistory
+          return nil if value.empty?
+          value.entries.map { |e| serialize_basic(e) }
         when String, Integer, Float, TrueClass, FalseClass, NilClass, Symbol
           value
         else
