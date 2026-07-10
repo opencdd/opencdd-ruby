@@ -1,0 +1,59 @@
+meta-class MDC_C002 {
+  code
+  superclass
+  MDC_P014
+}
+
+instance MDC_C002 {
+  MDC_P001_5: AAA340
+  MDC_P010:   UNIVERSE
+  MDC_P014:   { AAE341, AAE342 }
+}
+
+property-meta-class MDC_C003 {
+  MDC_P001_6
+  MDC_P020
+  MDC_P022
+  MDC_P028
+}
+
+instance MDC_C003 {
+  MDC_P001_6: AAE341
+  MDC_P020:   CONDITION_DET
+  MDC_P022:   ENUM_STRING_TYPE(AFA341)
+}
+
+instance MDC_C003 {
+  MDC_P001_6: AAE342
+  MDC_P020:   DEPENDENT_P_DET
+  MDC_P022:   ENUM_REFERENCE_TYPE(AFA341)
+  MDC_P028:   { AAE341 }
+}
+
+enumeration-meta-class MDC_C005 {
+  MDC_P001_12
+  MDC_P043
+  MDC_P044
+}
+
+instance MDC_C005 {
+  MDC_P001_12: AFA341
+  MDC_P043:    ( AQA341, AQA342 )
+  MDC_P044:    ( BAA500, BAA600 )
+}
+
+term-meta-class MDC_C010 {
+  MDC_P001_11
+  MDC_P025_1
+}
+
+instance MDC_C010 {
+  MDC_P001_11: AQA341
+  MDC_P025_1:  BAA500
+}
+
+instance MDC_C010 {
+  MDC_P001_11: AQA342
+  MDC_P025_1:  BAA600
+}
+
