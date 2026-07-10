@@ -7,7 +7,7 @@ $LOAD_PATH.unshift File.expand_path("lib", __dir__)
 require "cdd/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "cdd"
+  spec.name = "opencdd"
   spec.version = Cdd::VERSION
   spec.authors = ["OpenCDD contributors"]
   spec.email   = ["cdd@opencdd.org"]

@@ -133,6 +133,15 @@ module Cdd
           next if serialized.nil?
 
           payload[field.wire_name] = serialized
+
+          # For multilingual fields, also emit a language map keyed
+          # as <wire_name>_ml. Scans entity.properties for every
+          # <property_id>.<lang> key. The browser can use this for
+          # a language switcher without parsing raw_properties.
+          if field.multilingual? && field.property_id
+            ml = build_language_map(entity, field)
+            payload["#{field.wire_name}_ml"] = ml if ml && !ml.empty?
+          end
         end
         payload
       end
@@ -188,8 +197,29 @@ module Cdd
         end
       end
 
-      # Resolves the IRDI of the value list associated with `prop`, if
-      # any. Mirrors the cdd.iec.ch property → value-list hyperlink:
+      # Scans +entity.properties+ for +<property_id>.<lang>+ keys
+      # and builds a +{ lang => value }+ hash. Used for multilingual
+      # fields where the exporter emits a +<wire_name>_ml+ map
+      # alongside the source-language string.
+      def build_language_map(entity, field)
+        return nil unless field.property_id
+        prefix = "#{field.property_id}."
+        map = {}
+        entity.properties.each do |key, val|
+          next unless key.start_with?(prefix)
+          lang = key.sub(prefix, "")
+          next unless val && !val.to_s.strip.empty?
+          next unless lang =~ /\A[a-z]{2}(-[a-z0-9]+)?\z/i
+          map[lang] = val
+        end
+        bare = entity.properties[field.property_id]
+        if bare && map.empty?
+          map["en"] = bare
+        end
+        map
+      end
+
+
       # when a property's data type is an enumeration, its values come
       # from a named value list linked via a predication relation.
       # The Database resolves this at finalize time; we emit the IRDI
