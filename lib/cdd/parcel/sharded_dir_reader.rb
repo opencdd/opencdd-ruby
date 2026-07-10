@@ -47,8 +47,48 @@ module Cdd
           workbook = legacy.read_workbook
           database.add_workbook(workbook)
         end
+        attach_version_histories(database)
         database.finalize!
         database
+      end
+
+      # After entities are loaded from .xls rows, walk each class
+      # subdir's +_entity.json+ and attach its +versions+ array to
+      # the corresponding entity. The lookup goes by code (the
+      # subdir name), falling back to the first entity in the
+      # subdir's workbook if the code mapping is ambiguous.
+      def attach_version_histories(database)
+        class_subdirs.each do |subdir|
+          code = File.basename(subdir)
+          vh = parse_version_history(subdir)
+          next if vh.empty?
+          target = database.find_by_code(code)
+          target&.attach_version_history(vh)
+        end
+      end
+
+      def parse_version_history(code_dir)
+        path = File.join(code_dir, "_entity.json")
+        return Cdd::Entity::VersionHistory.new unless File.file?(path)
+        require "json"
+        data = JSON.parse(File.read(path))
+        versions = data["versions"] || []
+        vh = Cdd::Entity::VersionHistory.new
+        versions.each do |v|
+          vh.attach(Cdd::Entity::VersionHistory::Entry.new(
+            version:           v["version"],
+            revision:          v["revision"],
+            status:            v["status"],
+            timestamp:         v["timestamp"],
+            user:              v["user"],
+            change_request_id: v["change_request_id"],
+            unid:              v["unid"],
+            is_current:        v["is_current"],
+          ))
+        end
+        vh
+      rescue JSON::ParserError
+        Cdd::Entity::VersionHistory.new
       end
 
       def read_workbook

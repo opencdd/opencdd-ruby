@@ -9,8 +9,9 @@ module Cdd
     # adds an entry to FieldRegistry. Adding a field is one line
     # here — no edits to switch statements in the exporter,
     # validators, or TS codegen (all read from FieldRegistry).
-    autoload :FieldRegistry, "cdd/entity/field_registry"
-    autoload :FieldReader,   "cdd/entity/field_reader"
+    autoload :FieldRegistry,   "cdd/entity/field_registry"
+    autoload :FieldReader,     "cdd/entity/field_reader"
+    autoload :VersionHistory,  "cdd/entity/version_history"
 
     class << self
       # Declare a typed field on this entity class. Defaults for
@@ -82,6 +83,7 @@ module Cdd
       @properties = properties
       @schema = schema
       @meta_class_irdi = meta_class_irdi
+      @version_history = Cdd::Entity::VersionHistory.new
     end
 
     def type
@@ -130,6 +132,12 @@ module Cdd
     #     hasn't named yet. The browser can render typed fields
     #     nicely and fall back to raw_properties for completeness.
     field :raw_properties, synthetic: true, reader: :read_raw_properties
+
+    # ── Per-version provenance from _entity.json#versions. Set by
+    #     Cdd::Parcel::ShardedDirReader after entity creation. The
+    #     DSL serializer converts VersionHistory → array of entry
+    #     hashes for JSON emission.
+    field :version_history, synthetic: true, reader: :read_version_history
 
     # ── Computed field with custom reader ────────────────────────
     Dates = Struct.new(:original_definition, :current_version, :current_revision, keyword_init: true)
@@ -184,10 +192,23 @@ module Cdd
       self
     end
 
+    # Attach per-version provenance captured in _entity.json. Called
+    # by Cdd::Parcel::ShardedDirReader after entity creation — the
+    # constructor doesn't take it because FlatDirReader creates
+    # entities from .xls rows without version context.
+    def attach_version_history(version_history)
+      @version_history = version_history
+      self
+    end
+
     private
 
     def read_raw_properties
       @properties
+    end
+
+    def read_version_history
+      @version_history
     end
 
     def read_dates
