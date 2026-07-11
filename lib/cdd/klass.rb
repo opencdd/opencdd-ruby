@@ -4,13 +4,44 @@ module Cdd
   class Klass < Cdd::Entity
     PARENT_PROPERTY_IDS = [Cdd::PropertyIds::MDC_P010_1, Cdd::PropertyIds::MDC_P010].freeze
 
-    attr_accessor :parent_irdi, :children, :declared_property_irdis
-    attr_reader   :database
+    # Read-only accessors for state that the Database mutates via
+    # the explicit mutator methods below. Exposing only readers
+    # (instead of attr_accessor) keeps the entity's invariants
+    # under the class's control: parent linkage, child registration,
+    # and declared-property tracking each have a single mutator
+    # that can guard against duplicates, cycles, and stale state.
+    attr_reader :parent_irdi, :children, :declared_property_irdis, :database
 
     def initialize(irdi: nil, properties:, schema: nil, meta_class_irdi: nil)
       super
       @children = []
       @declared_property_irdis = []
+    end
+
+    # ── Mutators (called by Cdd::Database and Cdd::Cddal::Builder
+    #     during finalize/link phases). Single entry points keep
+    #     invariant checks (dedup, validity) in one place. ──────
+
+    def attach_parent_irdi(irdi)
+      @parent_irdi = irdi
+      self
+    end
+
+    def add_child(klass)
+      return self if @children.include?(klass)
+      @children << klass
+      self
+    end
+
+    def declare_property(irdi)
+      return self if @declared_property_irdis.include?(irdi)
+      @declared_property_irdis << irdi
+      self
+    end
+
+    def attach_database(database)
+      @database = database
+      self
     end
 
     # ── Pure field reads ─────────────────────────────────────────
@@ -21,11 +52,18 @@ module Cdd
     field :applicable_documents,       "MDC_P094"
     field :imported_documents,         "MDC_P093"
 
-    # ── Computed fields with custom readers ──────────────────────
-    field :class_type, synthetic: true, reader: :read_class_type
-    field :superclass_irdi, synthetic: true, reader: :read_superclass_irdi, as: "superclass"
-    field :superclass_type_property,
-          synthetic: true, reader: :read_superclass_type_property
+    # ── Computed fields with block-form readers ──────────────────
+    field(:class_type, synthetic: true) do
+      @class_type ||= Cdd::ClassType.parse(properties[Cdd::PropertyIds::MDC_P011])
+    end
+    field(:superclass_irdi, synthetic: true, as: "superclass") do
+      raw = properties[Cdd::PropertyIds::MDC_P010_1] || properties[Cdd::PropertyIds::MDC_P010]
+      next nil if raw.nil? || raw.to_s.strip.empty?
+      Cdd::IRDI.parse(raw)
+    end
+    field(:superclass_type_property, synthetic: true) do
+      properties[Cdd::PropertyIds::MDC_P010_1] || properties[Cdd::PropertyIds::MDC_P010]
+    end
 
     alias_method :parent_property_value, :superclass_irdi
 
@@ -119,20 +157,6 @@ module Cdd
     end
 
     private
-
-    def read_class_type
-      @class_type ||= Cdd::ClassType.parse(properties[Cdd::PropertyIds::MDC_P011])
-    end
-
-    def read_superclass_irdi
-      raw = properties[Cdd::PropertyIds::MDC_P010_1] || properties[Cdd::PropertyIds::MDC_P010]
-      return nil if raw.nil? || raw.to_s.strip.empty?
-      Cdd::IRDI.parse(raw)
-    end
-
-    def read_superclass_type_property
-      properties[Cdd::PropertyIds::MDC_P010_1] || properties[Cdd::PropertyIds::MDC_P010]
-    end
 
     def detect_parent_property_id
       return Cdd::PropertyIds::MDC_P010 unless @schema

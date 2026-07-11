@@ -515,8 +515,8 @@ module Cdd
         next if parent_raw.nil? || parent_raw.to_s.strip.empty?
         target = resolve_reference(parent_raw)
         next unless target
-        klass.parent_irdi = target.irdi
-        target.children << klass unless target.children.include?(klass)
+        klass.attach_parent_irdi(target.irdi)
+        target.add_child(klass)
       end
     end
 
@@ -533,10 +533,10 @@ module Cdd
           next unless src && dst
 
           if src.is_a?(Cdd::Klass) && dst.is_a?(Cdd::Property)
-            src.declared_property_irdis << dst.irdi unless src.declared_property_irdis.include?(dst.irdi)
+            src.declare_property(dst.irdi)
             @class_by_property_irdi[dst.irdi] << src unless @class_by_property_irdi[dst.irdi].include?(src)
           elsif src.is_a?(Cdd::Property) && dst.is_a?(Cdd::Klass)
-            dst.declared_property_irdis << src.irdi unless dst.declared_property_irdis.include?(src.irdi)
+            dst.declare_property(src.irdi)
             @class_by_property_irdi[src.irdi] << dst unless @class_by_property_irdi[src.irdi].include?(dst)
           end
         end

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# lint-no-raw-mdc — fail if any raw MDC_P### / MDC_C### / EXT_P### /
+# EXT_C### / CIM_P### string literal appears in lib/cdd/ outside the
+# designated registry files.
+#
+# The single source of truth for property IDs is
+# Cdd::PropertyIds::REGISTRY; for meta-class IRDIs it is
+# Cdd::MetaClasses::REGISTRY; for alias mappings it is
+# Cdd::AliasTable. No raw "MDC_P###" / "MDC_C###" / "EXT_P###" /
+# "EXT_C###" / "CIM_P###" string literals may appear anywhere else.
+#
+# Comment lines (lines whose first non-whitespace character is '#')
+# are exempt — they are documentation, not code.
+#
+set -euo pipefail
+
+# Pathspec exclusions: the three registry files + the generated parser.
+excludes=(
+  ':!lib/cdd/property_ids.rb'
+  ':!lib/cdd/meta_class.rb'
+  ':!lib/cdd/alias_table.rb'
+  ':!lib/cdd/cddal/generated_parser.rb'
+)
+
+# Collect hits, filtering out Ruby comment-only lines.
+hits=$(git grep -nE '"(MDC_[CP][0-9]+(_[0-9]+)?|EXT_[CP][0-9]+|CIM_P[0-9]+)"' \
+  -- 'lib/cdd/**/*.rb' "${excludes[@]}" 2>/dev/null \
+  | grep -vE '^[^:]+:[0-9]+:\s*#' \
+  || true)
+
+if [ -n "$hits" ]; then
+  echo "ERROR: raw MDC/EXT/CIM literal found outside registry files." >&2
+  echo "Use Cdd::PropertyIds::REGISTRY / Cdd::MetaClasses::REGISTRY instead." >&2
+  echo "" >&2
+  echo "$hits" >&2
+  exit 1
+fi
+
+exit 0

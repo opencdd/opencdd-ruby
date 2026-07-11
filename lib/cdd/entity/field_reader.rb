@@ -16,7 +16,15 @@ module Cdd
           entry = FieldRegistry.field_for(entity.class, name)
           return nil unless entry
 
-          return entity.send(entry.reader) if entry.synthetic? && entry.reader
+          # Synthetic fields defined with a block: evaluate the block
+          # in the entity's context via instance_exec. This preserves
+          # access to private helper methods without using send to
+          # bypass privacy (encapsulation rule from CLAUDE.md).
+          return entity.instance_exec(&entry.block) if entry.block?
+
+          # Legacy form: synthetic fields name a public reader method.
+          # public_send is safe here because readers are public API.
+          return entity.public_send(entry.reader) if entry.synthetic? && entry.reader
 
           raw =
             if entry.multilingual?

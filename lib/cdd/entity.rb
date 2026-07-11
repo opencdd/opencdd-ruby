@@ -26,11 +26,12 @@ module Cdd
       # a raw string).
       #
       # +synthetic: true+ for computed fields with no MDC_P### —
-      # requires +reader:+ naming an instance method that returns
-      # the value.
+      # requires a block (preferred) that returns the value. The
+      # block is evaluated via +instance_exec+ on the entity, so it
+      # has access to private helpers without +send+ dispatch.
       def field(name, property_id = nil, value_kind = nil,
                 multilingual: nil, synthetic: false, reader: nil,
-                as: nil)
+                as: nil, &block)
         resolved_kind, resolved_ml = resolve_from_registry(property_id)
         Cdd::Entity::FieldRegistry.register(
           entity_class: self,
@@ -40,6 +41,7 @@ module Cdd
           multilingual: multilingual.nil? ? resolved_ml : multilingual,
           synthetic: synthetic,
           reader: reader,
+          block: block,
           json_key: as,
         )
         define_method(name) do |lang = nil|
@@ -59,7 +61,7 @@ module Cdd
 
     META_CLASS_CODE = nil
 
-    attr_reader :irdi, :properties, :schema, :meta_class_irdi
+    attr_reader :irdi, :properties, :schema, :meta_class_irdi, :source_location
 
     def self.from_row(row, schema:, meta_class_irdi:, code_property_id: nil)
       code_property_id ||= default_code_property_id(meta_class_irdi)
@@ -127,12 +129,13 @@ module Cdd
     # ── C### workbook-specific codes. These are IEC CDD export column
     #     identifiers that don't have MDC_P### codes in PropertyIds::REGISTRY.
     #     They carry publisher, status, committee, and change-request data.
-    #     Declared as synthetic (no MDC_P###) with raw-key readers.
-    field :status_level,         synthetic: true, reader: :read_status_level
-    field :publisher,            synthetic: true, reader: :read_publisher
-    field :published_in,         synthetic: true, reader: :read_published_in
-    field :responsible_committee, synthetic: true, reader: :read_responsible_committee
-    field :change_request_id,    synthetic: true, reader: :read_change_request_id
+    #     Declared as synthetic (no MDC_P###) with block-form readers
+    #     evaluated via instance_exec (no send-to-private bypass).
+    field(:status_level,         synthetic: true) { @properties["C016"] }
+    field(:publisher,            synthetic: true) { @properties["C011"] }
+    field(:published_in,         synthetic: true) { @properties["C012"] }
+    field(:responsible_committee, synthetic: true) { @properties["MDC_P012"] || @properties["C019.en"] }
+    field(:change_request_id,    synthetic: true) { @properties["C002"] }
 
     # ── Full raw properties dump. Every key in @properties appears
     #     in the JSON output. This guarantees "full import" — every
@@ -141,18 +144,24 @@ module Cdd
     #     codes (status, publisher, etc.), and sub-IDs the DSL
     #     hasn't named yet. The browser can render typed fields
     #     nicely and fall back to raw_properties for completeness.
-    field :raw_properties, synthetic: true, reader: :read_raw_properties
+    field(:raw_properties, synthetic: true) { @properties }
 
     # ── Per-version provenance from _entity.json#versions. Set by
     #     Cdd::Parcel::ShardedDirReader after entity creation. The
     #     DSL serializer converts VersionHistory → array of entry
     #     hashes for JSON emission.
-    field :version_history, synthetic: true, reader: :read_version_history
+    field(:version_history, synthetic: true) { @version_history }
 
-    # ── Computed field with custom reader ────────────────────────
+    # ── Computed field with custom block ────────────────────────
     Dates = Struct.new(:original_definition, :current_version, :current_revision, keyword_init: true)
 
-    field :dates, synthetic: true, reader: :read_dates
+    field(:dates, synthetic: true) do
+      Dates.new(
+        original_definition: @properties[Cdd::PropertyIds::MDC_P003_1],
+        current_version:     @properties[Cdd::PropertyIds::MDC_P003_2],
+        current_revision:    @properties[Cdd::PropertyIds::MDC_P003_3],
+      )
+    end
 
     def [](key)
       @properties[key.to_s]
@@ -187,10 +196,6 @@ module Cdd
       "#<#{self.class.name} #{irdi}>"
     end
 
-    def to_h
-      @properties.dup
-    end
-
     def replace_irdi!(new_irdi)
       @irdi = Cdd::IRDI === new_irdi ? new_irdi : Cdd::IRDI.parse(new_irdi.to_s)
       self
@@ -211,43 +216,13 @@ module Cdd
       self
     end
 
-    private
-
-    def read_raw_properties
-      @properties
-    end
-
-    # C### readers — IEC CDD workbook-specific column codes.
-    def read_status_level
-      @properties["C016"]
-    end
-
-    def read_publisher
-      @properties["C011"]
-    end
-
-    def read_published_in
-      @properties["C012"]
-    end
-
-    def read_responsible_committee
-      @properties["MDC_P012"] || @properties["C019.en"]
-    end
-
-    def read_change_request_id
-      @properties["C002"]
-    end
-
-    def read_version_history
-      @version_history
-    end
-
-    def read_dates
-      Dates.new(
-        original_definition: @properties[Cdd::PropertyIds::MDC_P003_1],
-        current_version:     @properties[Cdd::PropertyIds::MDC_P003_2],
-        current_revision:    @properties[Cdd::PropertyIds::MDC_P003_3],
-      )
+    # Attach source location (file:line) where this entity was
+    # declared. Set by Cdd::Cddal::Builder from import/instantiation
+    # context. Nil for entities constructed from Parcel readers
+    # (which don't have a single source file).
+    def attach_source_location(loc)
+      @source_location = loc
+      self
     end
   end
 end

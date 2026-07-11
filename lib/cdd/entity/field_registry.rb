@@ -8,11 +8,19 @@ module Cdd
     module FieldRegistry
       Entry = Struct.new(
         :entity_class, :name, :property_id, :value_kind,
-        :multilingual, :synthetic, :reader, :json_key,
+        :multilingual, :synthetic, :reader, :block, :json_key,
         keyword_init: true,
       ) do
         def synthetic?    = !!synthetic
         def multilingual? = !!multilingual
+
+        # True when this field's value is computed by a block rather
+        # than read directly from +properties+. FieldReader dispatches
+        # block-defined fields via +instance_exec+, which preserves
+        # access to private helpers — no +send+ bypass required.
+        def block?
+          !block.nil?
+        end
 
         # The key to use when serializing this field to JSON. Defaults
         # to the field's ruby name. Override via the `as:` DSL option
@@ -30,9 +38,16 @@ module Cdd
         # is the only intended caller. Re-registering the same name on
         # the same class overwrites the prior declaration (useful for
         # subclasses overriding the value_kind).
+        #
+        # Synthetic fields prefer the +block:+ form: the block is
+        # evaluated via +instance_exec+ on the entity when the field
+        # is read, so it has access to private helpers without
+        # requiring +send+ dispatch. The legacy +reader:+ form
+        # (a Symbol naming a public method on the entity) is accepted
+        # for back-compat but should not be used for new fields.
         def register(entity_class:, name:, property_id:, value_kind:,
                      multilingual: false, synthetic: false, reader: nil,
-                     json_key: nil)
+                     block: nil, json_key: nil)
           entry = Entry.new(
             entity_class: entity_class,
             name: name.to_sym,
@@ -41,6 +56,7 @@ module Cdd
             multilingual: multilingual,
             synthetic: synthetic,
             reader: reader,
+            block: block,
             json_key: json_key,
           )
           @by_class[entity_class][entry.name] = entry

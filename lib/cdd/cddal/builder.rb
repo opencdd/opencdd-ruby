@@ -1,20 +1,40 @@
 # frozen_string_literal: true
 
 require "set"
-require "pathname"
 
 module Cdd
   module Cddal
-    class Builder
-      attr_reader :database, :alias_table, :symbol_table, :meta_class_overrides
+    # Source location attached to every entity created from CDDAL
+    # for diagnostics (validator messages, error attribution,
+    # cross-file navigation in the editor).
+    SourceLocation = Struct.new(:file, :line, keyword_init: true) do
+      def to_s
+        "#{file}:#{line || '?'}"
+      end
+    end
 
-      def initialize(database = nil)
+    # Builds a +Cdd::Database+ from a parsed CDDAL AST. Owns the
+    # module/import pipeline: resolves specifiers via the configured
+    # +Resolver+, fetches sources via the +Fetcher+, recursively
+    # builds imported documents into the same database, tracks the
+    # dependency graph for cycle detection, and applies bare,
+    # qualified, and selective import scoping rules.
+    class Builder
+      attr_reader :database, :alias_table, :symbol_table, :meta_class_overrides,
+                  :source_file, :loaded_modules
+
+      def initialize(database = nil, resolver: nil, source_file: nil,
+                     loaded_modules: nil, loading_stack: nil)
         @database = database || Cdd::Database.new
+        @resolver = resolver || Cdd::Cddal.default_resolver
+        @source_file = source_file
+        @loaded_modules = loaded_modules || {}
+        @loading_stack = loading_stack || []
         @alias_table = Cdd::AliasTable.new(defaults: true)
         @symbol_table = {}
+        @qualified_table = {} # "qualifier.name" => entity (qualified imports)
         @instance_decls = []
         @meta_class_overrides = {}
-        @imported_urls = Set.new
       end
 
       def build(document_or_declarations)
@@ -31,6 +51,13 @@ module Cdd
         rebuild_symbol_table
         @database.finalize!
         @database
+      end
+
+      # Resolve +specifier+ and return its source text without
+      # building it into the database. Used by the validator and
+      # by diagnostics that want to peek at imports.
+      def peek_import(specifier)
+        @resolver.resolve(specifier, importing_file: @source_file)
       end
 
       private
@@ -60,27 +87,102 @@ module Cdd
         end
       end
 
+      # ── Module/import pipeline ─────────────────────────────────
+      #
+      # Three import kinds share the same resolution + cycle-check
+      # + recursive-build core. They differ only in how the imported
+      # module's named declarations are surfaced in the parent
+      # document's symbol table:
+      #
+      #   bare       — every name from the target is in scope.
+      #   qualified  — name accessible as "<qualifier>.<name>".
+      #   selective  — only the listed names are in scope, each
+      #                optionally renamed via "as".
+      #
+      # All entities from the imported module are added to the parent
+      # Database regardless of import kind — IRDI references remain
+      # resolvable. The import kind controls only which symbolic
+      # names are accessible without qualification.
+
       def apply_import_declarations(document)
-        document.import_declarations.each do |decl|
-          next if @imported_urls.include?(decl.url)
-          @imported_urls << decl.url
-          source = read_import(decl.url)
-          next unless source
-          sub_doc = Cdd::Cddal::Parser.parse(source)
-          Builder.new(@database).build(sub_doc)
+        document.import_declarations.each { |decl| process_import(decl) }
+      end
+
+      def process_import(decl)
+        canonical, source = resolve_specifier(decl.specifier)
+        # Resolution may return [nil, nil] in non-strict mode when
+        # the specifier points at an unreachable URL or a missing
+        # file. Skip the import with a warning — preserves the
+        # graceful-degradation behavior CDDAL authors expect for
+        # cross-dictionary URLs.
+        return if canonical.nil?
+        return if @loaded_modules.key?(canonical)
+        check_cycle!(canonical, decl.specifier)
+
+        @loading_stack.push(canonical)
+        sub_doc = Cdd::Cddal::Parser.parse(source)
+        Builder.new(@database, resolver: @resolver, source_file: canonical,
+                                loaded_modules: @loaded_modules,
+                                loading_stack: @loading_stack)
+          .build(sub_doc)
+        @loading_stack.pop
+        @loaded_modules[canonical] = true
+
+        # Symbol scoping is applied AFTER the sub-document is built,
+        # so the named entities exist in @database by the time we
+        # look them up.
+        apply_import_scope(decl, canonical)
+      end
+
+      def resolve_specifier(specifier)
+        @resolver.resolve(specifier, importing_file: @source_file)
+      end
+
+      def check_cycle!(canonical, specifier)
+        return unless @loading_stack.include?(canonical)
+        cycle = @loading_stack.dup
+        cycle << canonical
+        raise Cdd::Cddal::ImportError,
+              "circular CDDAL import detected: #{cycle.join(' → ')} " \
+              "(originally imported as #{specifier.inspect})"
+      end
+
+      def apply_import_scope(decl, _canonical)
+        case decl.kind
+        when :bare
+          # Nothing to do — bare imports leave the sub-document's
+          # names in the shared @database symbol table.
+        when :qualified
+          register_qualified_symbols(decl.qualifier)
+        when :selective
+          register_selective_symbols(decl.imported_names)
         end
       end
 
-      def read_import(url)
-        return nil if url.to_s.empty?
-        return nil if url =~ /\Ahttps?:\/\//
-        path = expand_import_path(url)
-        return nil unless path && File.exist?(path)
-        File.read(path)
+      def register_qualified_symbols(qualifier)
+        @database.entities.each do |entity|
+          name = entity_alias_name(entity)
+          next unless name
+          qualified = "#{qualifier}.#{name}"
+          @qualified_table[qualified] = entity
+          @database.register_symbol(qualified, entity)
+        end
       end
 
-      def expand_import_path(url)
-        Pathname.new(url).expand_path
+      def register_selective_symbols(imported_names)
+        imported_names.each do |imported|
+          entity = @database.resolve_reference(imported.name)
+          next unless entity
+          # Register in the parent Database's symbol table so the
+          # renamed name resolves during link phase.
+          @database.register_symbol(imported.local_name, entity)
+        end
+      end
+
+      def entity_alias_name(entity)
+        code = entity.code
+        return code if code && !code.empty?
+        entity.preferred_name.to_s
       end
 
       def register_instance_symbols(document)
@@ -103,9 +205,16 @@ module Cdd
         @instance_decls.each do |decl|
           entity = build_entity(decl)
           next unless entity
+          attach_source_location(entity, decl)
           @database.add_entity(entity)
           @database.register_symbol(decl.name, entity) if decl.name
         end
+      end
+
+      def attach_source_location(entity, decl)
+        return unless entity.is_a?(Cdd::Entity)
+        loc = SourceLocation.new(file: @source_file, line: decl.line)
+        entity.attach_source_location(loc)
       end
 
       def build_entity(decl)
@@ -224,8 +333,8 @@ module Cdd
           next if parent_raw.nil? || parent_raw.to_s.strip.empty?
           target = @database.resolve_reference(parent_raw)
           next unless target
-          klass.parent_irdi = target.irdi
-          target.children << klass unless target.children.include?(klass)
+          klass.attach_parent_irdi(target.irdi)
+          target.add_child(klass)
         end
       end
 
@@ -234,18 +343,14 @@ module Cdd
           dc_raw = prop.properties[Cdd::PropertyIds::MDC_P021]
           next unless dc_raw
           target = @database.resolve_reference(dc_raw)
-          next unless target&.is_a?(Cdd::Klass)
-          unless target.declared_property_irdis.include?(prop.irdi)
-            target.declared_property_irdis << prop.irdi
-          end
+          next unless target.is_a?(Cdd::Klass)
+          target.declare_property(prop.irdi)
         end
       end
 
-      def link_value_lists
-      end
+      def link_value_lists; end
 
-      def rebuild_symbol_table
-      end
+      def rebuild_symbol_table; end
 
       def resolve_property_references(document)
         reference_kinds = %i[identifier_ref set_of_refs class_ref].freeze

@@ -91,6 +91,7 @@ PLATFORMS
 DEPENDENCIES
   opencdd!
   pry (~> 0.14)
+  racc (~> 1.7)
   rake (~> 13.0)
   rspec (~> 3.13)
   rspec-its (~> 1.3)

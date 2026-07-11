@@ -28,6 +28,12 @@ module Cdd
         "null"     => :NULL,
       }.freeze
 
+      # Soft keywords. These are reserved only inside import
+      # declarations; elsewhere they're valid identifiers (e.g.
+      # `short_name.en: as` for attosecond). The lexer emits IDENT
+      # and the parser validates the value in import position.
+      SOFT_KEYWORDS = %w[as from].freeze
+
       IRDI_RE         = /[0-9]+\/[0-9]+\/\/\/[A-Za-z0-9_]+(?:_[0-9]+)?#[A-Za-z0-9_]+/.freeze
       LOCAL_REF_RE    = /[A-Za-z_][A-Za-z0-9_]*#[A-Za-z0-9_]+(?:##[A-Za-z0-9_]+)?/.freeze
       DATE_RE         = /\d{4}-\d{2}-\d{2}/.freeze

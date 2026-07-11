@@ -7,18 +7,49 @@ RSpec::Core::RakeTask.new(:spec)
 
 require "json"
 
-task default: :spec
+# Default: run specs + registry lint.
+task default: %i[spec lint:registry]
+
+# ── CDDAL parser regeneration ───────────────────────────────────
+namespace :cddal do
+  desc "Regenerate the racc parser from cddal.y"
+  task :regen do
+    sh "bundle exec racc lib/cdd/cddal/cddal.y -o lib/cdd/cddal/generated_parser.rb"
+  end
+
+  desc "Fail if generated_parser.rb is out of sync with cddal.y"
+  task :check_regen do
+    tmp = ENV.fetch("CDDAL_REGEN_TMP", "/tmp/opencdd_generated_parser.rb")
+    sh "bundle exec racc lib/cdd/cddal/cddal.y -o #{tmp}"
+    unless system("diff -q lib/cdd/cddal/generated_parser.rb #{tmp}")
+      warn "ERROR: lib/cdd/cddal/generated_parser.rb is stale."
+      warn "  Run `bundle exec rake cddal:regen` and commit the result."
+      exit 1
+    end
+  end
+end
 
 # ── TS codegen ──────────────────────────────────────────────────
 desc "Regenerate TypeScript registry files for cdd-models-ts"
 task :generate_ts do
-  require "cdd"
-  cdd_models_ts = ENV.fetch(
-    "CDD_MODELS_TS_DIR",
-    File.expand_path("../cdd-models-ts", __dir__),
-  )
-  unless File.directory?(cdd_models_ts)
-    abort "cdd-models-ts not found at #{cdd_models_ts}. Set CDD_MODELS_TS_DIR."
+  # Placeholder: the actual codegen lives in Cdd::Codegen::Ts and
+  # writes to the sibling editor/cdd-models-ts repo. Invoke it
+  # directly when the target directory is available.
+  puts "TODO: invoke Cdd::Codegen::Ts"
+end
+
+# ── Lint ────────────────────────────────────────────────────────
+namespace :lint do
+  desc "Verify no raw MDC_P### / MDC_C### literals outside the registry files"
+  task :registry do
+    sh "bin/lint-no-raw-mdc"
   end
-  Cdd::Codegen::Ts.generate_all(cdd_models_ts)
+end
+
+# ── Spec subsets ────────────────────────────────────────────────
+namespace :spec do
+  desc "Run only the data-fixture specs (Parcel + CDDAL + exporters)"
+  task :data do
+    sh "bundle exec rspec spec/parcel spec/cddal_spec.rb spec/exporters_spec.rb spec/cddal/modules_spec.rb"
+  end
 end

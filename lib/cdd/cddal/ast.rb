@@ -36,7 +36,45 @@ module Cdd
 
       AliasDecl = Struct.new(:alias_name, :property_id, :line, keyword_init: true)
 
-      ImportDecl = Struct.new(:url, :line, keyword_init: true)
+      # One name in a selective import (`from "x" import { Foo, Bar as B }`).
+      # +as+ is the optional local rename; when nil, the name is bound
+      # under its original form.
+      ImportedName = Struct.new(:name, :as, keyword_init: true) do
+        def local_name
+          as || name
+        end
+      end
+
+      # CDDAL module import declaration. Three shapes, discriminated
+      # by +kind+:
+      #
+      #   :bare       — textual inclusion of every named declaration
+      #                 in the target. +specifier+ is the path/URL.
+      #   :qualified  — target's names are accessible as
+      #                 +<qualifier>.<name>+. +qualifier+ is the alias.
+      #   :selective  — only the names in +imported_names+ are pulled
+      #                 in, each subject to its optional rename.
+      ImportDecl = Struct.new(
+        :specifier, :kind, :qualifier, :imported_names, :line,
+        keyword_init: true,
+      ) do
+        def self.bare(specifier, line:)
+          new(specifier: specifier, kind: :bare, line: line)
+        end
+
+        def self.qualified(specifier, qualifier:, line:)
+          new(specifier: specifier, kind: :qualified, qualifier: qualifier, line: line)
+        end
+
+        def self.selective(specifier, imported_names:, line:)
+          new(specifier: specifier, kind: :selective, imported_names: imported_names, line: line)
+        end
+
+        # Backward-compat accessor for callers that expect +url+.
+        def url
+          specifier
+        end
+      end
 
       PropertyAssignment = Struct.new(:identifier, :language_tag, :value, :line, keyword_init: true) do
         def resolved_key

@@ -27,5 +27,41 @@ module Cdd
     autoload :DataTypeRule,     "cdd/validator/data_type_rule"
     autoload :HierarchyRule,    "cdd/validator/hierarchy_rule"
     autoload :Runner,           "cdd/validator/runner"
+
+    module_function
+
+    # Composite runner — applies every rule to every entity's every
+    # property, plus the database-level invariants (class-hierarchy
+    # acyclicity). Returns an Array of +ValidationError+ records
+    # that the UI / CI can render as a clickable list.
+    def run(database, **opts)
+      Runner.run(database, **opts)
+    end
+
+    # ── Reusable predicates (plan 10 public API). Each wraps an
+    #     existing rule class so the OpenCDD Editor's live validator
+    #     (TS port) can share the same semantics as the Ruby gem. ──
+
+    def irdi_well_formed?(value)
+      return false if value.nil? || value.to_s.strip.empty?
+      !Cdd::IRDI.parse(value.to_s).nil?
+    rescue Cdd::IRDI::ParseError
+      false
+    end
+
+    def mandatory_present?(value)
+      !value.nil? && !value.to_s.strip.empty?
+    end
+
+    def pattern_valid?(value, pattern)
+      return false if pattern.nil? || pattern.to_s.empty?
+      Regexp.new(pattern).match?(value.to_s)
+    rescue RegexpError
+      false
+    end
+
+    def class_hierarchy_acyclic?(database)
+      HierarchyRule.class_hierarchy_acyclic?(database)
+    end
   end
 end
