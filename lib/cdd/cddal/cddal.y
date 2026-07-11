@@ -2,6 +2,8 @@
 
 class Cdd::Cddal::GeneratedParser
 
+  expect 1    # one known shift/reduce conflict in import_item (IDENT vs IDENT soft_as IDENT)
+
   token META_CLASS INSTANCE ALIAS IMPORT TRUE FALSE NULL
         LBRACE RBRACE COLON COMMA LANGLE RANGLE DOT LPAREN RPAREN
         EQEQ NEQ
@@ -73,7 +75,46 @@ rule
 
   import_decl
     : IMPORT STRING
-        { result = Cdd::Cddal::AST::ImportDecl.new(url: val[1], line: lineno) }
+        { result = Cdd::Cddal::AST::ImportDecl.bare(val[1], line: lineno) }
+    | IMPORT STRING soft_as IDENT
+        { result = Cdd::Cddal::AST::ImportDecl.qualified(val[1], qualifier: val[3], line: lineno) }
+    | soft_from STRING IMPORT LBRACE import_list RBRACE
+        { result = Cdd::Cddal::AST::ImportDecl.selective(val[1], imported_names: val[4], line: lineno) }
+    ;
+
+  # Soft keywords. `as` and `from` are recognized by value at parse
+  # time rather than lexed as keyword tokens, because they appear as
+  # ordinary identifier values elsewhere (e.g. short_name.en: "as"
+  # for attosecond). The action validates the IDENT value and raises
+  # a ParseError if the soft keyword is misspelled.
+  soft_as
+    : IDENT
+        {
+          unless val[0] == "as"
+            raise Racc::ParseError, "expected 'as' keyword, got #{val[0].inspect}"
+          end
+          result = val[0]
+        }
+    ;
+
+  soft_from
+    : IDENT
+        {
+          unless val[0] == "from"
+            raise Racc::ParseError, "expected 'from' keyword, got #{val[0].inspect}"
+          end
+          result = val[0]
+        }
+    ;
+
+  import_list
+    : import_item                       { result = [val[0]] }
+    | import_list COMMA import_item     { result = val[0] + [val[2]] }
+    ;
+
+  import_item
+    : IDENT                             { result = Cdd::Cddal::AST::ImportedName.new(name: val[0]) }
+    | IDENT soft_as IDENT               { result = Cdd::Cddal::AST::ImportedName.new(name: val[0], as: val[2]) }
     ;
 
   ident_or_irdi
@@ -169,9 +210,6 @@ rule
     ;
 
 end
-
----- header
-require "cdd/cddal/ast"
 
 ---- inner
 

@@ -108,9 +108,24 @@ module Cdd
 
       def class_subdirs
         return [] unless File.directory?(@path)
-        Dir.children(@path).sort
+        dirs = Dir.children(@path).sort
           .map { |n| File.join(@path, n) }
           .select { |p| File.directory?(p) && looks_like_class_code?(File.basename(p)) }
+
+        # Also scan _entities/ for manifest-driven entity directories.
+        # The scraper writes class data to top-level <CODE>/ dirs (legacy)
+        # and property/value_list/etc data to _entities/<CODE>/ dirs (newer
+        # manifest-driven scrape). Both layouts must be scanned to capture
+        # all entities.
+        entities_root = File.join(@path, "_entities")
+        if File.directory?(entities_root)
+          Dir.children(entities_root).sort
+            .map { |n| File.join(entities_root, n) }
+            .select { |p| File.directory?(p) && looks_like_class_code?(File.basename(p)) }
+            .each { |dir| dirs << dir }
+        end
+
+        dirs
       end
 
       # Returns the directory that holds the active +export_*.xls+ for

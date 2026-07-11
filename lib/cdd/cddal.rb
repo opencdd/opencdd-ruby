@@ -8,22 +8,46 @@ module Cdd
     autoload :GeneratedParser, "cdd/cddal/generated_parser"
     autoload :Builder,         "cdd/cddal/builder"
     autoload :Serializer,      "cdd/cddal/serializer"
+    autoload :Resolver,        "cdd/cddal/resolver"
+    autoload :Fetcher,         "cdd/cddal/fetcher"
 
     class Error < StandardError; end
     class LexError < Error; end
     class ParseError < Error; end
     class ResolutionError < Error; end
+    class ImportError < Error; end
+
+    @default_resolver = nil
 
     module_function
 
-    def parse(source, database: nil)
-      tokens = Lexer.new(source).tokens
-      declarations = Parser.new(tokens).parse
-      Builder.new(database).build(declarations)
+    def default_resolver
+      @default_resolver ||= Resolver.new
     end
 
-    def parse_file(path, database: nil)
-      parse(File.read(path), database: database)
+    # Parse +source+ (a CDDAL string) into a +Cdd::Database+.
+    #
+    # Options:
+    #   database: - existing Database to merge into (default: new)
+    #   resolver: - Cdd::Cddal::Resolver for module imports
+    #               (default: a fresh Resolver with default fetcher)
+    #   fetcher:  - shortcut; if supplied, wraps in a new Resolver
+    #   source_file: - path/URL the source came from. Used for
+    #               diagnostics and for resolving relative imports.
+    def parse(source, database: nil, resolver: nil, fetcher: nil,
+              source_file: nil)
+      tokens = Lexer.new(source.to_s).tokens
+      declarations = Parser.new(tokens).parse
+      effective_resolver =
+        resolver || (fetcher ? Resolver.new(fetcher: fetcher) : default_resolver)
+      Builder.new(database, resolver: effective_resolver, source_file: source_file)
+        .build(declarations)
+    end
+
+    def parse_file(path, database: nil, resolver: nil, fetcher: nil)
+      source = File.read(path)
+      parse(source, database: database,
+            resolver: resolver, fetcher: fetcher, source_file: path)
     end
 
     def serialize(database)

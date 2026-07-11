@@ -9,20 +9,16 @@ module Cdd
     field :definition_class_irdi, "MDC_P021"
     field :data_type,           "MDC_P022", :string
 
-    # ── Computed fields with custom readers ──────────────────────
+    # ── Computed fields with block-form readers ──────────────────
     # The value-list backref can live under MDC_P018_1, MDC_P045, or
     # a non-standard VALUE_LIST_IRDI key. Try each in turn.
-    field :value_list_irdi, synthetic: true, reader: :read_value_list_irdi
-
-    alias_method :term_code, :enumeration_code
-
-    private
-
-    def read_value_list_irdi
+    field(:value_list_irdi, synthetic: true) do
       raw = properties[Cdd::PropertyIds::MDC_P018_1] ||
             properties[Cdd::PropertyIds::MDC_P045]   ||
             properties["VALUE_LIST_IRDI"]
       Cdd::IRDI.parse(raw) if raw
     end
+
+    alias_method :term_code, :enumeration_code
   end
 end

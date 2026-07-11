@@ -15,9 +15,19 @@ module Cdd
     # historical behavior.
     field :code_list,  "MDC_P044", :string_list
 
-    # ── Computed fields with custom readers ──────────────────────
-    field :selection_count, synthetic: true, reader: :read_selection_count
-    field :list_type,       synthetic: true, reader: :read_list_type
+    # ── Computed fields with block-form readers ──────────────────
+    field(:selection_count, synthetic: true) do
+      raw = properties[Cdd::PropertyIds::MDC_P045]
+      next nil unless raw
+      s = raw.to_s.strip
+      s = s[1..-2] if s.start_with?("(") && s.end_with?(")")
+      parts = s.split(",").map { |x| Integer(x.strip) rescue nil }.compact
+      parts.empty? ? nil : parts
+    end
+    field(:list_type, synthetic: true) do
+      raw = properties[Cdd::PropertyIds::MDC_P046]
+      LIST_TYPE_ALIASES[raw] || raw
+    end
 
     def terms(database = nil)
       return enum_for(:terms) unless block_given?
@@ -27,22 +37,6 @@ module Cdd
           yield term if term
         end
       end
-    end
-
-    private
-
-    def read_selection_count
-      raw = properties[Cdd::PropertyIds::MDC_P045]
-      return nil unless raw
-      s = raw.to_s.strip
-      s = s[1..-2] if s.start_with?("(") && s.end_with?(")")
-      parts = s.split(",").map { |x| Integer(x.strip) rescue nil }.compact
-      parts.empty? ? nil : parts
-    end
-
-    def read_list_type
-      raw = properties[Cdd::PropertyIds::MDC_P046]
-      LIST_TYPE_ALIASES[raw] || raw
     end
   end
 end

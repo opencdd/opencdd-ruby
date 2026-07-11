@@ -166,7 +166,7 @@ RSpec.describe Cdd::Klass do
     end
 
     it "exposes children collection" do
-      parent.children << child
+      parent.add_child(child)
       expect(parent.children).to include(child)
       expect(parent.subclasses).to eq([child])
     end

@@ -20,9 +20,18 @@ module Cdd
     field :segment,                  "MDC_P211", :string
     field :super_relation_irdi,      "MDC_P212"
 
-    # ── Computed fields with custom readers ──────────────────────
-    field :relation_type, synthetic: true, reader: :read_relation_type
-    field :domain_irdis,  synthetic: true, reader: :read_domain_irdis
+    # ── Computed fields with block-form readers ──────────────────
+    field(:relation_type, synthetic: true) do
+      @relation_type_value ||= Cdd::RelationType.parse(properties[Cdd::PropertyIds::MDC_P200]) ||
+        parse_legacy_relation_type
+    end
+    field(:domain_irdis, synthetic: true) do
+      list = []
+      [Cdd::PropertyIds::MDC_P201, Cdd::PropertyIds::MDC_P202].each do |key|
+        list.concat(parse_irdi_list(properties[key]))
+      end
+      list
+    end
 
     def relation_type_symbol
       value = relation_type
@@ -65,19 +74,6 @@ module Cdd
     end
 
     private
-
-    def read_relation_type
-      @relation_type_value ||= Cdd::RelationType.parse(properties[Cdd::PropertyIds::MDC_P200]) ||
-        parse_legacy_relation_type
-    end
-
-    def read_domain_irdis
-      list = []
-      [Cdd::PropertyIds::MDC_P201, Cdd::PropertyIds::MDC_P202].each do |key|
-        list.concat(parse_irdi_list(properties[key]))
-      end
-      list
-    end
 
     def parse_legacy_relation_type
       raw = properties[Cdd::PropertyIds::MDC_P200]

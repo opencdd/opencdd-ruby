@@ -28,14 +28,19 @@ RSpec.describe "code quality" do
     end
   end
 
-  it "does not call .send on private methods" do
-    # `.send(` is fine for public APIs and for test doubles; the
-    # forbidden case is calling private/protected methods via send.
-    # We approximate by flagging any `.send(:` whose argument starts
-    # with an underscore (a Ruby convention for private).
-    hits = grep(/\.send\(:?_\w/)
+  it "does not use .send (use public_send for dynamic dispatch to public API)" do
+    # `.send` bypasses Ruby's privacy check. Even when the target
+    # method is public today, a `.send` call site is a privacy
+    # violation waiting to happen (move the method to private and
+    # the .send call still works, hiding the bug).
+    #
+    # Allowed alternatives:
+    #   - public_send for dynamic dispatch to a public method
+    #   - instance_exec(&block) for DSLs that need private helpers
+    #   - explicit method definition when the dispatch set is small
+    hits = grep(/[^_a-zA-Z]send\(/)
     expect(hits).to be_empty,
-      "private-method .send found — see TODO.work/02:\n#{hits.join("\n")}"
+      ".send found — use public_send or instance_exec (TODO.work/02):\n#{hits.join("\n")}"
   end
 
   it "does not use instance_variable_set / instance_variable_get" do

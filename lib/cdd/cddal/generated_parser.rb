@@ -5,14 +5,11 @@
 #
 
 require 'racc/parser.rb'
-
-require "cdd/cddal/ast"
-
 module Cdd
   module Cddal
     class GeneratedParser < Racc::Parser
 
-module_eval(<<'...end cddal.y/module_eval...', 'cddal.y', 177)
+module_eval(<<'...end cddal.y/module_eval...', 'cddal.y', 215)
 
 def initialize(tokens)
   @tokens = tokens
@@ -52,70 +49,78 @@ end
 ##### State transition tables begin ###
 
 racc_action_table = [
-    44,    45,    46,    54,    91,    15,    14,    30,    33,    90,
-    55,    12,    54,    62,    41,    42,    43,    47,    53,    55,
-    54,    31,    35,    65,    66,    18,    67,    61,    88,    54,
-    89,    78,    79,    19,    81,    80,    55,    15,    16,    21,
-    65,    66,    22,    67,    61,     2,    24,     8,     9,    10,
-    11,    60,    59,    25,    57,    58,    73,    74,    86,    75,
-    76,    85,    84,    73,    74,    24,    75,    76,    15,    14,
-    15,    14,    37,    38,    39,    87,    59,    92 ]
+     2,   107,     8,     9,    10,    11,   106,    14,    70,    78,
+    20,    60,    61,    62,    70,    71,    21,    38,    41,    81,
+    82,    71,    83,    77,    13,    57,    58,    59,    63,    69,
+    70,    39,    43,    22,    76,    75,    70,    73,    74,    17,
+    16,    94,    95,    71,    97,    96,    24,    81,    82,    25,
+    83,    77,    89,    90,   102,    91,    92,   101,   100,    89,
+    90,    27,    91,    92,    49,   104,    50,   105,    17,    18,
+    17,    16,    17,    16,    28,    30,    31,    36,    37,    27,
+    46,    48,    30,    52,    53,    46,    55,   103,    75,   108 ]
 
 racc_action_check = [
-    38,    38,    38,    38,    71,     8,     8,    26,    28,    71,
-    38,     2,    54,    54,    38,    38,    38,    38,    38,    54,
-    56,    26,    28,    54,    54,    10,    54,    54,    63,    89,
-    63,    56,    56,    11,    56,    56,    89,     9,     9,    13,
-    89,    89,    16,    89,    89,     1,    17,     1,     1,     1,
-     1,    53,    53,    18,    53,    53,    55,    55,    59,    55,
-    55,    59,    59,    91,    91,    27,    91,    91,    22,    22,
-    25,    25,    35,    36,    37,    60,    61,    83 ]
+     1,    87,     1,     1,     1,     1,    87,     2,    70,    70,
+    10,    52,    52,    52,    52,    70,    11,    32,    34,    70,
+    70,    52,    70,    70,     1,    52,    52,    52,    52,    52,
+    72,    32,    34,    12,    69,    69,   105,    69,    69,     8,
+     8,    72,    72,   105,    72,    72,    15,   105,   105,    18,
+   105,   105,    71,    71,    75,    71,    71,    75,    75,   107,
+   107,    19,   107,   107,    44,    79,    44,    79,     9,     9,
+    25,    25,    28,    28,    20,    21,    22,    29,    31,    33,
+    37,    43,    46,    47,    48,    50,    51,    76,    77,    99 ]
 
 racc_action_pointer = [
-   nil,    45,    11,   nil,   nil,   nil,   nil,   nil,   -18,    14,
-     1,    13,   nil,    30,   nil,   nil,    29,    37,    42,   nil,
-   nil,   nil,    45,   nil,   nil,    47,    -3,    56,    -2,   nil,
-   nil,   nil,   nil,   nil,   nil,    57,    62,    50,    -6,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,    36,     3,    36,    11,   nil,   nil,    38,
-    51,    60,   nil,    18,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,    -8,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,    60,   nil,   nil,   nil,   nil,   nil,    20,
-   nil,    43,   nil,   nil,   nil ]
+   nil,     0,     7,   nil,   nil,   nil,   nil,   nil,    16,    45,
+   -14,    -4,    13,   nil,   nil,    37,   nil,   nil,    36,    52,
+    63,    51,    71,   nil,   nil,    47,   nil,   nil,    49,    53,
+   nil,    69,     7,    70,     8,   nil,   nil,    56,   nil,   nil,
+   nil,   nil,   nil,    66,    54,   nil,    58,    72,    60,   nil,
+    61,    62,     5,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    19,
+    -1,    32,    21,   nil,   nil,    34,    63,    72,   nil,    55,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   -11,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    72,
+   nil,   nil,   nil,   nil,   nil,    27,   nil,    39,   nil,   nil,
+   nil ]
 
 racc_action_default = [
-    -1,   -69,   -69,    -2,    -3,    -4,    -5,    -6,   -69,   -69,
-   -69,   -69,    95,    -8,   -23,   -24,   -23,   -14,   -69,   -22,
-    -7,   -10,   -69,   -13,   -16,   -69,   -69,   -14,   -69,   -21,
-    -9,   -11,   -12,   -15,   -17,   -19,   -69,   -69,   -69,   -20,
-   -18,   -25,   -26,   -27,   -28,   -29,   -30,   -31,   -32,   -33,
-   -34,   -35,   -36,   -37,   -69,   -69,   -69,   -39,   -40,   -69,
-   -69,   -61,   -51,   -69,   -53,   -55,   -56,   -57,   -58,   -59,
-   -60,   -69,   -63,   -65,   -66,   -67,   -68,   -38,   -41,   -42,
-   -43,   -44,   -45,   -69,   -47,   -48,   -49,   -50,   -52,   -69,
-   -62,   -69,   -46,   -54,   -64 ]
+    -1,   -77,   -77,    -2,    -3,    -4,    -5,    -6,   -77,   -77,
+   -77,   -77,   -77,   -26,   111,    -8,   -31,   -32,   -31,   -14,
+   -77,   -22,   -77,    -7,   -10,   -77,   -13,   -16,   -77,   -77,
+   -25,   -77,   -77,   -14,   -77,   -21,   -23,   -77,    -9,   -11,
+   -12,   -15,   -17,   -19,   -77,   -27,   -29,   -77,   -77,   -24,
+   -77,   -77,   -77,   -20,   -28,   -30,   -18,   -33,   -34,   -35,
+   -36,   -37,   -38,   -39,   -40,   -41,   -42,   -43,   -44,   -45,
+   -77,   -77,   -77,   -47,   -48,   -77,   -77,   -69,   -59,   -77,
+   -61,   -63,   -64,   -65,   -66,   -67,   -68,   -77,   -71,   -73,
+   -74,   -75,   -76,   -46,   -49,   -50,   -51,   -52,   -53,   -77,
+   -55,   -56,   -57,   -58,   -60,   -77,   -70,   -77,   -54,   -62,
+   -72 ]
 
 racc_goto_table = [
-    72,    51,    64,    13,    17,    23,     1,     3,     4,     5,
-     6,     7,    20,    26,    28,    32,    34,    27,    36,    82,
-    29,    40,    48,    49,    50,    52,    56,    77,    83,    63,
-    71,   nil,   nil,   nil,   nil,   nil,    94,    93 ]
+    88,    29,    80,    15,    19,    67,    45,    26,     1,     3,
+     4,     5,     6,     7,    23,    32,    34,    42,    47,    54,
+    33,    40,    56,    35,    12,    98,    51,    44,    64,    65,
+    66,    68,    72,    93,    99,    79,   110,   109,    87 ]
 
 racc_goto_check = [
-    26,    18,    24,     7,     7,    10,     1,     2,     3,     4,
-     5,     6,     8,     9,    11,    10,    12,     7,    13,    18,
-     7,    14,    15,    16,    17,    19,    20,    21,    22,    23,
-    25,   nil,   nil,   nil,   nil,   nil,    26,    24 ]
+    30,    15,    28,     7,     7,    22,    18,    10,     1,     2,
+     3,     4,     5,     6,     8,     9,    11,    12,    13,    18,
+     7,    10,    14,     7,    16,    22,    15,    17,    19,    20,
+    21,    23,    24,    25,    26,    27,    30,    28,    29 ]
 
 racc_goto_pointer = [
-   nil,     6,     6,     7,     8,     9,    10,    -5,    -1,    -8,
-   -12,   -10,   -12,   -17,   -17,   -16,   -15,   -14,   -37,   -13,
-   -27,   -29,   -31,   -25,   -52,   -25,   -55 ]
+   nil,     8,     8,     9,    10,    11,    12,    -5,    -1,    -9,
+   -12,   -11,   -17,   -25,   -30,   -20,    23,   -10,   -31,   -24,
+   -23,   -22,   -47,   -21,   -37,   -39,   -41,   -35,   -68,   -33,
+   -71 ]
 
 racc_goto_default = [
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,    68,   nil,    70,    69,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+    84,   nil,    86,    85,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
@@ -141,56 +146,64 @@ racc_reduce_table = [
   2, 38, :_reduce_20,
   4, 30, :_reduce_21,
   2, 31, :_reduce_22,
-  1, 32, :_reduce_23,
-  1, 32, :_reduce_24,
-  1, 39, :_reduce_25,
-  1, 39, :_reduce_26,
-  1, 39, :_reduce_27,
-  1, 39, :_reduce_28,
-  1, 39, :_reduce_29,
-  1, 39, :_reduce_30,
-  1, 39, :_reduce_31,
-  1, 39, :_reduce_none,
-  1, 39, :_reduce_none,
-  1, 39, :_reduce_none,
-  1, 39, :_reduce_none,
-  1, 39, :_reduce_none,
+  4, 31, :_reduce_23,
+  6, 31, :_reduce_24,
+  1, 40, :_reduce_25,
+  1, 41, :_reduce_26,
+  1, 42, :_reduce_27,
+  3, 42, :_reduce_28,
+  1, 43, :_reduce_29,
+  3, 43, :_reduce_30,
+  1, 32, :_reduce_31,
+  1, 32, :_reduce_32,
+  1, 39, :_reduce_33,
+  1, 39, :_reduce_34,
+  1, 39, :_reduce_35,
+  1, 39, :_reduce_36,
   1, 39, :_reduce_37,
-  3, 40, :_reduce_38,
-  1, 45, :_reduce_39,
-  1, 45, :_reduce_40,
-  1, 46, :_reduce_41,
-  1, 46, :_reduce_42,
-  1, 46, :_reduce_43,
-  1, 46, :_reduce_44,
-  1, 46, :_reduce_none,
-  4, 41, :_reduce_46,
-  1, 47, :_reduce_47,
-  1, 47, :_reduce_48,
-  1, 47, :_reduce_49,
-  3, 42, :_reduce_50,
-  2, 43, :_reduce_51,
-  3, 43, :_reduce_52,
-  1, 48, :_reduce_53,
-  3, 48, :_reduce_54,
-  1, 49, :_reduce_55,
-  1, 49, :_reduce_56,
-  1, 49, :_reduce_57,
-  1, 49, :_reduce_none,
-  1, 49, :_reduce_none,
-  1, 49, :_reduce_none,
-  1, 49, :_reduce_61,
-  3, 44, :_reduce_62,
-  1, 50, :_reduce_63,
-  3, 50, :_reduce_64,
-  1, 51, :_reduce_65,
-  1, 51, :_reduce_66,
-  1, 51, :_reduce_67,
-  1, 51, :_reduce_68 ]
+  1, 39, :_reduce_38,
+  1, 39, :_reduce_39,
+  1, 39, :_reduce_none,
+  1, 39, :_reduce_none,
+  1, 39, :_reduce_none,
+  1, 39, :_reduce_none,
+  1, 39, :_reduce_none,
+  1, 39, :_reduce_45,
+  3, 44, :_reduce_46,
+  1, 49, :_reduce_47,
+  1, 49, :_reduce_48,
+  1, 50, :_reduce_49,
+  1, 50, :_reduce_50,
+  1, 50, :_reduce_51,
+  1, 50, :_reduce_52,
+  1, 50, :_reduce_none,
+  4, 45, :_reduce_54,
+  1, 51, :_reduce_55,
+  1, 51, :_reduce_56,
+  1, 51, :_reduce_57,
+  3, 46, :_reduce_58,
+  2, 47, :_reduce_59,
+  3, 47, :_reduce_60,
+  1, 52, :_reduce_61,
+  3, 52, :_reduce_62,
+  1, 53, :_reduce_63,
+  1, 53, :_reduce_64,
+  1, 53, :_reduce_65,
+  1, 53, :_reduce_none,
+  1, 53, :_reduce_none,
+  1, 53, :_reduce_none,
+  1, 53, :_reduce_69,
+  3, 48, :_reduce_70,
+  1, 54, :_reduce_71,
+  3, 54, :_reduce_72,
+  1, 55, :_reduce_73,
+  1, 55, :_reduce_74,
+  1, 55, :_reduce_75,
+  1, 55, :_reduce_76 ]
 
-racc_reduce_n = 69
+racc_reduce_n = 77
 
-racc_shift_n = 95
+racc_shift_n = 111
 
 racc_token_table = {
   false => 0,
@@ -281,6 +294,10 @@ Racc_token_to_s_table = [
   "assignment",
   "opt_language_tag",
   "value",
+  "soft_as",
+  "soft_from",
+  "import_list",
+  "import_item",
   "condition",
   "class_reference",
   "dotted_ref",
@@ -301,14 +318,14 @@ Racc_debug_parser = false
 
 # reduce 0 omitted
 
-module_eval(<<'.,.,', 'cddal.y', 12)
+module_eval(<<'.,.,', 'cddal.y', 14)
   def _reduce_1(val, _values, result)
      result = Cdd::Cddal::AST::Document.new(declarations: [])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 13)
+module_eval(<<'.,.,', 'cddal.y', 15)
   def _reduce_2(val, _values, result)
      val[0].declarations << val[1]; result = val[0]
     result
@@ -323,42 +340,42 @@ module_eval(<<'.,.,', 'cddal.y', 13)
 
 # reduce 6 omitted
 
-module_eval(<<'.,.,', 'cddal.y', 25)
+module_eval(<<'.,.,', 'cddal.y', 27)
   def _reduce_7(val, _values, result)
      result = Cdd::Cddal::AST::MetaClassDecl.new(irdi: val[1], property_identifiers: val[2] || [], line: lineno)
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 29)
+module_eval(<<'.,.,', 'cddal.y', 31)
   def _reduce_8(val, _values, result)
      result = []
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 30)
+module_eval(<<'.,.,', 'cddal.y', 32)
   def _reduce_9(val, _values, result)
      result = val[1]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 34)
+module_eval(<<'.,.,', 'cddal.y', 36)
   def _reduce_10(val, _values, result)
      result = []
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 35)
+module_eval(<<'.,.,', 'cddal.y', 37)
   def _reduce_11(val, _values, result)
      result = val[0] + [val[1]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 40)
+module_eval(<<'.,.,', 'cddal.y', 42)
   def _reduce_12(val, _values, result)
      result = Cdd::Cddal::AST::InstanceDecl.new(
             name: val[1], meta_class_ref: val[3], assignments: val[4] || [], line: lineno)
@@ -366,7 +383,7 @@ module_eval(<<'.,.,', 'cddal.y', 40)
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 43)
+module_eval(<<'.,.,', 'cddal.y', 45)
   def _reduce_13(val, _values, result)
      result = Cdd::Cddal::AST::InstanceDecl.new(
             name: nil, meta_class_ref: val[1], assignments: val[2] || [], line: lineno)
@@ -374,35 +391,35 @@ module_eval(<<'.,.,', 'cddal.y', 43)
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 48)
+module_eval(<<'.,.,', 'cddal.y', 50)
   def _reduce_14(val, _values, result)
      result = []
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 49)
+module_eval(<<'.,.,', 'cddal.y', 51)
   def _reduce_15(val, _values, result)
      result = val[1]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 53)
+module_eval(<<'.,.,', 'cddal.y', 55)
   def _reduce_16(val, _values, result)
      result = []
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 54)
+module_eval(<<'.,.,', 'cddal.y', 56)
   def _reduce_17(val, _values, result)
      result = val[0] + [val[1]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 59)
+module_eval(<<'.,.,', 'cddal.y', 61)
   def _reduce_18(val, _values, result)
      result = Cdd::Cddal::AST::PropertyAssignment.new(
             identifier: val[0], language_tag: val[1], value: val[3], line: lineno)
@@ -410,306 +427,370 @@ module_eval(<<'.,.,', 'cddal.y', 59)
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 64)
+module_eval(<<'.,.,', 'cddal.y', 66)
   def _reduce_19(val, _values, result)
      result = nil
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 65)
+module_eval(<<'.,.,', 'cddal.y', 67)
   def _reduce_20(val, _values, result)
      result = val[1]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 70)
+module_eval(<<'.,.,', 'cddal.y', 72)
   def _reduce_21(val, _values, result)
      result = Cdd::Cddal::AST::AliasDecl.new(alias_name: val[1], property_id: val[3], line: lineno)
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 75)
+module_eval(<<'.,.,', 'cddal.y', 77)
   def _reduce_22(val, _values, result)
-     result = Cdd::Cddal::AST::ImportDecl.new(url: val[1], line: lineno)
+     result = Cdd::Cddal::AST::ImportDecl.bare(val[1], line: lineno)
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cddal.y', 79)
   def _reduce_23(val, _values, result)
-     result = val[0]
+     result = Cdd::Cddal::AST::ImportDecl.qualified(val[1], qualifier: val[3], line: lineno)
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 80)
+module_eval(<<'.,.,', 'cddal.y', 81)
   def _reduce_24(val, _values, result)
-     result = val[0]
+     result = Cdd::Cddal::AST::ImportDecl.selective(val[1], imported_names: val[4], line: lineno)
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 84)
+module_eval(<<'.,.,', 'cddal.y', 92)
   def _reduce_25(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+              unless val[0] == "as"
+            raise Racc::ParseError, "expected 'as' keyword, got #{val[0].inspect}"
+          end
+          result = val[0]
+
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 85)
+module_eval(<<'.,.,', 'cddal.y', 102)
   def _reduce_26(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
-    result
-  end
-.,.,
+              unless val[0] == "from"
+            raise Racc::ParseError, "expected 'from' keyword, got #{val[0].inspect}"
+          end
+          result = val[0]
 
-module_eval(<<'.,.,', 'cddal.y', 86)
-  def _reduce_27(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :date, raw: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 87)
-  def _reduce_28(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :boolean, raw: "true")
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 88)
-  def _reduce_29(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :boolean, raw: "false")
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 89)
-  def _reduce_30(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :null, raw: "null")
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 90)
-  def _reduce_31(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
-    result
-  end
-.,.,
-
-# reduce 32 omitted
-
-# reduce 33 omitted
-
-# reduce 34 omitted
-
-# reduce 35 omitted
-
-# reduce 36 omitted
-
-module_eval(<<'.,.,', 'cddal.y', 96)
-  def _reduce_37(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 101)
-  def _reduce_38(val, _values, result)
-     result = Cdd::Cddal::AST::Condition.new(left: val[0], operator: val[1], right: val[2])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 105)
-  def _reduce_39(val, _values, result)
-     result = "=="
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 106)
-  def _reduce_40(val, _values, result)
-     result = "!="
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cddal.y', 110)
-  def _reduce_41(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+  def _reduce_27(val, _values, result)
+     result = [val[0]]
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cddal.y', 111)
-  def _reduce_42(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
+  def _reduce_28(val, _values, result)
+     result = val[0] + [val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 112)
-  def _reduce_43(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+module_eval(<<'.,.,', 'cddal.y', 115)
+  def _reduce_29(val, _values, result)
+     result = Cdd::Cddal::AST::ImportedName.new(name: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 113)
-  def _reduce_44(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+module_eval(<<'.,.,', 'cddal.y', 116)
+  def _reduce_30(val, _values, result)
+     result = Cdd::Cddal::AST::ImportedName.new(name: val[0], as: val[2])
     result
   end
 .,.,
 
-# reduce 45 omitted
-
-module_eval(<<'.,.,', 'cddal.y', 119)
-  def _reduce_46(val, _values, result)
-     result = Cdd::Cddal::AST::ClassReference.new(type_name: val[0], argument: val[2])
+module_eval(<<'.,.,', 'cddal.y', 120)
+  def _reduce_31(val, _values, result)
+     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 123)
-  def _reduce_47(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 124)
-  def _reduce_48(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+module_eval(<<'.,.,', 'cddal.y', 121)
+  def _reduce_32(val, _values, result)
+     result = val[0]
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cddal.y', 125)
+  def _reduce_33(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 126)
+  def _reduce_34(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 127)
+  def _reduce_35(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :date, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 128)
+  def _reduce_36(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :boolean, raw: "true")
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 129)
+  def _reduce_37(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :boolean, raw: "false")
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 130)
+  def _reduce_38(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :null, raw: "null")
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 131)
+  def _reduce_39(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+# reduce 40 omitted
+
+# reduce 41 omitted
+
+# reduce 42 omitted
+
+# reduce 43 omitted
+
+# reduce 44 omitted
+
+module_eval(<<'.,.,', 'cddal.y', 137)
+  def _reduce_45(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 142)
+  def _reduce_46(val, _values, result)
+     result = Cdd::Cddal::AST::Condition.new(left: val[0], operator: val[1], right: val[2])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 146)
+  def _reduce_47(val, _values, result)
+     result = "=="
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 147)
+  def _reduce_48(val, _values, result)
+     result = "!="
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 151)
   def _reduce_49(val, _values, result)
      result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 130)
+module_eval(<<'.,.,', 'cddal.y', 152)
   def _reduce_50(val, _values, result)
-     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[2], owner: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 134)
-  def _reduce_51(val, _values, result)
-     result = Cdd::Cddal::AST::Set.new(elements: [])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 135)
-  def _reduce_52(val, _values, result)
-     result = Cdd::Cddal::AST::Set.new(elements: val[1])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 139)
-  def _reduce_53(val, _values, result)
-     result = [val[0]]
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 140)
-  def _reduce_54(val, _values, result)
-     result = val[0] + [val[2]]
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 144)
-  def _reduce_55(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 145)
-  def _reduce_56(val, _values, result)
      result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 146)
-  def _reduce_57(val, _values, result)
+module_eval(<<'.,.,', 'cddal.y', 153)
+  def _reduce_51(val, _values, result)
      result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
     result
   end
 .,.,
 
-# reduce 58 omitted
-
-# reduce 59 omitted
-
-# reduce 60 omitted
-
-module_eval(<<'.,.,', 'cddal.y', 150)
-  def _reduce_61(val, _values, result)
+module_eval(<<'.,.,', 'cddal.y', 154)
+  def _reduce_52(val, _values, result)
      result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 155)
-  def _reduce_62(val, _values, result)
-     result = Cdd::Cddal::AST::Tuple.new(elements: val[1])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 159)
-  def _reduce_63(val, _values, result)
-     result = [val[0]]
-    result
-  end
-.,.,
+# reduce 53 omitted
 
 module_eval(<<'.,.,', 'cddal.y', 160)
-  def _reduce_64(val, _values, result)
-     result = val[0] + [val[2]]
+  def _reduce_54(val, _values, result)
+     result = Cdd::Cddal::AST::ClassReference.new(type_name: val[0], argument: val[2])
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'cddal.y', 164)
-  def _reduce_65(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 165)
-  def _reduce_66(val, _values, result)
-     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
-    result
-  end
-.,.,
-
-module_eval(<<'.,.,', 'cddal.y', 166)
-  def _reduce_67(val, _values, result)
+  def _reduce_55(val, _values, result)
      result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'cddal.y', 167)
-  def _reduce_68(val, _values, result)
+module_eval(<<'.,.,', 'cddal.y', 165)
+  def _reduce_56(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 166)
+  def _reduce_57(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 171)
+  def _reduce_58(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[2], owner: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 175)
+  def _reduce_59(val, _values, result)
+     result = Cdd::Cddal::AST::Set.new(elements: [])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 176)
+  def _reduce_60(val, _values, result)
+     result = Cdd::Cddal::AST::Set.new(elements: val[1])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 180)
+  def _reduce_61(val, _values, result)
+     result = [val[0]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 181)
+  def _reduce_62(val, _values, result)
+     result = val[0] + [val[2]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 185)
+  def _reduce_63(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 186)
+  def _reduce_64(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 187)
+  def _reduce_65(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+# reduce 66 omitted
+
+# reduce 67 omitted
+
+# reduce 68 omitted
+
+module_eval(<<'.,.,', 'cddal.y', 191)
+  def _reduce_69(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 196)
+  def _reduce_70(val, _values, result)
+     result = Cdd::Cddal::AST::Tuple.new(elements: val[1])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 200)
+  def _reduce_71(val, _values, result)
+     result = [val[0]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 201)
+  def _reduce_72(val, _values, result)
+     result = val[0] + [val[2]]
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 205)
+  def _reduce_73(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :string, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 206)
+  def _reduce_74(val, _values, result)
+     result = Cdd::Cddal::AST::Literal.new(kind: :number, raw: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 207)
+  def _reduce_75(val, _values, result)
+     result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'cddal.y', 208)
+  def _reduce_76(val, _values, result)
      result = Cdd::Cddal::AST::IdentifierRef.new(name: val[0])
     result
   end
