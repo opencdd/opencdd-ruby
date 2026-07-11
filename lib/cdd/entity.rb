@@ -124,6 +124,16 @@ module Cdd
     field :data_object_identifier, "MDC_P066"
     field :time_stamp,        "MDC_P067"
 
+    # ── C### workbook-specific codes. These are IEC CDD export column
+    #     identifiers that don't have MDC_P### codes in PropertyIds::REGISTRY.
+    #     They carry publisher, status, committee, and change-request data.
+    #     Declared as synthetic (no MDC_P###) with raw-key readers.
+    field :status_level,         synthetic: true, reader: :read_status_level
+    field :publisher,            synthetic: true, reader: :read_publisher
+    field :published_in,         synthetic: true, reader: :read_published_in
+    field :responsible_committee, synthetic: true, reader: :read_responsible_committee
+    field :change_request_id,    synthetic: true, reader: :read_change_request_id
+
     # ── Full raw properties dump. Every key in @properties appears
     #     in the JSON output. This guarantees "full import" — every
     #     column from the .xls is preserved, including multilingual
@@ -205,6 +215,27 @@ module Cdd
 
     def read_raw_properties
       @properties
+    end
+
+    # C### readers — IEC CDD workbook-specific column codes.
+    def read_status_level
+      @properties["C016"]
+    end
+
+    def read_publisher
+      @properties["C011"]
+    end
+
+    def read_published_in
+      @properties["C012"]
+    end
+
+    def read_responsible_committee
+      @properties["MDC_P012"] || @properties["C019.en"]
+    end
+
+    def read_change_request_id
+      @properties["C002"]
     end
 
     def read_version_history
