@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Metadata do
+RSpec.describe Opencdd::Parcel::Metadata do
   describe ".new + #add" do
     it "parses a #KEY:=VALUE directive into the directives hash" do
       m = described_class.new
@@ -20,7 +20,7 @@ RSpec.describe Cdd::Parcel::Metadata do
     it "exposes the meta-class IRDI" do
       m = described_class.new
       m.add("#CLASS_ID:=MDC_C002")
-      expect(m.meta_class_irdi).to eq(Cdd::IRDI.parse("MDC_C002"))
+      expect(m.meta_class_irdi).to eq(Opencdd::IRDI.parse("MDC_C002"))
       expect(m.meta_class_code).to eq("MDC_C002")
     end
 

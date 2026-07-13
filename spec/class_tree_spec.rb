@@ -3,8 +3,8 @@
 require "spec_helper"
 require "yaml"
 
-RSpec.describe Cdd::ClassTree do
-  let(:db) { Cdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
+RSpec.describe Opencdd::ClassTree do
+  let(:db) { Opencdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
   subject(:tree) { described_class.new(db) }
 
   it "enumerates classes depth-first from roots" do
@@ -78,7 +78,7 @@ RSpec.describe Cdd::ClassTree do
     end
   end
 
-  describe "Cdd::Database#class_tree" do
+  describe "Opencdd::Database#class_tree" do
     it "returns a ClassTree bound to the database" do
       t = db.class_tree(fields: %i[code name irdi])
       yaml = t.to_yaml(max_depth: 1)

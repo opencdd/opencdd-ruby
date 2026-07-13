@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::ViewControl do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#EXT_C001") }
+RSpec.describe Opencdd::ViewControl do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#EXT_C001") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "EXT_P001", "EXT_P002", "EXT_P003", "MDC_P066", "MDC_P067"],
       ["#PROPERTY_NAME.en", "Code", "Controlled classes", "Shown properties", "DOI", "Time stamp"],
       ["#DATATYPE", "STRING_TYPE", "ICID_STRING", "ICID_STRING", "STRING_TYPE", "DATE_TIME_TYPE"],
@@ -27,7 +27,7 @@ RSpec.describe Cdd::ViewControl do
     described_class.from_row(row, schema: schema, meta_class_irdi: meta)
   end
 
-  its(:irdi) { should eq(Cdd::IRDI.parse("0112/2///62683#ACV001")) }
+  its(:irdi) { should eq(Opencdd::IRDI.parse("0112/2///62683#ACV001")) }
   its(:data_object_identifier) { should eq("doi:10.1234/example") }
   its(:time_stamp) { should eq("2026-06-23T12:00:00Z") }
 
@@ -42,6 +42,6 @@ RSpec.describe Cdd::ViewControl do
   end
 
   it "inherits ParseHelpers through Entity" do
-    expect(view_control).to be_a(Cdd::ParseHelpers)
+    expect(view_control).to be_a(Opencdd::ParseHelpers)
   end
 end

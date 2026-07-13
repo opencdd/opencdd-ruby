@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::DataType do
+RSpec.describe Opencdd::DataType do
   describe ".parse for simple types" do
     it "parses STRING_TYPE" do
       dt = described_class.parse("STRING_TYPE")
@@ -26,27 +26,27 @@ RSpec.describe Cdd::DataType do
   describe ".parse for measure types" do
     it "parses REAL_MEASURE_TYPE as a RealMeasureType subclass" do
       dt = described_class.parse("REAL_MEASURE_TYPE")
-      expect(dt).to be_a(Cdd::DataType::RealMeasureType)
+      expect(dt).to be_a(Opencdd::DataType::RealMeasureType)
       expect(dt).to be_measure
       expect(dt.to_s).to eq("REAL_MEASURE_TYPE")
     end
 
     it "parses INTEGER_MEASURE_TYPE" do
       dt = described_class.parse("INTEGER_MEASURE_TYPE")
-      expect(dt).to be_a(Cdd::DataType::IntegerMeasureType)
+      expect(dt).to be_a(Opencdd::DataType::IntegerMeasureType)
       expect(dt).to be_measure
     end
 
     it "accepts INT_MEASURE_TYPE as an alias for INTEGER_MEASURE_TYPE" do
       dt = described_class.parse("INT_MEASURE_TYPE")
-      expect(dt).to be_a(Cdd::DataType::IntegerMeasureType)
+      expect(dt).to be_a(Opencdd::DataType::IntegerMeasureType)
     end
   end
 
   describe ".parse for parameterized types" do
     it "parses CLASS_REFERENCE(EngineType)" do
       dt = described_class.parse("CLASS_REFERENCE(EngineType)")
-      expect(dt).to be_a(Cdd::DataType::ClassReference)
+      expect(dt).to be_a(Opencdd::DataType::ClassReference)
       expect(dt.class_identifier).to eq("EngineType")
       expect(dt).to be_class_reference
       expect(dt).to be_reference
@@ -56,7 +56,7 @@ RSpec.describe Cdd::DataType do
 
     it "parses ENUM_STRING_TYPE(vehicle_mode_enum)" do
       dt = described_class.parse("ENUM_STRING_TYPE(vehicle_mode_enum)")
-      expect(dt).to be_a(Cdd::DataType::EnumStringType)
+      expect(dt).to be_a(Opencdd::DataType::EnumStringType)
       expect(dt.value_list_identifier).to eq("vehicle_mode_enum")
       expect(dt).to be_enum
       expect(dt).to be_reference
@@ -65,7 +65,7 @@ RSpec.describe Cdd::DataType do
 
     it "parses ENUM_REFERENCE_TYPE(vehicle_mode_enum)" do
       dt = described_class.parse("ENUM_REFERENCE_TYPE(vehicle_mode_enum)")
-      expect(dt).to be_a(Cdd::DataType::EnumReferenceType)
+      expect(dt).to be_a(Opencdd::DataType::EnumReferenceType)
       expect(dt.value_list_identifier).to eq("vehicle_mode_enum")
       expect(dt).to be_enum
     end

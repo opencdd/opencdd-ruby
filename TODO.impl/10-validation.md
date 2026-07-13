@@ -124,17 +124,17 @@ from the cdd-data spec.
 
 ## Acceptance criteria
 
-- [ ] Every predicate listed above is public on `Cdd::Validator` and
+- [x] Every predicate listed above is public on `Cdd::Validator` and
       has at least one spec.
-- [ ] `Validator.run` returns zero errors on the ParcelMaker nuts
+- [x] `Validator.run` returns zero errors on the ParcelMaker nuts
       fixture and on the OceanRunner fixture.
-- [ ] On a deliberately-broken fixture (hand-crafted), `Validator.run`
+- [x] On a deliberately-broken fixture (hand-crafted), `Validator.run`
       returns the expected rule violations.
-- [ ] `cell_valid?` short-circuits on the first applicable rule's
+- [x] `cell_valid?` short-circuits on the first applicable rule's
       failure; performance is O(1) per cell for typical schemas.
-- [ ] Source location flows through to the ValidationError so the
+- [x] Source location flows through to the ValidationError so the
       editor can navigate to the offending line.
-- [ ] All `spec/validator*_spec.rb` files green.
+- [x] All `spec/validator*_spec.rb` files green.
 
 ## Dependencies
 

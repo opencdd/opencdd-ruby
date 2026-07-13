@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::ValueList, "extended accessors" do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C005") }
+RSpec.describe Opencdd::ValueList, "extended accessors" do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C005") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_12", "MDC_P043", "MDC_P044", "MDC_P045", "MDC_P046"],
       ["#PROPERTY_NAME.en", "Code", "Terms", "Codes", "Selection count", "List type"],
       ["#DATATYPE", "STRING_TYPE", "ICID_STRING", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE"],
@@ -105,10 +105,10 @@ RSpec.describe Cdd::ValueList, "extended accessors" do
 
   describe "terms iteration" do
     it "yields resolved terms from a database" do
-      db = Cdd::Database.new
-      meta_term = Cdd::IRDI.parse("0112/2///62656_1#MDC_C010")
-      term1 = Cdd::ValueTerm.new(irdi: Cdd::IRDI.parse("0112/2///62683#ACJ001"), properties: {}, meta_class_irdi: meta_term)
-      term2 = Cdd::ValueTerm.new(irdi: Cdd::IRDI.parse("0112/2///62683#ACJ002"), properties: {}, meta_class_irdi: meta_term)
+      db = Opencdd::Database.new
+      meta_term = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C010")
+      term1 = Opencdd::ValueTerm.new(irdi: Opencdd::IRDI.parse("0112/2///62683#ACJ001"), properties: {}, meta_class_irdi: meta_term)
+      term2 = Opencdd::ValueTerm.new(irdi: Opencdd::IRDI.parse("0112/2///62683#ACJ002"), properties: {}, meta_class_irdi: meta_term)
       db.add_entity(term1)
       db.add_entity(term2)
 

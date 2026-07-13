@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Klass do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C002") }
+RSpec.describe Opencdd::Klass do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_5", "MDC_P010_1", "MDC_P011", "MDC_P013", "MDC_P014", "MDC_P090", "MDC_P016"],
       ["#PROPERTY_NAME.en", "Code", "Superclass", "Class type", "Is case of", "Applicable properties", "Imported properties", "Sub class selection"],
       ["#DATATYPE", "STRING_TYPE", "ICID_STRING", "STRING_TYPE", "ICID_STRING", "ICID_STRING", "ICID_STRING", "ICID_STRING"],
@@ -29,7 +29,7 @@ RSpec.describe Cdd::Klass do
     described_class.from_row(row, schema: schema, meta_class_irdi: meta)
   end
 
-  its(:irdi) { should eq(Cdd::IRDI.parse("0112/2///62683#ACC002")) }
+  its(:irdi) { should eq(Opencdd::IRDI.parse("0112/2///62683#ACC002")) }
   its(:code) { should eq("ACC002") }
 
   describe "class_type" do
@@ -129,7 +129,7 @@ RSpec.describe Cdd::Klass do
 
     context "when only MDC_P010 is present in schema" do
       let(:schema) do
-        Cdd::Parcel::SheetSchema.from_header_rows([
+        Opencdd::Parcel::SheetSchema.from_header_rows([
           ["#PROPERTY_ID", "MDC_P001_5", "MDC_P010"],
           ["#PROPERTY_NAME.en", "Code", "Superclass"],
           ["#DATATYPE", "STRING_TYPE", "ICID_STRING"],

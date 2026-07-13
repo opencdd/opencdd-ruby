@@ -10,7 +10,7 @@ require "json"
 # 63213 scheme, plus one imported property (0112/2///62683#ACE808) from
 # a different scheme — that cross-dict reference is what proves the
 # source-scheme partitioning works.
-RSpec.describe Cdd::Parcel::ReferencedIrdis do
+RSpec.describe Opencdd::Parcel::ReferencedIrdis do
   FIXTURE = File.expand_path("../../downloads/iec63213", __dir__)
 
   subject(:collector) { described_class.new(FIXTURE) }

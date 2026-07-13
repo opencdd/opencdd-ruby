@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Property, "extended accessors" do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C003") }
+RSpec.describe Opencdd::Property, "extended accessors" do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C003") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_6", "MDC_P020", "MDC_P021", "MDC_P022", "MDC_P024", "MDC_P025_1", "MDC_P027_1", "MDC_P028", "MDC_P041", "MDC_P042", "MDC_P068"],
       ["#PROPERTY_NAME.en", "Code", "PDE type", "Definition class", "Data type", "Value format", "Symbol", "Formula", "Condition", "Unit", "Alt units", "Constraint"],
       ["#DATATYPE", "STRING_TYPE", "STRING_TYPE", "ICID_STRING", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "ICID_STRING", "ICID_STRING", "STRING_TYPE"],
@@ -18,7 +18,7 @@ RSpec.describe Cdd::Property, "extended accessors" do
       row = { "MDC_P001_6" => "0112/2///62683#ACE001", "MDC_P022" => "REAL_MEASURE_TYPE" }
       p = described_class.from_row(row, schema: schema, meta_class_irdi: meta)
       expect(p.data_type).to eq(:real_measure)
-      expect(p.parsed_data_type).to be_a(Cdd::DataType::RealMeasureType)
+      expect(p.parsed_data_type).to be_a(Opencdd::DataType::RealMeasureType)
     end
 
     it "returns the raw value for unknown data types" do
@@ -31,14 +31,14 @@ RSpec.describe Cdd::Property, "extended accessors" do
       row = { "MDC_P001_6" => "0112/2///62683#ACE001", "MDC_P022" => "CLASS_REFERENCE(0112/2///62683#ACC001)" }
       p = described_class.from_row(row, schema: schema, meta_class_irdi: meta)
       expect(p.class_reference?).to be(true)
-      expect(p.parsed_data_type).to be_a(Cdd::DataType::ClassReference)
+      expect(p.parsed_data_type).to be_a(Opencdd::DataType::ClassReference)
     end
 
     it "recognizes ENUM_STRING_TYPE as an enum reference" do
       row = { "MDC_P001_6" => "0112/2///62683#ACE001", "MDC_P022" => "ENUM_STRING_TYPE(0112/2///62683#ACI001)" }
       p = described_class.from_row(row, schema: schema, meta_class_irdi: meta)
       expect(p.enum?).to be(true)
-      expect(p.parsed_data_type).to be_a(Cdd::DataType::EnumStringType)
+      expect(p.parsed_data_type).to be_a(Opencdd::DataType::EnumStringType)
     end
   end
 
@@ -115,7 +115,7 @@ RSpec.describe Cdd::Property, "extended accessors" do
       p = described_class.from_row(row, schema: schema, meta_class_irdi: meta)
       expect(p.constraint).to eq("max_length=20")
       expect(p.condition_raw).to eq('class_type == "CATEGORICAL_CLASS"')
-      expect(p.condition).to be_a(Cdd::Condition)
+      expect(p.condition).to be_a(Opencdd::Condition)
       expect(p.condition.satisfied_by?("class_type" => "CATEGORICAL_CLASS")).to be(true)
     end
 

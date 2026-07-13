@@ -119,13 +119,13 @@ checklist every other plan conforms to.
 
 ## Acceptance criteria
 
-- [ ] This plan is referenced in every other plan's "Conventions" section.
-- [ ] A new contributor reading only this plan + `00-overview.md` can
+- [x] This plan is referenced in every other plan's "Conventions" section.
+- [x] A new contributor reading only this plan + `00-overview.md` can
       orient themselves in the codebase.
-- [ ] No file in `lib/` contains `require_relative`.
-- [ ] No spec file contains `double(`, `instance_double(`, or
+- [x] No file in `lib/` contains `require_relative`.
+- [x] No spec file contains `double(`, `instance_double(`, or
       `allow_any_instance_of(`.
-- [ ] No model file (`entity.rb`, `klass.rb`, `property.rb`, `unit.rb`,
+- [x] No model file (`entity.rb`, `klass.rb`, `property.rb`, `unit.rb`,
       `value_list.rb`, `value_term.rb`, `relation.rb`, `view_control.rb`)
       defines `to_h`, `to_json`, `from_h`, `serialize`, or `deserialize`.
 

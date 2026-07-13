@@ -147,21 +147,21 @@ test environments don't need racc at install time.
 
 ## Acceptance criteria
 
-- [ ] `Cdd::Cddal.parse_file("reference-docs/examples/oceanrunner.cddal")`
+- [x] `Cdd::Cddal.parse_file("reference-docs/examples/oceanrunner.cddal")`
       produces 20 classes, 19 properties, 1 value list.
-- [ ] `Cdd::Cddal.parse_file("reference-docs/202003-kagoshima-iec-def-sample.cddal")`
+- [x] `Cdd::Cddal.parse_file("reference-docs/202003-kagoshima-iec-def-sample.cddal")`
       produces the entities the Kagoshima sample encodes.
-- [ ] Builder resolves symbolic names in `superclass`,
+- [x] Builder resolves symbolic names in `superclass`,
       `applicable_properties`, `is_case_of`.
-- [ ] Builder resolves `CLASS_REFERENCE(...)` and `ENUM_*_TYPE(...)`
+- [x] Builder resolves `CLASS_REFERENCE(...)` and `ENUM_*_TYPE(...)`
       arguments.
-- [ ] Builder parses `condition: a == b` and
+- [x] Builder parses `condition: a == b` and
       `condition: a == { b, c }` into a `Cdd::Condition`.
-- [ ] Forward references work: an instance may reference another
+- [x] Forward references work: an instance may reference another
       declared later in the file.
-- [ ] Comments (`#` to EOL) are skipped.
-- [ ] `rake cddal:regen` regenerates `generated_parser.rb` idempotently.
-- [ ] `spec/cddal_spec.rb` green.
+- [x] Comments (`#` to EOL) are skipped.
+- [x] `rake cddal:regen` regenerates `generated_parser.rb` idempotently.
+- [x] `spec/cddal_spec.rb` green.
 
 ## Dependencies
 

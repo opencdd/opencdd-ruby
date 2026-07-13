@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::RelationType do
+RSpec.describe Opencdd::RelationType do
   describe "VALUES" do
     it "exposes the canonical set of relation type codes" do
       expect(described_class::VALUES).to eq(%w[

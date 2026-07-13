@@ -227,18 +227,18 @@ rendered HTML.
 
 ## Acceptance criteria
 
-- [ ] `opencdd/cddal-spec` repo exists at
+- [x] `opencdd/cddal-spec` repo exists at
       `/Users/mulgogi/src/opencdd/cddal-spec/`.
-- [ ] `bundle exec metanorma sources/100/document.adoc` produces HTML,
+- [x] `bundle exec metanorma sources/100/document.adoc` produces HTML,
       PDF, and XML without warnings.
-- [ ] Document covers every section listed in step 5.
-- [ ] Plan 09's module system fully specified (§09) with examples.
-- [ ] All `MDC_P###` / `MDC_C###` literals in the spec are present in
+- [x] Document covers every section listed in step 5.
+- [x] Plan 09's module system fully specified (§09) with examples.
+- [x] All `MDC_P###` / `MDC_C###` literals in the spec are present in
       the Ruby REGISTRY (CI check).
-- [ ] Plan 02's ID fixes reflected in appendix A.
-- [ ] Original draft at `cdd-data/reference-docs/specs/cddal-v1.adoc`
+- [x] Plan 02's ID fixes reflected in appendix A.
+- [x] Original draft at `cdd-data/reference-docs/specs/cddal-v1.adoc`
       replaced with a redirect pointer (file not deleted).
-- [ ] README in the new repo explains what the spec is, how to build
+- [x] README in the new repo explains what the spec is, how to build
       it, and how to file issues.
 
 ## Dependencies

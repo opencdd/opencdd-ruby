@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Sheet, "#dup_with" do
+RSpec.describe Opencdd::Parcel::Sheet, "#dup_with" do
   def make_class_sheet(rows:)
     header = [
       ["#CLASS_ID:=MDC_C002"],
@@ -13,7 +13,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#dup_with" do
       ["#REQUIREMENT", "KEY", "OPT"],
     ]
     data = rows.map { |code, sup| [nil, code, sup] }
-    Cdd::Parcel::Sheet.from_rows(header + data, name: "ORIG")
+    Opencdd::Parcel::Sheet.from_rows(header + data, name: "ORIG")
   end
 
   it "creates a sheet with the new name and same data" do
@@ -43,6 +43,6 @@ RSpec.describe Cdd::Parcel::Sheet, "#dup_with" do
 
   it "returns a Sheet instance" do
     original = make_class_sheet(rows: [["AAA001", nil]])
-    expect(original.dup_with(name: "COPY")).to be_a(Cdd::Parcel::Sheet)
+    expect(original.dup_with(name: "COPY")).to be_a(Opencdd::Parcel::Sheet)
   end
 end

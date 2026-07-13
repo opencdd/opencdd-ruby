@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Entity do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C002") }
+RSpec.describe Opencdd::Entity do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_5", "MDC_P004_1.en", "MDC_P005.en", "MDC_P002_1"],
       ["#PROPERTY_NAME.en", "Code", "Preferred name", "Definition", "Version number"],
     ])
@@ -25,7 +25,7 @@ RSpec.describe Cdd::Entity do
     subject(:entity) { described_class.from_row(row, schema: schema, meta_class_irdi: meta) }
 
     it "extracts the IRDI from the Code column" do
-      expect(entity.irdi).to eq(Cdd::IRDI.parse("0112/2///62683#ACC001"))
+      expect(entity.irdi).to eq(Opencdd::IRDI.parse("0112/2///62683#ACC001"))
     end
 
     it "exposes preferred_name, definition, version via semantic accessors" do

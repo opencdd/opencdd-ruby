@@ -2,11 +2,11 @@
 
 require "cdd"
 
-RSpec.describe "Cdd::Entity field DSL" do
-  # Test fixtures use a fresh subclass so we don't pollute Cdd::Entity.
+RSpec.describe "Opencdd::Entity field DSL" do
+  # Test fixtures use a fresh subclass so we don't pollute Opencdd::Entity.
   let(:klass) do
-    Class.new(Cdd::Entity) do
-      def self.name = "Cdd::EntityDSLTestKlass" # for FieldRegistry lookup
+    Class.new(Opencdd::Entity) do
+      def self.name = "Opencdd::EntityDSLTestKlass" # for FieldRegistry lookup
       field :code_value, "MDC_P001_5", :string
       field :short_name, "MDC_P005", :string, multilingual: true
       field :superclass_ref, "MDC_P010", :irdi
@@ -16,14 +16,14 @@ RSpec.describe "Cdd::Entity field DSL" do
 
   def entity(props)
     klass.new(
-      irdi: Cdd::IRDI.parse("0112/2///61360_4#AAA001"),
+      irdi: Opencdd::IRDI.parse("0112/2///61360_4#AAA001"),
       properties: props,
       meta_class_irdi: nil,
     )
   end
 
   it "registers fields with their metadata" do
-    fields = Cdd::Entity::FieldRegistry.fields_for(klass).map(&:name)
+    fields = Opencdd::Entity::FieldRegistry.fields_for(klass).map(&:name)
     expect(fields).to include(:code_value, :short_name, :superclass_ref, :case_of)
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "Cdd::Entity field DSL" do
 
   it "parses IRDI values via the :irdi kind" do
     e = entity("MDC_P010" => "0112/2///61360_4#AAA000")
-    expect(e.superclass_ref).to be_a(Cdd::IRDI)
+    expect(e.superclass_ref).to be_a(Opencdd::IRDI)
     expect(e.superclass_ref.to_s).to eq("0112/2///61360_4#AAA000")
   end
 
@@ -58,7 +58,7 @@ RSpec.describe "Cdd::Entity field DSL" do
     e = entity("MDC_P013" => "{0112/2///61360_4#AAA100,0112/2///61360_4#AAA101}")
     refs = e.case_of
     expect(refs.length).to eq(2)
-    expect(refs.first).to be_a(Cdd::IRDI)
+    expect(refs.first).to be_a(Opencdd::IRDI)
   end
 
   it "returns an empty array for empty set_of_refs" do
@@ -67,8 +67,8 @@ RSpec.describe "Cdd::Entity field DSL" do
   end
 
   it "supports synthetic fields with a custom reader" do
-    k = Class.new(Cdd::Entity) do
-      def self.name = "Cdd::EntityDLSyntheticTest"
+    k = Class.new(Opencdd::Entity) do
+      def self.name = "Opencdd::EntityDLSyntheticTest"
       field :computed, nil, :string, synthetic: true, reader: :read_computed
 
       def read_computed

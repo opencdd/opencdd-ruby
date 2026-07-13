@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Validator do
-  let(:meta_class_irdi) { Cdd::IRDI.parse("MDC_C002") }
+RSpec.describe Opencdd::Validator do
+  let(:meta_class_irdi) { Opencdd::IRDI.parse("MDC_C002") }
   let(:schema) { nil }
 
   def build_class(code:, properties: {})
-    Cdd::Klass.new(
-      irdi: Cdd::IRDI.parse(code),
+    Opencdd::Klass.new(
+      irdi: Opencdd::IRDI.parse(code),
       properties: properties,
       schema: schema,
       meta_class_irdi: meta_class_irdi,
@@ -16,11 +16,11 @@ RSpec.describe Cdd::Validator do
   end
 
   def build_property(code:, properties: {})
-    Cdd::Property.new(
-      irdi: Cdd::IRDI.parse(code),
+    Opencdd::Property.new(
+      irdi: Opencdd::IRDI.parse(code),
       properties: properties,
       schema: schema,
-      meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+      meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
     )
   end
 
@@ -52,15 +52,15 @@ RSpec.describe Cdd::Validator do
 
   describe "R02 — code uniqueness" do
     it "flags a duplicate code in the same sheet" do
-      db = Cdd::Database.new
-      e1 = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
-        properties: { Cdd::PropertyIds::MDC_P001_5 => "AAA001" },
+      db = Opencdd::Database.new
+      e1 = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
+        properties: { Opencdd::PropertyIds::MDC_P001_5 => "AAA001" },
         schema: nil, meta_class_irdi: meta_class_irdi,
       )
-      e2 = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("0112/2///99999_1#AAA001##1"),
-        properties: { Cdd::PropertyIds::MDC_P001_5 => "AAA001" },
+      e2 = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("0112/2///99999_1#AAA001##1"),
+        properties: { Opencdd::PropertyIds::MDC_P001_5 => "AAA001" },
         schema: nil, meta_class_irdi: meta_class_irdi,
       )
       db.add_entity(e1)
@@ -76,7 +76,7 @@ RSpec.describe Cdd::Validator do
     end
 
     it "passes when the code is unique within its sheet" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       db.add_entity(build_class(code: "AAA001"))
       db.add_entity(build_class(code: "AAA002"))
       rule = described_class::UniquenessRule.new
@@ -174,7 +174,7 @@ RSpec.describe Cdd::Validator do
 
   describe "R08 — cross-reference" do
     it "passes when the referenced entity exists" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       db.add_entity(build_class(code: "AAA001"))
       rule = described_class::ReferenceRule.new
       ctx = build_rule_context(database: db, value_kind: :identifier_ref)
@@ -182,14 +182,14 @@ RSpec.describe Cdd::Validator do
     end
 
     it "fails when the referenced entity is missing" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       rule = described_class::ReferenceRule.new
       ctx = build_rule_context(database: db, value_kind: :identifier_ref)
       expect(rule.call("AAA999", ctx)).to be false
     end
 
     it "resolves every element of a set_of_refs" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       db.add_entity(build_class(code: "AAA001"))
       db.add_entity(build_class(code: "AAA002"))
       rule = described_class::ReferenceRule.new
@@ -263,30 +263,30 @@ RSpec.describe Cdd::Validator do
 
   describe "R14 — class hierarchy acyclic" do
     it "passes on an acyclic hierarchy" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       vehicle = build_class(code: "AAA001", properties: {})
-      boat = build_class(code: "AAA010", properties: { Cdd::PropertyIds::MDC_P010 => "AAA001" })
+      boat = build_class(code: "AAA010", properties: { Opencdd::PropertyIds::MDC_P010 => "AAA001" })
       db.add_entity(vehicle)
       db.add_entity(boat)
       expect(described_class::HierarchyRule.class_hierarchy_acyclic?(db)).to be true
     end
 
     it "fails on a cycle" do
-      db = Cdd::Database.new
-      a = build_class(code: "AAA001", properties: { Cdd::PropertyIds::MDC_P010 => "AAA002" })
-      b = build_class(code: "AAA002", properties: { Cdd::PropertyIds::MDC_P010 => "AAA001" })
+      db = Opencdd::Database.new
+      a = build_class(code: "AAA001", properties: { Opencdd::PropertyIds::MDC_P010 => "AAA002" })
+      b = build_class(code: "AAA002", properties: { Opencdd::PropertyIds::MDC_P010 => "AAA001" })
       db.add_entity(a)
       db.add_entity(b)
       expect(described_class::HierarchyRule.class_hierarchy_acyclic?(db)).to be false
     end
   end
 
-  describe "Cdd::Validator::Runner.run" do
+  describe "Opencdd::Validator::Runner.run" do
     it "returns an empty list for a clean database" do
-      db = Cdd::Database.new
+      db = Opencdd::Database.new
       db.add_entity(build_class(
         code: "AAA001",
-        properties: { "#{Cdd::PropertyIds::MDC_P004}.en" => "Vehicle" },
+        properties: { "#{Opencdd::PropertyIds::MDC_P004}.en" => "Vehicle" },
       ))
       errors = described_class::Runner.run(db)
       # Some R08 errors will fire because superclass references UNIVERSE which isn't loaded
@@ -295,10 +295,10 @@ RSpec.describe Cdd::Validator do
     end
 
     it "returns an error for a malformed IRDI in a code column" do
-      db = Cdd::Database.new
-      bad_entity = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
-        properties: { Cdd::PropertyIds::MDC_P001_5 => "not an irdi ###" },
+      db = Opencdd::Database.new
+      bad_entity = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
+        properties: { Opencdd::PropertyIds::MDC_P001_5 => "not an irdi ###" },
         schema: nil,
         meta_class_irdi: meta_class_irdi,
       )
@@ -308,15 +308,15 @@ RSpec.describe Cdd::Validator do
     end
 
     it "includes R14 cycle error when a cycle exists" do
-      db = Cdd::Database.new
-      db.add_entity(build_class(code: "AAA001", properties: { Cdd::PropertyIds::MDC_P010 => "AAA002" }))
-      db.add_entity(build_class(code: "AAA002", properties: { Cdd::PropertyIds::MDC_P010 => "AAA001" }))
+      db = Opencdd::Database.new
+      db.add_entity(build_class(code: "AAA001", properties: { Opencdd::PropertyIds::MDC_P010 => "AAA002" }))
+      db.add_entity(build_class(code: "AAA002", properties: { Opencdd::PropertyIds::MDC_P010 => "AAA001" }))
       errors = described_class::Runner.run(db)
       expect(errors).to include(an_object_having_attributes(rule: "R14"))
     end
   end
 
-  describe "Cdd::Validator::ValidationError" do
+  describe "Opencdd::Validator::ValidationError" do
     it "renders a useful to_s" do
       err = described_class::ValidationError.new(
         sheet: "MDC_C002", row: "AAA001", column: "MDC_P001_5",
@@ -334,7 +334,7 @@ RSpec.describe Cdd::Validator do
 
   def build_rule_context(database: nil, entity: nil, column_iri: nil, value_kind: nil,
                          data_type: nil, value_format: nil, pattern: nil, requirement: nil)
-    Cdd::Validator::Runner::RuleContext.new(
+    Opencdd::Validator::Runner::RuleContext.new(
       database: database,
       entity: entity,
       column_iri: column_iri,
