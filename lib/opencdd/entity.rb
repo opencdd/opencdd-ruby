@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require "lutaml/model"
+
 module Opencdd
-  class Entity
+  class Entity < Lutaml::Model::Serializable
     include Opencdd::ParseHelpers
 
     # Open/closed field declaration. Each `field :foo, "MDC_P###",
@@ -12,6 +14,7 @@ module Opencdd
     autoload :FieldRegistry,   "opencdd/entity/field_registry"
     autoload :FieldReader,     "opencdd/entity/field_reader"
     autoload :VersionHistory,  "opencdd/entity/version_history"
+    autoload :Yaml,            "opencdd/entity/yaml"
 
     class << self
       # Declare a typed field on this entity class. Defaults for
@@ -80,9 +83,10 @@ module Opencdd
       Opencdd::MetaClasses.code_property_id_for(meta_class_irdi&.code)
     end
 
-    def initialize(irdi:, properties:, schema: nil, meta_class_irdi: nil)
+    def initialize(irdi: nil, properties: nil, schema: nil, meta_class_irdi: nil)
+      super({})
       @irdi = irdi
-      @properties = properties
+      @properties = properties || {}
       @schema = schema
       @meta_class_irdi = meta_class_irdi
       @version_history = Opencdd::Entity::VersionHistory.new
@@ -98,10 +102,6 @@ module Opencdd
 
     alias_method :short, :code
 
-    # ── Pure field reads (value_kind and multilingual auto-resolved
-    #     from PropertyIds::REGISTRY). `as:` aliases preserve the
-    #     existing JSON wire shape — ruby method names differ from
-    #     historical JSON keys for backward compatibility. ─────────
     # Note: irdi and code are NOT declared as DSL fields — they're
     # emitted explicitly by Exporters::Json#entity_payload because
     # the model's `irdi` accessor must return the Opencdd::IRDI object
@@ -250,6 +250,29 @@ module Opencdd
     def attach_source_location(loc)
       @source_location = loc
       self
+    end
+
+    # ── YAML persistence via Entity::Yaml ──────────────────────
+    # Entity extends Lutaml::Model::Serializable but its own attribute
+    # set is empty — the typed YAML model lives in Entity::Yaml
+    # (the deepened adapter). This avoids name conflicts between the
+    # field DSL getters (which read from @properties and return
+    # coerced values like IRDI objects, source-language Strings,
+    # parsed Arrays) and lutaml-model serialization attrs (which
+    # must return flat types: String, Hash, Array).
+    #
+    # lutaml-model serialization calls +public_send(attr_name)+
+    # during to_format, so any getter with the same name as a
+    # YAML attr is invoked. Keeping the YAML model in Entity::Yaml
+    # lets both worlds coexist: field DSL for domain access,
+    # Entity::Yaml for serialization.
+
+    def to_yaml(*args)
+      Opencdd::Entity::Yaml.from_entity(self).to_yaml(*args)
+    end
+
+    def self.from_yaml(yaml_str)
+      Opencdd::Entity::Yaml.from_yaml(yaml_str).to_entity
     end
   end
 end

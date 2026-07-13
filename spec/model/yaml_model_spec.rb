@@ -71,10 +71,10 @@ RSpec.describe "CDD-native YAML model", :yaml do
     end
   end
 
-  describe Opencdd::Model::YamlEntity do
+  describe Opencdd::Entity::Yaml do
     it "serializes a single entity to YAML with semantic names" do
       vehicle = oceanrunner.find_by_code("AAA001")
-      yaml_entity = Opencdd::Model::YamlEntity.from_entity(vehicle)
+      yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
       expect(yaml).to include("preferred_name:")
       expect(yaml).to include("en: Vehicle")
@@ -82,9 +82,9 @@ RSpec.describe "CDD-native YAML model", :yaml do
 
     it "deserializes from YAML back to an Entity" do
       vehicle = oceanrunner.find_by_code("AAA001")
-      yaml_entity = Opencdd::Model::YamlEntity.from_entity(vehicle)
+      yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
-      parsed = Opencdd::Model::YamlEntity.from_yaml(yaml)
+      parsed = Opencdd::Entity::Yaml.from_yaml(yaml)
       entity = parsed.to_entity
       expect(entity.code).to eq("AAA001")
       expect(entity.preferred_name).to eq("Vehicle")
@@ -103,7 +103,7 @@ RSpec.describe "CDD-native YAML model", :yaml do
   describe "collection fields as YAML arrays" do
     it "emits applicable_properties as an array" do
       vehicle = oceanrunner.find_by_code("AAA001")
-      yaml_entity = Opencdd::Model::YamlEntity.from_entity(vehicle)
+      yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
       expect(yaml).to include("applicable_properties:")
     end
