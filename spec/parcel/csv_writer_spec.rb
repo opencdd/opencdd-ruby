@@ -5,8 +5,8 @@ require "tmpdir"
 require "fileutils"
 require "csv"
 
-RSpec.describe Cdd::Parcel::CsvWriter do
-  let(:database) { Cdd::Database.load_workbook(PARCEL_MAKER_XLSX) }
+RSpec.describe Opencdd::Parcel::CsvWriter do
+  let(:database) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX) }
 
   def write_csv_to_tempfile(database, parcel_id: "IEC62683", **opts)
     dir = Dir.mktmpdir("cdd-csv")
@@ -25,16 +25,16 @@ RSpec.describe Cdd::Parcel::CsvWriter do
 
   describe ".write_sheet with a scaffolded sheet" do
     let(:small_db) do
-      Cdd::Database.new.tap do |d|
-        klass = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("0112/2///62656_1#AAA001"),
+      Opencdd::Database.new.tap do |d|
+        klass = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("0112/2///62656_1#AAA001"),
           properties: {
             "MDC_P001_5"  => "0112/2///62656_1#AAA001",
             "MDC_P002_1"  => "001",
             "MDC_P011"    => "ITEM_CLASS",
             "MDC_P004.en" => "Test Class",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         d.add_entity(klass)
         d.finalize!
@@ -42,7 +42,7 @@ RSpec.describe Cdd::Parcel::CsvWriter do
     end
 
     it "writes data rows only (no header or metadata rows)" do
-      sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+      sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
       io = StringIO.new
       described_class.write_sheet(sheet, small_db.classes, io)
       io.rewind
@@ -54,7 +54,7 @@ RSpec.describe Cdd::Parcel::CsvWriter do
     end
 
     it "includes multilingual preferred_name value" do
-      sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+      sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
       io = StringIO.new
       described_class.write_sheet(sheet, small_db.classes, io)
       io.rewind
@@ -115,11 +115,11 @@ RSpec.describe Cdd::Parcel::CsvWriter do
 
   describe "writing to a StringIO" do
     it "writes CSV rows to the stream" do
-      sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+      sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: { "MDC_P004.en" => "Solo" },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       )
       io = StringIO.new
       described_class.write_sheet(sheet, [klass], io)

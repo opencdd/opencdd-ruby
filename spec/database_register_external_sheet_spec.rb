@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Database, "#register_external_sheet" do
-  let(:db) { Cdd::Database.new }
+RSpec.describe Opencdd::Database, "#register_external_sheet" do
+  let(:db) { Opencdd::Database.new }
 
   def make_sheet(name = "OCDD1_CLASS")
-    Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1", sheet_name: name)
+    Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1", sheet_name: name)
   end
 
   it "registers the sheet under an existing dictionary" do
-    db.add_dictionary(Cdd::Database::Dictionary.new(parcel_id: "OCDD1"))
+    db.add_dictionary(Opencdd::Database::Dictionary.new(parcel_id: "OCDD1"))
     sheet = make_sheet("OCDD1_EXTRA")
     db.register_external_sheet(sheet, parcel_id: "OCDD1")
     wb = db.workbooks.first

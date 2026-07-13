@@ -1,0 +1,79 @@
+---
+title: opencdd
+description: A Ruby model for the IEC Common Data Dictionary — read, write, validate, and navigate CDD content with first-class powertype semantics.
+template: splash
+hero:
+  tagline: A Ruby model for the IEC Common Data Dictionary.
+  actions:
+    - text: Get started
+      link: /getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: The four-layer ontology
+      link: /ontology/
+    - text: View on GitHub
+      link: https://github.com/opencdd/opencdd-ruby
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What is opencdd?
+
+`opencdd` is a pure-Ruby library for reading, writing, validating, and
+navigating the IEC Common Data Dictionary (CDD) — the ISO/IEC 61360 /
+62656-1 ontology used by `cdd.iec.ch`, ParcelMaker, and downstream
+engineering and BOM tooling.
+
+It is the Ruby core of the OpenCDD ecosystem, paired with TypeScript,
+editor, and static-site components.
+
+<CardGrid stagger>
+  <Card title="Four-layer ontology" icon="book">
+    CDD models the world at four layers: meta-model, model, and data.
+    [`MetaClass`](/reference/api/) instances describe entity types;
+    [`Entity`](/reference/api/) instances are dictionary content;
+    individuals live at the data layer.
+  </Card>
+  <Card title="Powertype modelling" icon="seti/robotframework">
+    A class declared `CATEGORICAL_CLASS` has subclasses that are
+    themselves classes but also act as its instances. This is CDD's
+    defining capability vs UML/RDF/OWL.
+  </Card>
+  <Card title="Round-trip stable" icon="seti/puppet">
+    Information-equivalent read/write across Parcel Excel (`.xlsx`),
+    legacy BIFF (`.xls`), and the plain-text CDDAL format.
+    Semantic equality is the test bar.
+  </Card>
+  <Card title="Validator rules R01–R16" icon="book">
+    Sixteen rules covering IRDI syntax, code uniqueness, type/format/
+    pattern compliance, reference resolution, condition grammar,
+    acyclicity, and `CLASS_REFERENCE` target validation.
+  </Card>
+</CardGrid>
+
+## Quick example
+
+```ruby
+require "opencdd"
+
+db = Opencdd::Cddal.parse_file("oceanrunner.cddal")
+
+# Powertype API — EngineType's valid configuration options
+engine = db.find_by_code("AAA200")
+engine.powertype?                            # => true
+db.instances_of(engine).map(&:preferred_name)
+# => ["Single Diesel Engine", "Twin Diesel Engine", "Electric Hybrid Engine"]
+
+# Round-trip through Parcel Excel
+Opencdd::Parcel::Writer.new(db).write("out.xlsx", parcel_id: "OCEAN")
+db2 = Opencdd::Database.load("out.xlsx")
+db.semantically_equal?(db2)                  # => true (for non-colliding IDs)
+```
+
+## Start here
+
+- New to CDD? Read [the four-layer ontology](/ontology/).
+- Want to try it? Follow [Getting started](/getting-started/).
+- Want to author content? See [CDDAL syntax](/cddal-syntax/).
+- Want to integrate? See [Parcel format](/parcel-format/) and
+  [Architecture](/architecture/).

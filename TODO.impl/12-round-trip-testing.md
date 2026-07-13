@@ -155,15 +155,15 @@ F01–F30 list (Ruby-owned subset).
 
 ## Acceptance criteria
 
-- [ ] `Cdd::Database#semantically_equal?` defined and spec'd.
-- [ ] Every cell in the round-trip matrix has a spec; all green.
-- [ ] Serializer determinism specs pass (10× repeat, identical bytes).
-- [ ] Snapshot tests pass (or are explicitly regenerated with a
+- [x] `Cdd::Database#semantically_equal?` defined and spec'd.
+- [x] Every cell in the round-trip matrix has a spec; all green.
+- [x] Serializer determinism specs pass (10× repeat, identical bytes).
+- [x] Snapshot tests pass (or are explicitly regenerated with a
       documenting commit).
-- [ ] Property-registry invariant specs cover the discrepancies fixed
+- [x] Property-registry invariant specs cover the discrepancies fixed
       in plan 02.
-- [ ] `bundle exec rspec` total count is reported in CI; trend tracked.
-- [ ] No spec uses `double()`.
+- [x] `bundle exec rspec` total count is reported in CI; trend tracked.
+- [x] No spec uses `double()`.
 
 ## Dependencies
 

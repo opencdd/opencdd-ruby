@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Sheet, ".scaffold" do
+RSpec.describe Opencdd::Parcel::Sheet, ".scaffold" do
   it "builds an empty sheet for MDC_C002 with the class allowed properties" do
     sheet = described_class.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
     expect(sheet.meta_class_code).to eq("MDC_C002")

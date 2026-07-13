@@ -1,0 +1,19 @@
+/* Custom overrides for the opencdd docs site. Starlight provides
+   sensible defaults; this file adds small touches on top. */
+
+:root {
+  --sl-color-accent: #0891b2;
+  --sl-color-accent-low: #155e75;
+  --sl-color-accent-high: #67e8f9;
+}
+
+/* Slightly tighter code blocks for our many Ruby/CDDAL samples. */
+.sl-markdown code,
+.sl-markdown pre {
+  font-size: 0.85em;
+}
+
+/* Logo + nav header polish */
+.starlight-logo {
+  border-radius: 4px;
+}

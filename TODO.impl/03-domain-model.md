@@ -188,17 +188,17 @@ indexes. Entities are frozen at end of construction.
 
 ## Acceptance criteria
 
-- [ ] Every public method listed above exists and returns the documented type.
-- [ ] `bundle exec rspec spec/entity_spec.rb spec/klass_spec.rb
+- [x] Every public method listed above exists and returns the documented type.
+- [x] `bundle exec rspec spec/entity_spec.rb spec/klass_spec.rb
       spec/property_spec.rb spec/unit_spec.rb spec/value_list_spec.rb
       spec/value_term_spec.rb spec/relation_spec.rb spec/view_control_spec.rb`
       green.
-- [ ] A round-trip Property → properties hash → Property preserves the
+- [x] A round-trip Property → properties hash → Property preserves the
       typed accessor outputs.
-- [ ] Powertype invariant: a `Klass` whose `class_type` is
+- [x] Powertype invariant: a `Klass` whose `class_type` is
       `CATEGORICAL_CLASS` may appear in another `Klass`'s
       `is_case_of_irdis` without raising.
-- [ ] No `to_h`, `to_json`, `from_h`, `serialize`, or `deserialize`
+- [x] No `to_h`, `to_json`, `from_h`, `serialize`, or `deserialize`
       instance method on any model class.
 
 ## Dependencies

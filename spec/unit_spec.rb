@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Unit, "extended accessors" do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C009") }
+RSpec.describe Opencdd::Unit, "extended accessors" do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C009") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_10", "MDC_P021", "MDC_P023", "MDC_P023_1", "MDC_P023_2"],
       ["#PROPERTY_NAME.en", "Code", "Structure", "Unit symbol", "Text representation", "SGML representation"],
       ["#DATATYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE"],
@@ -27,7 +27,7 @@ RSpec.describe Cdd::Unit, "extended accessors" do
     described_class.from_row(row, schema: schema, meta_class_irdi: meta)
   end
 
-  its(:irdi) { should eq(Cdd::IRDI.parse("0112/2///62683#ACH005")) }
+  its(:irdi) { should eq(Opencdd::IRDI.parse("0112/2///62683#ACH005")) }
   its(:structure) { should eq("V") }
   its(:text_representation) { should eq("V_text") }
   its(:sgml_representation) { should eq("V_sgml") }

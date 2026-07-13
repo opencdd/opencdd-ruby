@@ -11,7 +11,7 @@ require "json"
 # VALUELIST / VALUETERMS workbooks currently hold header-only exports,
 # so only the CLASS rows produce entities — that's a scrape-time data
 # characteristic, not a reader bug.
-RSpec.describe Cdd::Parcel::ShardedDirReader do
+RSpec.describe Opencdd::Parcel::ShardedDirReader do
   SHARDED_FIXTURE = File.expand_path("../../downloads/iec63213", __dir__)
 
   let(:reader) { described_class.new(SHARDED_FIXTURE) }
@@ -37,21 +37,21 @@ RSpec.describe Cdd::Parcel::ShardedDirReader do
     end
   end
 
-  describe "round-trip through Cdd::Database" do
+  describe "round-trip through Opencdd::Database" do
     subject(:database) do
-      Cdd::Database.new.tap { |db| reader.load_into(db); db.finalize! }
+      Opencdd::Database.new.tap { |db| reader.load_into(db); db.finalize! }
     end
 
     it "loads every class subdir as a distinct entity" do
       expect(database.classes.size).to eq(26)
     end
 
-    it "is also reachable via Cdd::Reader.detect → :sharded_dir" do
-      expect(Cdd::Reader.detect(SHARDED_FIXTURE)).to eq(:sharded_dir)
+    it "is also reachable via Opencdd::Reader.detect → :sharded_dir" do
+      expect(Opencdd::Reader.detect(SHARDED_FIXTURE)).to eq(:sharded_dir)
     end
 
-    it "is also reachable via Cdd::Database.load (auto-detect)" do
-      db = Cdd::Database.load(SHARDED_FIXTURE)
+    it "is also reachable via Opencdd::Database.load (auto-detect)" do
+      db = Opencdd::Database.load(SHARDED_FIXTURE)
       expect(db.classes.size).to eq(database.classes.size)
     end
   end
@@ -78,8 +78,8 @@ RSpec.describe Cdd::Parcel::ShardedDirReader do
       end
     end
 
-    it "Cdd::Reader.detect returns :sharded_dir" do
-      expect(Cdd::Reader.detect(@tmp)).to eq(:sharded_dir)
+    it "Opencdd::Reader.detect returns :sharded_dir" do
+      expect(Opencdd::Reader.detect(@tmp)).to eq(:sharded_dir)
     end
 
     it "#active_xls_dir returns the nested UNID folder" do
@@ -108,8 +108,8 @@ RSpec.describe Cdd::Parcel::ShardedDirReader do
       end
     end
 
-    it "Cdd::Reader.detect returns :sharded_dir" do
-      expect(Cdd::Reader.detect(@tmp)).to eq(:sharded_dir)
+    it "Opencdd::Reader.detect returns :sharded_dir" do
+      expect(Opencdd::Reader.detect(@tmp)).to eq(:sharded_dir)
     end
 
     it "#active_xls_dir returns the code dir itself" do

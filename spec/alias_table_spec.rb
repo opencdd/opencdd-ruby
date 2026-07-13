@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::AliasTable do
+RSpec.describe Opencdd::AliasTable do
   describe "initialized with defaults" do
     it "populates built-in aliases from PropertyIds" do
       table = described_class.new(defaults: true)
@@ -20,7 +20,7 @@ RSpec.describe Cdd::AliasTable do
 
     it "exposes size matching PropertyIds alias count" do
       table = described_class.new(defaults: true)
-      expect(table.size).to eq(Cdd::PropertyIds.alias_map.size)
+      expect(table.size).to eq(Opencdd::PropertyIds.alias_map.size)
     end
   end
 

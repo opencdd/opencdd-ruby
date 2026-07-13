@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Visitor do
-  let(:database) { Cdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+RSpec.describe Opencdd::Visitor do
+  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
 
   describe "#visit_database" do
     it "visits every class, property, and value_list in the database" do
@@ -28,15 +28,15 @@ RSpec.describe Cdd::Visitor do
 
   describe "#visit_class cycle detection" do
     it "stops when a cycle is encountered" do
-      db = Cdd::Database.new
-      meta = Cdd::IRDI.parse("MDC_C002")
-      a = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("CYC001"),
+      db = Opencdd::Database.new
+      meta = Opencdd::IRDI.parse("MDC_C002")
+      a = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("CYC001"),
         properties: { "MDC_P010" => "CYC002" },
         meta_class_irdi: meta,
       )
-      b = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("CYC002"),
+      b = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("CYC002"),
         properties: { "MDC_P010" => "CYC001" },
         meta_class_irdi: meta,
       )

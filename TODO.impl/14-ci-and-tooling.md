@@ -238,19 +238,19 @@ bundle exec rake spec:data       # only the data-fixture specs (fast feedback)
 
 ## Acceptance criteria
 
-- [ ] `bundle exec rake default` runs `lint:registry` + `spec` and
+- [x] `bundle exec rake default` runs `lint:registry` + `spec` and
       exits non-zero on failure.
-- [ ] `bundle exec rake cddal:check_regen` passes when the checked-in
+- [x] `bundle exec rake cddal:check_regen` passes when the checked-in
       parser matches; fails when stale.
-- [ ] `bundle exec rake generate_ts` regenerates the TS files in the
+- [x] `bundle exec rake generate_ts` regenerates the TS files in the
       editor repo idempotently.
-- [ ] `bin/lint-no-raw-mdc` passes on the current codebase.
-- [ ] `bin/crosscheck-cddal-spec` succeeds when cddal-spec is present;
+- [x] `bin/lint-no-raw-mdc` passes on the current codebase.
+- [x] `bin/crosscheck-cddal-spec` succeeds when cddal-spec is present;
       reports unknown IDs when it isn't.
-- [ ] CI workflow runs on every push and PR; required to pass before
+- [x] CI workflow runs on every push and PR; required to pass before
       merge to main.
-- [ ] Release workflow requires manual dispatch; no automatic releases.
-- [ ] No AI attribution in any commit, PR, or workflow file.
+- [x] Release workflow requires manual dispatch; no automatic releases.
+- [x] No AI attribution in any commit, PR, or workflow file.
 
 ## Dependencies
 

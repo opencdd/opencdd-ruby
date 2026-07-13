@@ -55,7 +55,7 @@ RSpec.describe "CDDAL module system", :cddal do
           }
         CDDAL
 
-        db = Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        db = Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
         expect(db.classes.map(&:code)).to contain_exactly("AAA010", "AAA011")
         speedboat = db.find_by_code("AAA011")
         expect(speedboat.parent.code).to eq("AAA010")
@@ -90,7 +90,7 @@ RSpec.describe "CDDAL module system", :cddal do
           import "./right.cddal"
         CDDAL
 
-        db = Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        db = Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
         # base's Boat (AAA010) is imported transitively via both
         # left and right, but dedup means it appears exactly once.
         boats_aaa010 = db.find_all_by_code("AAA010")
@@ -121,7 +121,7 @@ RSpec.describe "CDDAL module system", :cddal do
         # The qualified form brings entities into the parent DB
         # (so IRDI resolution finds Boat), so bare-name resolution
         # to Boat still works.
-        db = Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        db = Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
         boat = db.find_by_code("AAA010")
         expect(boat).not_to be_nil
         expect(boat.preferred_name).to eq("Boat")
@@ -145,7 +145,7 @@ RSpec.describe "CDDAL module system", :cddal do
           }
         CDDAL
 
-        db = Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        db = Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
         # Selective import loads the whole target module's entities
         # (so IRDI resolution works), regardless of which names are
         # imported into the parent's symbol table.
@@ -169,7 +169,7 @@ RSpec.describe "CDDAL module system", :cddal do
           }
         CDDAL
 
-        db = Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        db = Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
         speedboat = db.find_by_code("AAA011")
         # The renamed symbol 'B' resolves to Boat's IRDI.
         expect(speedboat.parent.code).to eq("AAA010")
@@ -199,18 +199,18 @@ RSpec.describe "CDDAL module system", :cddal do
 
         main = 'import "./a.cddal"'
         expect {
-          Cdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
-        }.to raise_error(Cdd::Cddal::ImportError, /circular CDDAL import/)
+          Opencdd::Cddal.parse(main, source_file: File.join(dir, "main.cddal"))
+        }.to raise_error(Opencdd::Cddal::ImportError, /circular CDDAL import/)
       end
     end
   end
 
   describe "URL imports" do
     it "uses the in-memory fetcher for tests" do
-      fetcher = Cdd::Cddal::Fetcher::InMemory.new(
+      fetcher = Opencdd::Cddal::Fetcher::InMemory.new(
         "https://example.test/base.cddal" => base_dict,
       )
-      resolver = Cdd::Cddal::Resolver.new(fetcher: fetcher)
+      resolver = Opencdd::Cddal::Resolver.new(fetcher: fetcher)
 
       main = <<~CDDAL
         import "https://example.test/base.cddal"
@@ -223,13 +223,16 @@ RSpec.describe "CDDAL module system", :cddal do
         }
       CDDAL
 
-      db = Cdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
+      db = Opencdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
       expect(db.find_by_code("AAA011")&.parent&.code).to eq("AAA010")
     end
 
     it "skips unreachable URLs in non-strict mode" do
-      fetcher = Cdd::Cddal::Fetcher::InMemory.new # empty map → all URLs fail
-      resolver = Cdd::Cddal::Resolver.new(fetcher: fetcher)
+      fetcher = Opencdd::Cddal::Fetcher::InMemory.new # empty map → all URLs fail
+      # quiet: true suppresses the expected warning so the test
+      # output stays clean. Production callers let the warning
+      # surface so real bugs (typos, renamed files) aren't silent.
+      resolver = Opencdd::Cddal::Resolver.new(fetcher: fetcher, quiet: true)
 
       main = <<~CDDAL
         import "https://invalid.example/missing.cddal"
@@ -241,7 +244,7 @@ RSpec.describe "CDDAL module system", :cddal do
         }
       CDDAL
 
-      db = Cdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
+      db = Opencdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
       # The unreachable import is skipped; the local declaration still loads.
       expect(db.find_by_code("AAA099")).not_to be_nil
     end
@@ -249,12 +252,12 @@ RSpec.describe "CDDAL module system", :cddal do
 
   describe "strict mode" do
     it "raises ImportError when a path import cannot be resolved" do
-      resolver = Cdd::Cddal::Resolver.new(strict: true)
+      resolver = Opencdd::Cddal::Resolver.new(strict: true)
 
       main = 'import "./does-not-exist.cddal"'
       expect {
-        Cdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
-      }.to raise_error(Cdd::Cddal::ImportError, /cannot resolve import/)
+        Opencdd::Cddal.parse(main, resolver: resolver, source_file: "(main)")
+      }.to raise_error(Opencdd::Cddal::ImportError, /cannot resolve import/)
     end
   end
 
@@ -272,7 +275,7 @@ RSpec.describe "CDDAL module system", :cddal do
         }
       CDDAL
 
-      db = Cdd::Cddal.parse(cddal)
+      db = Opencdd::Cddal.parse(cddal)
       unit = db.find_by_code("UAC696")
       expect(unit.short_name).to eq("as")
     end
@@ -285,7 +288,7 @@ RSpec.describe "CDDAL module system", :cddal do
           class_type: ITEM_CLASS
         }
       CDDAL
-      db = Cdd::Cddal.parse(cddal)
+      db = Opencdd::Cddal.parse(cddal)
       expect(db.find_by_code("AAA001").short_name).to eq("as")
     end
   end
@@ -295,7 +298,7 @@ RSpec.describe "CDDAL module system", :cddal do
       Dir.mktmpdir("cddal-mod") do |dir|
         path = File.join(dir, "loc.cddal")
         File.write(path, base_dict)
-        db = Cdd::Cddal.parse_file(path)
+        db = Opencdd::Cddal.parse_file(path)
         boat = db.find_by_code("AAA010")
         expect(boat.source_location).not_to be_nil
         expect(boat.source_location.file).to eq(path)
@@ -306,7 +309,7 @@ RSpec.describe "CDDAL module system", :cddal do
   describe "Fetcher::NetHttp" do
     it "honors the cache_dir and offline flags" do
       cache = Dir.mktmpdir("cddal-cache")
-      fetcher = Cdd::Cddal::Fetcher::NetHttp.new(cache_dir: cache, offline: true)
+      fetcher = Opencdd::Cddal::Fetcher::NetHttp.new(cache_dir: cache, offline: true)
       expect(fetcher.cache_dir.to_s).to eq(cache)
       expect(fetcher.offline).to be(true)
     end

@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Selector do
-  let(:database) { Cdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
+RSpec.describe Opencdd::Parcel::Selector do
+  let(:database) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
 
   describe "constructor" do
     it "defaults to entities=nil, closure=:none (select all)" do
@@ -69,7 +69,7 @@ RSpec.describe Cdd::Parcel::Selector do
 
     it "raises TypeError for unsupported entity reference types" do
       sel = described_class.new(entities: [42])
-      expect { sel.resolve(database) }.to raise_error(TypeError, /must be Cdd::Entity/)
+      expect { sel.resolve(database) }.to raise_error(TypeError, /must be Opencdd::Entity/)
     end
   end
 end

@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::EffectiveProperties do
-  let(:database) { Cdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+RSpec.describe Opencdd::EffectiveProperties do
+  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
 
   describe "#for" do
     it "returns a Result that exposes properties and sources" do
       vehicle = database.find_by_code("AAA001")
       result = described_class.new(database).for(vehicle)
-      expect(result).to be_a(Cdd::EffectiveProperties::Result)
-      expect(result.properties).to all(be_a(Cdd::Property))
+      expect(result).to be_a(Opencdd::EffectiveProperties::Result)
+      expect(result.properties).to all(be_a(Opencdd::Property))
       expect(result.sources).to be_a(Hash)
     end
 
@@ -79,10 +79,10 @@ RSpec.describe Cdd::EffectiveProperties do
 
   describe "cycle detection" do
     it "terminates even if is_case_of creates a cycle" do
-      db = Cdd::Database.new
-      meta = Cdd::IRDI.parse("MDC_C002")
-      a = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+      db = Opencdd::Database.new
+      meta = Opencdd::IRDI.parse("MDC_C002")
+      a = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: {
           "MDC_P010" => "AAA002",
           "MDC_P013" => "(AAA002)",
@@ -90,8 +90,8 @@ RSpec.describe Cdd::EffectiveProperties do
         },
         meta_class_irdi: meta,
       )
-      b = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA002"),
+      b = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA002"),
         properties: {
           "MDC_P010" => "AAA001",
           "MDC_P013" => "(AAA001)",
@@ -99,15 +99,15 @@ RSpec.describe Cdd::EffectiveProperties do
         },
         meta_class_irdi: meta,
       )
-      p1 = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP001"),
+      p1 = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP001"),
         properties: { "MDC_P001_6" => "AAAP001" },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
-      p2 = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP002"),
+      p2 = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP002"),
         properties: { "MDC_P001_6" => "AAAP002" },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
       db.add_entity(a)
       db.add_entity(b)

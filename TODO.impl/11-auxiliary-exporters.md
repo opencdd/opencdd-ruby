@@ -120,17 +120,17 @@ the raw `properties` hash and constructs the payload itself.
 
 ## Acceptance criteria
 
-- [ ] `Json.new(db).to_json` re-parsed equals the same Ruby structure
+- [x] `Json.new(db).to_json` re-parsed equals the same Ruby structure
       (round-trip stable).
-- [ ] `Yaml.new(db).to_yaml` deterministic across runs (same db → same
+- [x] `Yaml.new(db).to_yaml` deterministic across runs (same db → same
       bytes).
-- [ ] `Mermaid.new(db).class_diagram(root: ...)` produces valid Mermaid
+- [x] `Mermaid.new(db).class_diagram(root: ...)` produces valid Mermaid
       that renders on GitHub.
-- [ ] Shared `entity_payload` used by all three.
-- [ ] Empty arrays preserved in `compact` mode.
-- [ ] No `to_json` / `to_yaml` / `to_h` instance method on any model
+- [x] Shared `entity_payload` used by all three.
+- [x] Empty arrays preserved in `compact` mode.
+- [x] No `to_json` / `to_yaml` / `to_h` instance method on any model
       class.
-- [ ] `spec/exporters_spec.rb` green.
+- [x] `spec/exporters_spec.rb` green.
 
 ## Dependencies
 

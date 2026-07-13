@@ -3,7 +3,7 @@
 require "spec_helper"
 require "tempfile"
 
-RSpec.describe Cdd::Cddal do
+RSpec.describe Opencdd::Cddal do
   let(:example_path) { REFERENCE_DOCS.join("examples/oceanrunner.cddal") }
   let(:database) { described_class.parse_file(example_path) }
 
@@ -160,49 +160,49 @@ RSpec.describe Cdd::Cddal do
 
     it "raises LexError on an unexpected character" do
       expect { described_class.parse("instance Foo < MDC_C002 { @ }") }
-        .to raise_error(Cdd::Cddal::LexError, /unexpected character/)
+        .to raise_error(Opencdd::Cddal::LexError, /unexpected character/)
     end
 
     it "raises ParseError when an alias is missing its target" do
       expect { described_class.parse("alias foo") }
-        .to raise_error(Cdd::Cddal::ParseError)
+        .to raise_error(Opencdd::Cddal::ParseError)
     end
   end
 end
 
-RSpec.describe "Cdd::Database#semantically_equal?" do
+RSpec.describe "Opencdd::Database#semantically_equal?" do
   it "compares two databases parsed from the same source as equal" do
     path = REFERENCE_DOCS.join("examples/oceanrunner.cddal")
-    a = Cdd::Cddal.parse_file(path)
-    b = Cdd::Cddal.parse_file(path)
+    a = Opencdd::Cddal.parse_file(path)
+    b = Opencdd::Cddal.parse_file(path)
     expect(a.semantically_equal?(b)).to be(true)
   end
 
   it "detects inequality when one database is missing entities" do
     path = REFERENCE_DOCS.join("examples/oceanrunner.cddal")
-    a = Cdd::Cddal.parse_file(path)
-    b = Cdd::Database.new
+    a = Opencdd::Cddal.parse_file(path)
+    b = Opencdd::Database.new
     expect(a.semantically_equal?(b)).to be(false)
   end
 end
 
 RSpec.describe "Parcel xlsx → CDDAL round-trip" do
   it "round-trips the ParcelMaker nuts example through CDDAL with semantic equality" do
-    db1 = Cdd::Parcel::WorkbookReader.new(NUTS_XLSX.to_s).load_into(Cdd::Database.new)
-    cddal = Cdd::Cddal.serialize(db1)
-    db2 = Cdd::Cddal.parse(cddal)
+    db1 = Opencdd::Parcel::WorkbookReader.new(NUTS_XLSX.to_s).load_into(Opencdd::Database.new)
+    cddal = Opencdd::Cddal.serialize(db1)
+    db2 = Opencdd::Cddal.parse(cddal)
     expect(db1.semantically_equal?(db2)).to be(true)
   end
 end
 
 RSpec.describe "Kagoshima IEC DEF sample" do
   it "parses hyphenated meta-class keywords" do
-    db = Cdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
+    db = Opencdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
     expect(db.entities.size).to eq(6)
   end
 
   it "supports anonymous instances (instance < META_CLASS without name)" do
-    db = Cdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
+    db = Opencdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
     expect(db.classes.size).to eq(1)
     expect(db.properties.size).to eq(2)
     expect(db.value_lists.size).to eq(1)
@@ -210,9 +210,9 @@ RSpec.describe "Kagoshima IEC DEF sample" do
   end
 
   it "round-trips through serialize → parse with semantic equality" do
-    db1 = Cdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
-    cddal = Cdd::Cddal.serialize(db1)
-    db2 = Cdd::Cddal.parse(cddal)
+    db1 = Opencdd::Cddal.parse_file(KAGOSHIMA_CDDAL)
+    cddal = Opencdd::Cddal.serialize(db1)
+    db2 = Opencdd::Cddal.parse(cddal)
     expect(db1.semantically_equal?(db2)).to be(true)
   end
 end

@@ -259,24 +259,24 @@ db = Cdd::Cddal.parse(source, fetcher: fetcher)
 
 ## Acceptance criteria
 
-- [ ] Existing bare `import "path"` semantics preserved — no regression
+- [x] Existing bare `import "path"` semantics preserved — no regression
       on OceanRunner fixture (which has one HTTPS import that's currently
       skipped).
-- [ ] `from "x" import { Foo }` pulls in only `Foo`.
-- [ ] `import "x" as p` makes `p.Foo` resolve and bare `Foo` not resolve.
-- [ ] `from "x" import { Foo as F }` renames.
-- [ ] URL imports work via Net::HTTP fetcher; cache survives across
+- [x] `from "x" import { Foo }` pulls in only `Foo`.
+- [x] `import "x" as p` makes `p.Foo` resolve and bare `Foo` not resolve.
+- [x] `from "x" import { Foo as F }` renames.
+- [x] URL imports work via Net::HTTP fetcher; cache survives across
       builder instances in the same process.
-- [ ] Cycle detection raises `Cdd::Cddal::ImportError` with the cycle
+- [x] Cycle detection raises `Cdd::Cddal::ImportError` with the cycle
       path in the message.
-- [ ] Every Entity has a `source_location` with `file` and `line`.
-- [ ] `Cdd::Cddal::Fetcher::InMemory` allows specs to test imports
+- [x] Every Entity has a `source_location` with `file` and `line`.
+- [x] `Cdd::Cddal::Fetcher::InMemory` allows specs to test imports
       without network.
-- [ ] `strict: false` mode warns and continues instead of raising on
+- [x] `strict: false` mode warns and continues instead of raising on
       unresolved imports / missing modules.
-- [ ] Idempotent: building the same root file twice produces identical
+- [x] Idempotent: building the same root file twice produces identical
       Databases.
-- [ ] New spec file: `spec/cddal/modules_spec.rb`.
+- [x] New spec file: `spec/cddal/modules_spec.rb`.
 
 ## Dependencies
 

@@ -2,23 +2,23 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Database, "#apply_view_control" do
+RSpec.describe Opencdd::Database, "#apply_view_control" do
   let(:db) do
-    Cdd::Database.new.tap do |d|
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+    Opencdd::Database.new.tap do |d|
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: {
           "MDC_P001_5" => "AAA001",
           "MDC_P011"   => "ITEM_CLASS",
           "MDC_P014"   => "(AAAP001,AAAP002,AAAP003,AAAP004,AAAP005)",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       )
       %w[AAAP001 AAAP002 AAAP003 AAAP004 AAAP005].each do |code|
-        d.add_entity(Cdd::Property.new(
-          irdi: Cdd::IRDI.parse(code),
+        d.add_entity(Opencdd::Property.new(
+          irdi: Opencdd::IRDI.parse(code),
           properties: { "MDC_P001_6" => code, "MDC_P022" => "STRING_TYPE" },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         ))
       end
       d.add_entity(klass)
@@ -29,14 +29,14 @@ RSpec.describe Cdd::Database, "#apply_view_control" do
   let(:klass) { db.find_by_code("AAA001") }
 
   def view_control(controlled_codes, shown_codes)
-    Cdd::ViewControl.new(
-      irdi: Cdd::IRDI.parse("EXT001"),
+    Opencdd::ViewControl.new(
+      irdi: Opencdd::IRDI.parse("EXT001"),
       properties: {
         "EXT_P001" => "EXT001",
         "EXT_P002" => "(#{controlled_codes.join(',')})",
         "EXT_P003" => "(#{shown_codes.join(',')})",
       },
-      meta_class_irdi: Cdd::IRDI.parse("EXT_C001"),
+      meta_class_irdi: Opencdd::IRDI.parse("EXT_C001"),
     )
   end
 
@@ -71,7 +71,7 @@ RSpec.describe Cdd::Database, "#apply_view_control" do
 
   it "resolves the klass argument when given an IRDI" do
     vc = view_control(%w[AAA001], %w[AAAP001])
-    result = db.apply_view_control(Cdd::IRDI.parse("AAA001"), vc)
+    result = db.apply_view_control(Opencdd::IRDI.parse("AAA001"), vc)
     expect(result.map(&:code)).to eq(%w[AAAP001])
   end
 end

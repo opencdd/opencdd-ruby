@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Sheet, "#merge_rows_from" do
+RSpec.describe Opencdd::Parcel::Sheet, "#merge_rows_from" do
   def make_class_sheet(rows:, default_value: nil)
     header = [
       ["#CLASS_ID:=MDC_C002"],
@@ -14,7 +14,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#merge_rows_from" do
     ]
     header << ["#DEFAULT_VALUE", nil, default_value] if default_value
     data = rows.map { |code, sup| [nil, code, sup] }
-    Cdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
+    Opencdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
   end
 
   it "appends rows from a same-meta-class source sheet" do
@@ -36,7 +36,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#merge_rows_from" do
       ["#DATATYPE", "STRING_TYPE"],
       ["#REQUIREMENT", "KEY"],
     ]
-    other = Cdd::Parcel::Sheet.from_rows(other_header + [[nil, "PPP001"]], name: "PROP")
+    other = Opencdd::Parcel::Sheet.from_rows(other_header + [[nil, "PPP001"]], name: "PROP")
     expect {
       target.merge_rows_from(other)
     }.to raise_error(ArgumentError, /meta-class mismatch/)

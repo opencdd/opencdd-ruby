@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::StructuredValues do
+RSpec.describe Opencdd::StructuredValues do
   describe "synonyms" do
     it "parses brace-wrapped tuples" do
       result = described_class.parse_synonyms("{(a,en),(b,fr)}")
@@ -43,14 +43,14 @@ RSpec.describe Cdd::StructuredValues do
     end
 
     it "round-trips through serialize" do
-      irdis = [Cdd::IRDI.parse("0112/2///62683#ACE001"), Cdd::IRDI.parse("0112/2///62683#ACE002")]
+      irdis = [Opencdd::IRDI.parse("0112/2///62683#ACE001"), Opencdd::IRDI.parse("0112/2///62683#ACE002")]
       serialized = described_class.serialize_ref_set(irdis)
       parsed = described_class.parse_ref_set(serialized)
       expect(parsed).to eq(irdis)
     end
 
     it "serializes to canonical brace form" do
-      irdi = Cdd::IRDI.parse("0112/2///62683#ACE001")
+      irdi = Opencdd::IRDI.parse("0112/2///62683#ACE001")
       expect(described_class.serialize_ref_set([irdi])).to eq("{0112/2///62683#ACE001}")
     end
   end
@@ -58,7 +58,7 @@ RSpec.describe Cdd::StructuredValues do
   describe "class_ref" do
     it "parses a single IRDI" do
       result = described_class.parse_class_ref("0112/2///62683#ACE001")
-      expect(result).to eq(Cdd::IRDI.parse("0112/2///62683#ACE001"))
+      expect(result).to eq(Opencdd::IRDI.parse("0112/2///62683#ACE001"))
     end
 
     it "returns nil for blank" do
@@ -67,7 +67,7 @@ RSpec.describe Cdd::StructuredValues do
     end
 
     it "serializes an IRDI" do
-      irdi = Cdd::IRDI.parse("0112/2///62683#ACE001")
+      irdi = Opencdd::IRDI.parse("0112/2///62683#ACE001")
       expect(described_class.serialize_class_ref(irdi)).to eq("0112/2///62683#ACE001")
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe Cdd::StructuredValues do
     end
 
     it "serializes through to_s" do
-      dt = Cdd::DataType.parse("REAL_TYPE")
+      dt = Opencdd::DataType.parse("REAL_TYPE")
       expect(described_class.serialize_data_type(dt)).to eq("REAL_TYPE")
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe Cdd::StructuredValues do
     end
 
     it "serializes through to_s" do
-      cond = Cdd::Condition.parse("MDC_P001_5 == ABC001")
+      cond = Opencdd::Condition.parse("MDC_P001_5 == ABC001")
       expect(described_class.serialize_condition(cond)).to eq("MDC_P001_5 == ABC001")
     end
   end

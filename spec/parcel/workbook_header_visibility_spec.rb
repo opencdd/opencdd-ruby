@@ -3,9 +3,9 @@
 require "spec_helper"
 require "set"
 
-RSpec.describe Cdd::Parcel::Workbook, "header visibility" do
+RSpec.describe Opencdd::Parcel::Workbook, "header visibility" do
   def empty_workbook(hidden: nil)
-    Cdd::Parcel::Workbook.new(sheets: [], sheetmap: [], hidden_header_rows: hidden)
+    Opencdd::Parcel::Workbook.new(sheets: [], sheetmap: [], hidden_header_rows: hidden)
   end
 
   describe "#hidden_header_rows" do
@@ -95,14 +95,14 @@ RSpec.describe Cdd::Parcel::Workbook, "header visibility" do
 
   describe "HEADER_ROW_NAMES" do
     it "exposes the full list of recognized header row names" do
-      names = Cdd::Parcel::Workbook::HEADER_ROW_NAMES
+      names = Opencdd::Parcel::Workbook::HEADER_ROW_NAMES
       expect(names).to include(:class_id, :property_id, :property_name,
                                :datatype, :value_format, :pattern,
                                :default_value, :requirement, :unit)
     end
 
     it "lists the mandatory rows separately" do
-      mandatory = Cdd::Parcel::Workbook::MANDATORY_HEADER_ROWS
+      mandatory = Opencdd::Parcel::Workbook::MANDATORY_HEADER_ROWS
       expect(mandatory).to contain_exactly(:class_id, :property_id)
     end
   end

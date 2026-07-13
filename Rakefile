@@ -14,15 +14,15 @@ task default: %i[spec lint:registry]
 namespace :cddal do
   desc "Regenerate the racc parser from cddal.y"
   task :regen do
-    sh "bundle exec racc lib/cdd/cddal/cddal.y -o lib/cdd/cddal/generated_parser.rb"
+    sh "bundle exec racc lib/opencdd/cddal/cddal.y -o lib/opencdd/cddal/generated_parser.rb"
   end
 
   desc "Fail if generated_parser.rb is out of sync with cddal.y"
   task :check_regen do
     tmp = ENV.fetch("CDDAL_REGEN_TMP", "/tmp/opencdd_generated_parser.rb")
-    sh "bundle exec racc lib/cdd/cddal/cddal.y -o #{tmp}"
-    unless system("diff -q lib/cdd/cddal/generated_parser.rb #{tmp}")
-      warn "ERROR: lib/cdd/cddal/generated_parser.rb is stale."
+    sh "bundle exec racc lib/opencdd/cddal/cddal.y -o #{tmp}"
+    unless system("diff -q lib/opencdd/cddal/generated_parser.rb #{tmp}")
+      warn "ERROR: lib/opencdd/cddal/generated_parser.rb is stale."
       warn "  Run `bundle exec rake cddal:regen` and commit the result."
       exit 1
     end
@@ -32,10 +32,10 @@ end
 # ── TS codegen ──────────────────────────────────────────────────
 desc "Regenerate TypeScript registry files for cdd-models-ts"
 task :generate_ts do
-  # Placeholder: the actual codegen lives in Cdd::Codegen::Ts and
+  # Placeholder: the actual codegen lives in Opencdd::Codegen::Ts and
   # writes to the sibling editor/cdd-models-ts repo. Invoke it
   # directly when the target directory is available.
-  puts "TODO: invoke Cdd::Codegen::Ts"
+  puts "TODO: invoke Opencdd::Codegen::Ts"
 end
 
 # ── Lint ────────────────────────────────────────────────────────
