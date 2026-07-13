@@ -4,7 +4,7 @@ require "lutaml/model"
 
 module Opencdd
   module Model
-    # CDD-native YAML database. Wraps a collection of YamlEntity
+    # CDD-native YAML database. Wraps a collection of Entity::Yaml
     # objects with dictionary-level metadata (source language,
     # translation languages). Serializes to YAML via lutaml-model
     # — no hand-rolled serialization on the model class itself.
@@ -26,18 +26,16 @@ module Opencdd
     class YamlDatabase < Lutaml::Model::Serializable
       attribute :source_language, :string, default: "en"
       attribute :translation_languages, :string, collection: true
-      attribute :entities, YamlEntity, collection: true
+      attribute :entities, Opencdd::Entity::Yaml, collection: true
 
-      # ── Conversion: Database → YamlDatabase ─────────────────
       def self.from_database(database)
         new(
           source_language: "en",
           translation_languages: [],
-          entities: database.entities.map { |e| YamlEntity.from_entity(e) },
+          entities: database.entities.map { |e| Opencdd::Entity::Yaml.from_entity(e) },
         )
       end
 
-      # ── Conversion: YamlDatabase → Database ─────────────────
       def to_database(database = nil)
         database ||= Opencdd::Database.new
         entities.each { |ye| database.add_entity(ye.to_entity(database)) }
