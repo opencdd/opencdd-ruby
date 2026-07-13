@@ -161,18 +161,18 @@ Used by every round-trip spec in plan 12.
 
 ## Acceptance criteria
 
-- [ ] `Database.new.add_entity(e).find(e.irdi) == e`.
-- [ ] `Database#finalize!` idempotent (guarded by `@finalized` flag).
-- [ ] `db.merge(other)` preserves entities from both, with `other`
+- [x] `Database.new.add_entity(e).find(e.irdi) == e`.
+- [x] `Database#finalize!` idempotent (guarded by `@finalized` flag).
+- [x] `db.merge(other)` preserves entities from both, with `other`
       winning on conflict.
-- [ ] `rename_entity` rewrites every back-reference type listed above.
+- [x] `rename_entity` rewrites every back-reference type listed above.
       Spec covers each one.
-- [ ] `apply_change_request` is transactional.
-- [ ] `effective_properties_of` walks `is_case_of` and the superclass
+- [x] `apply_change_request` is transactional.
+- [x] `effective_properties_of` walks `is_case_of` and the superclass
       chain; cycle-safe.
-- [ ] `semantically_equal?` true after parse → serialize → parse on the
+- [x] `semantically_equal?` true after parse → serialize → parse on the
       OceanRunner fixture.
-- [ ] `spec/database_spec.rb`, `spec/database_*_spec.rb`,
+- [x] `spec/database_spec.rb`, `spec/database_*_spec.rb`,
       `spec/effective_properties_spec.rb` green.
 
 ## Dependencies

@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::ValueTerm do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C010") }
+RSpec.describe Opencdd::ValueTerm do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C010") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_11", "MDC_P018_1", "MDC_P022", "MDC_P044", "MDC_P021"],
       ["#PROPERTY_NAME.en", "Code", "Value list", "Data type", "Code of value", "Definition class"],
     ])
@@ -26,7 +26,7 @@ RSpec.describe Cdd::ValueTerm do
     described_class.from_row(row, schema: schema, meta_class_irdi: meta)
   end
 
-  its(:irdi) { should eq(Cdd::IRDI.parse("0112/2///62683#ACJ001")) }
+  its(:irdi) { should eq(Opencdd::IRDI.parse("0112/2///62683#ACJ001")) }
 
   its(:enumeration_code) { should eq("001") }
   its(:term_code) { should eq("001") }
@@ -56,7 +56,7 @@ RSpec.describe Cdd::ValueTerm do
     end
   end
 
-  it "is a Cdd::ParseHelpers via Entity" do
-    expect(term).to be_a(Cdd::ParseHelpers)
+  it "is a Opencdd::ParseHelpers via Entity" do
+    expect(term).to be_a(Opencdd::ParseHelpers)
   end
 end

@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Relation, "extended accessors" do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C011") }
+RSpec.describe Opencdd::Relation, "extended accessors" do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C011") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_13", "MDC_P200", "MDC_P201", "MDC_P202", "MDC_P203", "MDC_P204", "MDC_P205", "MDC_P206", "MDC_P207", "MDC_P208", "MDC_P209", "MDC_P210", "MDC_P211", "MDC_P212"],
       ["#PROPERTY_NAME.en", "Code", "Relation type", "Domain", "Domain of function", "Codomain", "Formula", "Formula lang", "Solver", "Trigger", "Domain element", "Codomain element", "Role", "Segment", "Super relation"],
       ["#DATATYPE"] + ["STRING_TYPE", "ICID_STRING", "ICID_STRING", "ICID_STRING", "ICID_STRING", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "ICID_STRING"],
@@ -87,8 +87,8 @@ RSpec.describe Cdd::Relation, "extended accessors" do
   end
 
   describe "relation_type object" do
-    it "returns a Cdd::RelationType" do
-      expect(relation.relation_type).to be_a(Cdd::RelationType)
+    it "returns a Opencdd::RelationType" do
+      expect(relation.relation_type).to be_a(Opencdd::RelationType)
     end
 
     it "exposes a symbol form" do

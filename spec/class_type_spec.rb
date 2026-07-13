@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::ClassType do
+RSpec.describe Opencdd::ClassType do
   describe "VALUES" do
     it "exposes the canonical set of class_type codes" do
       expect(described_class::VALUES).to eq(%w[ITEM_CLASS CATEGORICAL_CLASS VALUE_CLASS MESSAGE_CLASS])

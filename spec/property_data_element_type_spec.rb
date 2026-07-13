@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::PropertyDataTypeElement do
+RSpec.describe Opencdd::PropertyDataTypeElement do
   describe "VALUES" do
     it "exposes the canonical set of DET codes" do
       expect(described_class::VALUES).to eq(%w[NON_DEPENDENT_P_DET CONDITION_DET DEPENDENT_P_DET])

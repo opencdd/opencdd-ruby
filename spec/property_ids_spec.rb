@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::PropertyIds do
+RSpec.describe Opencdd::PropertyIds do
   describe ".entry" do
     it "returns the Entry for a known property id" do
       entry = described_class.entry("MDC_P010")
@@ -114,7 +114,7 @@ RSpec.describe Cdd::PropertyIds do
     end
 
     it "covers every allowed_property_id declared by MetaClasses" do
-      declared = Cdd::MetaClass::MetaClasses.all.flat_map(&:allowed_property_ids).uniq
+      declared = Opencdd::MetaClass::MetaClasses.all.flat_map(&:allowed_property_ids).uniq
       registered = described_class::REGISTRY.keys
       expect(registered).to include(*declared)
     end

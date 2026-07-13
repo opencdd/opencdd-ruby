@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::CompositionTree do
-  let(:oceanrunner_db) { Cdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+RSpec.describe Opencdd::CompositionTree do
+  let(:oceanrunner_db) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
 
-  describe Cdd::CompositionTree::Node do
+  describe Opencdd::CompositionTree::Node do
     it "is a Struct exposing entity and children" do
       node = described_class.new(entity: "x", children: [])
       expect(node.entity).to eq("x")
@@ -35,21 +35,21 @@ RSpec.describe Cdd::CompositionTree do
 
   describe "#for with a single class of scalar properties" do
     let(:db) do
-      Cdd::Database.new.tap do |d|
-        klass = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA001"),
+      Opencdd::Database.new.tap do |d|
+        klass = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA001"),
           properties: {
             "MDC_P001_5" => "AAA001",
             "MDC_P011"   => "ITEM_CLASS",
             "MDC_P014"   => "(AAAP001,AAAP002,AAAP003)",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         %w[AAAP001 AAAP002 AAAP003].each_with_index do |code, i|
-          d.add_entity(Cdd::Property.new(
-            irdi: Cdd::IRDI.parse(code),
+          d.add_entity(Opencdd::Property.new(
+            irdi: Opencdd::IRDI.parse(code),
             properties: { "MDC_P001_6" => code, "MDC_P022" => "STRING_TYPE" },
-            meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+            meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
           ))
           i
         end
@@ -60,7 +60,7 @@ RSpec.describe Cdd::CompositionTree do
 
     it "emits root class with three property leaves" do
       tree = described_class.new(db).for(db.find_by_code("AAA001"))
-      expect(tree.entity).to be_a(Cdd::Klass)
+      expect(tree.entity).to be_a(Opencdd::Klass)
       expect(tree.entity.code).to eq("AAA001")
       expect(tree.children.size).to eq(3)
       expect(tree.children.map { |c| c.entity.code }).to contain_exactly("AAAP001", "AAAP002", "AAAP003")
@@ -76,37 +76,37 @@ RSpec.describe Cdd::CompositionTree do
 
   describe "#for with CLASS_REFERENCE recursion" do
     let(:db) do
-      Cdd::Database.new.tap do |d|
-        target = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA010"),
+      Opencdd::Database.new.tap do |d|
+        target = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA010"),
           properties: {
             "MDC_P001_5" => "AAA010",
             "MDC_P011"   => "ITEM_CLASS",
             "MDC_P014"   => "(AAAP101)",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        target_prop = Cdd::Property.new(
-          irdi: Cdd::IRDI.parse("AAAP101"),
+        target_prop = Opencdd::Property.new(
+          irdi: Opencdd::IRDI.parse("AAAP101"),
           properties: { "MDC_P001_6" => "AAAP101", "MDC_P022" => "STRING_TYPE" },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         )
-        owner = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA001"),
+        owner = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA001"),
           properties: {
             "MDC_P001_5" => "AAA001",
             "MDC_P011"   => "ITEM_CLASS",
             "MDC_P014"   => "(AAAP001)",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        ref_prop = Cdd::Property.new(
-          irdi: Cdd::IRDI.parse("AAAP001"),
+        ref_prop = Opencdd::Property.new(
+          irdi: Opencdd::IRDI.parse("AAAP001"),
           properties: {
             "MDC_P001_6" => "AAAP001",
             "MDC_P022"   => "CLASS_REFERENCE(AAA010)",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         )
         d.add_entity(target)
         d.add_entity(target_prop)
@@ -121,7 +121,7 @@ RSpec.describe Cdd::CompositionTree do
       ref_node = tree.children.find { |c| c.entity.code == "AAAP001" }
       expect(ref_node.children.size).to eq(1)
       sub = ref_node.children.first
-      expect(sub.entity).to be_a(Cdd::Klass)
+      expect(sub.entity).to be_a(Opencdd::Klass)
       expect(sub.entity.code).to eq("AAA010")
       expect(sub.children.map { |c| c.entity.code }).to eq(%w[AAAP101])
     end
@@ -129,42 +129,42 @@ RSpec.describe Cdd::CompositionTree do
 
   describe "#for with definition_class pointing at a categorical class" do
     let(:db) do
-      Cdd::Database.new.tap do |d|
-        categorical = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA200"),
+      Opencdd::Database.new.tap do |d|
+        categorical = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA200"),
           properties: {
             "MDC_P001_5" => "AAA200",
             "MDC_P011"   => "CATEGORICAL_CLASS",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        option_a = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA201"),
+        option_a = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA201"),
           properties: { "MDC_P001_5" => "AAA201", "MDC_P010" => "AAA200", "MDC_P011" => "ITEM_CLASS" },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        option_b = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA202"),
+        option_b = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA202"),
           properties: { "MDC_P001_5" => "AAA202", "MDC_P010" => "AAA200", "MDC_P011" => "ITEM_CLASS" },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        owner = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("AAA001"),
+        owner = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("AAA001"),
           properties: {
             "MDC_P001_5" => "AAA001",
             "MDC_P011"   => "ITEM_CLASS",
             "MDC_P014"   => "(AAAP001)",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        optioned_prop = Cdd::Property.new(
-          irdi: Cdd::IRDI.parse("AAAP001"),
+        optioned_prop = Opencdd::Property.new(
+          irdi: Opencdd::IRDI.parse("AAAP001"),
           properties: {
             "MDC_P001_6" => "AAAP001",
             "MDC_P021"   => "AAA200",
             "MDC_P022"   => "STRING_TYPE",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         )
         d.add_entity(categorical)
         d.add_entity(option_a)
@@ -185,26 +185,26 @@ RSpec.describe Cdd::CompositionTree do
 
   describe "cycle detection" do
     it "stops recursion when a class is revisited on the current path" do
-      db = Cdd::Database.new
-      meta_k = Cdd::IRDI.parse("MDC_C002")
-      meta_p = Cdd::IRDI.parse("MDC_C003")
-      a = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+      db = Opencdd::Database.new
+      meta_k = Opencdd::IRDI.parse("MDC_C002")
+      meta_p = Opencdd::IRDI.parse("MDC_C003")
+      a = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: { "MDC_P001_5" => "AAA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP001)" },
         meta_class_irdi: meta_k,
       )
-      b = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA002"),
+      b = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA002"),
         properties: { "MDC_P001_5" => "AAA002", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP002)" },
         meta_class_irdi: meta_k,
       )
-      p_a = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP001"),
+      p_a = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP001"),
         properties: { "MDC_P001_6" => "AAAP001", "MDC_P022" => "CLASS_REFERENCE(AAA002)" },
         meta_class_irdi: meta_p,
       )
-      p_b = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP002"),
+      p_b = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP002"),
         properties: { "MDC_P001_6" => "AAAP002", "MDC_P022" => "CLASS_REFERENCE(AAA001)" },
         meta_class_irdi: meta_p,
       )
@@ -221,16 +221,16 @@ RSpec.describe Cdd::CompositionTree do
     end
 
     it "honours max_depth as a hard stop" do
-      db = Cdd::Database.new
-      meta_k = Cdd::IRDI.parse("MDC_C002")
-      meta_p = Cdd::IRDI.parse("MDC_C003")
-      a = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+      db = Opencdd::Database.new
+      meta_k = Opencdd::IRDI.parse("MDC_C002")
+      meta_p = Opencdd::IRDI.parse("MDC_C003")
+      a = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: { "MDC_P001_5" => "AAA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP001)" },
         meta_class_irdi: meta_k,
       )
-      p = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP001"),
+      p = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP001"),
         properties: { "MDC_P001_6" => "AAAP001", "MDC_P022" => "CLASS_REFERENCE(AAA001)" },
         meta_class_irdi: meta_p,
       )
@@ -248,7 +248,7 @@ RSpec.describe Cdd::CompositionTree do
     it "delegates to a CompositionTree instance" do
       vehicle = oceanrunner_db.find_by_code("AAA001")
       tree = oceanrunner_db.composition_tree(vehicle)
-      expect(tree).to be_a(Cdd::CompositionTree::Node)
+      expect(tree).to be_a(Opencdd::CompositionTree::Node)
       expect(tree.entity.code).to eq("AAA001")
     end
   end
@@ -269,7 +269,7 @@ RSpec.describe Cdd::CompositionTree do
       expect(engine_type_node).not_to be_nil
       expect(engine_type_node.children.size).to eq(1)
       engine_type_class = engine_type_node.children.first
-      expect(engine_type_class.entity).to be_a(Cdd::Klass)
+      expect(engine_type_class.entity).to be_a(Opencdd::Klass)
       expect(engine_type_class.entity.code).to eq("AAA200")
     end
 
@@ -291,7 +291,7 @@ end
 
 def count_on_any_path(node, code, depth = 0)
   return 0 if depth > 100
-  own = node.entity.is_a?(Cdd::Klass) && node.entity.code == code ? 1 : 0
+  own = node.entity.is_a?(Opencdd::Klass) && node.entity.code == code ? 1 : 0
   child_counts = (node.children || []).map { |c| count_on_any_path(c, code, depth + 1) }
   own + (child_counts.empty? ? 0 : child_counts.max)
 end

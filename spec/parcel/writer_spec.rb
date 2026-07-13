@@ -4,10 +4,10 @@ require "spec_helper"
 require "tmpdir"
 require "fileutils"
 
-RSpec.describe Cdd::Parcel::Writer do
+RSpec.describe Opencdd::Parcel::Writer do
   let(:source_xlsx) { PARCEL_MAKER_XLSX }
 
-  let(:database) { Cdd::Database.load_workbook(source_xlsx) }
+  let(:database) { Opencdd::Database.load_workbook(source_xlsx) }
 
   def write_to_tempfile(database, parcel_id: "OCDD1", **opts)
     dir = Dir.mktmpdir("cdd-writer")
@@ -27,9 +27,9 @@ RSpec.describe Cdd::Parcel::Writer do
 
   describe "#write with a single-class database" do
     let(:small_db) do
-      Cdd::Database.new.tap do |d|
-        klass = Cdd::Klass.new(
-          irdi: Cdd::IRDI.parse("0112/2///62656_1#AAA001"),
+      Opencdd::Database.new.tap do |d|
+        klass = Opencdd::Klass.new(
+          irdi: Opencdd::IRDI.parse("0112/2///62656_1#AAA001"),
           properties: {
             "MDC_P001_5"      => "0112/2///62656_1#AAA001",
             "MDC_P002_1"      => "001",
@@ -37,7 +37,7 @@ RSpec.describe Cdd::Parcel::Writer do
             "MDC_P004.en"     => "Test Class",
             "MDC_P006.en"     => "class for testing",
           },
-          meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         d.add_entity(klass)
         d.finalize!
@@ -47,7 +47,7 @@ RSpec.describe Cdd::Parcel::Writer do
     it "produces an xlsx file readable by Parcel::WorkbookReader" do
       path = write_to_tempfile(small_db)
       remember(path)
-      reloaded = Cdd::Database.load_workbook(path)
+      reloaded = Opencdd::Database.load_workbook(path)
       expect(reloaded.classes.size).to eq(1)
       expect(reloaded.classes.first.preferred_name).to eq("Test Class")
     end
@@ -57,7 +57,7 @@ RSpec.describe Cdd::Parcel::Writer do
     it "round-trips with semantic equality" do
       path = write_to_tempfile(database, parcel_id: "IEC62683")
       remember(path)
-      reloaded = Cdd::Database.load_workbook(path)
+      reloaded = Opencdd::Database.load_workbook(path)
       expect(reloaded.semantically_equal?(database)).to be(true)
     end
 
@@ -153,15 +153,15 @@ RSpec.describe Cdd::Parcel::Writer do
 
   describe "#write_sheet for a single scaffolded sheet" do
     it "emits only that sheet's rows" do
-      sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+      sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: {
           "MDC_P001_5"  => "AAA001",
           "MDC_P011"    => "ITEM_CLASS",
           "MDC_P004.en" => "Solo Sheet",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       )
       path = File.join(Dir.mktmpdir("cdd-writer"), "single.xlsx")
       remember(path)

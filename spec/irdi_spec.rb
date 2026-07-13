@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::IRDI do
+RSpec.describe Opencdd::IRDI do
   describe ".parse (full form)" do
     subject(:irdi) { described_class.parse("0112/2///61360_4#AAA001") }
 

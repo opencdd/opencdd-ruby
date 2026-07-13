@@ -4,11 +4,11 @@
 # lib/ onto the load path manually instead of using require_relative
 # (consistent with the "no require_relative for library code" rule).
 $LOAD_PATH.unshift File.expand_path("lib", __dir__)
-require "cdd/version"
+require "opencdd/version"
 
 Gem::Specification.new do |spec|
   spec.name = "opencdd"
-  spec.version = Cdd::VERSION
+  spec.version = Opencdd::VERSION
   spec.authors = ["OpenCDD contributors"]
   spec.email   = ["cdd@opencdd.org"]
   spec.summary = "Ruby model and Parcel-format importer for the IEC Common Data Dictionary"
@@ -42,6 +42,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "base64",      ">= 0.2"
   spec.add_dependency "bigdecimal",  ">= 3.1"
   spec.add_dependency "csv",         "~> 3.3"
+  spec.add_dependency "lutaml-model", "~> 0.8"
+  spec.add_dependency "lutaml-store", "~> 0.2"
 
   spec.add_development_dependency "rake",      "~> 13.0"
   spec.add_development_dependency "rspec",     "~> 3.13"

@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::InstanceRule do
-  let(:klass) { Cdd::Klass.new(irdi: Cdd::IRDI.parse("AAA001"), properties: {}, meta_class_irdi: Cdd::IRDI.parse("MDC_C002")) }
+RSpec.describe Opencdd::InstanceRule do
+  let(:klass) { Opencdd::Klass.new(irdi: Opencdd::IRDI.parse("AAA001"), properties: {}, meta_class_irdi: Opencdd::IRDI.parse("MDC_C002")) }
 
   def group(name, props)
     described_class::Group.new(name: name, values_by_property: props)

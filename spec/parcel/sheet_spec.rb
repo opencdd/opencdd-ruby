@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Sheet do
+RSpec.describe Opencdd::Parcel::Sheet do
   def build_rows
     [
       ["#CLASS_ID:=MDC_C002"],
@@ -50,13 +50,13 @@ RSpec.describe Cdd::Parcel::Sheet do
     end
 
     it "exposes meta_class_irdi" do
-      expect(sheet.meta_class_irdi).to eq(Cdd::IRDI.parse("MDC_C002"))
+      expect(sheet.meta_class_irdi).to eq(Opencdd::IRDI.parse("MDC_C002"))
     end
   end
 
   describe "integration with reference workbook" do
     subject(:sheet) do
-      reader = Cdd::Parcel::WorkbookReader.new(PARCEL_MAKER_XLSX.to_s)
+      reader = Opencdd::Parcel::WorkbookReader.new(PARCEL_MAKER_XLSX.to_s)
       workbook = reader.read_workbook
       workbook.sheets.find { |s| s.name == "IEC62683_CLASS" }
     end

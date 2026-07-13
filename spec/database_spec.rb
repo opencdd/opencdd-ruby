@@ -2,9 +2,9 @@
 
 require "spec_helper"
 
-RSpec.describe "Cdd::Database end-to-end" do
+RSpec.describe "Opencdd::Database end-to-end" do
   describe "loading the ParcelMaker xlsx" do
-    subject(:db) { Cdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
+    subject(:db) { Opencdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
 
     it "exposes non-empty collections of every entity type" do
       expect(db.classes.size).to be >= 360
@@ -23,15 +23,15 @@ RSpec.describe "Cdd::Database end-to-end" do
     end
 
     it "finds entities by full IRDI" do
-      irdi = Cdd::IRDI.parse("0112/2///62683#ACC001")
+      irdi = Opencdd::IRDI.parse("0112/2///62683#ACC001")
       entity = db.find(irdi)
-      expect(entity).to be_a(Cdd::Klass)
+      expect(entity).to be_a(Opencdd::Klass)
       expect(entity.preferred_name).to eq("LV switchgear and controlgear domain")
     end
 
     it "finds entities by short code" do
       entity = db.find_by_code("ACC010")
-      expect(entity).to be_a(Cdd::Klass)
+      expect(entity).to be_a(Opencdd::Klass)
       expect(entity.preferred_name).to match(/blocks of properties/)
     end
 
@@ -44,7 +44,7 @@ RSpec.describe "Cdd::Database end-to-end" do
   end
 
   describe "loading the legacy 6-file set" do
-    subject(:db) { Cdd::Database.load(LEGACY_XLS_DIR.to_s) }
+    subject(:db) { Opencdd::Database.load(LEGACY_XLS_DIR.to_s) }
 
     it "loads at least one entity of each standard type" do
       expect(db.classes.size).to be > 100
@@ -55,30 +55,30 @@ RSpec.describe "Cdd::Database end-to-end" do
 
     it "builds the class hierarchy from the legacy CLASS file" do
       acc001 = db.find_by_code("ACC001")
-      expect(acc001).to be_a(Cdd::Klass)
+      expect(acc001).to be_a(Opencdd::Klass)
       expect(acc001.children.map(&:code)).to include("ACC010")
     end
   end
 
   describe "loading a single legacy .xls file" do
-    subject(:db) { Cdd::Database.load(LEGACY_SINGLE_XLS.to_s) }
+    subject(:db) { Opencdd::Database.load(LEGACY_SINGLE_XLS.to_s) }
 
     it "loads the file without error" do
       expect(db.entities.size).to be > 0
     end
   end
 
-  describe "Cdd::Reader.detect" do
+  describe "Opencdd::Reader.detect" do
     it "detects ParcelMaker xlsx" do
-      expect(Cdd::Reader.detect(PARCEL_MAKER_XLSX.to_s)).to eq(:xlsx)
+      expect(Opencdd::Reader.detect(PARCEL_MAKER_XLSX.to_s)).to eq(:xlsx)
     end
 
     it "detects a legacy directory" do
-      expect(Cdd::Reader.detect(LEGACY_XLS_DIR.to_s)).to eq(:legacy_dir)
+      expect(Opencdd::Reader.detect(LEGACY_XLS_DIR.to_s)).to eq(:legacy_dir)
     end
 
     it "detects a single legacy xls" do
-      expect(Cdd::Reader.detect(LEGACY_SINGLE_XLS.to_s)).to eq(:legacy_single)
+      expect(Opencdd::Reader.detect(LEGACY_SINGLE_XLS.to_s)).to eq(:legacy_single)
     end
   end
 end

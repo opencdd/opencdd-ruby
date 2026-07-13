@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::FlatDirReader do
+RSpec.describe Opencdd::Parcel::FlatDirReader do
   let(:reader) { described_class.new(LEGACY_XLS_DIR.to_s) }
 
   describe "#read_workbook" do
@@ -22,7 +22,7 @@ RSpec.describe Cdd::Parcel::FlatDirReader do
     it "exposes the meta-class IRDI derived from the filename prefix" do
       klass = workbook.class_sheet
       expect(klass).not_to be_nil
-      expect(klass.meta_class_irdi).to eq(Cdd::IRDI.parse("0112/2///62656_1#MDC_C002"))
+      expect(klass.meta_class_irdi).to eq(Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002"))
     end
   end
 end

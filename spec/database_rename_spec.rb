@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Database, "#rename_entity" do
+RSpec.describe Opencdd::Database, "#rename_entity" do
   let(:db) do
-    Cdd::Database.new.tap do |d|
-      parent = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA001"),
+    Opencdd::Database.new.tap do |d|
+      parent = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA001"),
         properties: {
           "MDC_P001_5" => "AAA001",
           "MDC_P011"   => "ITEM_CLASS",
           "MDC_P014"   => "(AAAP001)",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       )
-      child = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("AAA002"),
+      child = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("AAA002"),
         properties: {
           "MDC_P001_5" => "AAA002",
           "MDC_P010"   => "AAA001",
@@ -23,26 +23,26 @@ RSpec.describe Cdd::Database, "#rename_entity" do
           "MDC_P013"   => "(AAA001)",
           "MDC_P014"   => "(AAAP002,AAAP003)",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       )
-      p1 = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP001"),
+      p1 = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP001"),
         properties: {
           "MDC_P001_6" => "AAAP001",
           "MDC_P021"   => "AAA001",
           "MDC_P022"   => "STRING_TYPE",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
-      p2 = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP002"),
+      p2 = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP002"),
         properties: { "MDC_P001_6" => "AAAP002", "MDC_P022" => "STRING_TYPE" },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
-      p3 = Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP003"),
+      p3 = Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP003"),
         properties: { "MDC_P001_6" => "AAAP003", "MDC_P022" => "STRING_TYPE" },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
       [parent, child, p1, p2, p3].each { |e| d.add_entity(e) }
       d.finalize!
@@ -72,7 +72,7 @@ RSpec.describe Cdd::Database, "#rename_entity" do
   it "rewrites set_of_refs back-references (MDC_P013 is_case_of)" do
     db.rename_entity("AAA001", "AAA999")
     child = db.find_by_code("AAA002")
-    expect(Cdd::ParseHelpers.parse_irdi_list(child["MDC_P013"]).map(&:code))
+    expect(Opencdd::ParseHelpers.parse_irdi_list(child["MDC_P013"]).map(&:code))
       .to contain_exactly("AAA999")
   end
 
@@ -105,6 +105,6 @@ RSpec.describe Cdd::Database, "#rename_entity" do
   end
 
   def target_irdi(code)
-    Cdd::IRDI.parse(code)
+    Opencdd::IRDI.parse(code)
   end
 end

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::SheetSchema do
+RSpec.describe Opencdd::Parcel::SheetSchema do
   let(:header_rows) do
     [
       ["#PROPERTY_ID", "MDC_P001_5", "MDC_P002_1", "MDC_P004_1.en"],

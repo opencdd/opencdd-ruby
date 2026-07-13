@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Property do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C003") }
+RSpec.describe Opencdd::Property do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C003") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_6", "MDC_P022", "MDC_P024", "MDC_P041"],
       ["#PROPERTY_NAME.en", "Code", "Data type", "Value format", "Code for unit"],
       ["#DATATYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "ICID_STRING"],
@@ -26,20 +26,20 @@ RSpec.describe Cdd::Property do
     described_class.from_row(row, schema: schema, meta_class_irdi: meta)
   end
 
-  its(:irdi) { should eq(Cdd::IRDI.parse("0112/2///62683#ACE001")) }
+  its(:irdi) { should eq(Opencdd::IRDI.parse("0112/2///62683#ACE001")) }
   its(:data_type) { should eq(:real_measure) }
   its(:value_format) { should eq("NR3..12.3") }
 
   it "exposes unit_irdi as an IRDI object" do
-    expect(property.unit_irdi).to eq(Cdd::IRDI.parse("0112/2///62683#ACH990"))
+    expect(property.unit_irdi).to eq(Opencdd::IRDI.parse("0112/2///62683#ACH990"))
   end
 end
 
-RSpec.describe Cdd::ValueList do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C005") }
+RSpec.describe Opencdd::ValueList do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C005") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_12", "MDC_P043", "MDC_P046"],
       ["#PROPERTY_NAME.en", "Code", "Enumerated list of terms", "Type of list"],
     ])
@@ -65,11 +65,11 @@ RSpec.describe Cdd::ValueList do
   end
 end
 
-RSpec.describe Cdd::Unit do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C009") }
+RSpec.describe Opencdd::Unit do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C009") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_10", "MDC_P023_1"],
       ["#PROPERTY_NAME.en", "Code", "Unit in text"],
     ])
@@ -88,11 +88,11 @@ RSpec.describe Cdd::Unit do
   its(:symbol) { should eq("V") }
 end
 
-RSpec.describe Cdd::Relation do
-  let(:meta) { Cdd::IRDI.parse("0112/2///62656_1#MDC_C011") }
+RSpec.describe Opencdd::Relation do
+  let(:meta) { Opencdd::IRDI.parse("0112/2///62656_1#MDC_C011") }
 
   let(:schema) do
-    Cdd::Parcel::SheetSchema.from_header_rows([
+    Opencdd::Parcel::SheetSchema.from_header_rows([
       ["#PROPERTY_ID", "MDC_P001_13", "MDC_P200", "MDC_P201", "MDC_P203"],
       ["#PROPERTY_NAME.en", "Code", "Relation type", "Domain", "Codomain"],
     ])
@@ -112,7 +112,7 @@ RSpec.describe Cdd::Relation do
   end
 
   its(:relation_type_symbol) { should eq(:predication) }
-  it { expect(relation.relation_type).to be_a(Cdd::RelationType) }
+  it { expect(relation.relation_type).to be_a(Opencdd::RelationType) }
   it { expect(relation).to be_predication }
 
   it "parses domain_irdis and codomain_irdi" do

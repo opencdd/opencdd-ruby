@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::WorkbookReader do
+RSpec.describe Opencdd::Parcel::WorkbookReader do
   let(:reader) { described_class.new(PARCEL_MAKER_XLSX.to_s) }
 
   describe "#read_workbook" do
@@ -29,9 +29,9 @@ RSpec.describe Cdd::Parcel::WorkbookReader do
 
     it "exposes the meta-class IRDI of each sheet" do
       expect(workbook.class_sheet.meta_class_irdi)
-        .to eq(Cdd::IRDI.parse("0112/2///62656_1#MDC_C002"))
+        .to eq(Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002"))
       expect(workbook.unit_sheet.meta_class_irdi)
-        .to eq(Cdd::IRDI.parse("0112/2///62656_1#MDC_C009"))
+        .to eq(Opencdd::IRDI.parse("0112/2///62656_1#MDC_C009"))
     end
   end
 end

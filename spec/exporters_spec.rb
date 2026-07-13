@@ -4,10 +4,10 @@ require "spec_helper"
 require "json"
 require "yaml"
 
-RSpec.describe Cdd::Exporters do
-  let(:database) { Cdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+RSpec.describe Opencdd::Exporters do
+  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
 
-  describe Cdd::Exporters::Json do
+  describe Opencdd::Exporters::Json do
     it "produces parseable JSON with class, property, and value_list nodes" do
       text = described_class.new.to_json(database)
       parsed = JSON.parse(text)
@@ -83,21 +83,21 @@ RSpec.describe Cdd::Exporters do
     end
 
     it "emits the dates hash when an entity carries MDC_P003_* values" do
-      meta = Cdd::IRDI.parse("0112/2///62656_1#MDC_C002")
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("0112/2///62656_4#AAA001"),
+      meta = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002")
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("0112/2///62656_4#AAA001"),
         properties: {
-          Cdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#AAA001",
-          Cdd::PropertyIds::MDC_P003_1 => "2024-01-01",
-          Cdd::PropertyIds::MDC_P003_2 => "2024-06-01",
-          Cdd::PropertyIds::MDC_P066   => "guid-abc-123",
-          Cdd::PropertyIds::MDC_P067   => "2024-06-01T00:00:00Z",
-          Cdd::PropertyIds::MDC_P002_1 => "001",
-          Cdd::PropertyIds::MDC_P002_2 => "02",
+          Opencdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#AAA001",
+          Opencdd::PropertyIds::MDC_P003_1 => "2024-01-01",
+          Opencdd::PropertyIds::MDC_P003_2 => "2024-06-01",
+          Opencdd::PropertyIds::MDC_P066   => "guid-abc-123",
+          Opencdd::PropertyIds::MDC_P067   => "2024-06-01T00:00:00Z",
+          Opencdd::PropertyIds::MDC_P002_1 => "001",
+          Opencdd::PropertyIds::MDC_P002_2 => "02",
         },
         meta_class_irdi: meta,
       )
-      db = Cdd::Database.new.add_entity(klass)
+      db = Opencdd::Database.new.add_entity(klass)
       node = JSON.parse(described_class.new.to_json(db)).first
       expect(node["dates"]).to eq(
         "original_definition" => "2024-01-01",
@@ -110,15 +110,15 @@ RSpec.describe Cdd::Exporters do
     end
 
     it "omits the dates hash when no MDC_P003_* values are set" do
-      meta = Cdd::IRDI.parse("0112/2///62656_1#MDC_C002")
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("0112/2///62656_4#AAA002"),
+      meta = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002")
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("0112/2///62656_4#AAA002"),
         properties: {
-          Cdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#AAA002",
+          Opencdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#AAA002",
         },
         meta_class_irdi: meta,
       )
-      db = Cdd::Database.new.add_entity(klass)
+      db = Opencdd::Database.new.add_entity(klass)
       node = JSON.parse(described_class.new.to_json(db)).first
       expect(node).not_to have_key("dates")
     end
@@ -134,38 +134,38 @@ RSpec.describe Cdd::Exporters do
     end
 
     it "emits sub_class_selection when the class declares composition children" do
-      meta = Cdd::IRDI.parse("0112/2///62656_1#MDC_C002")
-      parent_irdi = Cdd::IRDI.parse("0112/2///62656_4#COMPOSED")
-      child_irdi = Cdd::IRDI.parse("0112/2///62656_4#COMPOSED_PART")
-      klass = Cdd::Klass.new(
+      meta = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002")
+      parent_irdi = Opencdd::IRDI.parse("0112/2///62656_4#COMPOSED")
+      child_irdi = Opencdd::IRDI.parse("0112/2///62656_4#COMPOSED_PART")
+      klass = Opencdd::Klass.new(
         irdi: parent_irdi,
         properties: {
-          Cdd::PropertyIds::MDC_P001_5           => parent_irdi.to_s,
-          Cdd::PropertyIds::MDC_P016             => child_irdi.to_s,
+          Opencdd::PropertyIds::MDC_P001_5           => parent_irdi.to_s,
+          Opencdd::PropertyIds::MDC_P016             => child_irdi.to_s,
         },
         meta_class_irdi: meta,
       )
-      db = Cdd::Database.new.add_entity(klass)
+      db = Opencdd::Database.new.add_entity(klass)
       node = JSON.parse(described_class.new.to_json(db)).first
       expect(node["sub_class_selection"]).to eq([child_irdi.to_s])
     end
 
     it "emits sub_class_selection as an empty array when the class has no composition children" do
-      meta = Cdd::IRDI.parse("0112/2///62656_1#MDC_C002")
-      klass = Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse("0112/2///62656_4#LEAF"),
+      meta = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002")
+      klass = Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse("0112/2///62656_4#LEAF"),
         properties: {
-          Cdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#LEAF",
+          Opencdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#LEAF",
         },
         meta_class_irdi: meta,
       )
-      db = Cdd::Database.new.add_entity(klass)
+      db = Opencdd::Database.new.add_entity(klass)
       node = JSON.parse(described_class.new.to_json(db)).first
       expect(node["sub_class_selection"]).to eq([])
     end
   end
 
-  describe Cdd::Exporters::Yaml do
+  describe Opencdd::Exporters::Yaml do
     it "produces parseable YAML mirroring the JSON shape" do
       text = described_class.new.to_yaml(database)
       parsed = YAML.safe_load(text, permitted_classes: [Symbol], aliases: true)
@@ -178,7 +178,7 @@ RSpec.describe Cdd::Exporters do
     end
   end
 
-  describe Cdd::Exporters::Mermaid do
+  describe Opencdd::Exporters::Mermaid do
     it "emits a classDiagram directive" do
       diagram = described_class.new.to_diagram(database)
       expect(diagram.lines.first.strip).to eq("classDiagram")
