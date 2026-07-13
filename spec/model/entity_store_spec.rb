@@ -7,19 +7,18 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
   let(:oceanrunner) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
 
   describe "Database#save_to_directory / load_from_directory" do
-    it "writes one data file per entity (via lutaml-store FileSystem adapter)" do
+    it "writes one YAML file per entity (via lutaml-store DatabaseStore)" do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
-        # lutaml-store shards by first 2 chars of the key for scalability
-        data_files = Dir.glob("#{dir}/**/*.data")
-        expect(data_files.size).to eq(oceanrunner.entities.size)
+        yaml_files = Dir.glob("#{dir}/**/*.yaml")
+        expect(yaml_files.size).to eq(oceanrunner.entities.size)
       end
     end
 
     it "each file uses CDD-native attribute names" do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
-        first_file = Dir.glob("#{dir}/**/*.data").first
+        first_file = Dir.glob("#{dir}/**/*.yaml").first
         content = File.read(first_file)
         expect(content).to include("preferred_name:")
         expect(content).not_to include("MDC_P004:")
@@ -67,8 +66,8 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
     it "persists data to disk (lutaml-store manages the layout)" do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
-        data_files = Dir.glob("#{dir}/**/*.data")
-        expect(data_files.size).to eq(40)
+        yaml_files = Dir.glob("#{dir}/**/*.yaml")
+        expect(yaml_files.size).to eq(40)
       end
     end
   end
@@ -83,7 +82,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         store = described_class.new(dir)
         store.save_database(oceanrunner)
-        expect(Dir.glob("#{dir}/**/*.data").size).to eq(40)
+        expect(Dir.glob("#{dir}/**/*.yaml").size).to eq(40)
       end
     end
 
