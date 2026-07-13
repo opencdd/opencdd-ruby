@@ -1,37 +1,38 @@
-#!/usr/bin/env bash
-#
 # lint-no-raw-mdc — fail if any raw MDC_P### / MDC_C### / EXT_P### /
-# EXT_C### / CIM_P### string literal appears in lib/cdd/ outside the
-# designated registry files.
+# EXT_C### / CIM_P### string literal appears in lib/opencdd/ outside
+# the designated SSOT files.
 #
-# The single source of truth for property IDs is
-# Cdd::PropertyIds::REGISTRY; for meta-class IRDIs it is
-# Cdd::MetaClasses::REGISTRY; for alias mappings it is
-# Cdd::AliasTable. No raw "MDC_P###" / "MDC_C###" / "EXT_P###" /
-# "EXT_C###" / "CIM_P###" string literals may appear anywhere else.
+# Allowed homes for raw MDC/EXT/CIM literals:
+#
+#   - lib/opencdd/property_ids.rb        — the ontology registry (SSOT)
+#   - lib/opencdd/meta_class.rb          — meta-class definitions
+#   - lib/opencdd/alias_table.rb         — alias defaults
+#   - lib/opencdd/parcel/sheet_schema.rb — Parcel-sheet variant→canonical
+#                                          column mapping (format-specific SSOT)
+#   - lib/opencdd/cddal/generated_parser.rb — racc-generated (machine output)
 #
 # Comment lines (lines whose first non-whitespace character is '#')
-# are exempt — they are documentation, not code.
+# are also exempt.
 #
 set -euo pipefail
 
-# Pathspec exclusions: the three registry files + the generated parser.
 excludes=(
-  ':!lib/cdd/property_ids.rb'
-  ':!lib/cdd/meta_class.rb'
-  ':!lib/cdd/alias_table.rb'
-  ':!lib/cdd/cddal/generated_parser.rb'
+  ':!lib/opencdd/property_ids.rb'
+  ':!lib/opencdd/meta_class.rb'
+  ':!lib/opencdd/alias_table.rb'
+  ':!lib/opencdd/parcel/sheet_schema.rb'
+  ':!lib/opencdd/cddal/generated_parser.rb'
 )
 
 # Collect hits, filtering out Ruby comment-only lines.
 hits=$(git grep -nE '"(MDC_[CP][0-9]+(_[0-9]+)?|EXT_[CP][0-9]+|CIM_P[0-9]+)"' \
-  -- 'lib/cdd/**/*.rb' "${excludes[@]}" 2>/dev/null \
+  -- 'lib/opencdd/**/*.rb' "${excludes[@]}" 2>/dev/null \
   | grep -vE '^[^:]+:[0-9]+:\s*#' \
   || true)
 
 if [ -n "$hits" ]; then
-  echo "ERROR: raw MDC/EXT/CIM literal found outside registry files." >&2
-  echo "Use Cdd::PropertyIds::REGISTRY / Cdd::MetaClasses::REGISTRY instead." >&2
+  echo "ERROR: raw MDC/EXT/CIM literal found outside designated SSOT files." >&2
+  echo "Use Opencdd::PropertyIds::REGISTRY / Opencdd::MetaClasses::REGISTRY instead." >&2
   echo "" >&2
   echo "$hits" >&2
   exit 1

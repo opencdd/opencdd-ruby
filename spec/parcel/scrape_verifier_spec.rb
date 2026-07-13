@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::ScrapeVerifier do
+RSpec.describe Opencdd::Parcel::ScrapeVerifier do
   let(:verifier) { described_class.new(directory) }
 
   describe "#verify on a directory with populated .xls files" do

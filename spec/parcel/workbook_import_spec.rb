@@ -4,8 +4,8 @@ require "spec_helper"
 require "tmpdir"
 require "fileutils"
 
-RSpec.describe Cdd::Parcel::Workbook, "#import_into" do
-  let(:target_db) { Cdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
+RSpec.describe Opencdd::Parcel::Workbook, "#import_into" do
+  let(:target_db) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
   let(:workbook)  { target_db.workbooks.first }
 
   after do
@@ -18,13 +18,13 @@ RSpec.describe Cdd::Parcel::Workbook, "#import_into" do
   end
 
   def write_csv_for(db, type, dir)
-    sheet = Cdd::Parcel::Sheet.scaffold(
-      meta_class_irdi: Cdd::MetaClasses.meta_class_for_type(type),
+    sheet = Opencdd::Parcel::Sheet.scaffold(
+      meta_class_irdi: Opencdd::MetaClasses.meta_class_for_type(type),
       parcel_id: "EXP",
     )
     entities = db.entities_of_type(type).first(3)
     path = File.join(dir, "exp_#{type}.csv")
-    Cdd::Parcel::CsvWriter.write_sheet(sheet, entities, path)
+    Opencdd::Parcel::CsvWriter.write_sheet(sheet, entities, path)
     path
   end
 
@@ -76,14 +76,14 @@ RSpec.describe Cdd::Parcel::Workbook, "#import_into" do
   end
 end
 
-RSpec.describe Cdd::Parcel::Workbook, "#register_sheet" do
+RSpec.describe Opencdd::Parcel::Workbook, "#register_sheet" do
   def empty_workbook
-    Cdd::Parcel::Workbook.new(sheets: [], sheetmap: [])
+    Opencdd::Parcel::Workbook.new(sheets: [], sheetmap: [])
   end
 
   it "appends the sheet and adds a sheetmap row" do
     wb = empty_workbook
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
     wb.register_sheet(sheet)
     expect(wb.sheets).to include(sheet)
     expect(wb.sheetmap.size).to eq(1)
@@ -93,14 +93,14 @@ RSpec.describe Cdd::Parcel::Workbook, "#register_sheet" do
 
   it "makes the sheet reachable via #sheet" do
     wb = empty_workbook
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
     wb.register_sheet(sheet)
     expect(wb.sheet(sheet.name)).to be(sheet)
   end
 
   it "raises ArgumentError when the sheet name is already registered" do
     wb = empty_workbook
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
     wb.register_sheet(sheet)
     dup = sheet.dup_with(name: sheet.name)
     expect {
@@ -110,12 +110,12 @@ RSpec.describe Cdd::Parcel::Workbook, "#register_sheet" do
 
   it "returns self for chaining" do
     wb = empty_workbook
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "OCDD1")
     expect(wb.register_sheet(sheet)).to be(wb)
   end
 end
 
-RSpec.describe Cdd::Parcel::CsvReader, ".read" do
+RSpec.describe Opencdd::Parcel::CsvReader, ".read" do
   after do
     @tempfiles&.each { |p| FileUtils.rm_rf(p) if File.exist?(p) }
   end
@@ -126,15 +126,15 @@ RSpec.describe Cdd::Parcel::CsvReader, ".read" do
   end
 
   def make_db_with_class(code)
-    Cdd::Database.new.tap do |d|
-      d.add_entity(Cdd::Klass.new(
-        irdi: Cdd::IRDI.parse(code),
+    Opencdd::Database.new.tap do |d|
+      d.add_entity(Opencdd::Klass.new(
+        irdi: Opencdd::IRDI.parse(code),
         properties: {
           "MDC_P001_5"  => code,
           "MDC_P011"    => "ITEM_CLASS",
           "MDC_P004.en" => "Class #{code}",
         },
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
       ))
       d.finalize!
     end
@@ -144,11 +144,11 @@ RSpec.describe Cdd::Parcel::CsvReader, ".read" do
     dir = Dir.mktmpdir("csv-reader")
     remember(dir)
     csv = File.join(dir, "data.csv")
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
     db = make_db_with_class("AAA001")
-    Cdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), csv)
+    Opencdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), csv)
 
-    reloaded = Cdd::Parcel::CsvReader.read(csv, meta_class_irdi: "MDC_C002")
+    reloaded = Opencdd::Parcel::CsvReader.read(csv, meta_class_irdi: "MDC_C002")
     expect(reloaded.rows.size).to eq(1)
     expect(reloaded.rows[0]["MDC_P001_5"]).to eq("AAA001")
   end
@@ -157,12 +157,12 @@ RSpec.describe Cdd::Parcel::CsvReader, ".read" do
     dir = Dir.mktmpdir("csv-reader")
     remember(dir)
     txt = File.join(dir, "data.txt")
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
     db = make_db_with_class("AAA001")
-    Cdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), txt)
+    Opencdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), txt)
     # Re-read with explicit tab separator even though file is comma-separated,
     # just to verify the col_sep parameter is honored (result will have one column).
-    reloaded = Cdd::Parcel::CsvReader.read(txt, meta_class_irdi: "MDC_C002", col_sep: "\t")
+    reloaded = Opencdd::Parcel::CsvReader.read(txt, meta_class_irdi: "MDC_C002", col_sep: "\t")
     expect(reloaded.rows.size).to eq(1)
   end
 
@@ -171,7 +171,7 @@ RSpec.describe Cdd::Parcel::CsvReader, ".read" do
     remember(dir)
     csv = File.join(dir, "data.csv")
     File.write(csv, "AAA001\n")
-    sheet = Cdd::Parcel::CsvReader.read(csv, meta_class_irdi: "0112/2///62656_1#MDC_C002")
+    sheet = Opencdd::Parcel::CsvReader.read(csv, meta_class_irdi: "0112/2///62656_1#MDC_C002")
     expect(sheet.meta_class_code).to eq("MDC_C002")
   end
 
@@ -179,13 +179,13 @@ RSpec.describe Cdd::Parcel::CsvReader, ".read" do
     dir = Dir.mktmpdir("csv-reader")
     remember(dir)
     csv = File.join(dir, "data.csv")
-    sheet = Cdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
+    sheet = Opencdd::Parcel::Sheet.scaffold(meta_class_irdi: "MDC_C002", parcel_id: "X")
     db = make_db_with_class("AAA001")
-    Cdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), csv)
+    Opencdd::Parcel::CsvWriter.write_sheet(sheet, db.entities_of_type(:class), csv)
     original = File.read(csv)
     File.write(csv, original + "\n,,\n")
 
-    reloaded = Cdd::Parcel::CsvReader.read(csv, meta_class_irdi: "MDC_C002")
+    reloaded = Opencdd::Parcel::CsvReader.read(csv, meta_class_irdi: "MDC_C002")
     expect(reloaded.rows.size).to eq(1)
   end
 end

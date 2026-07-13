@@ -161,18 +161,18 @@ Same for `"EXT_P###"`, `"EXT_C###"`, `"CIM_P###"`.
 
 ## Acceptance criteria
 
-- [ ] `Cdd::IRDI.parse` accepts all three forms; `well_formed?` matches.
-- [ ] `Cdd::PropertyIds::REGISTRY` covers every ID in
+- [x] `Cdd::IRDI.parse` accepts all three forms; `well_formed?` matches.
+- [x] `Cdd::PropertyIds::REGISTRY` covers every ID in
       `cdd-data/specs/parcelmaker/03_property_registry.md`.
-- [ ] Every `REGISTRY` key has a matching constant
+- [x] Every `REGISTRY` key has a matching constant
       (`Cdd::PropertyIds::MDC_P022 == "MDC_P022"`).
-- [ ] `Cdd::MetaClasses::REGISTRY` has `MDC_C011` for Relation and
+- [x] `Cdd::MetaClasses::REGISTRY` has `MDC_C011` for Relation and
       `MDC_C006` for Datatype.
-- [ ] No raw `"MDC_P###"` / `"MDC_C###"` literal outside the three
+- [x] No raw `"MDC_P###"` / `"MDC_C###"` literal outside the three
       registry files.
-- [ ] `rake generate_ts` regenerates the editor's `.generated.ts` files
+- [x] `rake generate_ts` regenerates the editor's `.generated.ts` files
       idempotently.
-- [ ] `spec/irdi_spec.rb`, `spec/property_ids_spec.rb`,
+- [x] `spec/irdi_spec.rb`, `spec/property_ids_spec.rb`,
       `spec/meta_class_spec.rb`, `spec/alias_table_spec.rb` green.
 
 ## Dependencies

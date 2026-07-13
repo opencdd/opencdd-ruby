@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "cdd"
+require "opencdd"
 require "pathname"
 require "rspec/its"
 

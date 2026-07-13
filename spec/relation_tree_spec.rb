@@ -2,21 +2,21 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::RelationTree do
+RSpec.describe Opencdd::RelationTree do
   def make_relation(code, super_code = nil, meta_class_irdi: "MDC_C011")
     props = {
-      Cdd::PropertyIds::MDC_P001_5 => code,
+      Opencdd::PropertyIds::MDC_P001_5 => code,
     }
-    props[Cdd::PropertyIds::MDC_P212] = super_code if super_code
-    Cdd::Relation.new(
-      irdi: Cdd::IRDI.parse("0112/2///62683##{code}"),
+    props[Opencdd::PropertyIds::MDC_P212] = super_code if super_code
+    Opencdd::Relation.new(
+      irdi: Opencdd::IRDI.parse("0112/2///62683##{code}"),
       properties: props,
-      meta_class_irdi: Cdd::IRDI.parse(meta_class_irdi),
+      meta_class_irdi: Opencdd::IRDI.parse(meta_class_irdi),
     )
   end
 
   def make_database(*relations)
-    Cdd::Database.new.tap do |d|
+    Opencdd::Database.new.tap do |d|
       relations.each { |r| d.add_entity(r) }
       d.finalize!
     end
@@ -70,7 +70,7 @@ RSpec.describe Cdd::RelationTree do
         make_relation("REL003", "REL002"),
       ).tap do |d|
         rel1 = d.find_by_code("REL001")
-        rel1.properties[Cdd::PropertyIds::MDC_P212] = "REL003"
+        rel1.properties[Opencdd::PropertyIds::MDC_P212] = "REL003"
       end
     end
 

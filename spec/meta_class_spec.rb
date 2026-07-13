@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::MetaClass do
+RSpec.describe Opencdd::MetaClass do
   describe "constructor" do
     it "freezes the allowed_property_ids list" do
       mc = described_class.new(irdi: "EXT_C900", name: "Demo", allowed_property_ids: %w[MDC_P004])
@@ -34,9 +34,9 @@ RSpec.describe Cdd::MetaClass do
     end
 
     it "preserves existing entity_class when other has none" do
-      a = described_class.new(irdi: "EXT_C900", name: "Demo", entity_class: Cdd::Klass, allowed_property_ids: %w[MDC_P004])
+      a = described_class.new(irdi: "EXT_C900", name: "Demo", entity_class: Opencdd::Klass, allowed_property_ids: %w[MDC_P004])
       b = described_class.new(irdi: "EXT_C900", name: "Demo", allowed_property_ids: %w[MDC_P005])
-      expect(a.merge(b).entity_class).to equal(Cdd::Klass)
+      expect(a.merge(b).entity_class).to equal(Opencdd::Klass)
     end
 
     it "raises when IRDI mismatch" do
@@ -46,31 +46,31 @@ RSpec.describe Cdd::MetaClass do
     end
   end
 
-  describe "Cdd::MetaClasses registry" do
-    after { Cdd::MetaClasses.reset! }
+  describe "Opencdd::MetaClasses registry" do
+    after { Opencdd::MetaClasses.reset! }
 
     describe ".for" do
       it "returns the Class meta-class for MDC_C002" do
-        mc = Cdd::MetaClasses.for("MDC_C002")
+        mc = Opencdd::MetaClasses.for("MDC_C002")
         expect(mc).to be_a(described_class)
         expect(mc.name).to eq("Class")
-        expect(mc.entity_class).to equal(Cdd::Klass)
+        expect(mc.entity_class).to equal(Opencdd::Klass)
         expect(mc.allows_property?("MDC_P010")).to be(true)
       end
 
       it "returns the Property meta-class for MDC_C003" do
-        mc = Cdd::MetaClasses.for("MDC_C003")
+        mc = Opencdd::MetaClasses.for("MDC_C003")
         expect(mc.name).to eq("Property")
-        expect(mc.entity_class).to equal(Cdd::Property)
+        expect(mc.entity_class).to equal(Opencdd::Property)
       end
 
       it "returns the ViewControl meta-class for EXT_C001" do
-        mc = Cdd::MetaClasses.for("EXT_C001")
-        expect(mc.entity_class).to equal(Cdd::ViewControl)
+        mc = Opencdd::MetaClasses.for("EXT_C001")
+        expect(mc.entity_class).to equal(Opencdd::ViewControl)
       end
 
       it "returns nil for unknown IRDI" do
-        expect(Cdd::MetaClasses.for("MDC_C999")).to be_nil
+        expect(Opencdd::MetaClasses.for("MDC_C999")).to be_nil
       end
     end
 
@@ -79,26 +79,26 @@ RSpec.describe Cdd::MetaClass do
         custom = described_class.new(
           irdi: "EXT_C900",
           name: "Custom",
-          entity_class: Cdd::Klass,
+          entity_class: Opencdd::Klass,
           allowed_property_ids: %w[MDC_P004],
         )
-        Cdd::MetaClasses.register(custom)
-        expect(Cdd::MetaClasses.for("EXT_C900")).to equal(custom)
+        Opencdd::MetaClasses.register(custom)
+        expect(Opencdd::MetaClasses.for("EXT_C900")).to equal(custom)
       end
 
       it "merges with an existing registration" do
         first = described_class.new(irdi: "EXT_C900", name: "Custom", allowed_property_ids: %w[MDC_P004])
         second = described_class.new(irdi: "EXT_C900", name: "Custom", allowed_property_ids: %w[MDC_P005])
-        Cdd::MetaClasses.register(first)
-        merged = Cdd::MetaClasses.register(second)
+        Opencdd::MetaClasses.register(first)
+        merged = Opencdd::MetaClasses.register(second)
         expect(merged.allowed_property_ids).to contain_exactly("MDC_P004", "MDC_P005")
       end
     end
 
     describe ".all and .codes" do
       it "returns all registered meta-classes" do
-        all = Cdd::MetaClasses.all
-        codes = Cdd::MetaClasses.codes
+        all = Opencdd::MetaClasses.all
+        codes = Opencdd::MetaClasses.codes
         expect(all.map(&:irdi)).to eq(codes)
         expect(codes).to include("MDC_C002", "MDC_C003", "MDC_C005", "MDC_C009", "MDC_C010", "MDC_C011", "EXT_C001")
       end
@@ -107,11 +107,11 @@ RSpec.describe Cdd::MetaClass do
     describe ".reset!" do
       it "restores the built-in registry" do
         custom = described_class.new(irdi: "EXT_C900", name: "Custom", allowed_property_ids: %w[MDC_P004])
-        Cdd::MetaClasses.register(custom)
-        expect(Cdd::MetaClasses.for("EXT_C900")).not_to be_nil
-        Cdd::MetaClasses.reset!
-        expect(Cdd::MetaClasses.for("EXT_C900")).to be_nil
-        expect(Cdd::MetaClasses.for("MDC_C002")).not_to be_nil
+        Opencdd::MetaClasses.register(custom)
+        expect(Opencdd::MetaClasses.for("EXT_C900")).not_to be_nil
+        Opencdd::MetaClasses.reset!
+        expect(Opencdd::MetaClasses.for("EXT_C900")).to be_nil
+        expect(Opencdd::MetaClasses.for("MDC_C002")).not_to be_nil
       end
     end
   end

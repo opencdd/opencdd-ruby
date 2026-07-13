@@ -150,15 +150,15 @@ Cdd::Cddal.serialize_to_file(db, path)
 
 ## Acceptance criteria
 
-- [ ] `serialize(parse_file("oceanrunner.cddal"))` re-parses to a
+- [x] `serialize(parse_file("oceanrunner.cddal"))` re-parses to a
       semantically equal Database.
-- [ ] Output is deterministic: two runs produce identical bytes.
-- [ ] Multilingual properties emit one line per language.
-- [ ] Non-ASCII UTF-8 emitted literally; control chars escaped.
-- [ ] References prefer symbolic name → code → IRDI.
-- [ ] No `to_h` / `from_h` / `serialize` / `deserialize` instance method
+- [x] Output is deterministic: two runs produce identical bytes.
+- [x] Multilingual properties emit one line per language.
+- [x] Non-ASCII UTF-8 emitted literally; control chars escaped.
+- [x] References prefer symbolic name → code → IRDI.
+- [x] No `to_h` / `from_h` / `serialize` / `deserialize` instance method
       on any model class — only on the Serializer service.
-- [ ] `spec/cddal_spec.rb` round-trip examples green.
+- [x] `spec/cddal_spec.rb` round-trip examples green.
 
 ## Dependencies
 

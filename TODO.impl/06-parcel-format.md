@@ -218,21 +218,21 @@ extend.
 
 ## Acceptance criteria
 
-- [ ] Reader consumes `reference-docs/export_CDD_IEC62683 in ParcelMaker format.xlsx`
+- [x] Reader consumes `reference-docs/export_CDD_IEC62683 in ParcelMaker format.xlsx`
       without error; entity counts match the source dictionary.
-- [ ] Reader consumes `reference-docs/export_CDD_IEC62368 in EXCEL format/`
+- [x] Reader consumes `reference-docs/export_CDD_IEC62368 in EXCEL format/`
       (flat-dir .xls) without error.
-- [ ] Reader consumes `reference-docs/parcelmaker/(ParcelMaker)example_nut.xlsx`.
-- [ ] Writer round-trips: read → write → read yields semantically equal
+- [x] Reader consumes `reference-docs/parcelmaker/(ParcelMaker)example_nut.xlsx`.
+- [x] Writer round-trips: read → write → read yields semantically equal
       Database (plan 12).
-- [ ] `Sheet.scaffold(MDC_C002, "IEC62683")` produces the expected
+- [x] `Sheet.scaffold(MDC_C002, "IEC62683")` produces the expected
       default-columns list from `cdd-data/specs/parcelmaker/02_workbook_format.md`.
-- [ ] CSV writer emits UTF-8 with comma delimiter; re-reads via
+- [x] CSV writer emits UTF-8 with comma delimiter; re-reads via
       CsvReader to semantically equal Database.
-- [ ] `Parcel.split(by: :each_class)` produces N partitions, one per
+- [x] `Parcel.split(by: :each_class)` produces N partitions, one per
       class, each self-sufficient (declared properties + their value
       lists + their units).
-- [ ] All specs in `spec/parcel/` green.
+- [x] All specs in `spec/parcel/` green.
 
 ## Dependencies
 

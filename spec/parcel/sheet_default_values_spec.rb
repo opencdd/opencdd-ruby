@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::Parcel::Sheet, "#apply_default_values!" do
+RSpec.describe Opencdd::Parcel::Sheet, "#apply_default_values!" do
   def make_sheet(default_value:, rows:)
     header = [
       ["#CLASS_ID:=MDC_C002"],
@@ -14,7 +14,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#apply_default_values!" do
       ["#REQUIREMENT", "KEY", "OPT"],
     ]
     data = rows.map { |code, val| [nil, code, val] }
-    Cdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
+    Opencdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
   end
 
   it "fills empty cells with the column's default value" do
@@ -51,7 +51,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#apply_default_values!" do
   end
 end
 
-RSpec.describe Cdd::Parcel::Sheet, "#apply_all_default_values!" do
+RSpec.describe Opencdd::Parcel::Sheet, "#apply_all_default_values!" do
   def make_sheet(rows:)
     header = [
       ["#CLASS_ID:=MDC_C002"],
@@ -63,7 +63,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#apply_all_default_values!" do
       ["#REQUIREMENT", "KEY", "OPT"],
     ]
     data = rows.map { |code, sup| [nil, code, sup] }
-    Cdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
+    Opencdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
   end
 
   it "fills every column that has a default" do
@@ -88,7 +88,7 @@ RSpec.describe Cdd::Parcel::Sheet, "#apply_all_default_values!" do
       ["#REQUIREMENT", "KEY"],
     ]
     data = [[nil, "AAA001"]]
-    sheet = Cdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
+    sheet = Opencdd::Parcel::Sheet.from_rows(header + data, name: "TEST")
     expect { sheet.apply_all_default_values! }.not_to raise_error
   end
 end

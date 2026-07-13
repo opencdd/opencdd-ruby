@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::ParseHelpers do
+RSpec.describe Opencdd::ParseHelpers do
   describe ".parse_irdi_list" do
     it "returns [] for nil and blank input" do
       expect(described_class.parse_irdi_list(nil)).to eq([])
@@ -92,34 +92,34 @@ RSpec.describe Cdd::ParseHelpers do
   end
 
   describe "integration with Entity" do
-    it "is mixed into Cdd::Entity so subclasses can use parse helpers as private methods" do
-      expect(Cdd::Entity.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::Klass.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::Property.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::Unit.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::ValueList.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::ValueTerm.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::Relation.ancestors).to include(Cdd::ParseHelpers)
-      expect(Cdd::ViewControl.ancestors).to include(Cdd::ParseHelpers)
+    it "is mixed into Opencdd::Entity so subclasses can use parse helpers as private methods" do
+      expect(Opencdd::Entity.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::Klass.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::Property.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::Unit.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::ValueList.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::ValueTerm.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::Relation.ancestors).to include(Opencdd::ParseHelpers)
+      expect(Opencdd::ViewControl.ancestors).to include(Opencdd::ParseHelpers)
     end
 
     it "exposes a working synonym accessor on Entity via the mixed-in parse_pair_list" do
-      entity = Cdd::Entity.new(
-        irdi: Cdd::IRDI.parse("0112/2///62683#ACC001"),
+      entity = Opencdd::Entity.new(
+        irdi: Opencdd::IRDI.parse("0112/2///62683#ACC001"),
         properties: { "MDC_P007" => "(en, Foo, fr, Bidon)" },
       )
       expect(entity.synonymous_names).to eq([["en", "Foo"], ["fr", "Bidon"]])
     end
 
     it "exposes a working parse_irdi_list on Klass via the mixin" do
-      schema = Cdd::Parcel::SheetSchema.from_header_rows([
+      schema = Opencdd::Parcel::SheetSchema.from_header_rows([
         ["#PROPERTY_ID", "MDC_P001_5", "MDC_P013"],
         ["#PROPERTY_NAME.en", "Code", "Is case of"],
       ])
-      klass = Cdd::Klass.from_row(
+      klass = Opencdd::Klass.from_row(
         { "MDC_P001_5" => "0112/2///62683#ACC001", "MDC_P013" => "0112/2///62683#ACC099" },
         schema: schema,
-        meta_class_irdi: Cdd::IRDI.parse("0112/2///62656_1#MDC_C002"),
+        meta_class_irdi: Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002"),
       )
       expect(klass.is_case_of_irdis.map(&:to_s)).to eq(["0112/2///62683#ACC099"])
     end

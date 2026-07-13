@@ -7,10 +7,10 @@
 #   - instance_variable_set / instance_variable_get — same
 #   - respond_to?(...) — duck-typing that hides type errors
 #   - require_relative "..." — eager-loads, breaks load path
-#   - require "cdd/..." — same
+#   - require "opencdd/..." — same
 #
-# The generated racc parser (lib/cdd/cddal/generated_parser.rb) is
-# exempt because it is machine-generated from lib/cdd/cddal/cddal.y.
+# The generated racc parser (lib/opencdd/cddal/generated_parser.rb) is
+# exempt because it is machine-generated from lib/opencdd/cddal/cddal.y.
 # Fix the grammar source and regenerate; do not hand-edit the parser.
 
 RSpec.describe "code quality" do

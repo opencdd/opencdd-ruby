@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Cdd::GUID do
+RSpec.describe Opencdd::GUID do
   describe ".generate" do
     it "returns a 36-character RFC 4122 v4 UUID" do
       uuid = described_class.generate
@@ -34,10 +34,10 @@ RSpec.describe Cdd::GUID do
 
   describe ".set_on" do
     let(:entity) do
-      Cdd::Property.new(
-        irdi: Cdd::IRDI.parse("AAAP001"),
+      Opencdd::Property.new(
+        irdi: Opencdd::IRDI.parse("AAAP001"),
         properties: {},
-        meta_class_irdi: Cdd::IRDI.parse("MDC_C003"),
+        meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
     end
 
@@ -48,7 +48,7 @@ RSpec.describe Cdd::GUID do
     end
 
     it "overwrites any prior value in MDC_P066" do
-      entity.properties[Cdd::PropertyIds::MDC_P066] = "stale"
+      entity.properties[Opencdd::PropertyIds::MDC_P066] = "stale"
       described_class.set_on(entity)
       expect(entity["MDC_P066"]).not_to eq("stale")
     end

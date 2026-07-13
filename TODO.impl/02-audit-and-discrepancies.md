@@ -156,16 +156,16 @@ Never commit to main. Never push tags. No AI attribution in any commit.
 
 ## Acceptance criteria
 
-- [ ] Baseline spec output captured at `/tmp/cdd-baseline.log`.
-- [ ] All discrepancies from `03_property_registry.md` fixed.
-- [ ] `bundle exec rspec` green (or, if any pre-existing failures remain,
+- [x] Baseline spec output captured at `/tmp/cdd-baseline.log`.
+- [x] All discrepancies from `03_property_registry.md` fixed.
+- [x] `bundle exec rspec` green (or, if any pre-existing failures remain,
       their count is unchanged and they are documented in plan 12).
-- [ ] OceanRunner CDDAL round-trip still semantically equal.
-- [ ] `lib/cdd/property_ids.rb` REGISTRY contains every ID cited in
+- [x] OceanRunner CDDAL round-trip still semantically equal.
+- [x] `lib/cdd/property_ids.rb` REGISTRY contains every ID cited in
       `03_property_registry.md`.
-- [ ] No raw `"MDC_P022"` / `"MDC_P090"` / etc. literal in `lib/cdd/`
+- [x] No raw `"MDC_P022"` / `"MDC_P090"` / etc. literal in `lib/cdd/`
       outside `property_ids.rb` and `meta_class.rb`.
-- [ ] CDDAL spec draft at `cdd-data/reference-docs/specs/cddal-v1.adoc`
+- [x] CDDAL spec draft at `cdd-data/reference-docs/specs/cddal-v1.adoc`
       uses the corrected IDs in examples and appendices.
 
 ## Dependencies

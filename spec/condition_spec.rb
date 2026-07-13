@@ -3,7 +3,7 @@
 require "spec_helper"
 require "set"
 
-RSpec.describe Cdd::Condition do
+RSpec.describe Opencdd::Condition do
   describe ".parse" do
     it "parses a simple equality expression" do
       cond = described_class.parse("operating_mode == surface_water")
