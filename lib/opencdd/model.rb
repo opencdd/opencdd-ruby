@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 module Opencdd
-  # CDD-native model layer backed by Lutaml::Model. Provides typed
-  # attributes with semantic CDD names (preferred_name, superclass,
-  # class_type) — not wire-format keys (MDC_P004, MDC_P010). YAML
-  # is the canonical persistence format per user decision (2026-07-13).
+  # Database-level YAML persistence helpers. Entity-level YAML
+  # serialization lives on +Opencdd::Entity::Yaml+ (the deepened
+  # adapter inside Entity's namespace). This module holds the
+  # whole-database YAML wrapper and the per-entity file store.
   module Model
-    autoload :YamlEntity,   "opencdd/model/yaml_entity"
     autoload :YamlDatabase, "opencdd/model/yaml_database"
     autoload :EntityStore,  "opencdd/model/entity_store"
   end
