@@ -99,14 +99,14 @@ it depends on.
 
 ## Acceptance
 
-- [ ] `database.rb` under 250 lines (core only)
-- [ ] Each concern in its own file under `lib/opencdd/database/`
-- [ ] All modules use autoload from `lib/opencdd/database.rb`
-- [ ] No `send` to private methods across modules
-- [ ] No `instance_variable_get/set` across objects
-- [ ] No `require_relative` (autoload only)
-- [ ] All 835+ specs pass unchanged
-- [ ] Database#public_methods surface unchanged (pure refactor)
+- [x] `database.rb` under 250 lines (core only) — 150 lines
+- [x] Each concern in its own file under `lib/opencdd/database/`
+- [x] All modules use autoload from `lib/opencdd/database.rb`
+- [x] No `send` to private methods across modules
+- [x] No `instance_variable_get/set` across objects
+- [x] No `require_relative` (autoload only)
+- [x] All 835+ specs pass unchanged
+- [x] Database#public_methods surface unchanged (pure refactor)
 
 ## Dependencies
 

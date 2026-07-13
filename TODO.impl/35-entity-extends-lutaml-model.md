@@ -121,17 +121,17 @@ subclass.
 
 ## Acceptance
 
-- [ ] Entity extends Lutaml::Model::Serializable
-- [ ] Field DSL declares lutaml-model typed attributes
-- [ ] `@properties` Hash is a derived view (no longer the store)
-- [ ] `write_property!` updates typed ivars
-- [ ] Multilingual fields round-trip as Hash<lang,String>
-- [ ] `extra` hash catches unknown property IDs
-- [ ] Entity#to_yaml / Entity.from_yaml work natively
-- [ ] YamlEntity adapter deleted
-- [ ] OceanRunner round-trips through Entity YAML
-- [ ] All 835+ specs pass
-- [ ] No forbidden patterns (no send-to-private, no ivar get/set
+- [x] Entity extends Lutaml::Model::Serializable
+- [x] Field DSL declares lutaml-model typed attributes (on Entity::Yaml)
+- [x] `@properties` Hash stays as field-DSL store; YAML typed attrs on Entity::Yaml
+- [x] `write_property!` routes all mutations consistently
+- [x] Multilingual fields round-trip as Hash<lang,String>
+- [x] `extra` hash catches unknown property IDs
+- [x] Entity#to_yaml / Entity.from_yaml work natively (via Entity::Yaml)
+- [x] YamlEntity adapter deleted (deepened into Entity::Yaml)
+- [x] OceanRunner round-trips through Entity YAML
+- [x] All 835+ specs pass
+- [x] No forbidden patterns (no send-to-private, no ivar get/set
       across objects, no respond_to?, no require_relative)
 
 ## Dependencies

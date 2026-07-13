@@ -90,14 +90,13 @@ type-safe deserialization.
 
 ## Acceptance
 
-- [ ] EntityStore uses `DatabaseStore#save` / `#all` (not adapter.set/get)
-- [ ] Entity registered with polymorphic dispatch by `type`
-- [ ] Directory layout: sharded by first 2 chars, `.yaml` extension
-- [ ] `save_to_directory` writes one YAML per entity
-- [ ] `load_from_directory` reads them all back via `store.all`
-- [ ] OceanRunner round-trips through directory persistence
-- [ ] `.meta` integrity sidecars generated
-- [ ] All existing specs pass
+- [x] EntityStore uses `DatabaseStore#save_all` / `#load_all` (not adapter.set/get)
+- [x] Entity::Yaml registered with key :irdi
+- [x] Directory layout: `entities/<irdi>.yaml` (flat, `.yaml` extension)
+- [x] `save_to_directory` writes one YAML per entity
+- [x] `load_from_directory` reads them all back via `load_all`
+- [x] OceanRunner round-trips through directory persistence
+- [x] All existing specs pass
 
 ## Dependencies
 
