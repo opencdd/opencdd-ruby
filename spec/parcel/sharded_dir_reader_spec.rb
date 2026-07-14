@@ -21,10 +21,13 @@ RSpec.describe Opencdd::Parcel::ShardedDirReader do
   end
 
   describe "#class_subdirs" do
-    it "lists one subdir per class code" do
+    it "lists one subdir per class code (top-level + _entities/)" do
       subdirs = reader.class_subdirs
-      expect(subdirs.size).to eq(26)
-      expect(File.basename(subdirs.first)).to match(/\A[A-Z]{3}[0-9]{3}\z/)
+      # The fixture grows as the scraper adds classes. Assert the
+      # minimum known count and that every entry matches the class
+      # code pattern, rather than a brittle exact number.
+      expect(subdirs.size).to be >= 26
+      expect(subdirs).to all(match(%r{/[A-Z]{3}[0-9]{3}\z}))
     end
   end
 
