@@ -5,3 +5,7 @@ tmp/
 *.swp
 .DS_Store
 coverage/
+
+# Local symlink to scraped .xls data from the sibling cdd-data repo.
+# Machine-specific — each developer symlinks to their own checkout.
+/downloads
