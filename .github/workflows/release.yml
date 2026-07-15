@@ -24,5 +24,6 @@ jobs:
     uses: metanorma/ci/.github/workflows/rubygems-release.yml@main
     with:
       next_version: ${{ github.event.inputs.next_version }}
+      role_to_assume: ${{ secrets.OPENCDD_RUBYGEMS_TRUSTED_PUBLISHER_ROLE }}
     secrets:
       pat_token: ${{ secrets.OPENCDD_CI_PAT_TOKEN }}
