@@ -195,13 +195,13 @@ module Opencdd
         props[Opencdd::PropertyIds::MDC_P203] = codomain if codomain
         props[Opencdd::PropertyIds::MDC_P204] = formula if formula
 
-        props["EXT_P002"] = rejoin_set(controlled_classes) if controlled_classes&.any?
-        props["EXT_P003"] = rejoin_set(shown_properties) if shown_properties&.any?
+        props[Opencdd::PropertyIds::EXT_P002] = rejoin_set(controlled_classes) if controlled_classes&.any?
+        props[Opencdd::PropertyIds::EXT_P003] = rejoin_set(shown_properties) if shown_properties&.any?
 
         extra&.each { |k, v| props[k.to_s] = v }
 
         entity_class = Opencdd::MetaClasses.entity_class_for_type(type&.to_sym) || Opencdd::Klass
-        meta_code = Opencdd::MetaClasses.meta_class_for_type(type&.to_sym) || "MDC_C002"
+        meta_code = Opencdd::MetaClasses.meta_class_for_type(type&.to_sym) || Opencdd::MetaClasses::MDC_C002
 
         entity_class.new(
           irdi: irdi ? Opencdd::IRDI.parse(irdi) : nil,

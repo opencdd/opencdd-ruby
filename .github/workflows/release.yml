@@ -24,6 +24,7 @@ jobs:
     uses: metanorma/ci/.github/workflows/rubygems-release.yml@main
     with:
       next_version: ${{ github.event.inputs.next_version }}
+      gated: false
     secrets:
       pat_token: ${{ secrets.OPENCDD_CI_PAT_TOKEN }}
       rubygems-api-key: ${{ secrets.OPENCDD_CI_RUBYGEM_API_KEY }}
