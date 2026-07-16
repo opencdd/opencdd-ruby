@@ -25,6 +25,7 @@ jobs:
     with:
       next_version: ${{ github.event.inputs.next_version }}
       gated: false
+      release_command: gem build *.gemspec && mkdir -p pkg && mv *.gem pkg/ && gem push pkg/*.gem
     secrets:
       pat_token: ${{ secrets.OPENCDD_CI_PAT_TOKEN }}
       rubygems-api-key: ${{ secrets.OPENCDD_CI_RUBYGEM_API_KEY }}
