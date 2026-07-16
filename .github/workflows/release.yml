@@ -26,3 +26,4 @@ jobs:
       next_version: ${{ github.event.inputs.next_version }}
     secrets:
       pat_token: ${{ secrets.OPENCDD_CI_PAT_TOKEN }}
+      rubygems-api-key: ${{ secrets.OPENCDD_CI_RUBYGEMS_API_KEY }}
