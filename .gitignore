@@ -6,6 +6,12 @@ tmp/
 .DS_Store
 coverage/
 
+# Gemfile.lock is NOT committed for gems — the gemspec is the
+# dependency source of truth. Also required by metanorma/ci's
+# rubygems-release workflow, which regenerates Gemfile.lock before
+# gem bump and aborts if the working tree is dirty.
+Gemfile*.lock
+
 # Local symlink to scraped .xls data from the sibling cdd-data repo.
 # Machine-specific — each developer symlinks to their own checkout.
 /downloads
