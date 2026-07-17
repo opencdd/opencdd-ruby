@@ -73,9 +73,11 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
   end
 
   describe Opencdd::Model::EntityStore do
-    it "initializes with a path" do
-      store = described_class.new("/tmp/test-store")
-      expect(store.path).to eq("/tmp/test-store")
+    it "initializes with an expanded path" do
+      Dir.mktmpdir("entity-store") do |dir|
+        store = described_class.new(dir)
+        expect(store.path).to eq(File.expand_path(dir))
+      end
     end
 
     it "save_database writes files to disk" do
