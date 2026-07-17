@@ -40,6 +40,18 @@ module Opencdd
         lines.join("\n") + "\n"
       end
 
+      # Emit a single entity as a standalone CDDAL document.
+      # Returns the canonical text (with header) for one entity,
+      # suitable for download from the browser or extraction from
+      # a database by IRDI.
+      #
+      # Round-trips: <tt>Opencdd::Cddal.parse(emit_entity(e))</tt>
+      # yields a Database whose single entity is equivalent to +e+.
+      def emit_entity(entity)
+        body = emit_instance(entity).join("\n")
+        "#{HEADER.chomp}\n#{body}\n"
+      end
+
       private
 
       def emit_default_aliases(lines)
