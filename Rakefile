@@ -42,7 +42,7 @@ end
 namespace :lint do
   desc "Verify no raw MDC_P### / MDC_C### literals outside the registry files"
   task :registry do
-    sh "bin/lint-no-raw-mdc"
+    sh "bash", "bin/lint-no-raw-mdc"
   end
 end
 
