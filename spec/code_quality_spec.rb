@@ -61,9 +61,33 @@ RSpec.describe "code quality" do
       "require_relative found — use autoload in the parent namespace (TODO.work/01):\n#{hits.join("\n")}"
   end
 
-  it "does not use require for internal cdd paths" do
-    hits = grep(/^\s*require\s+["']cdd\//)
+  it "does not use require for internal opencdd paths" do
+    hits = grep(/^\s*require\s+["']opencdd\//).concat(grep(/^\s*require\s+["']cdd\//))
     expect(hits).to be_empty,
       "internal require found — use autoload in the parent namespace (TODO.work/01):\n#{hits.join("\n")}"
+  end
+
+  it "autoloads every lib/opencdd/**/*.rb file from its parent namespace" do
+    misses = []
+    Dir.glob("lib/opencdd/**/*.rb").reject do |f|
+      f.end_with?("/generated_parser.rb") || f.end_with?("version.rb")
+    end.each do |f|
+      name = File.basename(f, ".rb")
+      camel = name.split("_").map(&:capitalize).join
+      parent_dir = File.dirname(f)
+      parent_file = "#{parent_dir}.rb"
+      unless File.file?(parent_file)
+        grand = File.dirname(parent_dir)
+        parent_file = File.join(grand, File.basename(parent_dir) + ".rb")
+      end
+      content = File.file?(parent_file) ? File.read(parent_file) : ""
+      pattern1 = /autoload\s+:(?:#{camel}|#{name})\b/
+      pattern2 = %r{autoload\s+:[A-Z][A-Za-z0-9]*,\s*"opencdd/[^"]*#{name}"}
+      unless content.match?(pattern1) || content.match?(pattern2)
+        misses << "#{f} → expected autoload in #{parent_file}"
+      end
+    end
+    expect(misses).to be_empty,
+      "orphan Ruby files missing autoload entries:\n#{misses.join("\n")}"
   end
 end
