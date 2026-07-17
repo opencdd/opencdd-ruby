@@ -448,6 +448,18 @@ ParcelMaker's interactive flows in a browser. Plans are in `TODO.cdd-editor/`.
   + iec61360 (574) + iec62683 (1855) + iec61987 (11831) =
   **14,529 entities** across 7 dictionaries. Run `cd browser && npm run dev`
   to serve at `http://localhost:5173`.
+- **2026-07-17 data pipeline additions** (see `TODO.final/`):
+  - `rake browser:build_parcel[<dict>]` — emit a Parcel .xlsx via
+    `Opencdd::Parcel::Writer`. Output at `data/<dict>/parcel/<parcel_id>.xlsx`.
+  - `rake browser:build_versions[<dict>]` — emit per-version JSON
+    via `Opencdd::Parcel::VersionedReader` + `Opencdd::Exporters::Json#payload_for`.
+    Output at `data/<dict>/versions/<code>/<unid>.json`.
+  - `rake browser:build_all_parcel` — batch Parcel emit across all dicts.
+- **2026-07-17 public API additions**:
+  - `Opencdd::Cddal::Serializer#emit_entity(entity)` — single-entity CDDAL.
+  - `Opencdd::Exporters::Json#payload_for(entity, database: nil)` — registry-dispatched per-entity payload (no case/when).
+  - `Opencdd::Parcel::VersionedReader#versions_for(code)`, `#load_version(code, unid)`.
+  - `Opencdd::EntityDiff.between(a, b)` + `#added` / `#removed` / `#changed`.
 - **Phase 2 (lutaml-model migration) NOT started**: tracked in
   `TODO.full-cdd/16-lutaml-model-migration.md`. This is the major
   remaining architectural work — migrate entities to `Lutaml::Model`

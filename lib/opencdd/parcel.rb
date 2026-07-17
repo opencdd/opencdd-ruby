@@ -12,6 +12,7 @@ module Opencdd
     autoload :WorkbookReader,  "opencdd/parcel/workbook_reader"
     autoload :FlatDirReader,   "opencdd/parcel/flat_dir_reader"
     autoload :ShardedDirReader, "opencdd/parcel/sharded_dir_reader"
+    autoload :VersionedReader,  "opencdd/parcel/versioned_reader"
     autoload :LayoutDetector,  "opencdd/parcel/layout_detector"
     autoload :EntityManifest,  "opencdd/parcel/entity_manifest"
     autoload :ReferencedIrdis,  "opencdd/parcel/referenced_irdis"

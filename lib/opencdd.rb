@@ -36,6 +36,7 @@ module Opencdd
   autoload :Reader,              "opencdd/reader"
   autoload :ClassTree,           "opencdd/class_tree"
   autoload :Visitor,             "opencdd/visitor"
+  autoload :EntityDiff,          "opencdd/entity_diff"
 
   autoload :Parcel, "opencdd/parcel"
 
