@@ -53,7 +53,34 @@ module Opencdd
         @nodes << view_control_node(vc)
       end
 
-      private
+      # ─────────────────────────────────────────────────────────────
+      # Public per-entity payload API
+      #
+      # `payload_for(entity, database:)` returns the wire-format Hash
+      # for a single entity. Dispatch is via the PAYLOAD_BUILDERS
+      # registry — adding a new entity type means adding one entry to
+      # the registry and one builder method, not editing a switch.
+      #
+      # The optional `database:` enables cross-entity resolution
+      # (e.g. property → value_list). Without it, cross-links are
+      # omitted (payload still has all the entity's own fields).
+      # ─────────────────────────────────────────────────────────────
+      PAYLOAD_BUILDERS = {
+        Opencdd::Klass        => :class_node,
+        Opencdd::Property     => :property_node,
+        Opencdd::Unit         => :unit_node,
+        Opencdd::ValueList    => :value_list_node,
+        Opencdd::ValueTerm    => :value_term_node,
+        Opencdd::Relation     => :relation_node,
+        Opencdd::ViewControl  => :view_control_node,
+      }.freeze
+
+      def payload_for(entity, database: nil)
+        @database = database if database
+        builder = PAYLOAD_BUILDERS[entity.class]
+        raise ArgumentError, "No JSON payload builder for #{entity.class}" unless builder
+        public_send(builder, entity)
+      end
 
       # ─────────────────────────────────────────────────────────────
       # Open/closed payload builders
@@ -97,6 +124,8 @@ module Opencdd
       def view_control_node(vc)
         entity_payload(vc).merge(type: "view_control").compact
       end
+
+      private
 
       # Iterates every declared field on the entity's class (walking
       # the ancestor chain via FieldRegistry.fields_for). Each field's
