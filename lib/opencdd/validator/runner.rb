@@ -77,7 +77,7 @@ module Opencdd
         base = column_iri.to_s.split(".").first
         entry = Opencdd::PropertyIds::REGISTRY[base]
         kind = entry&.value_kind
-        column_schema = schema&.column_for(base)
+        column_schema = schema&.find_by_property_id(base)
         RuleContext.new(
           database: database,
           entity: entity,
