@@ -23,6 +23,7 @@ module Opencdd
         "UNIT"       => :unit,
         "VALUELIST"  => :value_list,
         "VALUETERMS" => :value_term,
+        "LISTOFUNITS" => :list_of_unit,
       }.freeze
 
       attr_reader :path

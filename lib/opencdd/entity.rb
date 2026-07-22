@@ -69,6 +69,17 @@ module Opencdd
     def self.from_row(row, schema:, meta_class_irdi:, code_property_id: nil)
       code_property_id ||= default_code_property_id(meta_class_irdi)
       raw_code = code_property_id && row[code_property_id]
+      # Fall back to other known code property IDs when the entity-
+      # specific one is absent (happens with name-only header sheets
+      # where "Code" synthesizes to MDC_P001_5 regardless of type).
+      if raw_code.nil? || raw_code.to_s.strip.empty?
+        Opencdd::MetaClasses::CODE_PROPERTY_IDS.each_value do |alt_id|
+          val = row[alt_id]
+          next if val.nil? || val.to_s.strip.empty?
+          raw_code = val
+          break
+        end
+      end
       irdi = raw_code && Opencdd::IRDI.parse(raw_code)
 
       props = row.each_with_object({}) do |(k, v), h|
