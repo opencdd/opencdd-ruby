@@ -79,6 +79,7 @@ module Opencdd
         "MDC_C011" => "MDC_P001_13",
         "MDC_C009" => "MDC_P001_10",
         "MDC_C010" => "MDC_P001_11",
+        "MDC_C0100" => "C0101",
         "EXT_C001" => "EXT_P001",
       }.freeze
 
@@ -89,6 +90,7 @@ module Opencdd
         "MDC_C011" => :relation,
         "MDC_C009" => :unit,
         "MDC_C010" => :value_term,
+        "MDC_C0100" => :list_of_unit,
         "EXT_C001" => :view_control,
       }.freeze
 
@@ -252,6 +254,13 @@ module Opencdd
             type: :view_control,
             allowed_property_ids: common + %w[EXT_P002 EXT_P003],
           )
+          list_of_unit = MetaClass.new(
+            irdi: "MDC_C0100",
+            name: "ListOfUnit",
+            entity_class: Opencdd::Entity,
+            type: :list_of_unit,
+            allowed_property_ids: common,
+          )
           {
             klass_class.irdi    => klass_class,
             property_class.irdi => property_class,
@@ -260,6 +269,7 @@ module Opencdd
             unit.irdi           => unit,
             value_term.irdi     => value_term,
             view_control.irdi   => view_control,
+            list_of_unit.irdi   => list_of_unit,
           }
         end
       end

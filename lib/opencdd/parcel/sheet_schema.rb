@@ -159,6 +159,9 @@ module Opencdd
 
       def finalize!
         ids = @column_directives["PROPERTY_ID"] || []
+        if ids.empty? || ids.all? { |id| id.nil? || id.to_s.strip.empty? }
+          ids = synthesize_ids_from_names
+        end
         ids.each_with_index do |id, idx|
           next if id.nil? || id.to_s.strip.empty?
 
@@ -192,6 +195,81 @@ module Opencdd
         end
 
         freeze
+      end
+
+      # When a sheet has no #PROPERTY_ID directive row (only
+      # #PROPERTY_NAME), synthesize property IDs from the names.
+      # This happens with some export formats (notably RELATION
+      # exports from cdd.iec.ch) that omit the PROPERTY_ID row.
+      NAME_TO_PROPERTY_ID = {
+        "Code"                   => "MDC_P001_5",
+        "Version"                => "MDC_P002_1",
+        "Revision"               => "MDC_P002_2",
+        "VersionInitiationDate"  => "MDC_P003_1",
+        "VersionReleaseDate"     => "MDC_P003_2",
+        "RevisionReleaseDate"    => "MDC_P003_3",
+        "PreferredName"          => "MDC_P004",
+        "SynonymousName"         => "MDC_P007",
+        "ShortName"              => "MDC_P005",
+        "Definition"             => "MDC_P006",
+        "DefinitionSource"       => "MDC_P006_1",
+        "Note"                   => "MDC_P008",
+        "Remark"                 => "MDC_P009",
+        "Drawing"                => "MDC_P008_1",
+        "GUID"                   => "MDC_P066",
+        "TimeStamp"              => "MDC_P067",
+        "ClassType"              => "MDC_P011",
+        "Superclass"             => "MDC_P010",
+        "IsCaseOf"               => "MDC_P013",
+        "ApplicableProperties"   => "MDC_P014",
+        "ImportedProperties"     => "MDC_P090",
+        "SubClassSelection"      => "MDC_P016",
+        "DataType"               => "MDC_P022",
+        "ValueFormat"            => "MDC_P024",
+        "DefinitionClass"        => "MDC_P021",
+        "Unit"                   => "MDC_P041",
+        "Condition"              => "MDC_P028",
+        "ListType"               => "MDC_P046",
+        "CodeList"               => "MDC_P044",
+        "TermList"               => "MDC_P043",
+        "EnumerationCode"        => "MDC_P044",
+        "RelationType"           => "MDC_P200",
+        "RelationDomain"         => "MDC_P201",
+        "FunctionDomain"         => "MDC_P202",
+        "FunctionCodomain"       => "MDC_P203",
+        "Formula"                => "MDC_P204",
+        "FormulaLanguage"        => "MDC_P205",
+        "FormulaExternalSolver"  => "MDC_P206",
+        "TriggerEvent"           => "MDC_P207",
+        "DomainElementType"      => "MDC_P208",
+        "CodomainElementType"    => "MDC_P209",
+        "Role"                   => "MDC_P210",
+        "Segment"                => "MDC_P211",
+        "SuperRelation"          => "MDC_P212",
+      }.freeze
+
+      def synthesize_ids_from_names
+        names = nil
+        @column_directives.each do |key, vals|
+          base, = key.split(".", 2)
+          next unless base == "PROPERTY_NAME"
+          names = vals
+          break
+        end
+        return [] unless names
+        Array.new(names.size) do |idx|
+          val = names[idx]
+          next nil if val.nil? || val.to_s.strip.empty?
+          raw = val.to_s.strip
+          if raw =~ /\A(.+)\.([A-Za-z]{2})\z/
+            base = $1
+            lang = $2
+            pid = NAME_TO_PROPERTY_ID[base]
+            pid ? "#{pid}.#{lang.downcase}" : nil
+          else
+            NAME_TO_PROPERTY_ID[raw]
+          end
+        end
       end
 
       def [](property_id_or_name)
