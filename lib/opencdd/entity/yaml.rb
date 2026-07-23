@@ -96,55 +96,52 @@ module Opencdd
       # ── Catch-all for unknown properties (lossless) ────────
       attribute :extra, :hash
 
+      # Fields that should NOT be driven from FieldRegistry in
+      # from_entity — they're either identity fields (irdi, code)
+      # or catch-all (extra, raw_properties, version_history, etc.)
+      # handled separately.
+      SKIP_FIELDS = %i[
+        raw_properties version_history dates
+        source_document_of_definition synonymous_names
+        simplified_drawing example time_stamp
+        status_level publisher published_in responsible_committee
+        change_request_id data_object_identifier
+        alternative_unit_irdis domain_of_function_irdis
+        formula_language external_solver trigger_event
+        domain_element_type codomain_element_type role segment
+        super_relation_irdi sgml_representation
+        unit_sgml class_value_assignment coded_name
+        symbol_in_text constraint type_classification
+        applicable_documents imported_documents
+        superclass_type_property
+      ].freeze
+
       # ── Conversion: Entity → Entity::Yaml ───────────────────
+      # Drives from FieldRegistry — the same SSOT that drives the
+      # JSON exporter. Each field's wire_name (from the `as:` DSL
+      # option) determines the YAML attribute to set. Adding a new
+      # field requires zero changes here if the wire_name matches
+      # a declared YAML attribute.
       def self.from_entity(entity)
         attrs = {
           irdi: entity.irdi&.to_s,
           type: entity.type&.to_s,
           code: entity.code,
-          guid: entity[Opencdd::PropertyIds::MDC_P066],
-          version: entity[Opencdd::PropertyIds::MDC_P002_1],
-          revision: entity[Opencdd::PropertyIds::MDC_P002_2],
         }
 
-        attrs[:preferred_name] = extract_ml(entity, Opencdd::PropertyIds::MDC_P004)
-        attrs[:short_name]     = extract_ml(entity, Opencdd::PropertyIds::MDC_P005)
-        attrs[:definition]     = extract_ml(entity, Opencdd::PropertyIds::MDC_P006)
-        attrs[:note]           = extract_ml(entity, Opencdd::PropertyIds::MDC_P008)
-        attrs[:remark]         = extract_ml(entity, Opencdd::PropertyIds::MDC_P009)
-        attrs[:description]    = extract_ml(entity, Opencdd::PropertyIds::MDC_P112)
+        declared_attrs = attribute_names
+        seen_property_ids = {}
 
-        case entity.type
-        when :class
-          attrs[:class_type] = entity.read_field(:class_type)&.to_s
-          attrs[:superclass] = entity.read_field(:superclass_irdi)&.to_s
-          attrs[:is_case_of] = entity.read_field(:is_case_of_irdis)&.map(&:to_s) || []
-          attrs[:applicable_properties] = entity.read_field(:applicable_property_irdis)&.map(&:to_s) || []
-          attrs[:imported_properties] = entity.read_field(:imported_property_irdis)&.map(&:to_s) || []
-          attrs[:sub_class_selection] = entity.read_field(:sub_class_selection_irdis)&.map(&:to_s) || []
-        when :property
-          attrs[:data_type] = entity.read_field(:parsed_data_type)&.to_s
-          attrs[:value_format] = entity.read_field(:parsed_value_format)&.to_s
-          attrs[:definition_class] = entity.read_field(:definition_class_irdi)&.to_s
-          attrs[:unit] = entity.read_field(:unit_irdi)&.to_s
-          attrs[:condition] = entity.read_field(:condition)&.to_s
-          attrs[:property_data_element_type] = entity.read_field(:property_data_element_type)&.to_s
-        when :unit
-          attrs[:unit_structure] = entity.read_field(:structure)
-          attrs[:unit_text] = entity.read_field(:text_representation)
-        when :value_list
-          attrs[:list_type] = entity.read_field(:list_type)&.to_s
-          attrs[:code_list] = entity.read_field(:code_list) || []
-          attrs[:term_irdis] = entity.read_field(:term_irdis)&.map(&:to_s) || []
-        when :value_term
-          attrs[:enumeration_code] = entity.read_field(:enumeration_code)
-        when :relation
-          attrs[:relation_type] = entity.read_field(:relation_type)&.to_s
-          attrs[:codomain] = entity.read_field(:codomain_irdi)&.to_s
-          attrs[:formula] = entity.read_field(:formula)
-        when :view_control
-          attrs[:controlled_classes] = entity.read_field(:controlled_class_irdis)&.map(&:to_s) || []
-          attrs[:shown_properties] = entity.read_field(:shown_property_irdis)&.map(&:to_s) || []
+        Opencdd::Entity::FieldRegistry.fields_for(entity.class).each do |field|
+          next if SKIP_FIELDS.include?(field.name)
+          next unless declared_attrs.include?(field.wire_name)
+          next if field.property_id && seen_property_ids.key?(field.property_id)
+          seen_property_ids[field.property_id] = true if field.property_id
+
+          value = read_field_for_yaml(entity, field)
+          next if value.nil?
+
+          attrs[field.wire_name.to_sym] = value
         end
 
         extra = extract_extra(entity)
@@ -186,10 +183,17 @@ module Opencdd
         props[Opencdd::PropertyIds::MDC_P023_1] = unit_text if unit_text
 
         props[Opencdd::PropertyIds::MDC_P046] = list_type if list_type
-        props[Opencdd::PropertyIds::MDC_P044] = rejoin_set(code_list) if code_list&.any?
         props[Opencdd::PropertyIds::MDC_P043] = rejoin_set(term_irdis) if term_irdis&.any?
 
-        props[Opencdd::PropertyIds::MDC_P044] = enumeration_code if enumeration_code
+        # MDC_P044 is overloaded: code_list (value_list, collection)
+        # vs enumeration_code (value_term, scalar). Guard by type to
+        # prevent the value_term path from clobbering the value_list.
+        case type&.to_sym
+        when :value_list
+          props[Opencdd::PropertyIds::MDC_P044] = rejoin_set(code_list) if code_list&.any?
+        when :value_term
+          props[Opencdd::PropertyIds::MDC_P044] = enumeration_code if enumeration_code
+        end
 
         props[Opencdd::PropertyIds::MDC_P200] = relation_type if relation_type
         props[Opencdd::PropertyIds::MDC_P203] = codomain if codomain
@@ -229,7 +233,7 @@ module Opencdd
         MDC_P011 MDC_P010 MDC_P010_1
         MDC_P013 MDC_P014 MDC_P090 MDC_P016
         MDC_P022 MDC_P024 MDC_P021 MDC_P041 MDC_P028 MDC_P020
-        MDC_P023 MDC_P023_1
+        MDC_P023 MDC_P023_1 MDC_P023_2
         MDC_P046 MDC_P044 MDC_P043
         MDC_P200 MDC_P203 MDC_P204
         EXT_P002 EXT_P003
@@ -261,6 +265,53 @@ module Opencdd
 
       def rejoin_set(list)
         Opencdd::StructuredValues.rejoin(list)
+      end
+
+      # ── FieldRegistry-driven value conversion ───────────────
+      # For multilingual fields, returns the full Hash<lang,text>
+      # by scanning @properties for <property_id>.<lang> keys.
+      # For scalar/collection fields, reads through the field DSL
+      # and converts to YAML-compatible types.
+      def self.read_field_for_yaml(entity, field)
+        if field.multilingual? && field.property_id
+          extract_ml(entity, field.property_id)
+        else
+          value = entity.read_field(field.name)
+          return nil if value.nil?
+          field_to_yaml(value, field)
+        end
+      end
+
+      def self.field_to_yaml(value, field)
+        case field.value_kind
+        when :synonym_pairs
+          return nil if value.nil?
+          value.transform_keys(&:to_s)
+        when :irdi, :identifier_ref, :class_ref
+          value&.to_s
+        when :set_of_refs, :string_list
+          return nil if value.nil? || value.empty?
+          value.map(&:to_s)
+        when :string, :date, :date_time, :condition
+          value&.to_s
+        when :integer
+          value
+        when :boolean
+          value
+        else
+          case value
+          when Array then value.empty? ? nil : value.map(&:to_s)
+          when Hash then value.empty? ? nil : value
+          else value.to_s
+          end
+        end
+      end
+
+      # Returns the list of declared lutaml-model attribute names.
+      # Used by from_entity to check if a field's wire_name matches
+      # a declared YAML attribute.
+      def self.attribute_names
+        attributes.map { |name, _| name.to_s }
       end
     end
   end

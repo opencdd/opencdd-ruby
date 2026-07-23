@@ -7,6 +7,7 @@ module Opencdd
     autoload :Parser,          "opencdd/cddal/parser"
     autoload :GeneratedParser, "opencdd/cddal/generated_parser"
     autoload :Builder,         "opencdd/cddal/builder"
+    autoload :ImportPipeline,  "opencdd/cddal/import_pipeline"
     autoload :Serializer,      "opencdd/cddal/serializer"
     autoload :Resolver,        "opencdd/cddal/resolver"
     autoload :Fetcher,         "opencdd/cddal/fetcher"
