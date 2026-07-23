@@ -53,6 +53,10 @@ module Opencdd
         @nodes << view_control_node(vc)
       end
 
+      def visit_list_of_unit(lou)
+        @nodes << list_of_unit_node(lou)
+      end
+
       # ─────────────────────────────────────────────────────────────
       # Public per-entity payload API
       #
@@ -73,6 +77,7 @@ module Opencdd
         Opencdd::ValueTerm    => :value_term_node,
         Opencdd::Relation     => :relation_node,
         Opencdd::ViewControl  => :view_control_node,
+        Opencdd::ListUnit     => :list_of_unit_node,
       }.freeze
 
       def payload_for(entity, database: nil)
@@ -123,6 +128,10 @@ module Opencdd
 
       def view_control_node(vc)
         entity_payload(vc).merge(type: "view_control").compact
+      end
+
+      def list_of_unit_node(lou)
+        entity_payload(lou).merge(type: "list_of_unit").compact
       end
 
       private
