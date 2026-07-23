@@ -109,6 +109,7 @@ module Opencdd
     def value_terms    ; @entities_by_type[:value_term]   || [] ; end
     def relations      ; @entities_by_type[:relation]     || [] ; end
     def view_controls  ; @entities_by_type[:view_control] || [] ; end
+    def list_of_units  ; @entities_by_type[:list_of_unit] || [] ; end
 
     def entities_of_type(type)
       @entities_by_type[type.to_sym] || []

@@ -28,6 +28,7 @@ module Opencdd
   autoload :ValueTerm,   "opencdd/value_term"
   autoload :Relation,    "opencdd/relation"
   autoload :ViewControl, "opencdd/view_control"
+  autoload :ListUnit,    "opencdd/list_unit"
 
   autoload :Database,            "opencdd/database"
   autoload :EffectiveProperties, "opencdd/effective_properties"

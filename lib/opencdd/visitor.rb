@@ -18,6 +18,7 @@ module Opencdd
       visit_value_terms(database)
       visit_relations(database)
       visit_view_controls(database)
+      visit_list_of_units(database)
       self
     end
 
@@ -55,6 +56,10 @@ module Opencdd
       each_sorted(database.view_controls) { |v| visit_view_control(v) }
     end
 
+    def visit_list_of_units(database)
+      each_sorted(database.list_of_units) { |l| visit_list_of_unit(l) }
+    end
+
     # Single source of truth for sort-by-code traversal. Was
     # duplicated as `.sort_by { |x| x.code.to_s }` in 7 methods.
     def each_sorted(entities)
@@ -83,6 +88,10 @@ module Opencdd
 
     def visit_view_control(vc)
       @seen << vc.irdi if vc.irdi
+    end
+
+    def visit_list_of_unit(lou)
+      @seen << lou.irdi if lou.irdi
     end
 
     def reset!
