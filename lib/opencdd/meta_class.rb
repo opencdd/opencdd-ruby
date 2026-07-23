@@ -257,7 +257,7 @@ module Opencdd
           list_of_unit = MetaClass.new(
             irdi: "MDC_C0100",
             name: "ListOfUnit",
-            entity_class: Opencdd::Entity,
+            entity_class: Opencdd::ListUnit,
             type: :list_of_unit,
             allowed_property_ids: common,
           )
