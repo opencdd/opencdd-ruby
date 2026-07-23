@@ -69,13 +69,6 @@ module Opencdd
     end
     field :condition,              synthetic: true do
       @condition ||= Opencdd::Condition.parse(properties[Opencdd::PropertyIds::MDC_P028])
-    rescue ArgumentError
-      # IEC CDD occasionally stores a bare class-reference set in the
-      # condition column (e.g. "{0112/2///62683#ACE132}") instead of
-      # a `left OP right` boolean expression. Condition's grammar
-      # rejects that shape; treat it as nil rather than crashing the
-      # import. Tracked in TODO.full-cdd/17-condition-grammar-fix.md.
-      @condition = nil
     end
     field :formula,                synthetic: true do
       properties[Opencdd::PropertyIds::MDC_P027_1] ||

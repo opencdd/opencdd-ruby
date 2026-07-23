@@ -14,6 +14,9 @@ module Opencdd
 
       def call(value, _context)
         return true if value.nil? || value.to_s.strip.empty?
+        # parse returns a boolean Condition or a Condition::ClassReference
+        # for bare-IRDI / bare-set conditions (IEC 62683 shape). Both are
+        # valid; only malformed input raises ArgumentError.
         !Opencdd::Condition.parse(value.to_s).nil?
       rescue ArgumentError
         false

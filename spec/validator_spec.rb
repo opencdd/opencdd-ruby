@@ -239,6 +239,18 @@ RSpec.describe Opencdd::Validator do
       ctx = build_rule_context(column_iri: "MDC_P028")
       expect(rule.call("garbage no equals", ctx)).to be false
     end
+
+    it "accepts a bare class-reference IRDI" do
+      rule = described_class::ConditionRule.new
+      ctx = build_rule_context(column_iri: "MDC_P028")
+      expect(rule.call("0112/2///62683#ACE132", ctx)).to be true
+    end
+
+    it "accepts a class-reference set" do
+      rule = described_class::ConditionRule.new
+      ctx = build_rule_context(column_iri: "MDC_P028")
+      expect(rule.call("{0112/2///62683#ACE132, 0112/2///62683#ACE133}", ctx)).to be true
+    end
   end
 
   describe "R12 — data type expression" do
