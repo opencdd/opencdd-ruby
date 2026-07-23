@@ -37,10 +37,10 @@ module Opencdd
     field :type_classification,    "MDC_P033",   :string
     field :source_document,        "MDC_P006_1", :string
     field :coded_name,             "MDC_P018",  :string
-    field :definition_class_irdi,  "MDC_P021"
+    field :definition_class_irdi,  "MDC_P021", as: "definition_class"
     field :class_value_assignment, "MDC_P017"
-    field :unit_irdi,              "MDC_P041"
-    field :alternative_unit_irdis, "MDC_P042"
+    field :unit_irdi,              "MDC_P041", as: "unit"
+    field :alternative_unit_irdis, "MDC_P042", as: "alternative_units"
 
     # ── Computed fields with block-form readers (synthetic: true).
     #     Blocks are evaluated via instance_exec on the entity, so
@@ -57,11 +57,11 @@ module Opencdd
         Opencdd::PropertyDataTypeElement.parse(properties[Opencdd::PropertyIds::MDC_P020])
     }
 
-    field :parsed_data_type,       synthetic: true, &PARSED_DATA_TYPE_BLOCK
+    field :parsed_data_type,       synthetic: true, as: "data_type", &PARSED_DATA_TYPE_BLOCK
     field :data_element_type,      synthetic: true, as: "data_element_type", &DATA_ELEMENT_TYPE_BLOCK
     field :property_data_element_type,
-          synthetic: true, &DATA_ELEMENT_TYPE_BLOCK
-    field :parsed_value_format,    synthetic: true do
+          synthetic: true, as: "property_data_element_type", &DATA_ELEMENT_TYPE_BLOCK
+    field :parsed_value_format,    synthetic: true, as: "value_format" do
       Opencdd::ValueFormat.parse(properties[Opencdd::PropertyIds::MDC_P024])
     end
     field :condition_raw,          "MDC_P028", synthetic: true do
