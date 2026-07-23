@@ -16,7 +16,11 @@ RSpec.describe Opencdd::Database, "previously-untested public API" do
     # with sub-powertypes.
     klass = Opencdd::Klass.new(
       irdi: Opencdd::IRDI.parse("0112/2///61360_4#AAA001"),
-      properties: { "MDC_P001_5" => "AAA001", "MDC_P011" => "ITEM_CLASS" },
+      properties: {
+        "MDC_P001_5" => "AAA001",
+        "MDC_P011"   => "ITEM_CLASS",
+        "MDC_P004.en" => "Vehicle",
+      },
       meta_class_irdi: Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002"),
     )
     prop = Opencdd::Property.new(
@@ -71,7 +75,22 @@ RSpec.describe Opencdd::Database, "previously-untested public API" do
 
   describe "#find_by_name" do
     it "finds by preferred name when present" do
-      skip "preferred_name not set in this minimal fixture"
+      hit = db.find_by_name("Vehicle")
+      expect(hit).to be_a(Opencdd::Klass)
+      expect(hit.code).to eq("AAA001")
+    end
+
+    it "matches case-insensitively" do
+      expect(db.find_by_name("vehicle").code).to eq("AAA001")
+    end
+
+    it "returns nil when no entity has the name" do
+      expect(db.find_by_name("nonexistent")).to be_nil
+    end
+
+    it "scopes by type when given" do
+      expect(db.find_by_name("Vehicle", type: :class)).to be_a(Opencdd::Klass)
+      expect(db.find_by_name("Vehicle", type: :property)).to be_nil
     end
   end
 
