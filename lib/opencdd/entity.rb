@@ -15,6 +15,7 @@ module Opencdd
     autoload :FieldReader,     "opencdd/entity/field_reader"
     autoload :VersionHistory,  "opencdd/entity/version_history"
     autoload :Yaml,            "opencdd/entity/yaml"
+    autoload :NameSynthesizer, "opencdd/entity/name_synthesizer"
 
     class << self
       # Declare a typed field on this entity class. Defaults for

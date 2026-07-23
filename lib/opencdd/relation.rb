@@ -8,8 +8,8 @@ module Opencdd
     }.freeze
 
     # ── Pure field reads ─────────────────────────────────────────
-    field :domain_of_function_irdis, "MDC_P202"
-    field :codomain_irdi,            "MDC_P203"
+    field :domain_of_function_irdis, "MDC_P202", as: "domain_of_function"
+    field :codomain_irdi,            "MDC_P203", as: "codomain"
     field :formula,                  "MDC_P204", :string
     field :formula_language,         "MDC_P205", :string
     field :external_solver,          "MDC_P206", :string

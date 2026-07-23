@@ -24,7 +24,7 @@ module Opencdd
                   :source_file, :loaded_modules
 
       def initialize(database = nil, resolver: nil, source_file: nil,
-                     loaded_modules: nil, loading_stack: nil)
+                     loaded_modules: nil, loading_stack: nil, qualified_table: nil)
         @database = database || Opencdd::Database.new
         @resolver = resolver || Opencdd::Cddal.default_resolver
         @source_file = source_file
@@ -32,7 +32,7 @@ module Opencdd
         @loading_stack = loading_stack || []
         @alias_table = Opencdd::AliasTable.new(defaults: true)
         @symbol_table = {}
-        @qualified_table = {} # "qualifier.name" => entity (qualified imports)
+        @qualified_table = qualified_table || {}
         @instance_decls = []
         @meta_class_overrides = {}
       end
@@ -108,84 +108,14 @@ module Opencdd
       # names are accessible without qualification.
 
       def apply_import_declarations(document)
-        document.import_declarations.each { |decl| process_import(decl) }
-      end
-
-      def process_import(decl)
-        canonical, source = resolve_specifier(decl.specifier)
-        # Resolution may return [nil, nil] in non-strict mode when
-        # the specifier points at an unreachable URL or a missing
-        # file. Skip the import with a warning — preserves the
-        # graceful-degradation behavior CDDAL authors expect for
-        # cross-dictionary URLs.
-        return if canonical.nil?
-        return if @loaded_modules.key?(canonical)
-        check_cycle!(canonical, decl.specifier)
-
-        @loading_stack.push(canonical)
-        sub_doc = Opencdd::Cddal::Parser.parse(source)
-        Builder.new(@database, resolver: @resolver, source_file: canonical,
-                                loaded_modules: @loaded_modules,
-                                loading_stack: @loading_stack)
-          .build(sub_doc)
-        @loading_stack.pop
-        @loaded_modules[canonical] = true
-
-        # Symbol scoping is applied AFTER the sub-document is built,
-        # so the named entities exist in @database by the time we
-        # look them up.
-        apply_import_scope(decl, canonical)
-      end
-
-      def resolve_specifier(specifier)
-        @resolver.resolve(specifier, importing_file: @source_file)
-      end
-
-      def check_cycle!(canonical, specifier)
-        return unless @loading_stack.include?(canonical)
-        cycle = @loading_stack.dup
-        cycle << canonical
-        raise Opencdd::Cddal::ImportError,
-              "circular CDDAL import detected: #{cycle.join(' → ')} " \
-              "(originally imported as #{specifier.inspect})"
-      end
-
-      def apply_import_scope(decl, _canonical)
-        case decl.kind
-        when :bare
-          # Nothing to do — bare imports leave the sub-document's
-          # names in the shared @database symbol table.
-        when :qualified
-          register_qualified_symbols(decl.qualifier)
-        when :selective
-          register_selective_symbols(decl.imported_names)
-        end
-      end
-
-      def register_qualified_symbols(qualifier)
-        @database.entities.each do |entity|
-          name = entity_alias_name(entity)
-          next unless name
-          qualified = "#{qualifier}.#{name}"
-          @qualified_table[qualified] = entity
-          @database.register_symbol(qualified, entity)
-        end
-      end
-
-      def register_selective_symbols(imported_names)
-        imported_names.each do |imported|
-          entity = @database.resolve_reference(imported.name)
-          next unless entity
-          # Register in the parent Database's symbol table so the
-          # renamed name resolves during link phase.
-          @database.register_symbol(imported.local_name, entity)
-        end
-      end
-
-      def entity_alias_name(entity)
-        code = entity.code
-        return code if code && !code.empty?
-        entity.preferred_name.to_s
+        Opencdd::Cddal::ImportPipeline.new(
+          database: @database,
+          resolver: @resolver,
+          source_file: @source_file,
+          loaded_modules: @loaded_modules,
+          loading_stack: @loading_stack,
+          qualified_table: @qualified_table,
+        ).process(document.import_declarations)
       end
 
       def register_instance_symbols(document)
