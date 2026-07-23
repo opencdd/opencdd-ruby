@@ -136,12 +136,15 @@ RSpec.describe "Round-trip matrix", :round_trip do
   end
 
   # CDDAL → JSON → CDDAL --------------------------------------------
-
-  describe "CDDAL → JSON → CDDAL" do
-    it "preserves OceanRunner" do
-      skip "JSON exporter is a one-way serializer; round-trip requires a JSON importer (out of scope for v1)"
-    end
-  end
+  #
+  # No round-trip here: the JSON exporter is intentionally one-way.
+  # Its wire shape (Array of per-type Hashes keyed by MDC_P### wire
+  # names, with computed cross-entity fields like Property#value_list)
+  # is a projection of the in-memory model, not a serialization of
+  # the canonical @properties Hash. Building a JSON importer is
+  # deferred until TODO.final/19b Phase 2.5 collapses Exporters::Json
+  # onto Entity::Yaml — at which point the wire shape becomes the
+  # lutaml-model attribute shape and round-trip is trivial.
 
   # Parcel (synthesized) → CDDAL → Parcel ---------------------------
 
