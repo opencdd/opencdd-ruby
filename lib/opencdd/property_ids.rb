@@ -142,6 +142,58 @@ module Opencdd
     # ontology registry). Kept here as an alias for back-compat.
     PARCEL_VARIANT_TO_CANONICAL = Opencdd::Parcel::SheetSchema::VARIANT_TO_CANONICAL
 
+    # IEC 62656-1 defined PROPERTY_NAME directive column names mapped
+    # to canonical property IDs. Used by Opencdd::Entity::NameSynthesizer
+    # when a Parcel sheet omits the #PROPERTY_ID directive row and
+    # only carries #PROPERTY_NAME. Declared here so the raw IDs live
+    # in the lint-exempt SSOT instead of in the synthesis module.
+    IEC_COLUMN_NAMES = {
+      "Code"                   => "MDC_P001_5",
+      "Version"                => "MDC_P002_1",
+      "Revision"               => "MDC_P002_2",
+      "VersionInitiationDate"  => "MDC_P003_1",
+      "VersionReleaseDate"     => "MDC_P003_2",
+      "RevisionReleaseDate"    => "MDC_P003_3",
+      "PreferredName"          => "MDC_P004",
+      "SynonymousName"         => "MDC_P007",
+      "ShortName"              => "MDC_P005",
+      "Definition"             => "MDC_P006",
+      "DefinitionSource"       => "MDC_P006_1",
+      "Note"                   => "MDC_P008",
+      "Remark"                 => "MDC_P009",
+      "Drawing"                => "MDC_P008_1",
+      "GUID"                   => "MDC_P066",
+      "TimeStamp"              => "MDC_P067",
+      "ClassType"              => "MDC_P011",
+      "Superclass"             => "MDC_P010",
+      "IsCaseOf"               => "MDC_P013",
+      "ApplicableProperties"   => "MDC_P014",
+      "ImportedProperties"     => "MDC_P090",
+      "SubClassSelection"      => "MDC_P016",
+      "DataType"               => "MDC_P022",
+      "ValueFormat"            => "MDC_P024",
+      "DefinitionClass"        => "MDC_P021",
+      "Unit"                   => "MDC_P041",
+      "Condition"              => "MDC_P028",
+      "ListType"               => "MDC_P046",
+      "CodeList"               => "MDC_P044",
+      "TermList"               => "MDC_P043",
+      "EnumerationCode"        => "MDC_P044",
+      "RelationType"           => "MDC_P200",
+      "RelationDomain"         => "MDC_P201",
+      "FunctionDomain"         => "MDC_P202",
+      "FunctionCodomain"       => "MDC_P203",
+      "Formula"                => "MDC_P204",
+      "FormulaLanguage"        => "MDC_P205",
+      "FormulaExternalSolver"  => "MDC_P206",
+      "TriggerEvent"           => "MDC_P207",
+      "DomainElementType"      => "MDC_P208",
+      "CodomainElementType"    => "MDC_P209",
+      "Role"                   => "MDC_P210",
+      "Segment"                => "MDC_P211",
+      "SuperRelation"          => "MDC_P212",
+    }.freeze
+
     REGISTRY.each_key do |id|
       const_set(id, id.freeze) unless const_defined?(id, false)
     end
