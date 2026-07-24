@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # lint-no-raw-mdc — fail if any raw MDC_P### / MDC_C### / EXT_P### /
 # EXT_C### / CIM_P### string literal appears in lib/opencdd/ outside
 # the designated SSOT files.
