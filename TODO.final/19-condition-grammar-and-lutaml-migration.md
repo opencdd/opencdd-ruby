@@ -3,6 +3,17 @@
 **From:** cdd-data session 2026-07-23
 **User decisions:** All 3 lutaml decisions resolved; condition grammar Option 2 approved.
 
+## Status (2026-07-24)
+
+| Item | Status | Where |
+|------|--------|-------|
+| **Item 1** — Condition grammar (ClassReference subclass) | ✅ **SHIPPED** | commit `bae0c56` on `main`, merged via PR [#17](https://github.com/opencdd/opencdd-ruby/pull/17). Released in gem v0.3.1. |
+| **Item 2** — lutaml-model migration | 📋 **PLAN-ONLY** | [`19b-lutaml-model-migration.md`](19b-lutaml-model-migration.md) — Phases 2.1 & 2.2 already shipped via TODO.impl/33–35; Phases 2.3, 2.4, 2.5 remain. |
+
+TS team: `Opencdd::Condition::ClassReference` is real API on `main`,
+not a proposal. See `lib/opencdd/condition.rb:141`. The `lutaml-model`
+work is the only outstanding piece.
+
 ## Item 1: Condition Grammar — ClassReference subclass (TODO 18)
 
 ### Problem
