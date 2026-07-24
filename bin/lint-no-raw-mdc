@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+#
 # lint-no-raw-mdc — fail if any raw MDC_P### / MDC_C### / EXT_P### /
 # EXT_C### / CIM_P### string literal appears in lib/opencdd/ outside
 # the designated SSOT files.
@@ -14,29 +16,50 @@
 #
 # Comment lines (lines whose first non-whitespace character is '#')
 # are also exempt.
-#
-set -euo pipefail
 
-excludes=(
-  ':!lib/opencdd/property_ids.rb'
-  ':!lib/opencdd/meta_class.rb'
-  ':!lib/opencdd/alias_table.rb'
-  ':!lib/opencdd/parcel/sheet_schema.rb'
-  ':!lib/opencdd/cddal/generated_parser.rb'
-)
+require "open3"
 
-# Collect hits, filtering out Ruby comment-only lines.
-hits=$(git grep -nE '"(MDC_[CP][0-9]+(_[0-9]+)?|EXT_[CP][0-9]+|CIM_P[0-9]+)"' \
-  -- 'lib/opencdd/**/*.rb' "${excludes[@]}" 2>/dev/null \
-  | grep -vE '^[^:]+:[0-9]+:\s*#' \
-  || true)
+EXCLUDED_PATHS = %w[
+  lib/opencdd/property_ids.rb
+  lib/opencdd/meta_class.rb
+  lib/opencdd/alias_table.rb
+  lib/opencdd/parcel/sheet_schema.rb
+  lib/opencdd/cddal/generated_parser.rb
+].freeze
 
-if [ -n "$hits" ]; then
-  echo "ERROR: raw MDC/EXT/CIM literal found outside designated SSOT files." >&2
-  echo "Use Opencdd::PropertyIds::REGISTRY / Opencdd::MetaClasses::REGISTRY instead." >&2
-  echo "" >&2
-  echo "$hits" >&2
+# Match "MDC_P###", "MDC_C###", "EXT_P###", "EXT_C###", "CIM_P###"
+# with optional _### sub-ids, as a double-quoted Ruby string literal.
+# Source string is POSIX ERE (not Ruby regex) — git grep -E requires it.
+LITERAL_PATTERN_SOURCE = '"(MDC_[CP][0-9]+(_[0-9]+)?|EXT_[CP][0-9]+|CIM_P[0-9]+)"'.freeze
+
+# Each git grep hit looks like: <path>:<lineno>:<content>
+# Skip comment-only lines (content's first non-space char is '#').
+HIT_LINE_PATTERN = /\A(?<path>[^:]+):(?<lineno>\d+):(?<content>.*)\z/m.freeze
+
+# lib/opencdd/**/*.rb minus the excluded SSOT files.
+pathspecs = ["lib/opencdd/**/*.rb"].concat(EXCLUDED_PATHS.map { |p| ":!#{p}" })
+
+cmd = ["git", "grep", "-n", "-E", LITERAL_PATTERN_SOURCE] + ["--"] + pathspecs
+stdout, _stderr, status = Open3.capture3(*cmd)
+
+# git grep returns 1 when there are no matches, which is the success
+# case. Treat anything other than 0/1 as a real failure.
+unless [0, 1].include?(status.exitstatus)
+  warn "ERROR: git grep failed (exit #{status.exitstatus})"
+  exit 2
+end
+
+hits = stdout.each_line.map(&:chomp).reject do |line|
+  match = HIT_LINE_PATTERN.match(line)
+  match && match[:content].lstrip.start_with?("#")
+end
+
+if hits.any?
+  warn "ERROR: raw MDC/EXT/CIM literal found outside designated SSOT files."
+  warn "Use Opencdd::PropertyIds::REGISTRY / Opencdd::MetaClasses::REGISTRY instead."
+  warn ""
+  hits.each { |hit| warn hit }
   exit 1
-fi
+end
 
 exit 0
