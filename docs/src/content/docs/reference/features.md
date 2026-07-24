@@ -173,7 +173,7 @@ Opencdd::Validator.class_hierarchy_acyclic?(database)
 These features are NOT in the gem:
 
 - Live CDD search (`cdd.iec.ch`) — AWS WAF blocks library access; use
-  the Python harvester in `opencdd/cdd-data` instead.
+  the Python harvester in `opencdd/data-private` instead.
 - External parcel linking (ParcelMaker F19) — multi-file Parcel
   sessions. Use CDDAL imports instead.
 - CIM/RDF export — future work.
