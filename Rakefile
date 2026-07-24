@@ -42,10 +42,7 @@ end
 namespace :lint do
   desc "Verify no raw MDC_P### / MDC_C### literals outside the registry files"
   task :registry do
-    # Invoke via explicit `bash` so Windows runners (where Rake#sh uses
-    # cmd.exe and can't dispatch on the shebang line) find the script.
-    # Git for Windows ships bash in PATH, so this is portable.
-    sh "bash bin/lint-no-raw-mdc"
+    ruby "bin/lint-no-raw-mdc"
   end
 end
 
