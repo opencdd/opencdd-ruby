@@ -15,3 +15,6 @@ Gemfile*.lock
 # Local symlink to scraped .xls data from the sibling cdd-data repo.
 # Machine-specific — each developer symlinks to their own checkout.
 /downloads
+
+# TODO files are working notes, not artifacts.
+TODO*
