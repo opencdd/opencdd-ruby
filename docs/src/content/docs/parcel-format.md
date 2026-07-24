@@ -291,7 +291,7 @@ round-trip.
   instead.
 - **Live CDD search (F20)** — the `cdd.iec.ch` backend is gated by AWS
   WAF; can't be reached from a library context. Use the Python
-  harvester in `opencdd/cdd-data` to fetch first.
+  harvester in `opencdd/data-private` to fetch first.
 
 ## See also
 

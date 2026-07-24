@@ -6,6 +6,6 @@
 require "opencdd"
 
 # Alias for backward compatibility. The module was renamed from
-# Cdd to Opencdd, but many callers (cdd-data Rakefile, specs, etc.)
+# Cdd to Opencdd, but many callers (data-private Rakefile, specs, etc.)
 # still reference Cdd::. This alias lets them keep working.
 Cdd = Opencdd unless defined?(Cdd)
