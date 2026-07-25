@@ -1,9 +1,10 @@
 ---
 title: Getting started
 description: A 15-minute tutorial — load a dictionary, navigate the entity graph, query powertypes, emit output.
+published: 2026-07-25
+section: Getting Started
+order: 10
 ---
-
-# Getting started with opencdd
 
 This guide takes about 15 minutes. By the end you'll know how to load
 a CDD dictionary, navigate the entity graph, query powertype

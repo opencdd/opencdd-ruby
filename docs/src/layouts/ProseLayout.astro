@@ -1,0 +1,42 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  width?: "narrow" | "wide";
+  sidebar?: boolean;
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  width = "wide",
+  sidebar = false,
+  class: className,
+} = Astro.props;
+
+const bodyMax = width === "narrow" ? "max-w-2xl" : "max-w-3xl";
+---
+
+<BaseLayout title={title} description={description}>
+  {sidebar ? (
+    <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
+      <aside class="hidden lg:block">
+        <slot name="sidebar" />
+      </aside>
+      <article class:list={["prose-opencdd", bodyMax, className]}>
+        <slot />
+      </article>
+    </div>
+  ) : (
+    <article class:list={["mx-auto", bodyMax, className]}>
+      <slot name="header" />
+      <div class="prose-opencdd mt-8">
+        <slot />
+      </div>
+      <slot name="footer" />
+    </article>
+  )}
+</BaseLayout>

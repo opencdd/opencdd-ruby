@@ -1,0 +1,780 @@
+@import "tailwindcss";
+
+@theme {
+  /* ───────────────────────────────────────────────────────────────
+     OpenCDD design system — v2, built around the official logo
+     ───────────────────────────────────────────────────────────
+
+     The new SVG logo defines the palette. Light and dark variants
+     both use warm creams, sandy beiges, ocean teals, and a strong
+     amber/orange capstone — the I Ching hexagram ☱ (Lake/兌). The
+     site follows the same family.
+
+     Light mode (default):
+       paper     → warm cream backgrounds (#fefdf8 → #f3efe7)
+       ink       → warm charcoal text
+       clay      → sandy beige surfaces (the prism body)
+       teal      → ocean/pool accent (the data lakes)
+       lapis     → deep blue accent (depth)
+       hexagram  → amber/orange (the capstone — primary CTA)
+
+     Dark mode (prefers-color-scheme: dark):
+       same families, deeper backgrounds + brighter accents matching
+       the dark logo variant.
+     ─────────────────────────────────────────────────────────── */
+
+  /* Paper — backgrounds */
+  --color-paper-50: #fefdf8;
+  --color-paper-100: #fbfaf3;
+  --color-paper-200: #f3efe7;
+  --color-paper-300: #ede6d5;
+  --color-paper-400: #e0d6bf;
+  --color-paper-500: #ceb997;
+
+  /* Ink — warm charcoal text */
+  --color-ink-50: #f6f4f0;
+  --color-ink-100: #e8e4dc;
+  --color-ink-200: #d4cec1;
+  --color-ink-300: #b5ad9c;
+  --color-ink-400: #8a8273;
+  --color-ink-500: #6b6356;
+  --color-ink-600: #524c41;
+  --color-ink-700: #3d3830;
+  --color-ink-800: #2a2620;
+  --color-ink-900: #1a1814;
+  --color-ink-950: #0d0c0a;
+
+  /* Clay — sandy beige (the prism body) */
+  --color-clay-50: #faf5eb;
+  --color-clay-100: #f0e6d1;
+  --color-clay-200: #e3d0a8;
+  --color-clay-300: #d5aa65;
+  --color-clay-400: #c19452;
+  --color-clay-500: #a87a3e;
+  --color-clay-600: #876032;
+  --color-clay-700: #6a4a28;
+  --color-clay-800: #4a3420;
+  --color-clay-900: #2c1f14;
+
+  /* Teal — ocean/pool accent (the data lakes) */
+  --color-teal-50: #eff8fa;
+  --color-teal-100: #d4eef3;
+  --color-teal-200: #a8dde6;
+  --color-teal-300: #a0d6d1;
+  --color-teal-400: #5cc1cf;
+  --color-teal-500: #25a2cb;
+  --color-teal-600: #1d83ab;
+  --color-teal-700: #3f6ea3;
+  --color-teal-800: #2e5268;
+  --color-teal-900: #1e3845;
+
+  /* Lapis — deep blue (depth accent) */
+  --color-lapis-50: #eef3f7;
+  --color-lapis-100: #d4e1ec;
+  --color-lapis-200: #aec7d9;
+  --color-lapis-300: #7ba4bd;
+  --color-lapis-400: #5786a0;
+  --color-lapis-500: #4682b4;
+  --color-lapis-600: #3a6e98;
+  --color-lapis-700: #2e5678;
+  --color-lapis-800: #1f3d54;
+  --color-lapis-900: #122634;
+
+  /* Hexagram — amber/orange (the capstone — primary accent) */
+  --color-hex-50: #fef5e7;
+  --color-hex-100: #fce5bf;
+  --color-hex-200: #f8cd84;
+  --color-hex-300: #f4b03a;
+  --color-hex-400: #ec8a2e;
+  --color-hex-500: #d76b1f;
+  --color-hex-600: #b85519;
+  --color-hex-700: #8f4116;
+  --color-hex-800: #5e2c12;
+  --color-hex-900: #3a1b0b;
+
+  /* Coral — warm pink/coral (secondary accent, found in dark logo) */
+  --color-coral-50: #fef0ed;
+  --color-coral-100: #fcdcd4;
+  --color-coral-200: #f9b6a8;
+  --color-coral-300: #f48671;
+  --color-coral-400: #ec7a65;
+  --color-coral-500: #d85a45;
+  --color-coral-600: #b54535;
+  --color-coral-700: #8c3528;
+  --color-coral-800: #5c2419;
+  --color-coral-900: #381510;
+
+  /* Semantic colours */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+
+  --color-rose-50: #fff1f2;
+  --color-rose-100: #ffe4e6;
+  --color-rose-200: #fecdd3;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+  --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
+  --color-rose-900: #881337;
+
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-violet-700: #6d28d9;
+  --color-violet-800: #5b21b6;
+  --color-violet-900: #4c1d95;
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype",
+    Palatino, "Source Serif Pro", Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  /* ── Shadows ─────────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px 0 rgb(58 50 36 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(58 50 36 / 0.06), 0 1px 2px -1px rgb(58 50 36 / 0.05);
+  --shadow-md: 0 4px 12px -2px rgb(58 50 36 / 0.08), 0 2px 6px -2px rgb(58 50 36 / 0.05);
+  --shadow-lg: 0 12px 32px -8px rgb(58 50 36 / 0.12), 0 4px 12px -4px rgb(58 50 36 / 0.06);
+  --shadow-inner-ring: inset 0 0 0 1px rgb(244 176 58 / 0.35);
+
+  /* ── Dark mode overrides ─────────────────────────────────────── */
+  /* Applied via prefers-color-scheme below — these variables are the
+     dark-mode equivalents, derived from the dark logo variant. */
+}
+
+/* ── Dark mode token overrides ──────────────────────────────────── */
+/* In dark mode, the ink scale INVERTS semantically:
+   - ink-50/100 become the DARKEST inks (rarely used, dividers on dark)
+   - ink-800/900 become the LIGHTEST (body text + headings on dark bg)
+   The paper scale stays directionally the same (50 = lightest surface,
+   900 = darkest) but the values are now dark navy/blue instead of cream.
+   This is what makes `text-ink-800` mean "body text" in BOTH modes.
+
+   Semantic colours (amber/rose/emerald/violet) get dark surface
+   overrides so warning callouts and badges don't blast white in dark
+   mode. The text tones stay readable because the foreground is the
+   lightest variant of the same hue. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper-50: #1a2230;
+    --color-paper-100: #141c28;
+    --color-paper-200: #1f2a3a;
+    --color-paper-300: #2a3850;
+    --color-paper-400: #38486a;
+    --color-paper-500: #4d5f80;
+
+    /* Inverted: 50 = dimmest (almost invisible), 900 = brightest text */
+    --color-ink-50: #1d1a13;
+    --color-ink-100: #2e291f;
+    --color-ink-200: #443e30;
+    --color-ink-300: #5e5742;
+    --color-ink-400: #7d755c;
+    --color-ink-500: #a39a7e;
+    --color-ink-600: #c8c0a3;
+    --color-ink-700: #e6dfc6;
+    --color-ink-800: #f7f0da;
+    --color-ink-900: #fefdf8;
+    --color-ink-950: #ffffff;
+
+    /* Brand accents — brighter on dark surfaces (sampled from dark SVG). */
+    /* Surfaces (50/100/200): deep, low-saturation for badges & callouts. */
+    --color-hex-50: #2a1c0b;
+    --color-hex-100: #3a2812;
+    --color-hex-200: #4a3318;
+    --color-hex-300: #f4b03a;
+    --color-hex-400: #f08b36;
+    --color-hex-500: #ec7a2a;
+    /* Text (700/800/900): bright amber, readable on dark hex surfaces. */
+    --color-hex-700: #f4b03a;
+    --color-hex-800: #f8cd84;
+    --color-hex-900: #fce5bf;
+
+    --color-teal-50: #0e2628;
+    --color-teal-100: #143036;
+    --color-teal-200: #1a3a42;
+    --color-teal-300: #73e0cd;
+    --color-teal-400: #52d3e0;
+    --color-teal-500: #38c3d3;
+    --color-teal-700: #52d3e0;
+    --color-teal-800: #73e0cd;
+    --color-teal-900: #a8dde6;
+
+    --color-lapis-50: #0e1a26;
+    --color-lapis-100: #122030;
+    --color-lapis-200: #162840;
+    --color-lapis-300: #6494e7;
+    --color-lapis-400: #4a78c4;
+    --color-lapis-500: #355e9c;
+    --color-lapis-700: #6494e7;
+    --color-lapis-800: #aec7d9;
+    --color-lapis-900: #d4e1ec;
+
+    --color-coral-50: #2a1216;
+    --color-coral-100: #38181e;
+    --color-coral-200: #4a1e26;
+    --color-coral-300: #fcceca;
+    --color-coral-400: #f9b6a8;
+    --color-coral-700: #f48671;
+    --color-coral-800: #f9b6a8;
+    --color-coral-900: #fcdcd4;
+
+    --color-clay-50: #1a1208;
+    --color-clay-100: #241a10;
+    --color-clay-200: #d5aa65;
+    --color-clay-300: #e99c61;
+    --color-clay-700: #c19452;
+    --color-clay-800: #d5aa65;
+    --color-clay-900: #e3d0a8;
+
+    /* Semantic dark surfaces — for callouts/badges that use light tints
+       in light mode. Dark variants are deep, low-saturation versions. */
+    --color-amber-50: #2a2014;
+    --color-amber-100: #3a2c18;
+    --color-amber-200: #4a3820;
+    /* Semantic text on dark surfaces: flip dark text to light. */
+    --color-amber-700: #fbbf24;
+    --color-amber-800: #fcd34d;
+    --color-amber-900: #fde68a;
+
+    --color-rose-50: #2a161a;
+    --color-rose-100: #3a1e24;
+    --color-rose-200: #4a2630;
+    --color-rose-700: #fb7185;
+    --color-rose-800: #fda4af;
+    --color-rose-900: #fecdd3;
+
+    --color-emerald-50: #142a1f;
+    --color-emerald-100: #18392a;
+    --color-emerald-700: #34d399;
+    --color-emerald-800: #6ee7b7;
+    --color-emerald-900: #a7f3d0;
+
+    --color-violet-50: #1f1929;
+    --color-violet-100: #2a223a;
+    --color-violet-700: #a78bfa;
+    --color-violet-800: #c4b5fd;
+    --color-violet-900: #ddd6fe;
+
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5), 0 2px 6px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.6), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+  }
+}
+
+/* ── Rainbow mode (easter egg) ──────────────────────────────────────
+   Activated by ThemeToggle after 5 rapid clicks. The --rainbow-hue
+   custom property cycles 0-360 via requestAnimationFrame, and the
+   brand accent tokens follow it. Paper and ink stay stable so text
+   remains readable — only the accents shift. */
+:root[data-rainbow="on"] {
+  --color-teal-300: hsl(calc(var(--rainbow-hue, 200) + 10deg), 80%, 75%);
+  --color-teal-400: hsl(calc(var(--rainbow-hue, 200) + 10deg), 75%, 65%);
+  --color-teal-500: hsl(var(--rainbow-hue, 200), 80%, 55%);
+  --color-teal-600: hsl(var(--rainbow-hue, 200), 70%, 45%);
+
+  --color-lapis-300: hsl(calc(var(--rainbow-hue, 210) + 20deg), 80%, 70%);
+  --color-lapis-400: hsl(calc(var(--rainbow-hue, 210) + 20deg), 70%, 60%);
+  --color-lapis-500: hsl(calc(var(--rainbow-hue, 210) + 20deg), 65%, 52%);
+  --color-lapis-600: hsl(calc(var(--rainbow-hue, 210) + 20deg), 60%, 45%);
+
+  --color-hex-300: hsl(calc(var(--rainbow-hue, 200) + 180deg), 85%, 65%);
+  --color-hex-400: hsl(calc(var(--rainbow-hue, 200) + 180deg), 80%, 58%);
+  --color-hex-500: hsl(calc(var(--rainbow-hue, 200) + 180deg), 75%, 52%);
+  --color-hex-600: hsl(calc(var(--rainbow-hue, 200) + 180deg), 70%, 45%);
+
+  --color-coral-300: hsl(calc(var(--rainbow-hue, 200) + 140deg), 80%, 70%);
+  --color-coral-400: hsl(calc(var(--rainbow-hue, 200) + 140deg), 75%, 62%);
+  --color-coral-500: hsl(calc(var(--rainbow-hue, 200) + 140deg), 70%, 55%);
+}
+
+:root[data-rainbow="on"] body {
+  background-image:
+    radial-gradient(circle at 15% 20%, hsla(var(--rainbow-hue, 200), 80%, 60%, 0.06), transparent 35%),
+    radial-gradient(circle at 85% 80%, hsla(calc(var(--rainbow-hue, 200) + 180deg), 80%, 60%, 0.06), transparent 35%);
+  background-attachment: fixed;
+}
+
+/* ── Base styles ────────────────────────────────────────────────── */
+
+html {
+  background-color: var(--color-paper-100);
+  color: var(--color-ink-800);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper-100);
+  background-image:
+    radial-gradient(circle at 100% 0%, rgb(37 162 203 / 0.06) 0, transparent 35%),
+    radial-gradient(circle at 0% 100%, rgb(244 176 58 / 0.05) 0, transparent 35%);
+  min-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image:
+      radial-gradient(circle at 100% 0%, rgb(56 195 211 / 0.08) 0, transparent 35%),
+      radial-gradient(circle at 0% 100%, rgb(240 139 54 / 0.06) 0, transparent 35%);
+  }
+}
+
+::selection {
+  background-color: var(--color-hex-200);
+  color: var(--color-ink-900);
+}
+
+/* Editorial display utility — serif headlines */
+.font-display {
+  font-family: var(--font-display);
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+/* Quiet intro animation */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.35s ease-out;
+}
+
+/* ── Logo swap (light / dark variants) ─────────────────────────── */
+/* Use .logo-svg on a wrapper around both logo variants. The dark
+   variant is hidden by default and shown when the OS prefers dark. */
+.logo-svg--dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-svg--light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .logo-svg--dark {
+    display: block;
+  }
+}
+:root[data-theme="dark"] .logo-svg--light {
+  display: none;
+}
+:root[data-theme="dark"] .logo-svg--dark {
+  display: block;
+}
+
+/* ── Scrollbar (WebKit) ────────────────────────────────────────── */
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-300) transparent;
+}
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-ink-300);
+  border-radius: 3px;
+}
+.scroll-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-ink-400);
+}
+
+/* ── Accessibility ─────────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-visible\:outline {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.focus-visible\:outline-2 {
+  outline-width: 2px;
+}
+.focus-visible\:outline-offset-4 {
+  outline-offset: 4px;
+}
+.focus-visible\:outline-hex-600 {
+  outline-color: var(--color-hex-600);
+}
+.focus-visible\:not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ── Section anchor flash highlight ────────────────────────────── */
+/* When a TOC link is clicked, the browser navigates to #section-id.
+   This animation briefly highlights the target so the user sees where
+   they landed. */
+@keyframes section-flash {
+  0% { background-color: rgb(37 162 203 / 0); }
+  15% { background-color: rgb(37 162 203 / 0.08); }
+  100% { background-color: rgb(37 162 203 / 0); }
+}
+:target[data-section-anchor],
+h2[id]:target,
+h3[id]:target {
+  animation: section-flash 1.2s ease-out;
+  border-radius: 8px;
+}
+
+/* ── Entity link hover tooltip ────────────────────────────────── */
+/* Lightweight CSS-only tooltip showing entity definitions on hover.
+   The definition text is set via data-entity-tooltip attribute on
+   EntityLink anchors. */
+[data-entity-tooltip]:not([data-entity-tooltip=""]) {
+  position: relative;
+}
+[data-entity-tooltip]:not([data-entity-tooltip=""])::before {
+  content: attr(data-entity-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-ink-900);
+  color: var(--color-paper-100);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 280px;
+  width: max-content;
+  white-space: normal;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+  z-index: 50;
+  box-shadow: var(--shadow-md);
+}
+[data-entity-tooltip]:not([data-entity-tooltip=""])::after {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--color-ink-900);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+  z-index: 50;
+}
+[data-entity-tooltip]:not([data-entity-tooltip=""]):hover::before,
+[data-entity-tooltip]:not([data-entity-tooltip=""]):focus-visible::before,
+[data-entity-tooltip]:not([data-entity-tooltip=""]):hover::after,
+[data-entity-tooltip]:not([data-entity-tooltip=""]):focus-visible::after {
+  opacity: 1;
+}
+
+/* ── Multilingual visibility ───────────────────────────────────── */
+/* CSS-driven language switching. The LanguageSwitcher island sets
+   body[data-lang="xx"]; spans tagged per language show/hide via
+   display. Before hydration (no data-lang), English is shown. */
+
+body[data-lang="en"] .ml { display: none; }
+body[data-lang="en"] .ml-en { display: inline; }
+body[data-lang="de"] .ml { display: none; }
+body[data-lang="de"] .ml-de { display: inline; }
+body[data-lang="fr"] .ml { display: none; }
+body[data-lang="fr"] .ml-fr { display: inline; }
+body[data-lang="ja"] .ml { display: none; }
+body[data-lang="ja"] .ml-ja { display: inline; }
+body[data-lang="zh"] .ml { display: none; }
+body[data-lang="zh"] .ml-zh { display: inline; }
+
+body:not([data-lang]) .ml { display: none; }
+body:not([data-lang]) .ml-en { display: inline; }
+
+/* ── Print ─────────────────────────────────────────────────────── */
+
+@media print {
+  .print\:hidden {
+    display: none !important;
+  }
+  .print\:break-inside-avoid {
+    break-inside: avoid;
+  }
+}
+
+/* ── MDX prose (docs, blog) ─────────────────────────────────────── */
+
+.prose-opencdd {
+  color: var(--color-ink-700);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.prose-opencdd > * + * { margin-top: 1.25em; }
+
+.prose-opencdd h1,
+.prose-opencdd h2,
+.prose-opencdd h3,
+.prose-opencdd h4 {
+  font-family: var(--font-display);
+  color: var(--color-ink-900);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.prose-opencdd h1 { font-size: 2.25rem; margin-top: 0; }
+.prose-opencdd h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-paper-300);
+}
+.prose-opencdd h3 { font-size: 1.2rem; margin-top: 1.75em; }
+.prose-opencdd h4 {
+  font-size: 1rem;
+  margin-top: 1.5em;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--color-ink-500);
+}
+
+.prose-opencdd a {
+  color: var(--color-hex-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-hex-300);
+}
+.prose-opencdd a:hover {
+  color: var(--color-hex-600);
+  text-decoration-color: var(--color-hex-500);
+}
+
+.prose-opencdd strong {
+  color: var(--color-ink-900);
+  font-weight: 600;
+}
+
+.prose-opencdd code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-paper-200);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: var(--color-ink-800);
+}
+
+.prose-opencdd pre {
+  background: var(--color-ink-900);
+  color: var(--color-paper-100);
+  padding: 1em 1.25em;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.55;
+}
+.prose-opencdd pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose-opencdd blockquote {
+  border-left: 3px solid var(--color-teal-300);
+  padding: 0.25em 0 0.25em 1em;
+  color: var(--color-ink-600);
+  font-style: italic;
+}
+
+.prose-opencdd ul,
+.prose-opencdd ol { padding-left: 1.5em; }
+.prose-opencdd ul { list-style: disc; }
+.prose-opencdd ol { list-style: decimal; }
+.prose-opencdd li { margin: 0.35em 0; }
+.prose-opencdd li::marker { color: var(--color-teal-500); }
+
+.prose-opencdd table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.prose-opencdd th,
+.prose-opencdd td {
+  border: 1px solid var(--color-paper-300);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+.prose-opencdd th {
+  background: var(--color-paper-100);
+  font-weight: 600;
+  color: var(--color-ink-800);
+}
+
+.prose-opencdd hr {
+  border: none;
+  border-top: 1px solid var(--color-paper-300);
+  margin: 2.5em 0;
+}
+
+/* ── Manual dark mode override ───────────────────────────────── */
+/* Same tokens as prefers-color-scheme: dark above. Applied when the
+   user explicitly selects dark mode via the theme toggle. */
+:root[data-theme="dark"] {
+    --color-paper-50: #1a2230;
+    --color-paper-100: #141c28;
+    --color-paper-200: #1f2a3a;
+    --color-paper-300: #2a3850;
+    --color-paper-400: #38486a;
+    --color-paper-500: #4d5f80;
+
+    /* Inverted: 50 = dimmest (almost invisible), 900 = brightest text */
+    --color-ink-50: #1d1a13;
+    --color-ink-100: #2e291f;
+    --color-ink-200: #443e30;
+    --color-ink-300: #5e5742;
+    --color-ink-400: #7d755c;
+    --color-ink-500: #a39a7e;
+    --color-ink-600: #c8c0a3;
+    --color-ink-700: #e6dfc6;
+    --color-ink-800: #f7f0da;
+    --color-ink-900: #fefdf8;
+    --color-ink-950: #ffffff;
+
+    /* Brand accents — brighter on dark surfaces (sampled from dark SVG). */
+    /* Surfaces (50/100/200): deep, low-saturation for badges & callouts. */
+    --color-hex-50: #2a1c0b;
+    --color-hex-100: #3a2812;
+    --color-hex-200: #4a3318;
+    --color-hex-300: #f4b03a;
+    --color-hex-400: #f08b36;
+    --color-hex-500: #ec7a2a;
+    /* Text (700/800/900): bright amber, readable on dark hex surfaces. */
+    --color-hex-700: #f4b03a;
+    --color-hex-800: #f8cd84;
+    --color-hex-900: #fce5bf;
+
+    --color-teal-50: #0e2628;
+    --color-teal-100: #143036;
+    --color-teal-200: #1a3a42;
+    --color-teal-300: #73e0cd;
+    --color-teal-400: #52d3e0;
+    --color-teal-500: #38c3d3;
+    --color-teal-700: #52d3e0;
+    --color-teal-800: #73e0cd;
+    --color-teal-900: #a8dde6;
+
+    --color-lapis-50: #0e1a26;
+    --color-lapis-100: #122030;
+    --color-lapis-200: #162840;
+    --color-lapis-300: #6494e7;
+    --color-lapis-400: #4a78c4;
+    --color-lapis-500: #355e9c;
+    --color-lapis-700: #6494e7;
+    --color-lapis-800: #aec7d9;
+    --color-lapis-900: #d4e1ec;
+
+    --color-coral-50: #2a1216;
+    --color-coral-100: #38181e;
+    --color-coral-200: #4a1e26;
+    --color-coral-300: #fcceca;
+    --color-coral-400: #f9b6a8;
+    --color-coral-700: #f48671;
+    --color-coral-800: #f9b6a8;
+    --color-coral-900: #fcdcd4;
+
+    --color-clay-50: #1a1208;
+    --color-clay-100: #241a10;
+    --color-clay-200: #d5aa65;
+    --color-clay-300: #e99c61;
+    --color-clay-700: #c19452;
+    --color-clay-800: #d5aa65;
+    --color-clay-900: #e3d0a8;
+
+    /* Semantic dark surfaces — for callouts/badges that use light tints
+       in light mode. Dark variants are deep, low-saturation versions. */
+    --color-amber-50: #2a2014;
+    --color-amber-100: #3a2c18;
+    --color-amber-200: #4a3820;
+    /* Semantic text on dark surfaces: flip dark text to light. */
+    --color-amber-700: #fbbf24;
+    --color-amber-800: #fcd34d;
+    --color-amber-900: #fde68a;
+
+    --color-rose-50: #2a161a;
+    --color-rose-100: #3a1e24;
+    --color-rose-200: #4a2630;
+    --color-rose-700: #fb7185;
+    --color-rose-800: #fda4af;
+    --color-rose-900: #fecdd3;
+
+    --color-emerald-50: #142a1f;
+    --color-emerald-100: #18392a;
+    --color-emerald-700: #34d399;
+    --color-emerald-800: #6ee7b7;
+    --color-emerald-900: #a7f3d0;
+
+    --color-violet-50: #1f1929;
+    --color-violet-100: #2a223a;
+    --color-violet-700: #a78bfa;
+    --color-violet-800: #c4b5fd;
+    --color-violet-900: #ddd6fe;
+
+    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.5), 0 2px 6px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.6), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+}

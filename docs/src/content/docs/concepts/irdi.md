@@ -1,6 +1,9 @@
 ---
 title: IRDI identifiers
 description: International Registration Data Identifiers — the canonical keys for every CDD entity.
+published: 2026-07-25
+section: Concepts
+order: 30
 ---
 
 The **IRDI** (International Registration Data Identifier) is the
