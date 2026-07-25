@@ -1,0 +1,42 @@
+---
+import "~/styles/global.css";
+import SkipToContent from "~/components/ui/SkipToContent.astro";
+import Header from "~/components/layout/Header.astro";
+import Footer from "~/components/layout/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "opencdd — a Ruby model for the IEC Common Data Dictionary.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#fbfaf3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141c28" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <SkipToContent />
+    <Header />
+    <main id="main-content" class="mx-auto w-full max-w-7xl flex-1 px-6 py-6 lg:px-8">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

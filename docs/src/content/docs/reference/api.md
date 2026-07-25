@@ -1,6 +1,9 @@
 ---
 title: API reference
 description: Key classes and methods exposed by the opencdd gem.
+published: 2026-07-25
+section: Reference
+order: 100
 ---
 
 This page lists the most-used classes and methods. For full details,

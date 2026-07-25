@@ -1,6 +1,9 @@
 ---
 title: Validator rules
 description: The 16 rules enforced by Opencdd::Validator, with examples.
+published: 2026-07-25
+section: Reference
+order: 90
 ---
 
 `Opencdd::Validator.run(database)` returns an Array of
