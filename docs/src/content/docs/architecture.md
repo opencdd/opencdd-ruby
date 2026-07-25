@@ -1,6 +1,9 @@
 ---
 title: Architecture
 description: How opencdd is structured internally, the principles followed, and the extension points for common features.
+published: 2026-07-25
+section: Reference
+order: 70
 ---
 
 This document explains how `opencdd` is structured internally, what

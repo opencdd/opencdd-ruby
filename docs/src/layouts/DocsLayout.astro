@@ -1,0 +1,78 @@
+---
+import ProseLayout from "~/layouts/ProseLayout.astro";
+
+interface NavItem {
+  href: string;
+  title: string;
+  order: number;
+  section?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  docsNav: NavItem[];
+}
+
+const { title, description, docsNav } = Astro.props;
+
+const SECTION_ORDER = [
+  "Getting Started",
+  "Concepts",
+  "Guides",
+  "Reference",
+  "Project",
+];
+
+const grouped = SECTION_ORDER.map((section) => ({
+  section,
+  items: docsNav
+    .filter((d) => (d.section ?? "Other") === section)
+    .sort((a, b) => a.order - b.order),
+})).filter((g) => g.items.length > 0);
+
+const current = Astro.url.pathname;
+---
+
+<ProseLayout
+  title={`${title} — opencdd docs`}
+  description={description}
+  sidebar
+>
+  <aside slot="sidebar">
+    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-400">
+      Documentation
+    </p>
+    <nav>
+      {grouped.map((group) => (
+        <div class="mb-4">
+          <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-400">
+            {group.section}
+          </p>
+          <ul class="space-y-0.5 border-l border-ink-200">
+            {group.items.map((item) => {
+              const active = current === item.href || current === item.href + "/";
+              return (
+                <li>
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "block border-l-2 -ml-px py-0.5 pl-3 text-sm transition",
+                      active
+                        ? "border-lapis-500 font-medium text-lapis-700"
+                        : "border-transparent text-ink-500 hover:border-ink-300 hover:text-ink-800",
+                    ]}
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </aside>
+
+  <slot />
+</ProseLayout>

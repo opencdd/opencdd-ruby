@@ -1,0 +1,99 @@
+---
+const FOOTER_NAV = [
+  {
+    title: "Project",
+    items: [
+      { href: "/docs/", label: "Docs" },
+      { href: "https://github.com/opencdd/opencdd-ruby", label: "GitHub", external: true },
+      { href: "https://github.com/opencdd/opencdd-ruby/releases", label: "Releases", external: true },
+      { href: "https://rubygems.org/gems/opencdd", label: "RubyGems", external: true },
+    ],
+  },
+  {
+    title: "Elsewhere",
+    items: [
+      { href: "https://opencdd.github.io/", label: "OpenCDD Browser", external: true },
+      { href: "https://github.com/opencdd", label: "OpenCDD on GitHub", external: true },
+      { href: "https://www.iec.ch/dyn/www/f?p=103:7:0::::FSP_ORG_ID,FSP_LANG_ID:1273,25", label: "IEC CDD", external: true },
+    ],
+  },
+];
+---
+
+<footer class="mt-24 border-t border-paper-300 bg-paper-100 print:hidden">
+  <div class="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+    <div class="grid gap-8 sm:grid-cols-[2fr_1fr_1fr]">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5">
+          <span class="relative inline-block h-7 w-7 shrink-0">
+            <img
+              src="/img/opencdd-logo_light.svg"
+              alt=""
+              aria-hidden="true"
+              width="28"
+              height="28"
+              class="logo-svg logo-svg--light absolute inset-0 h-full w-full rounded"
+            />
+            <img
+              src="/img/opencdd-logo_dark.svg"
+              alt=""
+              aria-hidden="true"
+              width="28"
+              height="28"
+              class="logo-svg logo-svg--dark absolute inset-0 h-full w-full rounded"
+            />
+          </span>
+          <span class="font-display text-base font-medium text-ink-900">
+            opencdd
+          </span>
+          <a
+            href="https://github.com/opencdd"
+            class="ml-1 inline-flex items-center text-ink-500 transition hover:text-ink-900"
+            aria-label="OpenCDD on GitHub"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+          </a>
+        </div>
+        <p class="max-w-md text-sm leading-relaxed text-ink-500">
+          A Ruby model for the IEC Common Data Dictionary — read, write,
+          validate, and navigate CDD content with first-class powertype
+          semantics.
+        </p>
+      </div>
+
+      {FOOTER_NAV.map((group) => (
+        <nav class="text-sm" aria-label={`Footer ${group.title}`}>
+          <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-400">
+            {group.title}
+          </p>
+          <ul class="mt-2 space-y-1.5">
+            {group.items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "text-ink-700 hover:text-hex-700",
+                    item.external && "after:content-['↗']",
+                  ]}
+                  {...(item.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+
+    <div class="mt-10 border-t border-paper-300 pt-6 text-xs text-ink-400">
+      <p>
+        © {new Date().getFullYear()} OpenCDD contributors. Released under the MIT License.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Card from "~/components/ui/Card.astro";
+
+const SECTION_META: Record<string, { blurb: string; accent: string }> = {
+  "Getting Started": {
+    blurb: "New here? Start with these.",
+    accent: "border-lapis-300 bg-lapis-50/30",
+  },
+  Concepts: {
+    blurb: "Understand the mental model.",
+    accent: "border-teal-300 bg-teal-50/30",
+  },
+  Guides: {
+    blurb: "Step-by-step recipes for common tasks.",
+    accent: "border-hex-300 bg-hex-50/30",
+  },
+  Reference: {
+    blurb: "Detailed specifications and lookup.",
+    accent: "border-violet-300 bg-violet-50/20",
+  },
+  Project: {
+    blurb: "Contribute to opencdd.",
+    accent: "border-paper-300 bg-paper-100/50",
+  },
+};
+
+const SECTION_ORDER = ["Getting Started", "Concepts", "Guides", "Reference", "Project"];
+
+const entries = await getCollection("docs");
+const grouped = SECTION_ORDER.map((section) => ({
+  section,
+  meta: SECTION_META[section]!,
+  items: entries
+    .filter((d) => d.id !== "index" && d.id !== "index.mdx" && d.data.section === section)
+    .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)),
+})).filter((g) => g.items.length > 0);
+---
+
+<BaseLayout
+  title="Documentation — opencdd"
+  description="Guides, references, and deep dives for using opencdd — a Ruby model for the IEC Common Data Dictionary."
+>
+  <article class="mx-auto max-w-5xl space-y-8 px-6 py-10">
+    <header class="space-y-2">
+      <p class="text-xs font-medium uppercase tracking-wide text-ink-500">
+        Documentation
+      </p>
+      <h1 class="font-display text-4xl tracking-tight text-ink-900">
+        Guides, references, and deep dives
+      </h1>
+      <p class="text-lg text-ink-600">
+        Everything you need to use <code class="rounded bg-paper-200 px-1.5 py-0.5 text-[0.9em] text-ink-800">opencdd</code>
+        — read Parcel workbooks, walk the entity graph, validate content,
+        emit CDDAL / YAML / JSON.
+      </p>
+    </header>
+
+    <div class="space-y-8">
+      {grouped.map((group) => (
+        <section class={`rounded-2xl border p-6 ${group.meta.accent}`}>
+          <div class="mb-4 flex items-baseline justify-between gap-4">
+            <h2 class="font-display text-2xl text-ink-900">{group.section}</h2>
+            <p class="text-sm text-ink-500">{group.meta.blurb}</p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {group.items.map((entry) => (
+              <Card class="flex h-full flex-col">
+                <a
+                  href={`/docs/${entry.id.replace(/\.mdx?$/, "")}/`}
+                  class="group flex h-full flex-col gap-1"
+                >
+                  <h3 class="font-medium text-ink-900 group-hover:text-hex-700">
+                    {entry.data.title}
+                  </h3>
+                  {entry.data.description && (
+                    <p class="text-sm text-ink-500 line-clamp-3">
+                      {entry.data.description}
+                    </p>
+                  )}
+                </a>
+              </Card>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </article>
+</BaseLayout>

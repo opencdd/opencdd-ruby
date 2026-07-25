@@ -1,6 +1,9 @@
 ---
 title: Feature audit
 description: What opencdd does, what works, what's known-broken, and where to find each feature.
+published: 2026-07-25
+section: Reference
+order: 80
 ---
 
 This page is the canonical list of opencdd's features, the spec that
