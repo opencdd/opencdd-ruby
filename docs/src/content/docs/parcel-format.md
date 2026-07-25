@@ -1,9 +1,10 @@
 ---
 title: The Parcel Excel format
 description: The canonical Excel workbook format for exchanging CDD content — three reader layouts, one writer.
+published: 2026-07-25
+section: Guides
+order: 50
 ---
-
-# The Parcel Excel format
 
 Parcel is the canonical Excel workbook format for exchanging CDD
 content. It's defined by IEC 62656-1 and used by ParcelMaker, IEC CDD's

@@ -1,0 +1,23 @@
+{
+  "name": "OpenCDD",
+  "short_name": "OpenCDD",
+  "description": "An open, modern browser for the IEC Common Data Dictionary.",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png?v=20260712",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png?v=20260712",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#fbfaf3",
+  "background_color": "#fbfaf3",
+  "display": "standalone",
+  "start_url": "/"
+}

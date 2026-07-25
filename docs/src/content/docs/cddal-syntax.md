@@ -1,9 +1,10 @@
 ---
 title: CDDAL syntax guide
 description: The plain-text canonical format for CDD content — authorable, reviewable, version-controllable, round-trip stable against Parcel.
+published: 2026-07-25
+section: Guides
+order: 60
 ---
-
-# CDDAL syntax guide
 
 CDDAL (CDD Authoring Language, pronounced "coddle") is the plain-text
 canonical format for CDD content. It is:

@@ -1,0 +1,202 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const exampleCode = `require "opencdd"
+
+db = Opencdd::Database.load("my_dict.xlsx")
+
+root = db.classes.find { |c| c.superclass_irdi.nil? }
+puts "Root: #{root.preferred_name} (#{root.code})"
+
+# Walk effective properties (declared + inherited)
+db.effective_properties.properties_of(root).each do |prop|
+  puts "  - #{prop.code}: #{prop.preferred_name}"
+end
+
+# Emit YAML / JSON / CDDAL
+db.save_to_directory("./dict-yaml/")
+File.write("dict.json", Opencdd::Exporters::Json.new.to_json(db))`;
+
+const gemfileSnippet = `gem "opencdd", "~> 0.3"`;
+---
+
+<BaseLayout
+  title="opencdd — a Ruby model for the IEC Common Data Dictionary"
+  description="Read, write, validate, and navigate IEC CDD content with first-class powertype semantics. Open-source, MIT-licensed Ruby gem."
+>
+  <article class="space-y-24">
+    {/* HERO ─────────────────────────────────────────────────────── */}
+    <section class="relative overflow-hidden">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute -top-12 right-0 select-none opacity-[0.04]"
+      >
+        <svg width="320" height="320" viewBox="0 0 64 64" fill="none">
+          <!-- Hexagram ☱ (Dui / Lake): three horizontal bars, top broken -->
+          <rect x="8" y="10" width="20" height="6" fill="currentColor" class="text-ink-900" />
+          <rect x="36" y="10" width="20" height="6" fill="currentColor" class="text-ink-900" />
+          <rect x="8" y="28" width="48" height="6" fill="currentColor" class="text-ink-900" />
+          <rect x="8" y="46" width="48" height="6" fill="currentColor" class="text-ink-900" />
+        </svg>
+      </div>
+
+      <div class="relative space-y-8 pb-12 pt-8">
+        <div class="flex items-center gap-3">
+          <span class="relative inline-block h-10 w-10 shrink-0">
+            <img
+              src="/img/opencdd-logo_light.svg"
+              alt=""
+              aria-hidden="true"
+              width="40"
+              height="40"
+              class="logo-svg logo-svg--light absolute inset-0 h-full w-full rounded-md shadow-sm"
+            />
+            <img
+              src="/img/opencdd-logo_dark.svg"
+              alt=""
+              aria-hidden="true"
+              width="40"
+              height="40"
+              class="logo-svg logo-svg--dark absolute inset-0 h-full w-full rounded-md shadow-sm"
+            />
+          </span>
+          <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-hex-700">
+            opencdd · Ruby · IEC CDD
+          </p>
+        </div>
+
+        <h1 class="font-display max-w-4xl text-[2.75rem] leading-[1.05] tracking-[-0.02em] text-ink-900 sm:text-6xl">
+          A Ruby model for the{" "}
+          <span class="text-hex-600">IEC Common Data Dictionary.</span>
+        </h1>
+
+        <p class="max-w-2xl text-base leading-relaxed text-ink-600">
+          Read, write, validate, and navigate CDD content with first-class
+          powertype semantics. Loads Parcel Excel workbooks, walks the
+          four-layer ontology, and emits YAML, JSON, CDDAL, or Parcel.
+          Built on the <a
+            href="https://www.iec.ch/dyn/www/f?p=103:7:0::::FSP_ORG_ID,FSP_LANG_ID:1273,25"
+            target="_blank"
+            rel="noreferrer noopener"
+            class="text-hex-700 hover:text-hex-600">IEC&nbsp;CDD</a>
+          &nbsp;ontology — IRDIs, classes, properties, value lists, units,
+          and relations.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <a
+            href="/docs/"
+            class="inline-flex items-center gap-2 rounded-lg bg-hex-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-hex-600"
+          >
+            Get started
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/docs/ontology/"
+            class="inline-flex items-center gap-2 rounded-lg border border-paper-300 bg-paper-50 px-5 py-2.5 text-sm font-medium text-ink-700 transition hover:border-paper-400 hover:text-ink-900"
+          >
+            The four-layer ontology
+          </a>
+          <a
+            href="https://github.com/opencdd/opencdd-ruby"
+            target="_blank"
+            rel="noreferrer noopener"
+            class="inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-ink-600 transition hover:text-ink-900"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" class="h-5 w-5" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* WHAT IS IT ───────────────────────────────────────────────── */}
+    <section class="space-y-6">
+      <h2 class="font-display text-3xl tracking-tight text-ink-900">
+        What is opencdd?
+      </h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-xl border border-paper-300 bg-paper-50 p-6">
+          <div class="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-teal-500/10 text-teal-700">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m-7-8h8a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2V8a2 2 0 012-2z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 4h6v2H9z" />
+            </svg>
+          </div>
+          <h3 class="font-display text-lg font-medium text-ink-900">Model</h3>
+          <p class="mt-2 text-sm text-ink-600">
+            Frozen value objects for every CDD entity type — classes,
+            properties, value lists, value terms, units, relations, view
+            controls. One in-memory <code class="rounded bg-paper-200 px-1 text-[0.85em]">Database</code> store.
+          </p>
+        </div>
+        <div class="rounded-xl border border-paper-300 bg-paper-50 p-6">
+          <div class="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-lapis-500/10 text-lapis-700">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+          </div>
+          <h3 class="font-display text-lg font-medium text-ink-900">Read & write</h3>
+          <p class="mt-2 text-sm text-ink-600">
+            Three Parcel layouts (workbook, flat dir, sharded) plus
+            <code class="rounded bg-paper-200 px-1 text-[0.85em]">.xls</code>
+            BIFF. YAML persistence via lutaml-model. CDDAL plain-text
+            canonical format.
+          </p>
+        </div>
+        <div class="rounded-xl border border-paper-300 bg-paper-50 p-6">
+          <div class="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-hex-500/10 text-hex-700">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M12 22a10 10 0 110-20 10 10 0 010 20z" />
+            </svg>
+          </div>
+          <h3 class="font-display text-lg font-medium text-ink-900">Validate</h3>
+          <p class="mt-2 text-sm text-ink-600">
+            14 rule classes (R01–R14) cover IRDI format, hierarchy
+            acyclicity, type-specific shape, reference integrity. Composite
+            runner returns structured errors.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* CODE ──────────────────────────────────────────────────────── */}
+    <section class="space-y-6">
+      <h2 class="font-display text-3xl tracking-tight text-ink-900">
+        Five-minute example
+      </h2>
+      <p class="max-w-2xl text-ink-600">
+        Load a Parcel workbook, walk its class hierarchy, list the
+        effective properties (including inherited) of any class.
+      </p>
+      <div class="overflow-hidden rounded-xl border border-paper-300 bg-ink-900 text-paper-100 shadow-md">
+        <div class="border-b border-ink-700 px-4 py-2 text-xs font-medium uppercase tracking-wide text-ink-300">
+          example.rb
+        </div>
+        <pre class="overflow-x-auto p-5 text-sm leading-relaxed"><code set:html={exampleCode}></code></pre>
+      </div>
+      <p class="text-sm text-ink-500">
+        <a href="/docs/getting-started/" class="text-hex-700 hover:text-hex-600">Read the full getting-started guide →</a>
+      </p>
+    </section>
+
+    {/* INSTALL ──────────────────────────────────────────────────── */}
+    <section class="space-y-6">
+      <h2 class="font-display text-3xl tracking-tight text-ink-900">
+        Install
+      </h2>
+      <div class="overflow-hidden rounded-xl border border-paper-300 bg-ink-900 text-paper-100 shadow-md">
+        <div class="border-b border-ink-700 px-4 py-2 text-xs font-medium uppercase tracking-wide text-ink-300">
+          Gemfile
+        </div>
+        <pre class="overflow-x-auto p-5 text-sm leading-relaxed"><code set:html={gemfileSnippet}></code></pre>
+      </div>
+      <p class="text-sm text-ink-500">
+        Or <code class="rounded bg-paper-200 px-1 text-[0.85em]">gem install opencdd</code>.
+        Requires Ruby ≥ 3.1. Released under the MIT license.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

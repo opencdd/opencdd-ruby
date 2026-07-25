@@ -1,6 +1,9 @@
 ---
 title: YAML persistence (lutaml-model)
 description: The canonical on-disk persistence format for CDD content, using CDD-native attribute names via Lutaml::Model.
+published: 2026-07-25
+section: Guides
+order: 40
 ---
 
 YAML is the canonical persistence format for CDD content in opencdd.

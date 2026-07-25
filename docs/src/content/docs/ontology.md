@@ -1,9 +1,10 @@
 ---
 title: The four-layer CDD ontology
 description: CDD's distinguishing concept — powertype modelling — and why CDD is not UML, RDF/OWL, or a typical object model.
+published: 2026-07-25
+section: Concepts
+order: 20
 ---
-
-# The CDD four-layer ontology
 
 CDD (Common Data Dictionary) is an engineering-dictionary ontology
 standardised by IEC 61360 / 62656-1. This guide explains its

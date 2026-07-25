@@ -1,0 +1,80 @@
+---
+// Docs-site header. Simplified port of the sibling browser project's
+// Header — drops the command palette, dictionary nav, mobile nav, and
+// theme toggle (we rely on prefers-color-scheme via CSS instead).
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/docs/", label: "Docs" },
+  {
+    href: "https://github.com/opencdd/opencdd-ruby",
+    label: "GitHub",
+    external: true,
+  },
+  {
+    href: "https://opencdd.github.io/",
+    label: "OpenCDD Browser",
+    external: true,
+  },
+];
+
+const current = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-30 border-b border-paper-300/80 bg-paper-50/85 backdrop-blur-md print:hidden">
+  <div aria-hidden="true" class="h-0.5 w-full bg-gradient-to-r from-teal-500 to-lapis-500"></div>
+  <div class="mx-auto flex max-w-7xl items-center gap-6 px-6 py-3 lg:px-8">
+    <a
+      href="/"
+      class="group flex shrink-0 items-center gap-3 rounded-md px-1 py-0.5 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lapis-600"
+      aria-label="opencdd home"
+    >
+      <span class="relative inline-block h-9 w-9 shrink-0">
+        <img
+          src="/img/opencdd-logo_light.svg"
+          alt=""
+          aria-hidden="true"
+          width="36"
+          height="36"
+          class="logo-svg logo-svg--light absolute inset-0 h-full w-full rounded-md shadow-sm transition group-hover:shadow-md"
+          decoding="async"
+        />
+        <img
+          src="/img/opencdd-logo_dark.svg"
+          alt=""
+          aria-hidden="true"
+          width="36"
+          height="36"
+          class="logo-svg logo-svg--dark absolute inset-0 h-full w-full rounded-md shadow-sm transition group-hover:shadow-md"
+          decoding="async"
+        />
+      </span>
+      <span class="flex items-baseline gap-2">
+        <span class="font-display text-lg font-medium tracking-tight text-ink-900">opencdd</span>
+        <span class="hidden text-[11px] font-normal uppercase tracking-[0.12em] text-ink-400 sm:inline">
+          Ruby · IEC CDD
+        </span>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 text-sm" aria-label="Primary">
+      {NAV.map((item) => {
+        const active = !item.external && (current === item.href || current === item.href + "/");
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              "rounded-md px-2.5 py-1.5 transition",
+              active
+                ? "text-ink-900 bg-teal-500/10 font-medium ring-1 ring-inset ring-teal-400/30"
+                : "text-ink-600 hover:bg-paper-200/50 hover:text-ink-900",
+            ]}
+            {...(item.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</header>
