@@ -12,22 +12,18 @@ module Opencdd
   # "what languages does this dictionary have?" — used by the browser
   # to render a language switcher and by the data pipeline to report
   # language coverage.
+  #
+  # This is a model object. It does not normalize language codes:
+  # source-format quirks (e.g. IEC CDD .xls files using "jp" for
+  # Japanese) are normalized at the SheetSchema ingestion boundary
+  # via +Opencdd::Parcel::LanguageAliases+, so every consumer of
+  # this class can assume ISO 639-1 codes unconditionally.
   class Languages
-    # IEC CDD source .xls files sometimes use non-standard language
-    # codes that diverge from ISO 639-1. Map them here so the entire
-    # ecosystem (gem, JSON wire format, browser CSS, TS model) speaks
-    # the same ISO code. When a non-conformant code is encountered,
-    # +normalize+ emits a one-line warning on stderr so data-quality
-    # issues are visible without silently rewriting.
-    LANG_ALIASES = {
-      "jp" => "ja",
-    }.freeze
-
     attr_reader :source, :translations
 
     def initialize(source: "en", translations: [])
-      @source = self.class.normalize(source)
-      @translations = Array(translations).map { |t| self.class.normalize(t) }.uniq - [@source]
+      @source = source.to_s
+      @translations = Array(translations).map(&:to_s).uniq - [@source]
       freeze
     end
 
@@ -36,7 +32,7 @@ module Opencdd
     end
 
     def include?(lang)
-      all.include?(self.class.normalize(lang))
+      all.include?(lang.to_s)
     end
 
     def empty?
@@ -61,23 +57,6 @@ module Opencdd
       [source, translations].hash
     end
 
-    # Normalize a language code to ISO 639-1.
-    #
-    # Returns the input unchanged if it is already standard. If the
-    # code is a known non-conformant alias (e.g. "jp" from IEC CDD
-    # source .xls), returns the ISO equivalent ("ja") and emits a
-    # warning on stderr so the data-quality issue is visible.
-    def self.normalize(lang)
-      return lang if lang.nil?
-      code = lang.to_s.strip
-      return code if code.empty?
-      if LANG_ALIASES.key?(code)
-        warn "[opencdd] non-conformant language code #{code.inspect} → #{LANG_ALIASES[code].inspect} (ISO 639-1)"
-        return LANG_ALIASES[code]
-      end
-      code
-    end
-
     # Scan a properties hash for +<property_id>.<lang>+ keys and
     # return a Languages object covering every language seen. The
     # source language defaults to +default_source+ when no explicit
@@ -85,9 +64,9 @@ module Opencdd
     def self.from_properties(properties, default_source: "en")
       langs = properties.keys.each_with_object(Set.new) do |key, acc|
         next unless key.include?(".")
-        prefix, lang = key.split(".", 2)
+        _, lang = key.split(".", 2)
         next unless lang =~ /\A[a-z]{2}(-[a-z0-9]+)?\z/i
-        acc << normalize(lang)
+        acc << lang
       end
       source = langs.include?(default_source) ? default_source : (langs.first || default_source)
       translations = langs.to_a - [source]
