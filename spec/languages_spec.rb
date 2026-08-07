@@ -83,6 +83,48 @@ RSpec.describe Opencdd::Languages do
     end
   end
 
+  describe ".normalize" do
+    it "passes through ISO 639-1 codes unchanged" do
+      expect(described_class.normalize("en")).to eq("en")
+      expect(described_class.normalize("ja")).to eq("ja")
+      expect(described_class.normalize("de")).to eq("de")
+    end
+
+    it "maps jp to ja (IEC CDD non-conformant)" do
+      expect(described_class.normalize("jp")).to eq("ja")
+    end
+
+    it "warns on stderr when a non-conformant code is seen" do
+      expect { described_class.normalize("jp") }
+        .to output(/non-conformant language code "jp"/).to_stderr
+    end
+
+    it "does not warn for standard codes" do
+      expect { described_class.normalize("en") }.not_to output.to_stderr
+    end
+
+    it "handles nil and empty gracefully" do
+      expect(described_class.normalize(nil)).to be_nil
+      expect(described_class.normalize("")).to eq("")
+    end
+
+    it "strips whitespace" do
+      expect(described_class.normalize("  en  ")).to eq("en")
+    end
+  end
+
+  describe "normalization on construction" do
+    it "normalizes source and translations" do
+      langs = described_class.new(source: "en", translations: %w[jp fr])
+      expect(langs.translations).to eq(%w[ja fr])
+    end
+
+    it "does not double-count jp and ja" do
+      langs = described_class.new(source: "en", translations: %w[jp ja])
+      expect(langs.translations).to eq(%w[ja])
+    end
+  end
+
   describe ".from_properties" do
     it "scans properties hash for language-tagged keys" do
       props = { "MDC_P004.en" => "Vehicle", "MDC_P004.fr" => "Véhicule", "MDC_P004.de" => "Fahrzeug" }
@@ -101,6 +143,12 @@ RSpec.describe Opencdd::Languages do
       props = { "MDC_P004" => "Vehicle", "C016" => "Released" }
       langs = described_class.from_properties(props)
       expect(langs.all).to eq(%w[en])
+    end
+
+    it "normalizes non-conformant codes like jp to ja" do
+      props = { "MDC_P004.en" => "Vehicle", "MDC_P004.jp" => "車両" }
+      langs = described_class.from_properties(props)
+      expect(langs.translations).to eq(%w[ja])
     end
   end
 end
