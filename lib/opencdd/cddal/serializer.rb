@@ -174,7 +174,6 @@ module Opencdd
       def format_value(value)
         s = value.to_s
         return quote_string(s) if string_literal?(s)
-        return format_set(s) if set_like?(s)
         s
       end
 
@@ -192,15 +191,6 @@ module Opencdd
           .gsub("\b") { "\\b" }
           .gsub("\f") { "\\f" }
         "\"#{escaped}\""
-      end
-
-      def set_like?(s)
-        s.start_with?("(") && s.end_with?(")")
-      end
-
-      def format_set(s)
-        elements = Opencdd::StructuredValues.unwrap_and_split(s)
-        "{ #{elements.join(', ')} }"
       end
 
       def symbol_name_for(entity)
