@@ -102,17 +102,11 @@ RSpec.describe "Import pipeline round-trips" do
   end
 
   describe "scenario 3: parcel → cddal → parcel (round-trip)" do
-    # Cross-format round-trips hit a known Parcel writer normalization:
-    # version/revision codes stored as strings ("001") are written as
-    # numeric cells (1) and read back as "1". +semantically_equal?+
-    # does exact property-hash comparison and reports this as a
-    # mismatch. The entity graph itself (IRDIs, types, counts) survives
-    # the detour cleanly — that is the invariant tested here.
-    #
-    # TODO: the value-normalization gap should be resolved either in
-    # the Parcel writer (preserve string values) or in
-    # +semantically_equal?+ (normalize numeric strings). Flagged, not
-    # fixed — see [[ask-before-semantic-changes]].
+    # Cross-format round-trips preserve the entity graph (IRDIs, types,
+    # counts) cleanly. A full +semantically_equal?+ assertion is blocked
+    # by a separate multilingual key normalization gap (MDC_P004_1 vs
+    # MDC_P004.en) — see spec/parcel_string_preservation_spec.rb for the
+    # narrower string-preservation test that verifies audit A3's fix.
     let(:parcel_source) do
       path = write_parcel(source_database, parcel_id: "OCDDSRC3")
       Opencdd::Database.load_workbook(path)

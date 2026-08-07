@@ -147,7 +147,11 @@ module Opencdd
           rows = emitter.emit(built.sheet, built.entities)
           workbook.add_worksheet(name: built.sheet.name) do |ws|
             rows.each do |row|
-              emitted = ws.add_row(row)
+              # All property values are strings per IEC 61360 wire format.
+              # Force string cell type so values like "001" survive round-trip
+              # (otherwise caxlsx auto-types numeric-looking strings and roo
+              # reads them back as integers, breaking semantically_equal?).
+              emitted = ws.add_row(row, types: :string)
               emitted.hidden = true if row_hidden?(row, hidden_directives)
             end
           end
