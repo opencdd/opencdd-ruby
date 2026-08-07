@@ -110,6 +110,7 @@ module Opencdd
     def relations      ; @entities_by_type[:relation]     || [] ; end
     def view_controls  ; @entities_by_type[:view_control] || [] ; end
     def list_of_units  ; @entities_by_type[:list_of_unit] || [] ; end
+    def det_classifications ; @entities_by_type[:det_classification] || [] ; end
 
     def entities_of_type(type)
       @entities_by_type[type.to_sym] || []
