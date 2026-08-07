@@ -70,14 +70,15 @@ module Opencdd
       # omitted (payload still has all the entity's own fields).
       # ─────────────────────────────────────────────────────────────
       PAYLOAD_BUILDERS = {
-        Opencdd::Klass        => :class_node,
-        Opencdd::Property     => :property_node,
-        Opencdd::Unit         => :unit_node,
-        Opencdd::ValueList    => :value_list_node,
-        Opencdd::ValueTerm    => :value_term_node,
-        Opencdd::Relation     => :relation_node,
-        Opencdd::ViewControl  => :view_control_node,
-        Opencdd::ListUnit     => :list_of_unit_node,
+        Opencdd::Klass             => :class_node,
+        Opencdd::Property          => :property_node,
+        Opencdd::Unit              => :unit_node,
+        Opencdd::ValueList         => :value_list_node,
+        Opencdd::ValueTerm         => :value_term_node,
+        Opencdd::Relation          => :relation_node,
+        Opencdd::ViewControl       => :view_control_node,
+        Opencdd::ListUnit          => :list_of_unit_node,
+        Opencdd::DetClassification => :det_classification_node,
       }.freeze
 
       def payload_for(entity, database: nil)
@@ -132,6 +133,10 @@ module Opencdd
 
       def list_of_unit_node(lou)
         entity_payload(lou).merge(type: "list_of_unit").compact
+      end
+
+      def det_classification_node(det)
+        entity_payload(det).merge(type: "det_classification").compact
       end
 
       private
