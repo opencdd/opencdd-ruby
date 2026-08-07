@@ -80,6 +80,7 @@ module Opencdd
         "MDC_C009" => "MDC_P001_10",
         "MDC_C010" => "MDC_P001_11",
         "MDC_C0100" => "C0101",
+        "MDC_C0101" => "C0102",
         "EXT_C001" => "EXT_P001",
       }.freeze
 
@@ -91,6 +92,7 @@ module Opencdd
         "MDC_C009" => :unit,
         "MDC_C010" => :value_term,
         "MDC_C0100" => :list_of_unit,
+        "MDC_C0101" => :det_classification,
         "EXT_C001" => :view_control,
       }.freeze
 
@@ -261,6 +263,17 @@ module Opencdd
             type: :list_of_unit,
             allowed_property_ids: common,
           )
+          # cdd.iec.ch's search-export uses CLASS_ID:=IECCDD_001 (an
+          # IEC-internal supplier scheme) — not a Parcel meta-class IRDI.
+          # We register MDC_C0101 as the canonical meta-class IRDI; the
+          # file's CLASS_ID is documentation, not the parsing gate.
+          det_classification = MetaClass.new(
+            irdi: "MDC_C0101",
+            name: "DetClassification",
+            entity_class: Opencdd::DetClassification,
+            type: :det_classification,
+            allowed_property_ids: common,
+          )
           {
             klass_class.irdi    => klass_class,
             property_class.irdi => property_class,
@@ -270,6 +283,7 @@ module Opencdd
             value_term.irdi     => value_term,
             view_control.irdi   => view_control,
             list_of_unit.irdi   => list_of_unit,
+            det_classification.irdi => det_classification,
           }
         end
       end
