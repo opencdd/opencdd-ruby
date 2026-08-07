@@ -24,6 +24,7 @@ module Opencdd
         "VALUELIST"  => :value_list,
         "VALUETERMS" => :value_term,
         "LISTOFUNITS" => :list_of_unit,
+        "DETCLASSIFICATION" => :det_classification,
       }.freeze
 
       attr_reader :path
