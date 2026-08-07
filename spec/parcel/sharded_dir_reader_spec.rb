@@ -5,19 +5,20 @@ require "tmpdir"
 require "fileutils"
 require "json"
 
-# Exercises the sharded per-class layout in downloads/iec63213/, which
+# Exercises the sharded per-class layout in downloads/iec-63213/, which
 # has 26 class subdirectories (KEA001..KEB124) each containing 4 .xls
 # files (CLASS, PROPERTY, VALUELIST, VALUETERMS). The PROPERTY /
 # VALUELIST / VALUETERMS workbooks currently hold header-only exports,
 # so only the CLASS rows produce entities — that's a scrape-time data
 # characteristic, not a reader bug.
 RSpec.describe Opencdd::Parcel::ShardedDirReader do
-  SHARDED_FIXTURE = File.expand_path("../../downloads/iec63213", __dir__)
+  SHARDED_FIXTURE = File.expand_path("../../downloads/iec-63213", __dir__)
 
   let(:reader) { described_class.new(SHARDED_FIXTURE) }
 
   before(:all) do
-    skip "sharded fixture downloads/iec63213 not present" unless File.directory?(SHARDED_FIXTURE)
+    skip "sharded fixture downloads/iec-63213 not present" unless File.directory?(SHARDED_FIXTURE)
+    warn_poor_fixture(SHARDED_FIXTURE)
   end
 
   describe "#class_subdirs" do
@@ -59,14 +60,14 @@ RSpec.describe Opencdd::Parcel::ShardedDirReader do
     end
   end
 
-  # Self-contained layout tests that don't depend on downloads/iec63213
+  # Self-contained layout tests that don't depend on downloads/iec-63213
   # state. Copies a real export_*.xls into the synthetic layout so the
   # reader exercises real XLS parsing, not just file existence checks.
   describe "per-version layout (nested <CODE>/<UNID>/export_*.xls)" do
     let(:fake_unid) { "1FF0BC2CBBBE16DBC125873E002DD576" }
 
     around do |ex|
-      skip "sharded fixture downloads/iec63213 not present" unless File.directory?(SHARDED_FIXTURE)
+      skip "sharded fixture downloads/iec-63213 not present" unless File.directory?(SHARDED_FIXTURE)
       Dir.mktmpdir("cdd-per-version") do |tmp|
         @tmp = tmp
         code_dir = File.join(tmp, "KEA001")
@@ -100,7 +101,7 @@ RSpec.describe Opencdd::Parcel::ShardedDirReader do
 
   describe "legacy flat layout (back-compat)" do
     around do |ex|
-      skip "sharded fixture downloads/iec63213 not present" unless File.directory?(SHARDED_FIXTURE)
+      skip "sharded fixture downloads/iec-63213 not present" unless File.directory?(SHARDED_FIXTURE)
       Dir.mktmpdir("cdd-flat") do |tmp|
         @tmp = tmp
         code_dir = File.join(tmp, "KEA001")
@@ -134,5 +135,39 @@ RSpec.describe Opencdd::Parcel::ShardedDirReader do
       .map { |n| File.join(src, n) }
       .find { |p| Dir.children(p).any? { |f| f =~ /\Aexport_.*\.xls\z/i } }
     nested || src
+  end
+
+  # Classifies each export_*.xls in +fixture_path+ by data row count.
+  # Warns on stderr naming every header-only export type. Pure
+  # visibility nudge — does not fail the suite.
+  def warn_poor_fixture(fixture_path)
+    header_only = {}
+    Dir.glob("#{fixture_path}/*/export_*.xls").each do |xls|
+      type = File.basename(xls)[/export_([A-Z]+)_/, 1]
+      next unless type
+      row_count = count_data_rows(xls)
+      next if row_count.nil? || row_count > 1
+      header_only[type] ||= 0
+      header_only[type] += 1
+    end
+    return if header_only.empty?
+    warn "[opencdd] sharded fixture #{fixture_path} has header-only exports: " \
+         "#{header_only.map { |t, n| "#{t} (#{n} file#{'s' if n > 1})" }.join(', ')}. " \
+         "Re-scrape with `harvest/download.py --dictionary iec-63213` for richer data."
+  end
+
+  # Returns the number of rows in the first sheet of +xls_path+, or
+  # +nil+ if the file cannot be parsed. Header-only files return 1.
+  # Uses the same +spreadsheet+ gem (not Roo) that
+  # +Opencdd::Parcel::WorkbookReader::SpreadsheetSource+ uses for
+  # +.xls+ files in production.
+  def count_data_rows(xls_path)
+    require "spreadsheet"
+    return nil unless [".xls"].include?(File.extname(xls_path).downcase)
+    book = Spreadsheet.open(xls_path)
+    ws = book.worksheet(0)
+    ws.rows.count
+  rescue StandardError
+    nil
   end
 end
