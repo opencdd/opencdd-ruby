@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe "DET classification property-ID aliasing" do
   let(:path) do
-    "/Users/mulgogi/src/opencdd/data-private/exports/latest/iec61360-4/" \
+    "/Users/mulgogi/src/opencdd/data-private/exports/latest/iec-61360-4/" \
       "export_DETCLASSIFICATION_DOMO-DWL8BK.xls"
   end
 

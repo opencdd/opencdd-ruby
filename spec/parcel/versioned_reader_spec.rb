@@ -2,17 +2,17 @@
 
 require "spec_helper"
 
-# Exercises the per-version sharded layout in downloads/iec63213.
+# Exercises the per-version sharded layout in downloads/iec-63213.
 # KEA012 has 3 versions (current v003 + two superseded), each in its
 # own UNID subfolder. The fixture is the only multi-version dict
 # available without large downloads.
 RSpec.describe Opencdd::Parcel::VersionedReader do
-  SHARDED_FIXTURE = File.expand_path("../../downloads/iec63213", __dir__)
+  SHARDED_FIXTURE = File.expand_path("../../downloads/iec-63213", __dir__)
 
   let(:reader) { described_class.new(SHARDED_FIXTURE) }
 
   before(:all) do
-    skip "sharded fixture downloads/iec63213 not present" unless File.directory?(SHARDED_FIXTURE)
+    skip "sharded fixture downloads/iec-63213 not present" unless File.directory?(SHARDED_FIXTURE)
   end
 
   describe "#versions_for" do
