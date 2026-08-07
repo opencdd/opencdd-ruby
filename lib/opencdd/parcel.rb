@@ -7,6 +7,7 @@ module Opencdd
 
     autoload :Metadata,        "opencdd/parcel/metadata"
     autoload :SheetSchema,     "opencdd/parcel/sheet_schema"
+    autoload :LanguageAliases, "opencdd/parcel/language_aliases"
     autoload :Sheet,           "opencdd/parcel/sheet"
     autoload :Workbook,        "opencdd/parcel/workbook"
     autoload :WorkbookReader,  "opencdd/parcel/workbook_reader"

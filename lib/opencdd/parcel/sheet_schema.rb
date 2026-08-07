@@ -23,7 +23,7 @@ module Opencdd
       # (<id>.<lang>) so they round-trip cleanly. Returns the
       # canonical ID (or the input unchanged if no mapping exists).
       # Language codes are normalized to ISO 639-1 via
-      # +Opencdd::Languages.normalize+.
+      # +Opencdd::Parcel::LanguageAliases.normalize+.
       def self.canonical_id(raw_id)
         return nil if raw_id.nil?
         s = raw_id.to_s.strip
@@ -32,7 +32,7 @@ module Opencdd
         base = match ? match.pre_match : s
         lang = match && match[:lang]
         canonical = VARIANT_TO_CANONICAL[base] || base
-        lang ? "#{canonical}.#{Opencdd::Languages.normalize(lang)}" : canonical
+        lang ? "#{canonical}.#{Opencdd::Parcel::LanguageAliases.normalize(lang)}" : canonical
       end
 
       DIRECTIVE_ROWS = %w[
@@ -112,7 +112,7 @@ module Opencdd
 
       DIRECTIVE_ROW_PREFIX = "#".freeze
 
-      attr_reader :columns, :columns_by_id, :column_directives
+      attr_reader :columns, :columns_by_id, :column_directives, :normalized_language_codes
 
       def initialize
         @columns = []
@@ -196,6 +196,7 @@ module Opencdd
           @columns_by_id[col.property_id] = col
         end
 
+        @normalized_language_codes = compute_normalized_language_codes.freeze
         freeze
       end
 
@@ -262,11 +263,33 @@ module Opencdd
           next if v.nil?
           s = v.to_s.strip
           next if s.empty?
-          lang = Opencdd::Languages.normalize(lang) if lang && !lang.empty?
+          lang = Opencdd::Parcel::LanguageAliases.normalize(lang)
           lang = "en" if lang.nil? || lang.empty?
           h[lang] = s
         end
         h
+      end
+
+      # Audit trail of language-code normalizations applied at this
+      # schema's ingestion boundary. Returns a frozen Hash mapping each
+      # original (non-conformant) language code seen in the source to
+      # its ISO 639-1 equivalent. Empty when the source spoke ISO.
+      def compute_normalized_language_codes
+        seen = {}
+        @column_directives.each_key do |key|
+          _, lang = key.to_s.split(".", 2)
+          next if lang.nil? || lang.empty?
+          normalized = Opencdd::Parcel::LanguageAliases.normalize(lang)
+          seen[lang] = normalized if normalized != lang
+        end
+        @columns.each do |col|
+          next if col.raw_property_id.nil?
+          _, lang = col.raw_property_id.split(".", 2)
+          next if lang.nil? || lang.empty?
+          normalized = Opencdd::Parcel::LanguageAliases.normalize(lang)
+          seen[lang] = normalized if normalized != lang
+        end
+        seen
       end
     end
   end
