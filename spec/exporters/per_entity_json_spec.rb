@@ -52,6 +52,28 @@ RSpec.describe Opencdd::Exporters::Json do
       it { is_expected.to include(type: "value_list") }
     end
 
+    context "with a det_classification entity" do
+      let(:entity) do
+        Opencdd::DetClassification.new(
+          irdi: Opencdd::IRDI.parse("0112/2///IECCDD_001#A11"),
+          properties: {
+            "MDC_P001_5" => "A11",
+            "MDC_P004.en" => "geographical unit (greater than a place)",
+          },
+          meta_class_irdi: Opencdd::IRDI.parse("MDC_C0101"),
+        )
+      end
+      subject(:payload) { exporter.payload_for(entity) }
+
+      it { is_expected.to include(type: "det_classification") }
+      it { is_expected.to include(irdi: "0112/2///IECCDD_001#A11") }
+      it { is_expected.to include(code: "A11") }
+
+      it "includes the preferred name" do
+        expect(payload["preferred_name"]).to eq("geographical unit (greater than a place)")
+      end
+    end
+
     context "without a database (no cross-link resolution)" do
       let(:entity) { database.properties.first }
       subject(:payload) { exporter.payload_for(entity) }

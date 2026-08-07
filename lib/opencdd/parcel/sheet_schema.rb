@@ -27,13 +27,16 @@ module Opencdd
         # project-specific column IDs (C0001 = code, C0002.<lang> = name)
         # rather than the standard MDC codes. Without these mappings,
         # every DET classification entity would have nil code + name.
+        #
+        # C0002 maps to MDC_P004 (preferred_name), not MDC_P004_1
+        # (preferred_name_localized), because canonical_id splits the
+        # language suffix off and reapplies it after the base lookup —
+        # so the per-language entries (C0002.en, C0002.fr, etc.) below
+        # would be dead code. The base entry alone produces
+        # MDC_P004.<lang>, which is what the preferred_name field DSL
+        # reads via FieldRegistry.
         "IECCDD_001_C0001"     => "MDC_P001_5",
-        "IECCDD_001_C0002"     => "MDC_P004_1",
-        "IECCDD_001_C0002.en"   => "MDC_P004_1.en",
-        "IECCDD_001_C0002.fr"   => "MDC_P004_1.fr",
-        "IECCDD_001_C0002.de"   => "MDC_P004_1.de",
-        "IECCDD_001_C0002.ja"   => "MDC_P004_1.ja",
-        "IECCDD_001_C0002.zh"   => "MDC_P004_1.zh",
+        "IECCDD_001_C0002"     => "MDC_P004",
       }.freeze
 
       # Canonicalize a Parcel column ID. Splits language tags
