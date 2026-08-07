@@ -3,11 +3,15 @@
 module Opencdd
   module Parcel
     class SheetSchema
-      # Parcel-specific column-ID canonicalization. Maps the
-      # ParcelMaker variant headers (MDC_P004_1, MDC_P005, ...)
-      # to the canonical IEC 61360 IDs (MDC_P004, MDC_P006, ...).
+      # Parcel-specific column-ID canonicalization. Maps:
       #
-      # Owned by SheetSchema because this mapping only exists for
+      # - ParcelMaker language-variant headers (MDC_P004_1, MDC_P005, ...)
+      #   to the canonical IEC 61360 IDs (MDC_P004, MDC_P006, ...).
+      # - cdd.iec.ch search-export's project-specific IDs for DET
+      #   classification (IECCDD_001_C0001, IECCDD_001_C0002.<lang>, ...)
+      #   to the canonical IEC 61360 IDs (MDC_P001_5, MDC_P004_1.<lang>, ...).
+      #
+      # Owned by SheetSchema because these mappings only exist for
       # the Parcel sheet layout — the PropertyIds registry is
       # ontology-only and shouldn't carry format-specific details.
       VARIANT_TO_CANONICAL = {
@@ -17,6 +21,19 @@ module Opencdd
         "MDC_P005"   => "MDC_P006",
         "MDC_P007_1" => "MDC_P008",
         "MDC_P007_2" => "MDC_P009",
+
+        # cdd.iec.ch search-export DET classification aliases.
+        # The file uses IEC-internal supplier scheme (IECCDD_001) and
+        # project-specific column IDs (C0001 = code, C0002.<lang> = name)
+        # rather than the standard MDC codes. Without these mappings,
+        # every DET classification entity would have nil code + name.
+        "IECCDD_001_C0001"     => "MDC_P001_5",
+        "IECCDD_001_C0002"     => "MDC_P004_1",
+        "IECCDD_001_C0002.en"   => "MDC_P004_1.en",
+        "IECCDD_001_C0002.fr"   => "MDC_P004_1.fr",
+        "IECCDD_001_C0002.de"   => "MDC_P004_1.de",
+        "IECCDD_001_C0002.ja"   => "MDC_P004_1.ja",
+        "IECCDD_001_C0002.zh"   => "MDC_P004_1.zh",
       }.freeze
 
       # Canonicalize a Parcel column ID. Splits language tags
