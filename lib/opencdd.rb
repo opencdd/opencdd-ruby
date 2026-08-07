@@ -29,6 +29,7 @@ module Opencdd
   autoload :Relation,    "opencdd/relation"
   autoload :ViewControl, "opencdd/view_control"
   autoload :ListUnit,    "opencdd/list_unit"
+  autoload :DetClassification, "opencdd/det_classification"
 
   autoload :Database,            "opencdd/database"
   autoload :EffectiveProperties, "opencdd/effective_properties"

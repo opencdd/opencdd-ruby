@@ -18,6 +18,8 @@ module Opencdd
         "UNIT"       => :unit,
         "VALUELIST"  => :value_list,
         "VALUETERMS" => :value_term,
+        "LISTOFUNITS" => :list_of_unit,
+        "DETCLASSIFICATION" => :det_classification,
       }.freeze
 
       LEGACY_TYPE_TO_PARCEL_NAME = {
@@ -27,6 +29,8 @@ module Opencdd
         value_term:  "TERMINOLOGY",
         unit:        "UoM",
         relation:    "RELATION",
+        list_of_unit: "LISTOFUNITS",
+        det_classification: "DETCLASSIFICATION",
       }.freeze
 
       META_CLASS_BY_LEGACY_TYPE = Opencdd::MetaClasses::TYPE_BY_META_CLASS.invert.freeze

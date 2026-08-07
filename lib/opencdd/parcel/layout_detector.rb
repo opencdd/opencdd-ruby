@@ -32,7 +32,7 @@ module Opencdd
 
       # Per-type export filename produced by cdd.iec.ch's download
       # endpoint.
-      FILE_PATTERN = /\Aexport_(CLASS|PROPERTY|RELATION|UNIT|VALUELIST|VALUETERMS|LISTOFUNITS)_[^\.]+\.(xls|xlsx)\z/i.freeze
+      FILE_PATTERN = /\Aexport_(CLASS|PROPERTY|RELATION|UNIT|VALUELIST|VALUETERMS|LISTOFUNITS|DETCLASSIFICATION)_[^\.]+\.(xls|xlsx)\z/i.freeze
 
       module_function
 
