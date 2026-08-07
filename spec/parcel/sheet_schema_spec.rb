@@ -49,5 +49,30 @@ RSpec.describe Opencdd::Parcel::SheetSchema do
       s = described_class.from_header_rows(rows)
       expect(s.find_by_property_id("MDC_P004.fr").name("fr")).to eq("Nom préféré")
     end
+
+    it "normalizes non-conformant language codes (jp → ja) in column IDs" do
+      rows = [
+        ["#PROPERTY_ID", "MDC_P004_1.en", "MDC_P004_1.jp"],
+        ["#PROPERTY_NAME.en", "Preferred name", nil],
+        ["#PROPERTY_NAME.jp", nil, "推奨名"],
+        ["#DATATYPE", "STRING_TYPE", "TRANSLATABLE_STRING_TYPE"],
+        ["#REQUIREMENT", "MAND", "MAND"],
+      ]
+      s = described_class.from_header_rows(rows)
+      expect(s.columns.map(&:property_id))
+        .to eq(["MDC_P004.en", "MDC_P004.ja"])
+      col = s.find_by_property_id("MDC_P004.ja")
+      expect(col.name("ja")).to eq("推奨名")
+    end
+  end
+
+  describe ".canonical_id" do
+    it "normalizes jp suffix to ja" do
+      expect(described_class.canonical_id("MDC_P004.jp")).to eq("MDC_P004.ja")
+    end
+
+    it "preserves standard language suffixes" do
+      expect(described_class.canonical_id("MDC_P004.de")).to eq("MDC_P004.de")
+    end
   end
 end

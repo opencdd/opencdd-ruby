@@ -22,6 +22,8 @@ module Opencdd
       # Canonicalize a Parcel column ID. Splits language tags
       # (<id>.<lang>) so they round-trip cleanly. Returns the
       # canonical ID (or the input unchanged if no mapping exists).
+      # Language codes are normalized to ISO 639-1 via
+      # +Opencdd::Languages.normalize+.
       def self.canonical_id(raw_id)
         return nil if raw_id.nil?
         s = raw_id.to_s.strip
@@ -30,7 +32,7 @@ module Opencdd
         base = match ? match.pre_match : s
         lang = match && match[:lang]
         canonical = VARIANT_TO_CANONICAL[base] || base
-        lang ? "#{canonical}.#{lang}" : canonical
+        lang ? "#{canonical}.#{Opencdd::Languages.normalize(lang)}" : canonical
       end
 
       DIRECTIVE_ROWS = %w[
@@ -260,6 +262,7 @@ module Opencdd
           next if v.nil?
           s = v.to_s.strip
           next if s.empty?
+          lang = Opencdd::Languages.normalize(lang) if lang && !lang.empty?
           lang = "en" if lang.nil? || lang.empty?
           h[lang] = s
         end
