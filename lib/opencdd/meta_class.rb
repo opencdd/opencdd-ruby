@@ -80,7 +80,7 @@ module Opencdd
         "MDC_C009" => "MDC_P001_10",
         "MDC_C010" => "MDC_P001_11",
         "MDC_C0100" => "C0101",
-        "MDC_C0101" => "C0102",
+        "MDC_C0101" => "MDC_P001_5",
         "EXT_C001" => "EXT_P001",
       }.freeze
 
@@ -93,6 +93,7 @@ module Opencdd
         "MDC_C010" => :value_term,
         "MDC_C0100" => :list_of_unit,
         "MDC_C0101" => :det_classification,
+        "IECCDD_001" => :det_classification,
         "EXT_C001" => :view_control,
       }.freeze
 
