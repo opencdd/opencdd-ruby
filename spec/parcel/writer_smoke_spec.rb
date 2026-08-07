@@ -8,15 +8,15 @@ require "fileutils"
 # Exercises the same path used by `rake browser:build_parcel[<dict>]`:
 # load_database → Parcel::Writer#write → Parcel::WorkbookReader round-trip.
 RSpec.describe "Parcel build-pipeline smoke" do
-  SOURCE_DIR = File.expand_path("../../downloads/iec63213", __dir__)
+  SOURCE_DIR = File.expand_path("../../downloads/iec-63213", __dir__)
 
   before(:all) do
-    skip "downloads/iec63213 fixture not present" unless File.directory?(SOURCE_DIR)
+    skip "downloads/iec-63213 fixture not present" unless File.directory?(SOURCE_DIR)
   end
 
   let(:database) { Opencdd::Reader.load_database(SOURCE_DIR) }
 
-  it "loads iec63213, emits a Parcel xlsx, and reloads equivalent entities" do
+  it "loads iec-63213, emits a Parcel xlsx, and reloads equivalent entities" do
     dir = Dir.mktmpdir("parcel-smoke")
     out_path = File.join(dir, "IEC63213.xlsx")
     begin

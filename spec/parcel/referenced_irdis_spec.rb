@@ -4,19 +4,19 @@ require "spec_helper"
 require "json"
 
 # Exercises the same sharded per-class fixture as
-# +sharded_dir_reader_spec.rb+ (downloads/iec63213/). KEA011 is the
+# +sharded_dir_reader_spec.rb+ (downloads/iec-63213/). KEA011 is the
 # canonical worked example: it declares 7 applicable_property_irdis
 # (KEA336, KEA337, KEA338, KEA321, KEA322, KEA323, KEA324) all in the
 # 63213 scheme, plus one imported property (0112/2///62683#ACE808) from
 # a different scheme — that cross-dict reference is what proves the
 # source-scheme partitioning works.
 RSpec.describe Opencdd::Parcel::ReferencedIrdis do
-  FIXTURE = File.expand_path("../../downloads/iec63213", __dir__)
+  FIXTURE = File.expand_path("../../downloads/iec-63213", __dir__)
 
   subject(:collector) { described_class.new(FIXTURE) }
 
   before(:all) do
-    skip "sharded fixture downloads/iec63213 not present" unless File.directory?(FIXTURE)
+    skip "sharded fixture downloads/iec-63213 not present" unless File.directory?(FIXTURE)
   end
 
   let(:manifest) { collector.collect }

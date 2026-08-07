@@ -17,7 +17,7 @@ module Opencdd
     #     version's subfolder.
     #
     # Example:
-    #   reader = Opencdd::Parcel::VersionedReader.new("downloads/iec63213")
+    #   reader = Opencdd::Parcel::VersionedReader.new("downloads/iec-63213")
     #   reader.versions_for("KEA012")    # => 3 VersionHistory::Entry
     #   reader.load_version("KEA012", "ABC123...") # => Database with v002 content
     class VersionedReader

@@ -4,7 +4,7 @@ module Opencdd
   module Parcel
     # Verifies that scrape output produced populated .xls files, not
     # just schema stubs. Catches the silent failure mode discovered
-    # on 2026-07-08: iec61360/iec63213/iec61360-7 scrapes appeared
+    # on 2026-07-08: iec61360/iec-63213/iec-61360-7 scrapes appeared
     # complete (10,338 PROPERTY .xls files for iec61360) but every
     # file had 0 data rows. The build pipeline exported 574 classes
     # + 0 properties, and the browser showed "No declared properties"
