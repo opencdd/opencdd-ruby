@@ -26,7 +26,7 @@ module Opencdd
     #     +.xls+ files into a Workbook.
     #
     # Example:
-    #   reader = Opencdd::Parcel::ShardedDirReader.new("downloads/iec63213")
+    #   reader = Opencdd::Parcel::ShardedDirReader.new("downloads/iec-63213")
     #   db = Opencdd::Database.new
     #   reader.load_into(db)
     #
