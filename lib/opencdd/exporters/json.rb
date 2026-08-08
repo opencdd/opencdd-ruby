@@ -57,6 +57,10 @@ module Opencdd
         @nodes << list_of_unit_node(lou)
       end
 
+      def visit_det_classification(det)
+        @nodes << det_classification_node(det)
+      end
+
       # ─────────────────────────────────────────────────────────────
       # Public per-entity payload API
       #
