@@ -19,6 +19,7 @@ module Opencdd
       visit_relations(database)
       visit_view_controls(database)
       visit_list_of_units(database)
+      visit_det_classifications(database)
       self
     end
 
@@ -58,6 +59,10 @@ module Opencdd
 
     def visit_list_of_units(database)
       each_sorted(database.list_of_units) { |l| visit_list_of_unit(l) }
+    end
+
+    def visit_det_classifications(database)
+      each_sorted(database.det_classifications) { |d| visit_det_classification(d) }
     end
 
     # Single source of truth for sort-by-code traversal. Was
