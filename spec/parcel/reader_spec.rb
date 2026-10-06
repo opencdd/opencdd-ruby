@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::Parcel::WorkbookReader do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:reader) { described_class.new(PARCEL_MAKER_XLSX.to_s) }
 
   describe "#read_workbook" do

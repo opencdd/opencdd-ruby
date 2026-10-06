@@ -187,6 +187,8 @@ RSpec.describe "Opencdd::Database#semantically_equal?" do
 end
 
 RSpec.describe "Parcel xlsx → CDDAL round-trip" do
+  before { require_fixture NUTS_XLSX }
+
   it "round-trips the ParcelMaker nuts example through CDDAL with semantic equality" do
     db1 = Opencdd::Parcel::WorkbookReader.new(NUTS_XLSX.to_s).load_into(Opencdd::Database.new)
     cddal = Opencdd::Cddal.serialize(db1)

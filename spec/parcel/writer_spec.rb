@@ -5,6 +5,8 @@ require "tmpdir"
 require "fileutils"
 
 RSpec.describe Opencdd::Parcel::Writer do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:source_xlsx) { PARCEL_MAKER_XLSX }
 
   let(:database) { Opencdd::Database.load_workbook(source_xlsx) }

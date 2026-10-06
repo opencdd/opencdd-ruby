@@ -4,6 +4,8 @@ require "spec_helper"
 require "yaml"
 
 RSpec.describe Opencdd::ClassTree do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:db) { Opencdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
   subject(:tree) { described_class.new(db) }
 

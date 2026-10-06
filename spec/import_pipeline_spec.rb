@@ -19,6 +19,8 @@ require "fileutils"
 # All round-trips use +Database#semantically_equal?+ — the user's
 # chosen invariant. No stricter equality needed.
 RSpec.describe "Import pipeline round-trips" do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:source_database) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
 
   after do

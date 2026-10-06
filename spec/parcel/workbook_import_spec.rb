@@ -5,6 +5,8 @@ require "tmpdir"
 require "fileutils"
 
 RSpec.describe Opencdd::Parcel::Workbook, "#import_into" do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:target_db) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
   let(:workbook)  { target_db.workbooks.first }
 

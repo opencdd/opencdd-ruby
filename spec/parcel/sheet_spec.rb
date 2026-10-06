@@ -55,6 +55,8 @@ RSpec.describe Opencdd::Parcel::Sheet do
   end
 
   describe "integration with reference workbook" do
+    before { require_fixture PARCEL_MAKER_XLSX }
+
     subject(:sheet) do
       reader = Opencdd::Parcel::WorkbookReader.new(PARCEL_MAKER_XLSX.to_s)
       workbook = reader.read_workbook

@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::Parcel::FlatDirReader do
+  before { require_fixture LEGACY_XLS_DIR }
+
   let(:reader) { described_class.new(LEGACY_XLS_DIR.to_s) }
 
   describe "#read_workbook" do

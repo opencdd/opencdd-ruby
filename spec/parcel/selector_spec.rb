@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::Parcel::Selector do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:database) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX.to_s) }
 
   describe "constructor" do

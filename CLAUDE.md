@@ -26,8 +26,12 @@ and `TODO.full-cdd/` for per-phase plans.
 
 The repo also contains:
 
-- `reference-docs/` — authoritative CDD exports + ParcelMaker manuals (source
-  material, do not delete).
+- `reference-docs/` — OpenCDD-authored reference material only (CDDAL
+  examples, CDDAL spec). Test fixtures that cannot be committed to a
+  public repo live in the **private** sibling repo
+  `../data-private/reference-docs` — never commit them here
+  (`.gitignore` guards these paths). Specs source those fixtures from
+  there and skip when it is absent (CI has no access to that repo).
 - `downloads/` — scraped `.xls` files (one dir per dictionary).
 - `harvest/` — Python scraper ecosystem (`download.py`, `discover.py`,
   `probe_*.py`, cached `tree_form_*.html`, `pages/`, `verify/iec-*.txt`).
@@ -55,12 +59,14 @@ pcls_LOCAL              local class-id bridge
 <PROJ>_VIEWCONTROL      view-control metadata
 ```
 
-Real example: `export_CDD_IEC62683 in ParcelMaker format.xlsx` (project IEC62683).
+Real example fixture: the IEC62683 ParcelMaker workbook — in
+`../data-private/reference-docs/` (private repo).
 
 **Legacy "EXCEL format" `.xls`** — OLE-compound BIFF, **one file per entity
 type**, 6 files per dictionary: `export_{CLASS,PROPERTY,RELATION,UNIT,
-VALUELIST,VALUETERMS}_<CODE>.xls`. Real example: the `export_CDD_IEC62368 ...`
-folder. Per-class downloads in `downloads/` only fetch 4 of these variants
+VALUELIST,VALUETERMS}_<CODE>.xls`. Real example: the IEC62368
+legacy-export folder (private repo). Per-class downloads in
+`downloads/` only fetch 4 of these variants
 (CLASS, PROPERTY, VALUELIST, VALUETERMS) — that is a scrape-time decision, not
 a format constraint.
 
@@ -129,7 +135,9 @@ The library is at full ParcelMaker parity. Five layers in `lib/cdd/`:
   model class + reader, not editing a switch statement.
 - Persistence is downstream — the in-memory model is canonical.
 - Do not delete or "clean up" any file in `reference-docs/` or `downloads/` —
-  those are source material, not derived artifacts.
+  those are source material, not derived artifacts. Private reference
+  fixtures must only live in `../data-private/reference-docs` — never
+  re-add them to this public repo.
 
 ### Commands
 

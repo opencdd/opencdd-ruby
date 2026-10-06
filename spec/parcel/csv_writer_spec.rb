@@ -6,6 +6,8 @@ require "fileutils"
 require "csv"
 
 RSpec.describe Opencdd::Parcel::CsvWriter do
+  before { require_fixture PARCEL_MAKER_XLSX }
+
   let(:database) { Opencdd::Database.load_workbook(PARCEL_MAKER_XLSX) }
 
   def write_csv_to_tempfile(database, parcel_id: "IEC62683", **opts)

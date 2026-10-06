@@ -18,3 +18,10 @@ Gemfile*.lock
 
 # TODO files are working notes, not artifacts.
 TODO*
+
+# Private reference fixtures live in the private sibling repo
+# ../data-private/reference-docs — never commit them to this public repo.
+/reference-docs/standards/
+/reference-docs/normative/
+/reference-docs/parcelmaker/
+/reference-docs/export_CDD_*

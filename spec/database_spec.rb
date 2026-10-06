@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe "Opencdd::Database end-to-end" do
+  before { require_fixture PARCEL_MAKER_XLSX, LEGACY_XLS_DIR, LEGACY_SINGLE_XLS }
+
   describe "loading the ParcelMaker xlsx" do
     subject(:db) { Opencdd::Database.load(PARCEL_MAKER_XLSX.to_s) }
 
