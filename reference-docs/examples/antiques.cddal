@@ -107,7 +107,7 @@ meta-class MDC_C005 {
 instance Antique < MDC_C002 {
   code: ANA001
   preferred_name.en: "Antique"
-  preferred_name.zh-Hant: "古董"
+  preferred_name.zh-TW: "古董"
   preferred_name.ja: "骨董"
   preferred_name.ko: "골동품"
   definition.en: "object of art or craftsmanship from a past period, valued for its age, beauty, rarity, or provenance"
@@ -123,7 +123,7 @@ instance Antique < MDC_C002 {
 instance Culture < MDC_C002 {
   code: ANA010
   preferred_name.en: "Culture"
-  preferred_name.zh-Hant: "文化"
+  preferred_name.zh-TW: "文化"
   definition.en: "cultural sphere of origin of an antique"
   superclass: Antique
   class_type: CATEGORICAL_CLASS
@@ -132,7 +132,7 @@ instance Culture < MDC_C002 {
 instance China < MDC_C002 {
   code: ANA011
   preferred_name.en: "China"
-  preferred_name.zh-Hant: "中國"
+  preferred_name.zh-TW: "中國"
   definition.en: "Chinese cultural sphere of origin"
   superclass: Culture
   class_type: ITEM_CLASS
@@ -167,7 +167,7 @@ instance Korea < MDC_C002 {
 instance Period < MDC_C002 {
   code: ANA020
   preferred_name.en: "Period"
-  preferred_name.zh-Hant: "朝代時期"
+  preferred_name.zh-TW: "朝代時期"
   definition.en: "categorical class whose members enumerate the dynasties and eras of East Asian art history"
   superclass: Antique
   class_type: CATEGORICAL_CLASS
@@ -176,7 +176,7 @@ instance Period < MDC_C002 {
 instance Shang < MDC_C002 {
   code: ANA021
   preferred_name.en: "Shang"
-  preferred_name.zh-Hant: "商"
+  preferred_name.zh-TW: "商"
   definition.en: "Chinese dynasty of the Bronze Age, c. 1600–1046 BC"
   superclass: Period
   class_type: ITEM_CLASS
@@ -185,7 +185,7 @@ instance Shang < MDC_C002 {
 instance Zhou < MDC_C002 {
   code: ANA022
   preferred_name.en: "Zhou"
-  preferred_name.zh-Hant: "周"
+  preferred_name.zh-TW: "周"
   definition.en: "Chinese dynasty, 1046–256 BC, including the Western and Eastern Zhou"
   superclass: Period
   class_type: ITEM_CLASS
@@ -194,7 +194,7 @@ instance Zhou < MDC_C002 {
 instance Han < MDC_C002 {
   code: ANA023
   preferred_name.en: "Han"
-  preferred_name.zh-Hant: "漢"
+  preferred_name.zh-TW: "漢"
   definition.en: "Chinese dynasty, 206 BC–AD 220"
   superclass: Period
   class_type: ITEM_CLASS
@@ -203,7 +203,7 @@ instance Han < MDC_C002 {
 instance Tang < MDC_C002 {
   code: ANA024
   preferred_name.en: "Tang"
-  preferred_name.zh-Hant: "唐"
+  preferred_name.zh-TW: "唐"
   definition.en: "Chinese dynasty, 618–907"
   superclass: Period
   class_type: ITEM_CLASS
@@ -212,7 +212,7 @@ instance Tang < MDC_C002 {
 instance Song < MDC_C002 {
   code: ANA025
   preferred_name.en: "Song"
-  preferred_name.zh-Hant: "宋"
+  preferred_name.zh-TW: "宋"
   definition.en: "Chinese dynasty, 960–1279, including Northern and Southern Song"
   superclass: Period
   class_type: ITEM_CLASS
@@ -221,7 +221,7 @@ instance Song < MDC_C002 {
 instance Yuan < MDC_C002 {
   code: ANA026
   preferred_name.en: "Yuan"
-  preferred_name.zh-Hant: "元"
+  preferred_name.zh-TW: "元"
   definition.en: "Chinese dynasty, 1271–1368"
   superclass: Period
   class_type: ITEM_CLASS
@@ -230,7 +230,7 @@ instance Yuan < MDC_C002 {
 instance Ming < MDC_C002 {
   code: ANA027
   preferred_name.en: "Ming"
-  preferred_name.zh-Hant: "明"
+  preferred_name.zh-TW: "明"
   definition.en: "Chinese dynasty, 1368–1644"
   superclass: Period
   class_type: ITEM_CLASS
@@ -239,7 +239,7 @@ instance Ming < MDC_C002 {
 instance Qing < MDC_C002 {
   code: ANA028
   preferred_name.en: "Qing"
-  preferred_name.zh-Hant: "清"
+  preferred_name.zh-TW: "清"
   definition.en: "Chinese dynasty, 1644–1912"
   superclass: Period
   class_type: ITEM_CLASS
@@ -304,7 +304,7 @@ instance Meiji < MDC_C002 {
 instance AntiqueCategory < MDC_C002 {
   code: ANA100
   preferred_name.en: "Antique Category"
-  preferred_name.zh-Hant: "品類"
+  preferred_name.zh-TW: "品類"
   definition.en: "categorical class whose members enumerate the kinds of East Asian works of art"
   superclass: Antique
   class_type: CATEGORICAL_CLASS
@@ -313,7 +313,7 @@ instance AntiqueCategory < MDC_C002 {
 instance Ceramics < MDC_C002 {
   code: ANA101
   preferred_name.en: "Ceramics"
-  preferred_name.zh-Hant: "陶瓷"
+  preferred_name.zh-TW: "陶瓷"
   preferred_name.ja: "陶磁器"
   definition.en: "objects of fired clay, including porcelain and stoneware vessels and wares"
   superclass: AntiqueCategory
@@ -324,7 +324,7 @@ instance Ceramics < MDC_C002 {
 instance Bronze < MDC_C002 {
   code: ANA102
   preferred_name.en: "Bronze"
-  preferred_name.zh-Hant: "青銅器"
+  preferred_name.zh-TW: "青銅器"
   definition.en: "cast bronze ritual vessels, weapons and fittings"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -334,7 +334,7 @@ instance Bronze < MDC_C002 {
 instance Jade < MDC_C002 {
   code: ANA103
   preferred_name.en: "Jade"
-  preferred_name.zh-Hant: "玉器"
+  preferred_name.zh-TW: "玉器"
   definition.en: "objects carved from jade stone, whether nephrite or jadeite"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -344,7 +344,7 @@ instance Jade < MDC_C002 {
 instance PaintingCalligraphy < MDC_C002 {
   code: ANA104
   preferred_name.en: "Painting and Calligraphy"
-  preferred_name.zh-Hant: "書畫"
+  preferred_name.zh-TW: "書畫"
   preferred_name.ja: "書画"
   definition.en: "paintings and works of calligraphy on paper or silk"
   superclass: AntiqueCategory
@@ -355,7 +355,7 @@ instance PaintingCalligraphy < MDC_C002 {
 instance Furniture < MDC_C002 {
   code: ANA105
   preferred_name.en: "Furniture"
-  preferred_name.zh-Hant: "家具"
+  preferred_name.zh-TW: "家具"
   definition.en: "cabinetwork and household furniture of hardwood or softwood"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -365,7 +365,7 @@ instance Furniture < MDC_C002 {
 instance Lacquer < MDC_C002 {
   code: ANA106
   preferred_name.en: "Lacquer"
-  preferred_name.zh-Hant: "漆器"
+  preferred_name.zh-TW: "漆器"
   preferred_name.ja: "漆工"
   definition.en: "objects decorated or built in applied lacquer"
   superclass: AntiqueCategory
@@ -376,7 +376,7 @@ instance Lacquer < MDC_C002 {
 instance CloisonneEnamel < MDC_C002 {
   code: ANA107
   preferred_name.en: "Cloisonné Enamel"
-  preferred_name.zh-Hant: "掐絲琺瑯"
+  preferred_name.zh-TW: "掐絲琺瑯"
   definition.en: "objects decorated with cloisonné enamel, wire-outlined glass paste fired on a metal body"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -386,7 +386,7 @@ instance CloisonneEnamel < MDC_C002 {
 instance BuddhistSculpture < MDC_C002 {
   code: ANA108
   preferred_name.en: "Buddhist Sculpture"
-  preferred_name.zh-Hant: "佛教造像"
+  preferred_name.zh-TW: "佛教造像"
   definition.en: "sculptural images of Buddhist devotion"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -396,7 +396,7 @@ instance BuddhistSculpture < MDC_C002 {
 instance SnuffBottle < MDC_C002 {
   code: ANA109
   preferred_name.en: "Snuff Bottle"
-  preferred_name.zh-Hant: "鼻煙壺"
+  preferred_name.zh-TW: "鼻煙壺"
   definition.en: "small bottle for powdered tobacco, made in glass, porcelain, jade and other materials"
   superclass: AntiqueCategory
   class_type: ITEM_CLASS
@@ -406,7 +406,7 @@ instance SnuffBottle < MDC_C002 {
 instance UkiyoEPrint < MDC_C002 {
   code: ANA110
   preferred_name.en: "Ukiyo-e Print"
-  preferred_name.zh-Hant: "浮世繪"
+  preferred_name.zh-TW: "浮世繪"
   preferred_name.ja: "浮世絵"
   definition.en: "Japanese woodblock print of the floating-world genre"
   superclass: AntiqueCategory
@@ -474,7 +474,7 @@ instance condition_enum < MDC_C005 {
 instance category < MDC_C003 {
   code: ANB001
   preferred_name.en: "antique category"
-  preferred_name.zh-Hant: "品類"
+  preferred_name.zh-TW: "品類"
   definition.en: "kind of object, selected from the antique category classification"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -484,7 +484,7 @@ instance category < MDC_C003 {
 instance culture < MDC_C003 {
   code: ANB002
   preferred_name.en: "culture"
-  preferred_name.zh-Hant: "文化"
+  preferred_name.zh-TW: "文化"
   definition.en: "cultural sphere of origin of the antique"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -494,7 +494,7 @@ instance culture < MDC_C003 {
 instance period < MDC_C003 {
   code: ANB003
   preferred_name.en: "period"
-  preferred_name.zh-Hant: "朝代時期"
+  preferred_name.zh-TW: "朝代時期"
   definition.en: "dynasty or era of the antique"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -504,7 +504,7 @@ instance period < MDC_C003 {
 instance height < MDC_C003 {
   code: ANB004
   preferred_name.en: "height"
-  preferred_name.zh-Hant: "高度"
+  preferred_name.zh-TW: "高度"
   definition.en: "height of the object as catalogued"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -515,7 +515,7 @@ instance height < MDC_C003 {
 instance diameter < MDC_C003 {
   code: ANB005
   preferred_name.en: "diameter"
-  preferred_name.zh-Hant: "口徑"
+  preferred_name.zh-TW: "口徑"
   definition.en: "diameter of the widest body section, as catalogued"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -526,7 +526,7 @@ instance diameter < MDC_C003 {
 instance condition_grade < MDC_C003 {
   code: ANB006
   preferred_name.en: "condition grade"
-  preferred_name.zh-Hant: "品相"
+  preferred_name.zh-TW: "品相"
   definition.en: "preservation condition of the object"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Antique
@@ -538,7 +538,7 @@ instance condition_grade < MDC_C003 {
 instance reign_mark < MDC_C003 {
   code: ANB007
   preferred_name.en: "reign mark"
-  preferred_name.zh-Hant: "年款"
+  preferred_name.zh-TW: "年款"
   definition.en: "imperial reign mark inscribed on the object"
   property_data_element_type: CONDITION_DET
   definition_class: Antique
@@ -556,7 +556,7 @@ instance reign_mark < MDC_C003 {
 instance kiln < MDC_C003 {
   code: ANB101
   preferred_name.en: "kiln"
-  preferred_name.zh-Hant: "窯口"
+  preferred_name.zh-TW: "窯口"
   definition.en: "kiln complex or firing centre of origin"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Ceramics
@@ -566,7 +566,7 @@ instance kiln < MDC_C003 {
 instance glaze < MDC_C003 {
   code: ANB102
   preferred_name.en: "glaze"
-  preferred_name.zh-Hant: "釉彩"
+  preferred_name.zh-TW: "釉彩"
   definition.en: "glaze and dominant decorative palette of the ware"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Ceramics
@@ -576,7 +576,7 @@ instance glaze < MDC_C003 {
 instance vessel_form < MDC_C003 {
   code: ANB103
   preferred_name.en: "vessel form"
-  preferred_name.zh-Hant: "器形"
+  preferred_name.zh-TW: "器形"
   definition.en: "classical ritual vessel form of the bronze"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Bronze
@@ -586,7 +586,7 @@ instance vessel_form < MDC_C003 {
 instance inscription_characters < MDC_C003 {
   code: ANB104
   preferred_name.en: "inscription character count"
-  preferred_name.zh-Hant: "銘文字數"
+  preferred_name.zh-TW: "銘文字數"
   definition.en: "number of characters in the cast inscription"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Bronze
@@ -596,7 +596,7 @@ instance inscription_characters < MDC_C003 {
 instance jade_stone < MDC_C003 {
   code: ANB105
   preferred_name.en: "jade stone"
-  preferred_name.zh-Hant: "玉料"
+  preferred_name.zh-TW: "玉料"
   definition.en: "jade mineral of the carved stone"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Jade
@@ -606,7 +606,7 @@ instance jade_stone < MDC_C003 {
 instance medium < MDC_C003 {
   code: ANB106
   preferred_name.en: "medium"
-  preferred_name.zh-Hant: "材質"
+  preferred_name.zh-TW: "材質"
   definition.en: "ink and colour medium on the paper or silk support"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: PaintingCalligraphy
@@ -616,7 +616,7 @@ instance medium < MDC_C003 {
 instance mounting_format < MDC_C003 {
   code: ANB107
   preferred_name.en: "mounting format"
-  preferred_name.zh-Hant: "裝裱形式"
+  preferred_name.zh-TW: "裝裱形式"
   definition.en: "traditional mounting format of the work"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: PaintingCalligraphy
@@ -626,7 +626,7 @@ instance mounting_format < MDC_C003 {
 instance wood_type < MDC_C003 {
   code: ANB108
   preferred_name.en: "wood type"
-  preferred_name.zh-Hant: "木料"
+  preferred_name.zh-TW: "木料"
   definition.en: "timber of the furniture"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Furniture
@@ -636,7 +636,7 @@ instance wood_type < MDC_C003 {
 instance lacquer_technique < MDC_C003 {
   code: ANB109
   preferred_name.en: "lacquer technique"
-  preferred_name.zh-Hant: "漆藝"
+  preferred_name.zh-TW: "漆藝"
   definition.en: "decorative lacquer technique of the object"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Lacquer
@@ -646,7 +646,7 @@ instance lacquer_technique < MDC_C003 {
 instance cloisonne_technique < MDC_C003 {
   code: ANB110
   preferred_name.en: "cloisonné technique"
-  preferred_name.zh-Hant: "琺瑯工藝"
+  preferred_name.zh-TW: "琺瑯工藝"
   definition.en: "enamel technique applied to the metal body"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: CloisonneEnamel
@@ -656,7 +656,7 @@ instance cloisonne_technique < MDC_C003 {
 instance sculpture_material < MDC_C003 {
   code: ANB111
   preferred_name.en: "sculpture material"
-  preferred_name.zh-Hant: "造像材質"
+  preferred_name.zh-TW: "造像材質"
   definition.en: "material of the sculptural image"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: BuddhistSculpture
@@ -666,7 +666,7 @@ instance sculpture_material < MDC_C003 {
 instance bottle_material < MDC_C003 {
   code: ANB112
   preferred_name.en: "bottle material"
-  preferred_name.zh-Hant: "壺身材質"
+  preferred_name.zh-TW: "壺身材質"
   definition.en: "material of the snuff bottle body"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: SnuffBottle
@@ -676,7 +676,7 @@ instance bottle_material < MDC_C003 {
 instance print_format < MDC_C003 {
   code: ANB113
   preferred_name.en: "print format"
-  preferred_name.zh-Hant: "版式"
+  preferred_name.zh-TW: "版式"
   definition.en: "sheet format of the woodblock print"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: UkiyoEPrint
@@ -694,7 +694,7 @@ instance print_format < MDC_C003 {
 instance MingBlueAndWhite < MDC_C002 {
   code: ANA150
   preferred_name.en: "Ming Blue-and-White Porcelain"
-  preferred_name.zh-Hant: "明青花"
+  preferred_name.zh-TW: "明青花"
   definition.en: "porcelain of the Ming dynasty decorated in underglaze cobalt blue"
   superclass: Ceramics
   class_type: ITEM_CLASS
@@ -721,7 +721,7 @@ instance GoryeoCeladon < MDC_C002 {
 
 instance MaoGongDing < MDC_C002 {
   code: ANI001
-  preferred_name.zh-Hant: "毛公鼎"
+  preferred_name.zh-TW: "毛公鼎"
   preferred_name.en: "Mao Gong Ding"
   short_name.en: "MaoGongDing"
   definition.en: "Western Zhou bronze tripod food vessel bearing one of the longest known Chinese bronze inscriptions, National Palace Museum, Taipei"
@@ -739,7 +739,7 @@ instance MaoGongDing < MDC_C002 {
 
 instance JadeiteCabbage < MDC_C002 {
   code: ANI002
-  preferred_name.zh-Hant: "翠玉白菜"
+  preferred_name.zh-TW: "翠玉白菜"
   preferred_name.en: "Jadeite Cabbage"
   short_name.en: "JadeiteCabbage"
   definition.en: "Qing dynasty jadeite carving of a Chinese cabbage with insects, National Palace Museum, Taipei"
@@ -755,7 +755,7 @@ instance JadeiteCabbage < MDC_C002 {
 
 instance QingmingScroll < MDC_C002 {
   code: ANI003
-  preferred_name.zh-Hant: "清明上河圖"
+  preferred_name.zh-TW: "清明上河圖"
   preferred_name.en: "Along the River During the Qingming Festival"
   short_name.en: "QingmingScroll"
   definition.en: "attributed to Zhang Zeduan, Northern Song handscroll depicting the capital Bianjing, Palace Museum, Beijing"
@@ -803,7 +803,7 @@ instance GreatWavePrint < MDC_C002 {
 
 instance XuandeDragonJar < MDC_C002 {
   code: ANI006
-  preferred_name.zh-Hant: "明宣德青花穿花龍紋罐"
+  preferred_name.zh-TW: "明宣德青花穿花龍紋罐"
   preferred_name.en: "Blue-and-white 'Interlocking Dragon' Jar, Xuande Mark and Period"
   short_name.en: "XuandeJar"
   definition.en: "Ming Xuande porcelain jar painted in underglaze blue with dragons among lotus scrolls, bearing the imperial reign mark"
@@ -835,7 +835,7 @@ instance JoseonMoonJar < MDC_C002 {
 
 instance TangGiltBronzeBuddha < MDC_C002 {
   code: ANI008
-  preferred_name.zh-Hant: "唐鎏金銅佛坐像"
+  preferred_name.zh-TW: "唐鎏金銅佛坐像"
   preferred_name.en: "Tang Gilt-Bronze Seated Buddha"
   short_name.en: "TangBuddha"
   definition.en: "Tang dynasty gilt-bronze figure of the seated Buddha"
@@ -850,7 +850,7 @@ instance TangGiltBronzeBuddha < MDC_C002 {
 
 instance HuanghualiCabinet < MDC_C002 {
   code: ANI009
-  preferred_name.zh-Hant: "明黃花梨圓角櫃"
+  preferred_name.zh-TW: "明黃花梨圓角櫃"
   preferred_name.en: "Ming Huanghuali Rounded-Corner Cabinet"
   short_name.en: "HuanghualiCabinet"
   definition.en: "Ming dynasty rounded-corner cabinet of huanghuali hardwood with original mounts"
@@ -865,7 +865,7 @@ instance HuanghualiCabinet < MDC_C002 {
 
 instance InsidePaintedSnuffBottle < MDC_C002 {
   code: ANI010
-  preferred_name.zh-Hant: "玻璃內畫鼻煙壺"
+  preferred_name.zh-TW: "玻璃內畫鼻煙壺"
   preferred_name.en: "Inside-Painted Glass Snuff Bottle"
   short_name.en: "SnuffBottle"
   definition.en: "Qing dynasty snuff bottle of transparent glass painted on the interior surface"
@@ -880,7 +880,7 @@ instance InsidePaintedSnuffBottle < MDC_C002 {
 
 instance CloisonneCenser < MDC_C002 {
   code: ANI011
-  preferred_name.zh-Hant: "掐絲琺瑯香爐"
+  preferred_name.zh-TW: "掐絲琺瑯香爐"
   preferred_name.en: "Cloisonné Enamel Censer"
   short_name.en: "CloisonneCenser"
   definition.en: "censer of copper decorated with wire-outlined enamel, of the type made for the Ming court"
@@ -895,7 +895,7 @@ instance CloisonneCenser < MDC_C002 {
 
 instance CarvedLacquerBox < MDC_C002 {
   code: ANI012
-  preferred_name.zh-Hant: "雕漆蓋盒"
+  preferred_name.zh-TW: "雕漆蓋盒"
   preferred_name.en: "Carved Red Lacquer Box and Cover"
   short_name.en: "LacquerBox"
   definition.en: "box and cover deeply carved through thick red lacquer layers with floral scroll"

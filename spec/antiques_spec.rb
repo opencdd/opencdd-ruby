@@ -116,17 +116,17 @@ RSpec.describe "Antiques dictionary" do
 
   describe "native multilingual names" do
     it "carries each object's native name alongside English" do
-      expect(db.find_by_code("ANI001").preferred_name("zh-Hant")).to eq("毛公鼎")
+      expect(db.find_by_code("ANI001").preferred_name("zh-TW")).to eq("毛公鼎")
       expect(db.find_by_code("ANI001").preferred_name(:en)).to eq("Mao Gong Ding")
-      expect(db.find_by_code("ANI002").preferred_name("zh-Hant")).to eq("翠玉白菜")
+      expect(db.find_by_code("ANI002").preferred_name("zh-TW")).to eq("翠玉白菜")
       expect(db.find_by_code("ANI005").preferred_name("ja")).to eq("神奈川沖浪裏")
       expect(db.find_by_code("ANI004").preferred_name("ko")).to eq("고려청자 매병")
       expect(db.find_by_code("ANI007").preferred_name("ko")).to eq("달항아리")
     end
 
     it "carries native names on the classification dimensions too" do
-      expect(db.find_by_code("ANA101").preferred_name("zh-Hant")).to eq("陶瓷")
-      expect(db.find_by_code("ANA027").preferred_name("zh-Hant")).to eq("明")
+      expect(db.find_by_code("ANA101").preferred_name("zh-TW")).to eq("陶瓷")
+      expect(db.find_by_code("ANA027").preferred_name("zh-TW")).to eq("明")
       expect(db.find_by_code("ANA110").preferred_name("ja")).to eq("浮世絵")
       expect(db.find_by_code("ANA029").preferred_name("ko")).to eq("고려")
     end

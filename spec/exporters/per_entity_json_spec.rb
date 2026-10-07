@@ -41,7 +41,11 @@ RSpec.describe Opencdd::Exporters::Json do
 
       it "includes the data_type when parsed" do
         skip "no property in fixture has a parsed data_type" unless entity.parsed_data_type
-        expect(payload.key?(:data_type)).to be(true)
+        # Wire format is JSON: data_type must be a single string key
+        # (it was once duplicated as both a string and a symbol key,
+        # which JSON generation rejects).
+        expect(payload.key?("data_type")).to be(true)
+        expect(payload.key?(:data_type)).to be(false)
       end
     end
 
