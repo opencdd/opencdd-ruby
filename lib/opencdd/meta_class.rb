@@ -7,7 +7,7 @@ module Opencdd
   #                      MDC_C003 Property, MDC_C009 Unit, etc.
   #                      Fixed set per the standard. Each is modeled
   #                      by an +Opencdd::MetaClass+ instance.
-  #   M1 (model)       — dictionary content: AAA001 Vehicle, AAAP001
+  #   M1 (model)       — dictionary content: ORA001 Vehicle, ORB001
   #                      vehicle_length, etc. Instances of M2
   #                      meta-classes, modeled by Opencdd::Entity
   #                      subclasses (Klass, Property, Unit, ...).

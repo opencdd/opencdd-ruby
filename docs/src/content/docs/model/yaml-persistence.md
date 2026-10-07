@@ -29,9 +29,9 @@ translation_languages:
 - fr
 - ja
 entities:
-- irdi: AAA001
+- irdi: ORA001
   type: class
-  code: AAA001
+  code: ORA001
   preferred_name:
     en: Vehicle
     fr: Véhicule
@@ -41,15 +41,15 @@ entities:
   class_type: ITEM_CLASS
   superclass: UNIVERSE
   applicable_properties:
-  - AAAP001
-  - AAAP002
-- irdi: AAAP001
+  - ORB001
+  - ORB002
+- irdi: ORB001
   type: property
-  code: AAAP001
+  code: ORB001
   preferred_name:
     en: vehicle length
   data_type: REAL_TYPE
-  definition_class: AAA001
+  definition_class: ORA001
   unit: metre
   property_data_element_type: NON_DEPENDENT_P_DET
 ```
@@ -143,7 +143,7 @@ db2 = Opencdd::Database.from_yaml(yaml)
 db.entities.size == db2.entities.size         # true
 db.classes.size   == db2.classes.size         # true
 db.properties.size == db2.properties.size     # true
-db2.find_by_code("AAA200").powertype?         # true
+db2.find_by_code("ORA200").powertype?         # true
 ```
 
 The YAML round-trip preserves entity count, types, multilingual

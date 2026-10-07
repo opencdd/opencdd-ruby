@@ -71,13 +71,13 @@ require "opencdd"
 db = Opencdd::Database.load("downloads/iec63213")
 
 # Find a class and walk its hierarchy
-vehicle = db.find_by_code("AAA001")
+vehicle = db.find_by_code("ORA001")
 puts vehicle.preferred_name                          # => "Vehicle"
-puts vehicle.children.map(&:code)                    # => ["AAA010", "AAA020", "AAA030", ...]
+puts vehicle.children.map(&:code)                    # => ["ORA010", "ORA020", "ORA030", ...]
 puts vehicle.effective_properties.map(&:code)        # inherited + declared properties
 
 # Powertype API: what configuration options does EngineType offer?
-engine_type = db.find_by_code("AAA200")
+engine_type = db.find_by_code("ORA200")
 engine_type.powertype?                               # => true
 db.instances_of(engine_type).map(&:preferred_name)
 # => ["Single Diesel Engine", "Twin Diesel Engine", "Electric Hybrid Engine"]
@@ -146,8 +146,8 @@ M2  Meta-model        The meta-classes: Class, Property, Unit, ValueList,
                      Modeled as Opencdd::MetaClass instances.
                      Fixed set per the standard.
 
-M1  Model            The dictionary content: AAA001 "Vehicle",
-                     AAAP001 "vehicle length", etc. Instances of M2
+M1  Model            The dictionary content: ORA001 "Vehicle",
+                     ORB001 "vehicle length", etc. Instances of M2
                      meta-classes. Modeled as Opencdd::Entity
                      subclasses (Klass, Property, Unit, ...).
 

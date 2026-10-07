@@ -22,22 +22,22 @@ RSpec.describe Opencdd::Exporters do
     it "emits class_type and is_case_of for categorical classes" do
       text = described_class.new.to_json(database)
       parsed = JSON.parse(text)
-      engine_type = parsed.find { |n| n["code"] == "AAA200" }
+      engine_type = parsed.find { |n| n["code"] == "ORA200" }
       expect(engine_type["class_type"]).to eq("CATEGORICAL_CLASS")
     end
 
     it "emits value_list on properties whose data type references a value list" do
       text = described_class.new.to_json(database)
       parsed = JSON.parse(text)
-      operating_mode = parsed.find { |n| n["code"] == "AAAP100" }
+      operating_mode = parsed.find { |n| n["code"] == "ORB100" }
       expect(operating_mode["data_type"]).to eq("ENUM_STRING_TYPE(vehicle_mode_enum)")
-      expect(operating_mode["value_list"]).to eq("AAAE001")
+      expect(operating_mode["value_list"]).to eq("ORE001")
     end
 
     it "omits value_list on properties without an enumerated data type" do
       text = described_class.new.to_json(database)
       parsed = JSON.parse(text)
-      non_enum = parsed.find { |n| n["code"] == "AAAP001" }
+      non_enum = parsed.find { |n| n["code"] == "ORB001" }
       expect(non_enum["data_type"]).to eq("REAL_TYPE")
       expect(non_enum).not_to have_key("value_list")
     end
@@ -85,9 +85,9 @@ RSpec.describe Opencdd::Exporters do
     it "emits the dates hash when an entity carries MDC_P003_* values" do
       meta = Opencdd::IRDI.parse("0112/2///62656_1#MDC_C002")
       klass = Opencdd::Klass.new(
-        irdi: Opencdd::IRDI.parse("0112/2///62656_4#AAA001"),
+        irdi: Opencdd::IRDI.parse("0112/2///62656_4#ORA001"),
         properties: {
-          Opencdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#AAA001",
+          Opencdd::PropertyIds::MDC_P001_5 => "0112/2///62656_4#ORA001",
           Opencdd::PropertyIds::MDC_P003_1 => "2024-01-01",
           Opencdd::PropertyIds::MDC_P003_2 => "2024-06-01",
           Opencdd::PropertyIds::MDC_P066   => "guid-abc-123",
@@ -186,19 +186,19 @@ RSpec.describe Opencdd::Exporters do
 
     it "emits inheritance edges for the superclass hierarchy" do
       diagram = described_class.new.to_diagram(database)
-      expect(diagram).to include("AAA001 <|-- AAA010")
-      expect(diagram).to include("AAA001 <|-- AAA020")
-      expect(diagram).to include("AAA001 <|-- AAA030")
+      expect(diagram).to include("ORA001 <|-- ORA010")
+      expect(diagram).to include("ORA001 <|-- ORA020")
+      expect(diagram).to include("ORA001 <|-- ORA030")
     end
 
     it "emits is_case_of edges for powertype composition" do
       diagram = described_class.new.to_diagram(database)
-      expect(diagram).to include("<.. AAA100 : is_case_of")
+      expect(diagram).to include("<.. ORA100 : is_case_of")
     end
 
     it "includes class_type annotation for categorical classes" do
       diagram = described_class.new.to_diagram(database)
-      expect(diagram).to match(/class AAA200 \{\s*<<CATEGORICAL_CLASS>>/)
+      expect(diagram).to match(/class ORA200 \{\s*<<CATEGORICAL_CLASS>>/)
     end
   end
 end

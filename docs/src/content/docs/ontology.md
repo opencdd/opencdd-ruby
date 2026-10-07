@@ -42,8 +42,8 @@ ISO/IEC 11179, but with a twist.
 │ M1  Model         The dictionary content — instances of M2       │
 │ ↓                 meta-classes. This is what authors write.      │
 │                                                                  │
-│                   AAA001 "Vehicle"           (instance of Class) │
-│                   AAAP001 "vehicle length"   (instance of Property)│
+│                   ORA001 "Vehicle"           (instance of Class) │
+│                   ORB001 "vehicle length"   (instance of Property)│
 │                   UAC001 "metre"             (instance of Unit)   │
 │                                                                  │
 │                   Modeled by: Opencdd::Entity subclasses         │
@@ -79,24 +79,24 @@ Concretely, in the OceanRunner fixture:
 
 ```cddal
 instance EngineType < MDC_C002 {
-  code: AAA200
+  code: ORA200
   class_type: CATEGORICAL_CLASS
 }
 
 instance SingleDieselEngine < MDC_C002 {
-  code: AAA201
+  code: ORA201
   superclass: EngineType
   class_type: ITEM_CLASS
 }
 
 instance TwinDieselEngine < MDC_C002 {
-  code: AAA202
+  code: ORA202
   superclass: EngineType
   class_type: ITEM_CLASS
 }
 
 instance ElectricHybridEngine < MDC_C002 {
-  code: AAA203
+  code: ORA203
   superclass: EngineType
   class_type: ITEM_CLASS
 }
@@ -114,7 +114,7 @@ IRDI as a *value* of a property whose type is `CLASS_REFERENCE(EngineType)`:
 
 ```cddal
 instance engine_type < MDC_C003 {
-  code: AAAP200
+  code: ORB200
   definition_class: OceanRunner
   data_type: CLASS_REFERENCE(EngineType)
 }
@@ -125,7 +125,7 @@ categorical instances:
 
 ```cddal
 instance ORCA30_TwinDiesel_Premium_CarbonBlack < MDC_C002 {
-  code: BBB100
+  code: ORA400
   superclass: ORCA30
   sub_class_selection: { TwinDieselEngine, PremiumInterior, CarbonBlackHull }
 }
@@ -140,15 +140,15 @@ require "opencdd"
 
 db = Opencdd::Cddal.parse_file("reference-docs/examples/oceanrunner.cddal")
 
-engine_type = db.find_by_code("AAA200")
-single_diesel = db.find_by_code("AAA201")
+engine_type = db.find_by_code("ORA200")
+single_diesel = db.find_by_code("ORA201")
 
 # Predicate: is this a categorical (powertype) class?
 engine_type.powertype?                            # => true
 
 # What are its instances?
 engine_type.categorical_instances(db).map(&:code)
-# => ["AAA201", "AAA202", "AAA203"]
+# => ["ORA201", "ORA202", "ORA203"]
 
 # Or from the database side:
 db.instances_of(engine_type).map(&:preferred_name)
@@ -156,7 +156,7 @@ db.instances_of(engine_type).map(&:preferred_name)
 
 # Validate a CLASS_REFERENCE value
 db.valid_class_reference?(engine_type, single_diesel)   # => true
-db.valid_class_reference?(engine_type, "AAA001")        # => false (Vehicle isn't an EngineType instance)
+db.valid_class_reference?(engine_type, "ORA001")        # => false (Vehicle isn't an EngineType instance)
 ```
 
 The R16 validator rule enforces `CLASS_REFERENCE` constraints:

@@ -32,18 +32,18 @@ RSpec.describe "Round-trip matrix", :round_trip do
       meta-class MDC_C011 { code preferred_name relation_type }
 
       instance Vehicle < MDC_C002 {
-        code: AAA001
+        code: ORA001
         preferred_name.en: "Vehicle"
         class_type: ITEM_CLASS
       }
       instance vehicle_length < MDC_C003 {
-        code: AAAP001
+        code: ORB001
         preferred_name.en: "vehicle length"
         definition_class: Vehicle
         data_type: REAL_TYPE
       }
       instance mode_enum < MDC_C005 {
-        code: AAAE001
+        code: ORE001
         preferred_name.en: "operating mode"
         enumerated_values: { ROAD, WATER }
       }
@@ -129,7 +129,7 @@ RSpec.describe "Round-trip matrix", :round_trip do
 
     it "preserves property codes on Property entities (the P24 regression)" do
       reread = write_then_read(synthetic_per_type, parcel_id: "SYNTH")
-      prop = reread.properties.find { |p| p.code == "AAAP001" }
+      prop = reread.properties.find { |p| p.code == "ORB001" }
       expect(prop).not_to be_nil
       expect(prop.preferred_name).to eq("vehicle length")
     end
@@ -152,9 +152,9 @@ RSpec.describe "Round-trip matrix", :round_trip do
     it "round-trips a synthetic Class-only workbook through CDDAL" do
       db = Opencdd::Database.new
       klass = Opencdd::Klass.new(
-        irdi: Opencdd::IRDI.parse("0112/2///61360_4#AAA001"),
+        irdi: Opencdd::IRDI.parse("0112/2///OCEANRUNNER#ORA001"),
         properties: {
-          "MDC_P001_5"  => "0112/2///61360_4#AAA001",
+          "MDC_P001_5"  => "0112/2///OCEANRUNNER#ORA001",
           "MDC_P004.en" => "Round-trip class",
           "MDC_P011"    => "ITEM_CLASS",
         },
@@ -165,7 +165,7 @@ RSpec.describe "Round-trip matrix", :round_trip do
 
       reread = write_then_read(db, parcel_id: "ROUNDTRIP")
       expect(reread.classes.size).to eq(1)
-      expect(reread.classes.first.code).to eq("AAA001")
+      expect(reread.classes.first.code).to eq("ORA001")
     end
   end
 end

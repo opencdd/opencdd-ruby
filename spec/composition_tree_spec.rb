@@ -37,15 +37,15 @@ RSpec.describe Opencdd::CompositionTree do
     let(:db) do
       Opencdd::Database.new.tap do |d|
         klass = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA001"),
+          irdi: Opencdd::IRDI.parse("ORA001"),
           properties: {
-            "MDC_P001_5" => "AAA001",
+            "MDC_P001_5" => "ORA001",
             "MDC_P011"   => "ITEM_CLASS",
-            "MDC_P014"   => "(AAAP001,AAAP002,AAAP003)",
+            "MDC_P014"   => "(ORB001,ORB002,ORB003)",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
-        %w[AAAP001 AAAP002 AAAP003].each_with_index do |code, i|
+        %w[ORB001 ORB002 ORB003].each_with_index do |code, i|
           d.add_entity(Opencdd::Property.new(
             irdi: Opencdd::IRDI.parse(code),
             properties: { "MDC_P001_6" => code, "MDC_P022" => "STRING_TYPE" },
@@ -59,18 +59,18 @@ RSpec.describe Opencdd::CompositionTree do
     end
 
     it "emits root class with three property leaves" do
-      tree = described_class.new(db).for(db.find_by_code("AAA001"))
+      tree = described_class.new(db).for(db.find_by_code("ORA001"))
       expect(tree.entity).to be_a(Opencdd::Klass)
-      expect(tree.entity.code).to eq("AAA001")
+      expect(tree.entity.code).to eq("ORA001")
       expect(tree.children.size).to eq(3)
-      expect(tree.children.map { |c| c.entity.code }).to contain_exactly("AAAP001", "AAAP002", "AAAP003")
+      expect(tree.children.map { |c| c.entity.code }).to contain_exactly("ORB001", "ORB002", "ORB003")
       expect(tree.children.all?(&:leaf?)).to be(true)
     end
 
     it "exposes only Klass entities via #classes and only Property via #properties" do
-      tree = described_class.new(db).for(db.find_by_code("AAA001"))
-      expect(tree.classes.map(&:code)).to eq(%w[AAA001])
-      expect(tree.properties.map(&:code)).to contain_exactly("AAAP001", "AAAP002", "AAAP003")
+      tree = described_class.new(db).for(db.find_by_code("ORA001"))
+      expect(tree.classes.map(&:code)).to eq(%w[ORA001])
+      expect(tree.properties.map(&:code)).to contain_exactly("ORB001", "ORB002", "ORB003")
     end
   end
 
@@ -78,33 +78,33 @@ RSpec.describe Opencdd::CompositionTree do
     let(:db) do
       Opencdd::Database.new.tap do |d|
         target = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA010"),
+          irdi: Opencdd::IRDI.parse("ORA010"),
           properties: {
-            "MDC_P001_5" => "AAA010",
+            "MDC_P001_5" => "ORA010",
             "MDC_P011"   => "ITEM_CLASS",
-            "MDC_P014"   => "(AAAP101)",
+            "MDC_P014"   => "(ORB101)",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         target_prop = Opencdd::Property.new(
-          irdi: Opencdd::IRDI.parse("AAAP101"),
-          properties: { "MDC_P001_6" => "AAAP101", "MDC_P022" => "STRING_TYPE" },
+          irdi: Opencdd::IRDI.parse("ORB101"),
+          properties: { "MDC_P001_6" => "ORB101", "MDC_P022" => "STRING_TYPE" },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         )
         owner = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA001"),
+          irdi: Opencdd::IRDI.parse("ORA001"),
           properties: {
-            "MDC_P001_5" => "AAA001",
+            "MDC_P001_5" => "ORA001",
             "MDC_P011"   => "ITEM_CLASS",
-            "MDC_P014"   => "(AAAP001)",
+            "MDC_P014"   => "(ORB001)",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         ref_prop = Opencdd::Property.new(
-          irdi: Opencdd::IRDI.parse("AAAP001"),
+          irdi: Opencdd::IRDI.parse("ORB001"),
           properties: {
-            "MDC_P001_6" => "AAAP001",
-            "MDC_P022"   => "CLASS_REFERENCE(AAA010)",
+            "MDC_P001_6" => "ORB001",
+            "MDC_P022"   => "CLASS_REFERENCE(ORA010)",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
         )
@@ -117,13 +117,13 @@ RSpec.describe Opencdd::CompositionTree do
     end
 
     it "recurses into the referenced class and emits its properties" do
-      tree = described_class.new(db).for(db.find_by_code("AAA001"))
-      ref_node = tree.children.find { |c| c.entity.code == "AAAP001" }
+      tree = described_class.new(db).for(db.find_by_code("ORA001"))
+      ref_node = tree.children.find { |c| c.entity.code == "ORB001" }
       expect(ref_node.children.size).to eq(1)
       sub = ref_node.children.first
       expect(sub.entity).to be_a(Opencdd::Klass)
-      expect(sub.entity.code).to eq("AAA010")
-      expect(sub.children.map { |c| c.entity.code }).to eq(%w[AAAP101])
+      expect(sub.entity.code).to eq("ORA010")
+      expect(sub.children.map { |c| c.entity.code }).to eq(%w[ORB101])
     end
   end
 
@@ -131,37 +131,37 @@ RSpec.describe Opencdd::CompositionTree do
     let(:db) do
       Opencdd::Database.new.tap do |d|
         categorical = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA200"),
+          irdi: Opencdd::IRDI.parse("ORA200"),
           properties: {
-            "MDC_P001_5" => "AAA200",
+            "MDC_P001_5" => "ORA200",
             "MDC_P011"   => "CATEGORICAL_CLASS",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         option_a = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA201"),
-          properties: { "MDC_P001_5" => "AAA201", "MDC_P010" => "AAA200", "MDC_P011" => "ITEM_CLASS" },
+          irdi: Opencdd::IRDI.parse("ORA201"),
+          properties: { "MDC_P001_5" => "ORA201", "MDC_P010" => "ORA200", "MDC_P011" => "ITEM_CLASS" },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         option_b = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA202"),
-          properties: { "MDC_P001_5" => "AAA202", "MDC_P010" => "AAA200", "MDC_P011" => "ITEM_CLASS" },
+          irdi: Opencdd::IRDI.parse("ORA202"),
+          properties: { "MDC_P001_5" => "ORA202", "MDC_P010" => "ORA200", "MDC_P011" => "ITEM_CLASS" },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         owner = Opencdd::Klass.new(
-          irdi: Opencdd::IRDI.parse("AAA001"),
+          irdi: Opencdd::IRDI.parse("ORA001"),
           properties: {
-            "MDC_P001_5" => "AAA001",
+            "MDC_P001_5" => "ORA001",
             "MDC_P011"   => "ITEM_CLASS",
-            "MDC_P014"   => "(AAAP001)",
+            "MDC_P014"   => "(ORB001)",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C002"),
         )
         optioned_prop = Opencdd::Property.new(
-          irdi: Opencdd::IRDI.parse("AAAP001"),
+          irdi: Opencdd::IRDI.parse("ORB001"),
           properties: {
-            "MDC_P001_6" => "AAAP001",
-            "MDC_P021"   => "AAA200",
+            "MDC_P001_6" => "ORB001",
+            "MDC_P021"   => "ORA200",
             "MDC_P022"   => "STRING_TYPE",
           },
           meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
@@ -176,10 +176,10 @@ RSpec.describe Opencdd::CompositionTree do
     end
 
     it "recurses into every subclass of the categorical class" do
-      tree = described_class.new(db).for(db.find_by_code("AAA001"))
+      tree = described_class.new(db).for(db.find_by_code("ORA001"))
       prop_node = tree.children.first
       subclass_codes = prop_node.children.map { |c| c.entity.code }
-      expect(subclass_codes).to contain_exactly("AAA201", "AAA202")
+      expect(subclass_codes).to contain_exactly("ORA201", "ORA202")
     end
   end
 
@@ -189,34 +189,34 @@ RSpec.describe Opencdd::CompositionTree do
       meta_k = Opencdd::IRDI.parse("MDC_C002")
       meta_p = Opencdd::IRDI.parse("MDC_C003")
       a = Opencdd::Klass.new(
-        irdi: Opencdd::IRDI.parse("AAA001"),
-        properties: { "MDC_P001_5" => "AAA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP001)" },
+        irdi: Opencdd::IRDI.parse("ORA001"),
+        properties: { "MDC_P001_5" => "ORA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(ORB001)" },
         meta_class_irdi: meta_k,
       )
       b = Opencdd::Klass.new(
         irdi: Opencdd::IRDI.parse("AAA002"),
-        properties: { "MDC_P001_5" => "AAA002", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP002)" },
+        properties: { "MDC_P001_5" => "AAA002", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(ORB002)" },
         meta_class_irdi: meta_k,
       )
       p_a = Opencdd::Property.new(
-        irdi: Opencdd::IRDI.parse("AAAP001"),
-        properties: { "MDC_P001_6" => "AAAP001", "MDC_P022" => "CLASS_REFERENCE(AAA002)" },
+        irdi: Opencdd::IRDI.parse("ORB001"),
+        properties: { "MDC_P001_6" => "ORB001", "MDC_P022" => "CLASS_REFERENCE(AAA002)" },
         meta_class_irdi: meta_p,
       )
       p_b = Opencdd::Property.new(
-        irdi: Opencdd::IRDI.parse("AAAP002"),
-        properties: { "MDC_P001_6" => "AAAP002", "MDC_P022" => "CLASS_REFERENCE(AAA001)" },
+        irdi: Opencdd::IRDI.parse("ORB002"),
+        properties: { "MDC_P001_6" => "ORB002", "MDC_P022" => "CLASS_REFERENCE(ORA001)" },
         meta_class_irdi: meta_p,
       )
       [a, b, p_a, p_b].each { |e| db.add_entity(e) }
       db.finalize!
 
       tree = described_class.new(db).for(a)
-      expect(tree.entity.code).to eq("AAA001")
+      expect(tree.entity.code).to eq("ORA001")
       class_codes = tree.classes.map(&:code)
-      expect(class_codes).to include("AAA001", "AAA002")
+      expect(class_codes).to include("ORA001", "AAA002")
       expect(tree.depth).to be <= 5
-      path_a_count = count_on_any_path(tree, "AAA001")
+      path_a_count = count_on_any_path(tree, "ORA001")
       expect(path_a_count).to be <= 2
     end
 
@@ -225,13 +225,13 @@ RSpec.describe Opencdd::CompositionTree do
       meta_k = Opencdd::IRDI.parse("MDC_C002")
       meta_p = Opencdd::IRDI.parse("MDC_C003")
       a = Opencdd::Klass.new(
-        irdi: Opencdd::IRDI.parse("AAA001"),
-        properties: { "MDC_P001_5" => "AAA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(AAAP001)" },
+        irdi: Opencdd::IRDI.parse("ORA001"),
+        properties: { "MDC_P001_5" => "ORA001", "MDC_P011" => "ITEM_CLASS", "MDC_P014" => "(ORB001)" },
         meta_class_irdi: meta_k,
       )
       p = Opencdd::Property.new(
-        irdi: Opencdd::IRDI.parse("AAAP001"),
-        properties: { "MDC_P001_6" => "AAAP001", "MDC_P022" => "CLASS_REFERENCE(AAA001)" },
+        irdi: Opencdd::IRDI.parse("ORB001"),
+        properties: { "MDC_P001_6" => "ORB001", "MDC_P022" => "CLASS_REFERENCE(ORA001)" },
         meta_class_irdi: meta_p,
       )
       db.add_entity(a)
@@ -240,44 +240,44 @@ RSpec.describe Opencdd::CompositionTree do
 
       tree = described_class.new(db).for(a, max_depth: 0)
       expect(tree.children).to eq([])
-      expect(tree.entity.code).to eq("AAA001")
+      expect(tree.entity.code).to eq("ORA001")
     end
   end
 
   describe "Database#composition_tree entry point" do
     it "delegates to a CompositionTree instance" do
-      vehicle = oceanrunner_db.find_by_code("AAA001")
+      vehicle = oceanrunner_db.find_by_code("ORA001")
       tree = oceanrunner_db.composition_tree(vehicle)
       expect(tree).to be_a(Opencdd::CompositionTree::Node)
-      expect(tree.entity.code).to eq("AAA001")
+      expect(tree.entity.code).to eq("ORA001")
     end
   end
 
   describe "OceanRunner integration" do
     it "emits Vehicle with three applicable properties as leaves" do
-      vehicle = oceanrunner_db.find_by_code("AAA001")
+      vehicle = oceanrunner_db.find_by_code("ORA001")
       tree = oceanrunner_db.composition_tree(vehicle)
-      expect(tree.entity.code).to eq("AAA001")
+      expect(tree.entity.code).to eq("ORA001")
       expect(tree.children.map { |c| c.entity.code })
-        .to contain_exactly("AAAP001", "AAAP002", "AAAP003")
+        .to contain_exactly("ORB001", "ORB002", "ORB003")
     end
 
     it "recurses CLASS_REFERENCE into the categorical EngineType class for OceanRunner.engine_type" do
-      oceanrunner = oceanrunner_db.find_by_code("BBB001")
+      oceanrunner = oceanrunner_db.find_by_code("ORA300")
       tree = oceanrunner_db.composition_tree(oceanrunner)
-      engine_type_node = tree.children.find { |c| c.entity.code == "BBAP001" }
+      engine_type_node = tree.children.find { |c| c.entity.code == "ORB301" }
       expect(engine_type_node).not_to be_nil
       expect(engine_type_node.children.size).to eq(1)
       engine_type_class = engine_type_node.children.first
       expect(engine_type_class.entity).to be_a(Opencdd::Klass)
-      expect(engine_type_class.entity.code).to eq("AAA200")
+      expect(engine_type_class.entity.code).to eq("ORA200")
     end
 
     it "produces a non-empty tree for the configured ORCA30 product" do
-      orca = oceanrunner_db.find_by_code("BBB100")
+      orca = oceanrunner_db.find_by_code("ORA400")
       tree = oceanrunner_db.composition_tree(orca)
-      expect(tree.entity.code).to eq("BBB100")
-      expect(tree.properties.map(&:code)).to include("BBAP001", "BBAP002", "BBAP003", "BBAP004")
+      expect(tree.entity.code).to eq("ORA400")
+      expect(tree.properties.map(&:code)).to include("ORB301", "ORB302", "ORB303", "ORB304")
     end
   end
 

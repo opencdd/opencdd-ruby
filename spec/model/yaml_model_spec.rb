@@ -40,7 +40,7 @@ RSpec.describe "CDD-native YAML model", :yaml do
     it "round-trips preserving preferred_name (multilingual)" do
       yaml = oceanrunner.to_yaml
       db2 = Opencdd::Database.from_yaml(yaml)
-      vehicle = db2.find_by_code("AAA001")
+      vehicle = db2.find_by_code("ORA001")
       expect(vehicle).not_to be_nil
       expect(vehicle.preferred_name).to eq("Vehicle")
     end
@@ -48,7 +48,7 @@ RSpec.describe "CDD-native YAML model", :yaml do
     it "round-trips preserving class_type" do
       yaml = oceanrunner.to_yaml
       db2 = Opencdd::Database.from_yaml(yaml)
-      engine = db2.find_by_code("AAA200")
+      engine = db2.find_by_code("ORA200")
       expect(engine).not_to be_nil
       expect(engine.class_type.to_s).to eq("CATEGORICAL_CLASS")
     end
@@ -56,16 +56,16 @@ RSpec.describe "CDD-native YAML model", :yaml do
     it "round-trips preserving powertype semantics" do
       yaml = oceanrunner.to_yaml
       db2 = Opencdd::Database.from_yaml(yaml)
-      engine = db2.find_by_code("AAA200")
+      engine = db2.find_by_code("ORA200")
       expect(engine).to be_powertype
       expect(db2.instances_of(engine).map(&:code).sort)
-        .to eq(%w[AAA201 AAA202 AAA203])
+        .to eq(%w[ORA201 ORA202 ORA203])
     end
 
     it "round-trips preserving superclass relationships" do
       yaml = oceanrunner.to_yaml
       db2 = Opencdd::Database.from_yaml(yaml)
-      boat = db2.find_by_code("AAA010")
+      boat = db2.find_by_code("ORA010")
       expect(boat).not_to be_nil
       expect(boat.parent_irdi).not_to be_nil
     end
@@ -73,7 +73,7 @@ RSpec.describe "CDD-native YAML model", :yaml do
 
   describe Opencdd::Entity::Yaml do
     it "serializes a single entity to YAML with semantic names" do
-      vehicle = oceanrunner.find_by_code("AAA001")
+      vehicle = oceanrunner.find_by_code("ORA001")
       yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
       expect(yaml).to include("preferred_name:")
@@ -81,12 +81,12 @@ RSpec.describe "CDD-native YAML model", :yaml do
     end
 
     it "deserializes from YAML back to an Entity" do
-      vehicle = oceanrunner.find_by_code("AAA001")
+      vehicle = oceanrunner.find_by_code("ORA001")
       yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
       parsed = Opencdd::Entity::Yaml.from_yaml(yaml)
       entity = parsed.to_entity
-      expect(entity.code).to eq("AAA001")
+      expect(entity.code).to eq("ORA001")
       expect(entity.preferred_name).to eq("Vehicle")
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe "CDD-native YAML model", :yaml do
 
   describe "collection fields as YAML arrays" do
     it "emits applicable_properties as an array" do
-      vehicle = oceanrunner.find_by_code("AAA001")
+      vehicle = oceanrunner.find_by_code("ORA001")
       yaml_entity = Opencdd::Entity::Yaml.from_entity(vehicle)
       yaml = yaml_entity.to_yaml
       expect(yaml).to include("applicable_properties:")

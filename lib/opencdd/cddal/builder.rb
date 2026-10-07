@@ -177,7 +177,7 @@ module Opencdd
       def build_properties(decl)
         # Resolve the meta-class once so per-assignment code-alias
         # resolution can be context-aware. Without this, a CDDAL
-        # `code: AAAP001` on a Property stores the value under
+        # `code: ORB001` on a Property stores the value under
         # MDC_P001_5 (the Class code) — Parcel readers look for
         # MDC_P001_6 (the Property code) and miss it, dropping the
         # entity on round-trip.
@@ -225,7 +225,7 @@ module Opencdd
       # canonical code property), and the resolved ID is one of the
       # MDC_P001_X code variants for a *different* meta-class,
       # we redirect to the canonical. This makes the CDDAL `code`
-      # alias context-aware: writing `code: AAA001` on a Property
+      # alias context-aware: writing `code: ORA001` on a Property
       # stores the value under MDC_P001_6, not MDC_P001_5.
       def resolve_property_id(name, canonical_code_pid: nil)
         s = name.to_s
