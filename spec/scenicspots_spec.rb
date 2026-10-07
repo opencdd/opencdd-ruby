@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(83)
+    expect(db.entities.size).to eq(305)
   end
 
   describe "powertypes" do
@@ -26,12 +26,13 @@ RSpec.describe "ScenicSpots dictionary" do
     it "enumerates the spot kinds as extended instances" do
       spot_type = db.find_by_code("SPA100")
       codes = db.instances_of(spot_type).map(&:code).sort
-      expect(codes).to eq(%w[SPA101 SPA102 SPA103 SPA104 SPA105 SPA106 SPA107 SPA108 SPA109])
+      expect(codes).to eq(%w[SPA101 SPA102 SPA103 SPA104 SPA105 SPA106 SPA107 SPA108 SPA109 SPA110])
     end
 
     it "enumerates countries as plain instances" do
       country = db.find_by_code("SPA010")
-      expect(db.instances_of(country).map(&:code).sort).to eq(%w[SPA011 SPA012 SPA013 SPA014])
+      expect(db.instances_of(country).map(&:code).sort).to eq(%w[SPA011 SPA012 SPA013 SPA014 SPA015
+                                                             SPA016 SPA017 SPA018 SPA019 SPA020])
     end
   end
 
@@ -77,7 +78,7 @@ RSpec.describe "ScenicSpots dictionary" do
 
   describe "effective properties across the power-type chain" do
     it "merges core, temple-specific, and tradition properties for Kinkaku-ji" do
-      kinkakuji = db.find_by_code("SPI011")
+      kinkakuji = db.find_by_code("SPI101")
       codes = kinkakuji.effective_properties.map(&:code).sort
       expect(codes).to include("SPB001", "SPB002", "SPB003", "SPB004",
                                "SPB007", "SPB008", "SPB009",
@@ -95,12 +96,34 @@ RSpec.describe "ScenicSpots dictionary" do
 
   describe "native multilingual names" do
     it "carries each country's native name alongside English" do
-      expect(db.find_by_code("SPI001").preferred_name("zh-Hant")).to eq("艋舺龍山寺")
+      expect(db.find_by_code("SPI001").preferred_name("zh-TW")).to eq("艋舺龍山寺")
       expect(db.find_by_code("SPI001").preferred_name(:en)).to eq("Longshan Temple")
-      expect(db.find_by_code("SPI011").preferred_name(:ja)).to eq("金閣寺")
-      expect(db.find_by_code("SPI011").preferred_name(:en)).to eq("Kinkaku-ji")
-      expect(db.find_by_code("SPI021").preferred_name(:ko)).to eq("경복궁")
-      expect(db.find_by_code("SPI031").preferred_name(:it)).to eq("Colosseo")
+      expect(db.find_by_code("SPI101").preferred_name(:ja)).to eq("金閣寺")
+      expect(db.find_by_code("SPI101").preferred_name(:en)).to eq("Kinkaku-ji")
+      expect(db.find_by_code("SPI201").preferred_name(:ko)).to eq("경복궁")
+      expect(db.find_by_code("SPI301").preferred_name(:it)).to eq("Colosseo")
+    end
+  end
+
+  describe "global registry" do
+    it "registers the Eiffel Tower through the Landmark type with core height" do
+      eiffel = db.find_by_code("SPI601")
+      expect(eiffel.parent&.code).to eq("SPA110") # Landmark
+      codes = eiffel.effective_properties.map(&:code)
+      expect(codes).to include("SPB004", "SPB305") # core height + architectural_style
+      expect(eiffel.preferred_name(:fr)).to eq("Tour Eiffel")
+    end
+
+    it "classifies Fushimi Inari under the Shinto tradition" do
+      inari = db.find_by_code("SPI105")
+      expect(db.find_by_code("SPA124").preferred_name(:ja)).to eq("神道")
+      expect(inari.preferred_name(:ja)).to eq("伏見稲荷大社")
+    end
+
+    it "carries a bulk registry of two hundred plus spots across ten countries" do
+      indiv = db.entities.map(&:code).grep(/\ASPI/)
+      expect(indiv.size).to be > 200
+      expect(db.find_by_code("SPA019").preferred_name("zh-CN")).to eq("中國")
     end
   end
 end

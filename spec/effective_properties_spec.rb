@@ -24,15 +24,17 @@ RSpec.describe Opencdd::EffectiveProperties do
     it "includes own applicable properties" do
       vehicle = database.find_by_code("ORA001")
       result = described_class.new(database).for(vehicle)
-      expect(result.codes).to contain_exactly("ORB001", "ORB002", "ORB003")
+      expect(result.codes).to contain_exactly("ORB001", "ORB002", "ORB003", "ORB004",
+                                              "ORB005", "ORB006", "ORB007", "ORB008")
     end
 
     it "includes inherited applicable properties via superclass chain" do
       boat = database.find_by_code("ORA010")
       result = described_class.new(database).for(boat)
       expect(result.codes).to contain_exactly(
-        "ORB001", "ORB002", "ORB003",
-        "ORB010", "ORB011", "ORB012",
+        "ORB001", "ORB002", "ORB003", "ORB004",
+        "ORB005", "ORB006", "ORB007", "ORB008",
+        "ORB010", "ORB011", "ORB012", "ORB013", "ORB014", "ORB015",
       )
     end
 
@@ -40,19 +42,20 @@ RSpec.describe Opencdd::EffectiveProperties do
       tm = database.find_by_code("ORA100")
       result = described_class.new(database).for(tm)
       expect(result.codes).to contain_exactly(
-        "ORB001", "ORB002", "ORB003",
-        "ORB010", "ORB011", "ORB012",
-        "ORB020", "ORB021", "ORB022",
-        "ORB030", "ORB031",
-        "ORB100", "ORB101", "ORB102", "ORB103",
+        "ORB001", "ORB002", "ORB003", "ORB004",
+        "ORB005", "ORB006", "ORB007", "ORB008",
+        "ORB010", "ORB011", "ORB012", "ORB013", "ORB014", "ORB015",
+        "ORB020", "ORB021", "ORB022", "ORB023", "ORB024", "ORB025", "ORB026",
+        "ORB030", "ORB031", "ORB032", "ORB033", "ORB034",
+        "ORB100", "ORB101", "ORB102", "ORB103", "ORB104", "ORB105",
       )
-      expect(result.size).to eq(15)
+      expect(result.size).to eq(32)
     end
 
     it "cascades through OceanRunner which subclasses TransmediumVehicle" do
       oceanrunner = database.find_by_code("ORA300")
       result = described_class.new(database).for(oceanrunner)
-      expect(result.size).to eq(19)
+      expect(result.size).to eq(38)
       expect(result.codes).to include("ORB301", "ORB302", "ORB303", "ORB304")
     end
 
@@ -124,7 +127,8 @@ RSpec.describe Opencdd::EffectiveProperties do
     it "returns the codes of the resolved properties" do
       vehicle = database.find_by_code("ORA001")
       engine = described_class.new(database)
-      expect(engine.codes_for(vehicle)).to contain_exactly("ORB001", "ORB002", "ORB003")
+      expect(engine.codes_for(vehicle)).to contain_exactly("ORB001", "ORB002", "ORB003", "ORB004",
+                                                            "ORB005", "ORB006", "ORB007", "ORB008")
     end
   end
 end

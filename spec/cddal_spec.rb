@@ -10,8 +10,8 @@ RSpec.describe Opencdd::Cddal do
   describe ".parse_file" do
     it "loads classes, properties, and value_lists from a CDDAL source" do
       expect(database.classes.size).to      eq(20)
-      expect(database.properties.size).to   eq(19)
-      expect(database.value_lists.size).to  eq(1)
+      expect(database.properties.size).to   eq(38)
+      expect(database.value_lists.size).to  eq(4)
     end
 
     it "registers aliases declared in the source" do
@@ -45,7 +45,8 @@ RSpec.describe Opencdd::Cddal do
     it "resolves symbolic instance names in applicable_properties" do
       vehicle = database.find_by_code("ORA001")
       expect(vehicle.applicable_property_irdis.map(&:code)).to contain_exactly(
-        "ORB001", "ORB002", "ORB003",
+        "ORB001", "ORB002", "ORB003", "ORB004",
+        "ORB005", "ORB006", "ORB007", "ORB008",
       )
     end
 

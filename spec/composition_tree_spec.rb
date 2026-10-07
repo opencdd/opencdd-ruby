@@ -63,14 +63,16 @@ RSpec.describe Opencdd::CompositionTree do
       expect(tree.entity).to be_a(Opencdd::Klass)
       expect(tree.entity.code).to eq("ORA001")
       expect(tree.children.size).to eq(3)
-      expect(tree.children.map { |c| c.entity.code }).to contain_exactly("ORB001", "ORB002", "ORB003")
+      expect(tree.children.map { |c| c.entity.code })
+        .to contain_exactly("ORB001", "ORB002", "ORB003")
       expect(tree.children.all?(&:leaf?)).to be(true)
     end
 
     it "exposes only Klass entities via #classes and only Property via #properties" do
       tree = described_class.new(db).for(db.find_by_code("ORA001"))
       expect(tree.classes.map(&:code)).to eq(%w[ORA001])
-      expect(tree.properties.map(&:code)).to contain_exactly("ORB001", "ORB002", "ORB003")
+      expect(tree.properties.map(&:code))
+        .to contain_exactly("ORB001", "ORB002", "ORB003")
     end
   end
 
@@ -259,7 +261,8 @@ RSpec.describe Opencdd::CompositionTree do
       tree = oceanrunner_db.composition_tree(vehicle)
       expect(tree.entity.code).to eq("ORA001")
       expect(tree.children.map { |c| c.entity.code })
-        .to contain_exactly("ORB001", "ORB002", "ORB003")
+        .to contain_exactly("ORB001", "ORB002", "ORB003", "ORB004",
+                           "ORB005", "ORB006", "ORB007", "ORB008")
     end
 
     it "recurses CLASS_REFERENCE into the categorical EngineType class for OceanRunner.engine_type" do

@@ -24,8 +24,11 @@
 #
 # Countries: Taiwan, Japan, Korea, Italy.
 # All content authored by OpenCDD; spot facts are public knowledge.
-# Individual property values are sourced from the English Wikipedia
-# articles for each spot (retrieved 2026-10-07); facts only, no text.
+# Individual property values are sourced from the English Wikipedia and
+# DBpedia (Wikipedia, CC BY-SA), retrieved 2026-10-07; facts only, no
+# text. Language tags are region-coded: zh-TW, zh-HK, zh-CN, ja, ko,
+# fr, it, en. Registry codes: SPI0xx TW, SPI1xx JP, SPI2xx KR, SPI3xx
+# IT, SPI4xx HK, SPI5xx UK, SPI6xx FR, SPI7xx US, SPI8xx CN, SPI9xx SG.
 #
 # Code allocation (OpenCDD house convention):
 #   <stem><T><NNN> — stem is unique per dictionary, T is the entity type:
@@ -110,7 +113,7 @@ meta-class MDC_C005 {
 instance ScenicSpot < MDC_C002 {
   code: SPA001
   preferred_name.en: "Scenic Spot"
-  preferred_name.zh-Hant: "旅遊景點"
+  preferred_name.zh-TW: "旅遊景點"
   preferred_name.ja: "観光名所"
   preferred_name.ko: "관광지"
   preferred_name.it: "Attrazione Turistica"
@@ -123,7 +126,7 @@ instance ScenicSpot < MDC_C002 {
 instance annual_visitors < MDC_C003 {
   code: SPB010
   preferred_name.en: "annual visitors"
-  preferred_name.zh-Hant: "年度遊客"
+  preferred_name.zh-TW: "年度遊客"
   definition.en: "approximate number of visitors per year"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -133,7 +136,7 @@ instance annual_visitors < MDC_C003 {
 instance listing_criteria < MDC_C003 {
   code: SPB011
   preferred_name.en: "listing criteria"
-  preferred_name.zh-Hant: "遺產類別"
+  preferred_name.zh-TW: "遺產類別"
   definition.en: "cultural, natural, or mixed character of a World Heritage listing"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -147,7 +150,7 @@ instance listing_criteria < MDC_C003 {
 instance Country < MDC_C002 {
   code: SPA010
   preferred_name.en: "Country"
-  preferred_name.zh-Hant: "國家"
+  preferred_name.zh-TW: "國家"
   definition.en: "sovereign state in which a scenic spot is located"
   superclass: ScenicSpot
   class_type: CATEGORICAL_CLASS
@@ -156,7 +159,7 @@ instance Country < MDC_C002 {
 instance Taiwan < MDC_C002 {
   code: SPA011
   preferred_name.en: "Taiwan"
-  preferred_name.zh-Hant: "臺灣"
+  preferred_name.zh-TW: "臺灣"
   definition.en: "island state in East Asia"
   superclass: Country
   class_type: ITEM_CLASS
@@ -189,6 +192,58 @@ instance Italy < MDC_C002 {
   class_type: ITEM_CLASS
 }
 
+instance HongKong < MDC_C002 {
+  code: SPA015
+  preferred_name.en: "Hong Kong"
+  preferred_name.zh-HK: "香港"
+  definition.en: "special administrative region of China"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
+instance UnitedKingdom < MDC_C002 {
+  code: SPA016
+  preferred_name.en: "United Kingdom"
+  definition.en: "country in Northwestern Europe"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
+instance France < MDC_C002 {
+  code: SPA017
+  preferred_name.en: "France"
+  preferred_name.fr: "France"
+  definition.en: "republic in Western Europe"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
+instance UnitedStates < MDC_C002 {
+  code: SPA018
+  preferred_name.en: "United States"
+  definition.en: "federal republic in North America"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
+instance China < MDC_C002 {
+  code: SPA019
+  preferred_name.en: "China"
+  preferred_name.zh-CN: "中國"
+  definition.en: "country in East Asia"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
+instance Singapore < MDC_C002 {
+  code: SPA020
+  preferred_name.en: "Singapore"
+  preferred_name.zh-CN: "新加坡"
+  definition.en: "island city-state in Southeast Asia"
+  superclass: Country
+  class_type: ITEM_CLASS
+}
+
 # =============================================================================
 # Powertype 1 — ScenicSpotType
 #
@@ -211,7 +266,7 @@ instance Italy < MDC_C002 {
 instance ScenicSpotType < MDC_C002 {
   code: SPA100
   preferred_name.en: "Scenic Spot Type"
-  preferred_name.zh-Hant: "景點類型"
+  preferred_name.zh-TW: "景點類型"
   definition.en: "categorical class whose subclasses enumerate the kinds of scenic spots"
   superclass: ScenicSpot
   class_type: CATEGORICAL_CLASS
@@ -220,7 +275,7 @@ instance ScenicSpotType < MDC_C002 {
 instance NationalPark < MDC_C002 {
   code: SPA101
   preferred_name.en: "National Park"
-  preferred_name.zh-Hant: "國家公園"
+  preferred_name.zh-TW: "國家公園"
   preferred_name.ja: "国立公園"
   preferred_name.ko: "국립공원"
   definition.en: "protected area designated for conservation and public enjoyment by national law"
@@ -232,7 +287,7 @@ instance NationalPark < MDC_C002 {
 instance Temple < MDC_C002 {
   code: SPA102
   preferred_name.en: "Temple"
-  preferred_name.zh-Hant: "寺廟"
+  preferred_name.zh-TW: "寺廟"
   preferred_name.ja: "寺"
   preferred_name.ko: "사원"
   definition.en: "building dedicated to religious worship"
@@ -244,7 +299,7 @@ instance Temple < MDC_C002 {
 instance Palace < MDC_C002 {
   code: SPA103
   preferred_name.en: "Palace"
-  preferred_name.zh-Hant: "宮殿"
+  preferred_name.zh-TW: "宮殿"
   preferred_name.ko: "궁궐"
   definition.en: "grand residence of a sovereign or aristocratic family"
   superclass: ScenicSpotType
@@ -255,7 +310,7 @@ instance Palace < MDC_C002 {
 instance Museum < MDC_C002 {
   code: SPA104
   preferred_name.en: "Museum"
-  preferred_name.zh-Hant: "博物館"
+  preferred_name.zh-TW: "博物館"
   preferred_name.ja: "博物館"
   preferred_name.ko: "박물관"
   preferred_name.it: "Museo"
@@ -268,7 +323,7 @@ instance Museum < MDC_C002 {
 instance HotSpring < MDC_C002 {
   code: SPA105
   preferred_name.en: "Hot Spring"
-  preferred_name.zh-Hant: "溫泉"
+  preferred_name.zh-TW: "溫泉"
   preferred_name.ja: "温泉"
   preferred_name.ko: "온천"
   definition.en: "natural spring of geothermally heated water"
@@ -280,7 +335,7 @@ instance HotSpring < MDC_C002 {
 instance NightMarket < MDC_C002 {
   code: SPA106
   preferred_name.en: "Night Market"
-  preferred_name.zh-Hant: "夜市"
+  preferred_name.zh-TW: "夜市"
   preferred_name.ko: "야시장"
   definition.en: "street market operating primarily in the evening"
   superclass: ScenicSpotType
@@ -291,7 +346,7 @@ instance NightMarket < MDC_C002 {
 instance Mountain < MDC_C002 {
   code: SPA107
   preferred_name.en: "Mountain"
-  preferred_name.zh-Hant: "山岳"
+  preferred_name.zh-TW: "山岳"
   preferred_name.ja: "山"
   preferred_name.ko: "산"
   definition.en: "elevated landform rising prominently above its surroundings"
@@ -303,7 +358,7 @@ instance Mountain < MDC_C002 {
 instance Lake < MDC_C002 {
   code: SPA108
   preferred_name.en: "Lake"
-  preferred_name.zh-Hant: "湖泊"
+  preferred_name.zh-TW: "湖泊"
   preferred_name.ja: "湖"
   definition.en: "inland body of standing water"
   superclass: ScenicSpotType
@@ -314,12 +369,22 @@ instance Lake < MDC_C002 {
 instance ArchaeologicalSite < MDC_C002 {
   code: SPA109
   preferred_name.en: "Archaeological Site"
-  preferred_name.zh-Hant: "考古遺址"
+  preferred_name.zh-TW: "考古遺址"
   preferred_name.it: "Sito Archeologico"
   definition.en: "place with physical evidence of past human activity studied by archaeology"
   superclass: ScenicSpotType
   class_type: ITEM_CLASS
   applicable_properties: { excavation_status, discovery_year }
+}
+
+instance Landmark < MDC_C002 {
+  code: SPA110
+  preferred_name.en: "Landmark"
+  preferred_name.zh-TW: "地標"
+  definition.en: "structure or monument of recognized cultural, historical, or symbolic significance"
+  superclass: ScenicSpotType
+  class_type: ITEM_CLASS
+  applicable_properties: { architectural_style }
 }
 
 # =============================================================================
@@ -333,7 +398,7 @@ instance ArchaeologicalSite < MDC_C002 {
 instance ReligiousTradition < MDC_C002 {
   code: SPA120
   preferred_name.en: "Religious Tradition"
-  preferred_name.zh-Hant: "宗教傳統"
+  preferred_name.zh-TW: "宗教傳統"
   definition.en: "categorical class whose subclasses enumerate the religious traditions of a place of worship"
   superclass: ScenicSpot
   class_type: CATEGORICAL_CLASS
@@ -342,7 +407,7 @@ instance ReligiousTradition < MDC_C002 {
 instance Buddhist < MDC_C002 {
   code: SPA121
   preferred_name.en: "Buddhist"
-  preferred_name.zh-Hant: "佛寺"
+  preferred_name.zh-TW: "佛寺"
   preferred_name.ja: "仏寺"
   preferred_name.ko: "불교 사원"
   definition.en: "Buddhist tradition of worship"
@@ -353,7 +418,7 @@ instance Buddhist < MDC_C002 {
 instance Taoist < MDC_C002 {
   code: SPA122
   preferred_name.en: "Taoist"
-  preferred_name.zh-Hant: "道觀"
+  preferred_name.zh-TW: "道觀"
   definition.en: "Taoist tradition of worship"
   superclass: ReligiousTradition
   class_type: ITEM_CLASS
@@ -362,8 +427,17 @@ instance Taoist < MDC_C002 {
 instance FolkShrine < MDC_C002 {
   code: SPA123
   preferred_name.en: "Folk Shrine"
-  preferred_name.zh-Hant: "民間信仰廟宇"
+  preferred_name.zh-TW: "民間信仰廟宇"
   definition.en: "local folk-religion tradition of worship"
+  superclass: ReligiousTradition
+  class_type: ITEM_CLASS
+}
+
+instance Shinto < MDC_C002 {
+  code: SPA124
+  preferred_name.en: "Shinto"
+  preferred_name.ja: "神道"
+  definition.en: "indigenous Japanese tradition of worship at shrines"
   superclass: ReligiousTradition
   class_type: ITEM_CLASS
 }
@@ -379,7 +453,7 @@ instance FolkShrine < MDC_C002 {
 instance OfficialGrade < MDC_C002 {
   code: SPA130
   preferred_name.en: "Official Grade"
-  preferred_name.zh-Hant: "官方等級"
+  preferred_name.zh-TW: "官方等級"
   definition.en: "categorical class whose subclasses enumerate the official listing or priority levels of a scenic spot"
   superclass: ScenicSpot
   class_type: CATEGORICAL_CLASS
@@ -388,7 +462,7 @@ instance OfficialGrade < MDC_C002 {
 instance WorldHeritage < MDC_C002 {
   code: SPA131
   preferred_name.en: "World Heritage"
-  preferred_name.zh-Hant: "世界遺產"
+  preferred_name.zh-TW: "世界遺產"
   preferred_name.ja: "世界遺産"
   preferred_name.ko: "세계유산"
   preferred_name.it: "Patrimonio Mondiale"
@@ -401,7 +475,7 @@ instance WorldHeritage < MDC_C002 {
 instance NationalGrade < MDC_C002 {
   code: SPA132
   preferred_name.en: "National Grade"
-  preferred_name.zh-Hant: "國家級"
+  preferred_name.zh-TW: "國家級"
   preferred_name.ja: "国指定"
   definition.en: "designation of national significance"
   superclass: OfficialGrade
@@ -411,7 +485,7 @@ instance NationalGrade < MDC_C002 {
 instance ProvincialGrade < MDC_C002 {
   code: SPA133
   preferred_name.en: "Provincial Grade"
-  preferred_name.zh-Hant: "省市級"
+  preferred_name.zh-TW: "省市級"
   definition.en: "designation of provincial or municipal significance"
   superclass: OfficialGrade
   class_type: ITEM_CLASS
@@ -420,7 +494,7 @@ instance ProvincialGrade < MDC_C002 {
 instance LocalGrade < MDC_C002 {
   code: SPA134
   preferred_name.en: "Local Grade"
-  preferred_name.zh-Hant: "地方級"
+  preferred_name.zh-TW: "地方級"
   definition.en: "designation of local significance"
   superclass: OfficialGrade
   class_type: ITEM_CLASS
@@ -472,7 +546,7 @@ instance excavation_enum < MDC_C005 {
 instance country < MDC_C003 {
   code: SPB001
   preferred_name.en: "country"
-  preferred_name.zh-Hant: "所在國家"
+  preferred_name.zh-TW: "所在國家"
   definition.en: "sovereign state in which the scenic spot is located"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -482,7 +556,7 @@ instance country < MDC_C003 {
 instance spot_type < MDC_C003 {
   code: SPB002
   preferred_name.en: "scenic spot type"
-  preferred_name.zh-Hant: "景點類型"
+  preferred_name.zh-TW: "景點類型"
   definition.en: "kind of scenic spot, selected from the scenic spot type classification"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -492,7 +566,7 @@ instance spot_type < MDC_C003 {
 instance tradition < MDC_C003 {
   code: SPB003
   preferred_name.en: "religious tradition"
-  preferred_name.zh-Hant: "宗教傳統"
+  preferred_name.zh-TW: "宗教傳統"
   definition.en: "religious tradition observed at the place of worship"
   property_data_element_type: CONDITION_DET
   definition_class: ScenicSpot
@@ -503,7 +577,7 @@ instance tradition < MDC_C003 {
 instance official_grade < MDC_C003 {
   code: SPB004
   preferred_name.en: "official grade"
-  preferred_name.zh-Hant: "官方等級"
+  preferred_name.zh-TW: "官方等級"
   definition.en: "official listing or priority level of the scenic spot"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -513,7 +587,7 @@ instance official_grade < MDC_C003 {
 instance elevation < MDC_C003 {
   code: SPB005
   preferred_name.en: "elevation"
-  preferred_name.zh-Hant: "海拔"
+  preferred_name.zh-TW: "海拔"
   definition.en: "elevation above sea level of the spot's principal feature"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -524,7 +598,7 @@ instance elevation < MDC_C003 {
 instance area < MDC_C003 {
   code: SPB006
   preferred_name.en: "area"
-  preferred_name.zh-Hant: "面積"
+  preferred_name.zh-TW: "面積"
   definition.en: "extent of the scenic spot"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -535,7 +609,7 @@ instance area < MDC_C003 {
 instance established_year < MDC_C003 {
   code: SPB007
   preferred_name.en: "established year"
-  preferred_name.zh-Hant: "建立年份"
+  preferred_name.zh-TW: "建立年份"
   definition.en: "calendar year in which the spot was established, constructed, or first recorded"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -545,7 +619,7 @@ instance established_year < MDC_C003 {
 instance admission < MDC_C003 {
   code: SPB008
   preferred_name.en: "admission"
-  preferred_name.zh-Hant: "門票"
+  preferred_name.zh-TW: "門票"
   definition.en: "whether entry requires payment"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -555,7 +629,7 @@ instance admission < MDC_C003 {
 instance opening_period < MDC_C003 {
   code: SPB009
   preferred_name.en: "opening period"
-  preferred_name.zh-Hant: "開放期間"
+  preferred_name.zh-TW: "開放期間"
   definition.en: "operating period of the spot"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ScenicSpot
@@ -573,7 +647,7 @@ instance opening_period < MDC_C003 {
 instance trail_count < MDC_C003 {
   code: SPB101
   preferred_name.en: "trail count"
-  preferred_name.zh-Hant: "步道數量"
+  preferred_name.zh-TW: "步道數量"
   definition.en: "number of maintained hiking trails in the national park"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: NationalPark
@@ -583,7 +657,7 @@ instance trail_count < MDC_C003 {
 instance founding_dynasty < MDC_C003 {
   code: SPB102
   preferred_name.en: "founding dynasty"
-  preferred_name.zh-Hant: "創建朝代"
+  preferred_name.zh-TW: "創建朝代"
   definition.en: "dynasty or period during which the temple was founded"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Temple
@@ -593,7 +667,7 @@ instance founding_dynasty < MDC_C003 {
 instance deity < MDC_C003 {
   code: SPB103
   preferred_name.en: "principal deity"
-  preferred_name.zh-Hant: "主祀神明"
+  preferred_name.zh-TW: "主祀神明"
   definition.en: "principal deity venerated at the temple"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Temple
@@ -603,7 +677,7 @@ instance deity < MDC_C003 {
 instance royal_dynasty < MDC_C003 {
   code: SPB104
   preferred_name.en: "royal dynasty"
-  preferred_name.zh-Hant: "皇室朝代"
+  preferred_name.zh-TW: "皇室朝代"
   definition.en: "dynasty for which the palace served as a royal residence"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Palace
@@ -613,7 +687,7 @@ instance royal_dynasty < MDC_C003 {
 instance collection_size < MDC_C003 {
   code: SPB105
   preferred_name.en: "collection size"
-  preferred_name.zh-Hant: "館藏數量"
+  preferred_name.zh-TW: "館藏數量"
   definition.en: "number of catalogued objects held by the museum"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Museum
@@ -623,7 +697,7 @@ instance collection_size < MDC_C003 {
 instance water_temperature < MDC_C003 {
   code: SPB106
   preferred_name.en: "water temperature"
-  preferred_name.zh-Hant: "泉水溫度"
+  preferred_name.zh-TW: "泉水溫度"
   definition.en: "temperature of the spring water at emergence"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: HotSpring
@@ -634,7 +708,7 @@ instance water_temperature < MDC_C003 {
 instance mineral_type < MDC_C003 {
   code: SPB107
   preferred_name.en: "mineral type"
-  preferred_name.zh-Hant: "泉質"
+  preferred_name.zh-TW: "泉質"
   definition.en: "dominant dissolved mineral character of the spring"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: HotSpring
@@ -644,7 +718,7 @@ instance mineral_type < MDC_C003 {
 instance stall_count < MDC_C003 {
   code: SPB108
   preferred_name.en: "stall count"
-  preferred_name.zh-Hant: "攤位數量"
+  preferred_name.zh-TW: "攤位數量"
   definition.en: "approximate number of vending stalls at the market"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: NightMarket
@@ -654,7 +728,7 @@ instance stall_count < MDC_C003 {
 instance prominence < MDC_C003 {
   code: SPB109
   preferred_name.en: "topographic prominence"
-  preferred_name.zh-Hant: "地形突出度"
+  preferred_name.zh-TW: "地形突出度"
   definition.en: "height of the mountain's summit relative to its surroundings"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Mountain
@@ -665,7 +739,7 @@ instance prominence < MDC_C003 {
 instance max_depth < MDC_C003 {
   code: SPB110
   preferred_name.en: "maximum depth"
-  preferred_name.zh-Hant: "最大深度"
+  preferred_name.zh-TW: "最大深度"
   definition.en: "greatest depth of the lake"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Lake
@@ -676,7 +750,7 @@ instance max_depth < MDC_C003 {
 instance excavation_status < MDC_C003 {
   code: SPB111
   preferred_name.en: "excavation status"
-  preferred_name.zh-Hant: "挖掘狀態"
+  preferred_name.zh-TW: "挖掘狀態"
   definition.en: "state of archaeological investigation"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ArchaeologicalSite
@@ -687,7 +761,7 @@ instance excavation_status < MDC_C003 {
 instance trail_length < MDC_C003 {
   code: SPB201
   preferred_name.en: "trail length"
-  preferred_name.zh-Hant: "步道總長"
+  preferred_name.zh-TW: "步道總長"
   definition.en: "total length of maintained hiking trails"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: NationalPark
@@ -697,7 +771,7 @@ instance trail_length < MDC_C003 {
 instance wildlife_species < MDC_C003 {
   code: SPB202
   preferred_name.en: "wildlife species"
-  preferred_name.zh-Hant: "野生物種數"
+  preferred_name.zh-TW: "野生物種數"
   definition.en: "number of documented wildlife species in the protected area"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: NationalPark
@@ -706,7 +780,7 @@ instance wildlife_species < MDC_C003 {
 instance treasure_count < MDC_C003 {
   code: SPB203
   preferred_name.en: "treasure count"
-  preferred_name.zh-Hant: "指定寶物數"
+  preferred_name.zh-TW: "指定寶物數"
   definition.en: "number of holdings designated as national treasures or important cultural properties"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Temple
@@ -715,7 +789,7 @@ instance treasure_count < MDC_C003 {
 instance floor_area < MDC_C003 {
   code: SPB204
   preferred_name.en: "floor area"
-  preferred_name.zh-Hant: "樓地板面積"
+  preferred_name.zh-TW: "樓地板面積"
   definition.en: "total floor area of the palace buildings"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Palace
@@ -725,7 +799,7 @@ instance floor_area < MDC_C003 {
 instance room_count < MDC_C003 {
   code: SPB205
   preferred_name.en: "room count"
-  preferred_name.zh-Hant: "房間數"
+  preferred_name.zh-TW: "房間數"
   definition.en: "number of rooms in the palace"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Palace
@@ -734,7 +808,7 @@ instance room_count < MDC_C003 {
 instance exhibition_area < MDC_C003 {
   code: SPB206
   preferred_name.en: "exhibition area"
-  preferred_name.zh-Hant: "展覽面積"
+  preferred_name.zh-TW: "展覽面積"
   definition.en: "gallery floor area open to the public"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Museum
@@ -744,7 +818,7 @@ instance exhibition_area < MDC_C003 {
 instance special_exhibition_count < MDC_C003 {
   code: SPB207
   preferred_name.en: "special exhibition count"
-  preferred_name.zh-Hant: "特展數量"
+  preferred_name.zh-TW: "特展數量"
   definition.en: "number of special exhibitions held per year"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Museum
@@ -753,7 +827,7 @@ instance special_exhibition_count < MDC_C003 {
 instance flow_rate < MDC_C003 {
   code: SPB208
   preferred_name.en: "flow rate"
-  preferred_name.zh-Hant: "湧泉量"
+  preferred_name.zh-TW: "湧泉量"
   definition.en: "rate of flow of the spring at emergence"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: HotSpring
@@ -763,7 +837,7 @@ instance flow_rate < MDC_C003 {
 instance source_depth < MDC_C003 {
   code: SPB209
   preferred_name.en: "source depth"
-  preferred_name.zh-Hant: "泉源深度"
+  preferred_name.zh-TW: "泉源深度"
   definition.en: "depth below surface of the geothermal source"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: HotSpring
@@ -773,7 +847,7 @@ instance source_depth < MDC_C003 {
 instance opening_days_per_week < MDC_C003 {
   code: SPB210
   preferred_name.en: "opening days per week"
-  preferred_name.zh-Hant: "每週營業天數"
+  preferred_name.zh-TW: "每週營業天數"
   definition.en: "number of evenings per week the market operates"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: NightMarket
@@ -782,7 +856,7 @@ instance opening_days_per_week < MDC_C003 {
 instance first_ascent_year < MDC_C003 {
   code: SPB211
   preferred_name.en: "first ascent year"
-  preferred_name.zh-Hant: "首登年份"
+  preferred_name.zh-TW: "首登年份"
   definition.en: "year of the first recorded ascent"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Mountain
@@ -791,7 +865,7 @@ instance first_ascent_year < MDC_C003 {
 instance climbing_routes < MDC_C003 {
   code: SPB212
   preferred_name.en: "climbing routes"
-  preferred_name.zh-Hant: "攀登路線數"
+  preferred_name.zh-TW: "攀登路線數"
   definition.en: "number of established climbing routes"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Mountain
@@ -800,7 +874,7 @@ instance climbing_routes < MDC_C003 {
 instance surface_area < MDC_C003 {
   code: SPB213
   preferred_name.en: "surface area"
-  preferred_name.zh-Hant: "湖面面積"
+  preferred_name.zh-TW: "湖面面積"
   definition.en: "area of the lake surface"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Lake
@@ -810,17 +884,27 @@ instance surface_area < MDC_C003 {
 instance mean_depth < MDC_C003 {
   code: SPB214
   preferred_name.en: "mean depth"
-  preferred_name.zh-Hant: "平均深度"
+  preferred_name.zh-TW: "平均深度"
   definition.en: "average depth of the lake"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: Lake
   data_type: REAL_TYPE
   unit: metre
 }
+instance architectural_style < MDC_C003 {
+  code: SPB305
+  preferred_name.en: "architectural style"
+  preferred_name.zh-TW: "建築風格"
+  definition.en: "architectural style of the landmark"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Landmark
+  data_type: STRING_TYPE
+}
+
 instance discovery_year < MDC_C003 {
   code: SPB215
   preferred_name.en: "discovery year"
-  preferred_name.zh-Hant: "發現年份"
+  preferred_name.zh-TW: "發現年份"
   definition.en: "year the site was discovered or first excavated"
   property_data_element_type: NON_DEPENDENT_P_DET
   definition_class: ArchaeologicalSite
@@ -837,7 +921,7 @@ instance discovery_year < MDC_C003 {
 instance inscription_year < MDC_C003 {
   code: SPB131
   preferred_name.en: "inscription year"
-  preferred_name.zh-Hant: "列入年份"
+  preferred_name.zh-TW: "列入年份"
   definition.en: "calendar year in which the site was inscribed on the World Heritage List"
   property_data_element_type: CONDITION_DET
   definition_class: ScenicSpot
@@ -857,7 +941,7 @@ instance inscription_year < MDC_C003 {
 instance BuddhistTemple < MDC_C002 {
   code: SPA150
   preferred_name.en: "Buddhist Temple"
-  preferred_name.zh-Hant: "佛寺"
+  preferred_name.zh-TW: "佛寺"
   preferred_name.ja: "仏寺"
   definition.en: "temple of the Buddhist tradition"
   superclass: Temple
@@ -868,7 +952,7 @@ instance BuddhistTemple < MDC_C002 {
 instance TaoistTemple < MDC_C002 {
   code: SPA151
   preferred_name.en: "Taoist Temple"
-  preferred_name.zh-Hant: "道觀"
+  preferred_name.zh-TW: "道觀"
   definition.en: "temple of the Taoist tradition"
   superclass: Temple
   class_type: ITEM_CLASS
@@ -878,11 +962,254 @@ instance TaoistTemple < MDC_C002 {
 instance FolkTemple < MDC_C002 {
   code: SPA152
   preferred_name.en: "Folk Temple"
-  preferred_name.zh-Hant: "民間信仰廟宇"
+  preferred_name.zh-TW: "民間信仰廟宇"
   definition.en: "temple of the folk-religion tradition"
   superclass: Temple
   class_type: ITEM_CLASS
   sub_class_selection: { FolkShrine }
+}
+
+
+# =============================================================================
+# Flagship registry — Wikipedia-sourced entries for the wider roster
+#
+# Hand-curated companions to the original twelve, facts pulled from each
+# spot's Wikipedia article (2026-10-07). Same country code blocks.
+# =============================================================================
+
+instance VictoriaPeak < MDC_C002 {
+  code: SPI401
+  preferred_name.en: "Victoria Peak"
+  preferred_name.zh-HK: "太平山"
+  short_name.en: "ThePeak"
+  definition.en: "552 m hill, the tallest on Hong Kong Island, overlooking Victoria Harbour"
+  superclass: Mountain
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Mountain
+  elevation: 552
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance WongTaiSinTemple < MDC_C002 {
+  code: SPI402
+  preferred_name.en: "Wong Tai Sin Temple"
+  preferred_name.zh-HK: "黃大仙祠"
+  definition.en: "folk temple in Kowloon, Hong Kong, built in 1921 and renowned for fortune-telling"
+  superclass: FolkTemple
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Temple
+  tradition: FolkShrine
+  established_year: 1921
+  admission: Free
+  opening_period: YearRound
+}
+
+instance Kiyomizudera < MDC_C002 {
+  code: SPI104
+  preferred_name.en: "Kiyomizu-dera"
+  preferred_name.ja: "清水寺"
+  definition.en: "Buddhist temple in eastern Kyoto founded in 778, part of the Historic Monuments of Ancient Kyoto"
+  superclass: BuddhistTemple
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Temple
+  tradition: Buddhist
+  official_grade: WorldHeritage
+  established_year: 778
+  founding_dynasty: "Heian period"
+  inscription_year: 1994
+  listing_criteria: Cultural
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance FushimiInariTaisha < MDC_C002 {
+  code: SPI105
+  preferred_name.en: "Fushimi Inari-taisha"
+  preferred_name.ja: "伏見稲荷大社"
+  definition.en: "head Shinto shrine of Inari in Kyoto, founded in 711 by the Hata clan, famed for its thousands of torii gates"
+  superclass: Temple
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Temple
+  tradition: Shinto
+  established_year: 711
+  admission: Free
+  opening_period: YearRound
+}
+
+instance Bulguksa < MDC_C002 {
+  code: SPI203
+  preferred_name.en: "Bulguksa"
+  preferred_name.ko: "불국사"
+  definition.en: "Buddhist temple on the slopes of Tohamsan near Gyeongju, completed in 774 by the Silla court"
+  superclass: BuddhistTemple
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Temple
+  tradition: Buddhist
+  official_grade: WorldHeritage
+  established_year: 774
+  founding_dynasty: "Silla"
+  inscription_year: 1995
+  listing_criteria: Cultural
+  treasure_count: 7
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance SeongsanIlchulbong < MDC_C002 {
+  code: SPI204
+  preferred_name.en: "Seongsan Ilchulbong"
+  preferred_name.ko: "성산일출봉"
+  definition.en: "volcanic tuff cone on Jeju Island formed about five thousand years ago, rising from the sea"
+  superclass: Mountain
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Mountain
+  official_grade: WorldHeritage
+  inscription_year: 2007
+  listing_criteria: Natural
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance TowerOfLondon < MDC_C002 {
+  code: SPI501
+  preferred_name.en: "Tower of London"
+  definition.en: "historic castle on the north bank of the Thames, founded toward the end of 1066 as part of the Norman Conquest"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: UnitedKingdom
+  spot_type: Palace
+  royal_dynasty: "Norman"
+  official_grade: WorldHeritage
+  established_year: 1066
+  inscription_year: 1988
+  listing_criteria: Cultural
+  annual_visitors: 2817852
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance BritishMuseum < MDC_C002 {
+  code: SPI502
+  preferred_name.en: "British Museum"
+  definition.en: "world's first public national museum, established in 1753 and opened in 1759"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedKingdom
+  spot_type: Museum
+  established_year: 1753
+  collection_size: 8000000
+  annual_visitors: 6440120
+  admission: Free
+  opening_period: YearRound
+}
+
+instance EiffelTower < MDC_C002 {
+  code: SPI601
+  preferred_name.en: "Eiffel Tower"
+  preferred_name.fr: "Tour Eiffel"
+  definition.en: "330 m wrought-iron lattice tower in Paris, built for the 1889 World's Fair"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Landmark
+  official_grade: WorldHeritage
+  established_year: 1889
+  height: 330
+  architectural_style: "wrought-iron lattice"
+  inscription_year: 1991
+  listing_criteria: Cultural
+  annual_visitors: 5890000
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance Louvre < MDC_C002 {
+  code: SPI602
+  preferred_name.en: "Louvre"
+  preferred_name.fr: "Musée du Louvre"
+  definition.en: "the world's largest art museum, opened on 10 August 1793 in the former royal palace on the Right Bank of the Seine"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1793
+  exhibition_area: 72735
+  annual_visitors: 9000000
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance ArcDeTriomphe < MDC_C002 {
+  code: SPI603
+  preferred_name.en: "Arc de Triomphe"
+  preferred_name.fr: "Arc de triomphe de l'Étoile"
+  definition.en: "49.54 m triumphal arch in Paris, commissioned by Napoleon after Austerlitz and completed in 1836"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Landmark
+  established_year: 1836
+  height: 49.54
+  architectural_style: "Neoclassical"
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance StatueOfLiberty < MDC_C002 {
+  code: SPI701
+  preferred_name.en: "Statue of Liberty"
+  definition.en: "colossal neoclassical sculpture on Liberty Island in New York Harbor, dedicated on 28 October 1886"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+  official_grade: WorldHeritage
+  established_year: 1886
+  height: 93
+  architectural_style: "Neoclassical"
+  inscription_year: 1984
+  listing_criteria: Cultural
+  admission: Free
+  opening_period: YearRound
+}
+
+instance GrandCanyon < MDC_C002 {
+  code: SPI702
+  preferred_name.en: "Grand Canyon"
+  definition.en: "446 km long, up to 1,857 m deep canyon carved by the Colorado River in Arizona"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: NationalPark
+  official_grade: WorldHeritage
+  established_year: 1919
+  inscription_year: 1979
+  listing_criteria: Natural
+  admission: Paid
+  opening_period: YearRound
+}
+
+instance MetropolitanMuseumOfArt < MDC_C002 {
+  code: SPI703
+  preferred_name.en: "Metropolitan Museum of Art"
+  short_name.en: "TheMet"
+  definition.en: "the largest art museum in the Americas, founded in 1870 on Manhattan's Museum Mile"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Museum
+  established_year: 1870
+  collection_size: 2000000
+  annual_visitors: 5727258
+  admission: Paid
+  opening_period: YearRound
 }
 
 # =============================================================================
@@ -897,7 +1224,7 @@ instance FolkTemple < MDC_C002 {
 
 instance LongshanTemple < MDC_C002 {
   code: SPI001
-  preferred_name.zh-Hant: "艋舺龍山寺"
+  preferred_name.zh-TW: "艋舺龍山寺"
   preferred_name.en: "Longshan Temple"
   short_name.en: "LongshanTemple"
   definition.en: "Taiwanese folk temple in Wanhua District, Taipei, built in 1738 by settlers from Fujian during Qing rule in honour of Guanyin, with halls to folk deities such as Mazu and Guan Yu"
@@ -916,7 +1243,7 @@ instance LongshanTemple < MDC_C002 {
 
 instance TarokoNationalPark < MDC_C002 {
   code: SPI002
-  preferred_name.zh-Hant: "太魯閣國家公園"
+  preferred_name.zh-TW: "太魯閣國家公園"
   preferred_name.en: "Taroko National Park"
   short_name.en: "TarokoNP"
   definition.en: "national park spanning Taichung, Nantou, and Hualien counties, named for the Taroko Gorge — one of only three river gorges in the world cut entirely through pure marble"
@@ -935,7 +1262,7 @@ instance TarokoNationalPark < MDC_C002 {
 
 instance BeitouHotSpring < MDC_C002 {
   code: SPI003
-  preferred_name.zh-Hant: "北投溫泉"
+  preferred_name.zh-TW: "北投溫泉"
   preferred_name.en: "Beitou Hot Spring"
   short_name.en: "Beitou"
   definition.en: "hot spring district in Beitou District, Taipei — named after the Ketagalan word Kipatauw — known for its geothermal valley and sulfur-free alkaline springs"
@@ -953,7 +1280,7 @@ instance BeitouHotSpring < MDC_C002 {
 
 instance ShilinNightMarket < MDC_C002 {
   code: SPI004
-  preferred_name.zh-Hant: "士林夜市"
+  preferred_name.zh-TW: "士林夜市"
   preferred_name.en: "Shilin Night Market"
   short_name.en: "ShilinNM"
   definition.en: "largest night market in Taipei"
@@ -962,14 +1289,15 @@ instance ShilinNightMarket < MDC_C002 {
   country: Taiwan
   spot_type: NightMarket
   official_grade: LocalGrade
-  stall_count: 500
+  stall_count: 539
+  established_year: 1909
   opening_period: YearRound
   admission: Free
 }
 
 instance NationalPalaceMuseum < MDC_C002 {
   code: SPI005
-  preferred_name.zh-Hant: "國立故宮博物院"
+  preferred_name.zh-TW: "國立故宮博物院"
   preferred_name.en: "National Palace Museum"
   short_name.en: "NPM"
   definition.en: "national museum founded in Beijing in 1925 and re-established in Shilin, Taipei, in 1965, holding nearly 700,000 Chinese imperial artifacts spanning 8,000 years"
@@ -978,7 +1306,7 @@ instance NationalPalaceMuseum < MDC_C002 {
   country: Taiwan
   spot_type: Museum
   official_grade: NationalGrade
-  collection_size: 697690
+  collection_size: 700000
   established_year: 1925
   admission: Paid
   opening_period: YearRound
@@ -987,7 +1315,7 @@ instance NationalPalaceMuseum < MDC_C002 {
 # --- Japan ----------------------------------------------------------------
 
 instance Kinkakuji < MDC_C002 {
-  code: SPI011
+  code: SPI101
   preferred_name.ja: "金閣寺"
   preferred_name.en: "Kinkaku-ji"
   short_name.en: "Kinkakuji"
@@ -1007,7 +1335,7 @@ instance Kinkakuji < MDC_C002 {
 }
 
 instance Fujisan < MDC_C002 {
-  code: SPI012
+  code: SPI102
   preferred_name.ja: "富士山"
   preferred_name.en: "Mount Fuji"
   short_name.en: "Fujisan"
@@ -1022,12 +1350,14 @@ instance Fujisan < MDC_C002 {
   inscription_year: 2013
   listing_criteria: Cultural
   first_ascent_year: 663
+  climbing_routes: 4
+  annual_visitors: 300000
   opening_period: Seasonal
   admission: Free
 }
 
 instance DogoOnsen < MDC_C002 {
-  code: SPI013
+  code: SPI103
   preferred_name.ja: "道後温泉"
   preferred_name.en: "Dogo Onsen"
   short_name.en: "DogoOnsen"
@@ -1047,7 +1377,7 @@ instance DogoOnsen < MDC_C002 {
 # --- Korea ----------------------------------------------------------------
 
 instance Gyeongbokgung < MDC_C002 {
-  code: SPI021
+  code: SPI201
   preferred_name.ko: "경복궁"
   preferred_name.en: "Gyeongbokgung"
   short_name.en: "Gyeongbokgung"
@@ -1059,12 +1389,13 @@ instance Gyeongbokgung < MDC_C002 {
   official_grade: NationalGrade
   established_year: 1395
   royal_dynasty: "Joseon dynasty"
+  room_count: 755
   admission: Paid
   opening_period: YearRound
 }
 
 instance MyeongdongNightMarket < MDC_C002 {
-  code: SPI022
+  code: SPI202
   preferred_name.ko: "명동"
   preferred_name.en: "Myeongdong Night Market"
   short_name.en: "Myeongdong"
@@ -1082,7 +1413,7 @@ instance MyeongdongNightMarket < MDC_C002 {
 # --- Italy ----------------------------------------------------------------
 
 instance Colosseo < MDC_C002 {
-  code: SPI031
+  code: SPI301
   preferred_name.it: "Colosseo"
   preferred_name.en: "Colosseum"
   short_name.en: "Colosseum"
@@ -1095,13 +1426,14 @@ instance Colosseo < MDC_C002 {
   established_year: 80
   excavation_status: Completed
   inscription_year: 1980
+  height: 48
   listing_criteria: Cultural
   admission: Paid
   opening_period: YearRound
 }
 
 instance UffiziGallery < MDC_C002 {
-  code: SPI032
+  code: SPI302
   preferred_name.it: "Galleria degli Uffizi"
   preferred_name.en: "Uffizi Gallery"
   short_name.en: "Uffizi"
@@ -1111,7 +1443,2515 @@ instance UffiziGallery < MDC_C002 {
   country: Italy
   spot_type: Museum
   official_grade: NationalGrade
-  established_year: 1765
+  established_year: 1769
+  exhibition_area: 13000
+  annual_visitors: 2000000
   admission: Paid
   opening_period: YearRound
+}
+
+# =============================================================================
+# Registered individuals - DBpedia-sourced registry (bulk)
+#
+# Sourced from DBpedia (Wikipedia, CC BY-SA), retrieved 2026-10-07 - facts and
+# multilingual labels only. Country code blocks: SPI0xx TW, SPI1xx JP, SPI2xx KR,
+# SPI3xx IT, SPI4xx HK, SPI5xx UK, SPI6xx FR, SPI7xx US, SPI8xx CN, SPI9xx US SG.
+# Identifiers beginning with a digit are prefixed N.
+# =============================================================================
+
+instance AmaMuseum < MDC_C002 {
+  code: SPI0006
+  preferred_name.en: "Ama Museum"
+  preferred_name.zh-TW: "阿嬤家-和平與女性人權館"
+  preferred_name.ja: "阿マの家 平和と女性人権館"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 2016
+}
+
+instance BeitouDistrict < MDC_C002 {
+  code: SPI0007
+  preferred_name.en: "Beitou District"
+  preferred_name.zh-TW: "北投區"
+  preferred_name.ja: "北投区"
+  preferred_name.ko: "베이터우구"
+  preferred_name.fr: "District de Beitou"
+  preferred_name.it: "Distretto di Beitou"
+  definition.en: "A district in Taipei City, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+}
+
+instance BeitouHotSpringMuseum < MDC_C002 {
+  code: SPI0008
+  preferred_name.en: "Beitou Hot Spring Museum"
+  preferred_name.zh-TW: "北投溫泉博物館"
+  preferred_name.ja: "北投温泉博物館"
+  definition.en: "museum in Taipei, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+  established_year: 1998
+}
+
+instance BeitouMuseum < MDC_C002 {
+  code: SPI0009
+  preferred_name.en: "Beitou Museum"
+  preferred_name.zh-TW: "北投文物館"
+  definition.en: "museum in Taipei, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+  established_year: 2008
+}
+
+instance ChangFoundationMuseum < MDC_C002 {
+  code: SPI0010
+  preferred_name.en: "Chang Foundation Museum"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1988
+}
+
+instance ChengNanjungLibertyMuseum < MDC_C002 {
+  code: SPI0011
+  preferred_name.en: "Cheng Nan-jung Liberty Museum"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1999
+}
+
+instance ChunghwaPostalMuseum < MDC_C002 {
+  code: SPI0012
+  preferred_name.en: "Chunghwa Postal Museum"
+  preferred_name.zh-TW: "郵政博物館 (臺灣)"
+  preferred_name.ja: "郵政博物館 (台北市)"
+  definition.en: "postal museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1966
+}
+
+instance CustomsMuseum < MDC_C002 {
+  code: SPI0013
+  preferred_name.en: "Customs Museum"
+  definition.en: "museum in Datong, Taipei, Taiwan"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1996
+}
+
+instance Dakeng < MDC_C002 {
+  code: SPI0014
+  preferred_name.en: "Dakeng"
+  preferred_name.zh-TW: "大坑風景區"
+  definition.en: "The area that contains most of the mountain region of Beitun District, Taichung, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+}
+
+instance DongshaAtollNationalPark < MDC_C002 {
+  code: SPI0015
+  preferred_name.en: "Dongsha Atoll National Park"
+  preferred_name.zh-TW: "東沙環礁國家公園"
+  definition.en: "national park of Taiwan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: NationalPark
+  established_year: 2007
+}
+
+instance EvergreenMaritimeMuseum < MDC_C002 {
+  code: SPI0016
+  preferred_name.en: "Evergreen Maritime Museum"
+  preferred_name.zh-TW: "長榮海事博物館"
+  preferred_name.ja: "長榮海事博物館"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 2008
+}
+
+instance FireSafetyMuseumofTaipeiCityFireDepartment < MDC_C002 {
+  code: SPI0017
+  preferred_name.en: "Fire Safety Museum of Taipei City Fire Department"
+  preferred_name.zh-TW: "臺北市政府消防局防災科學教育館"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1998
+}
+
+instance FubonArtMuseum < MDC_C002 {
+  code: SPI0018
+  preferred_name.en: "Fubon Art Museum"
+  definition.en: "Private art museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 2024
+}
+
+instance GuanzilingHotSpring < MDC_C002 {
+  code: SPI0019
+  preferred_name.en: "Guanziling Hot Spring"
+  preferred_name.zh-TW: "關子嶺溫泉"
+  preferred_name.ja: "関子嶺温泉"
+  preferred_name.ko: "관쯔린 온천"
+  definition.en: "Hot spring in Tainan, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+}
+
+instance Guguanhotspring < MDC_C002 {
+  code: SPI0020
+  preferred_name.en: "Guguan (hot spring)"
+  preferred_name.zh-TW: "谷關溫泉"
+  preferred_name.ja: "谷関温泉"
+  definition.en: "hot spring located in Heping District, Taichung City, Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+}
+
+instance HongGahMuseum < MDC_C002 {
+  code: SPI0021
+  preferred_name.en: "Hong-Gah Museum"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1999
+}
+
+instance HotspringsinTaiwan < MDC_C002 {
+  code: SPI0022
+  preferred_name.en: "Hot springs in Taiwan"
+  preferred_name.zh-TW: "台灣溫泉"
+  preferred_name.fr: "Sources chaudes à Taïwan"
+  preferred_name.it: "Sorgenti termali taiwanesi"
+  definition.en: "spring produced by the emergence of geothermally heated groundwater in Taiwan"
+  superclass: HotSpring
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: HotSpring
+}
+
+instance HwaKangMuseum < MDC_C002 {
+  code: SPI0023
+  preferred_name.en: "Hwa Kang Museum"
+  preferred_name.zh-TW: "中國文化大學華岡博物館"
+  definition.en: "university museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1971
+}
+
+instance InsectScienceMuseum < MDC_C002 {
+  code: SPI0024
+  preferred_name.en: "Insect Science Museum"
+  definition.en: "museum in Taipei"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: Museum
+  established_year: 1971
+}
+
+instance JingmeiNightMarket < MDC_C002 {
+  code: SPI0025
+  preferred_name.en: "Jingmei Night Market"
+  preferred_name.zh-TW: "景美夜市"
+  definition.en: "night market in Wenshan, Taipei, Taiwan"
+  superclass: NightMarket
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: NightMarket
+}
+
+instance KentingNationalPark < MDC_C002 {
+  code: SPI0026
+  preferred_name.en: "Kenting National Park"
+  preferred_name.zh-TW: "墾丁國家公園"
+  preferred_name.ja: "墾丁国家公園"
+  preferred_name.fr: "Parc national de Kenting"
+  definition.en: "national park of Taiwan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: NationalPark
+  established_year: 1984
+  area: 333.0
+}
+
+instance KinmenNationalPark < MDC_C002 {
+  code: SPI0027
+  preferred_name.en: "Kinmen National Park"
+  preferred_name.zh-TW: "金門國家公園"
+  preferred_name.ja: "金門国家公園"
+  definition.en: "national park in Kinmen County, Taiwan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Taiwan
+  spot_type: NationalPark
+  established_year: 1995
+  area: 35.29
+}
+
+instance AdMuseumTokyo < MDC_C002 {
+  code: SPI1006
+  preferred_name.en: "Ad Museum Tokyo"
+  definition.en: "library"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+  established_year: 2002
+}
+
+instance AdashinoNenbutsuji < MDC_C002 {
+  code: SPI1007
+  preferred_name.en: "Adashino Nenbutsu-ji"
+  preferred_name.ja: "化野念仏寺"
+  preferred_name.fr: "Adashino Nenbutsu-ji"
+  definition.en: "Buddhist temple in Kyoto, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance AkiyoshidaiQuasiNationalPark < MDC_C002 {
+  code: SPI1008
+  preferred_name.en: "Akiyoshidai Quasi-National Park"
+  preferred_name.zh-TW: "秋吉台國定公園"
+  preferred_name.ja: "秋吉台国定公園"
+  preferred_name.fr: "Parc quasi national d'Akiyoshidai"
+  definition.en: "quasi-national park in Yamaguchi prefecture, Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1955
+  area: 45.02
+}
+
+instance Anrakujuin < MDC_C002 {
+  code: SPI1009
+  preferred_name.en: "Anrakuju-in"
+  preferred_name.ja: "安楽寿院"
+  preferred_name.fr: "Anrakuju-in"
+  definition.en: "Buddhist Temple in Kyoto"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance AshizuriUwakaiNationalPark < MDC_C002 {
+  code: SPI1010
+  preferred_name.en: "Ashizuri-Uwakai National Park"
+  preferred_name.zh-TW: "足摺宇和海國立公園"
+  preferred_name.ja: "足摺宇和海国立公園"
+  preferred_name.ko: "아시즈리우와카이 국립공원"
+  preferred_name.fr: "Parc national d'Ashizuri-Uwakai"
+  preferred_name.it: "Parco nazionale di Ashizuri-Uwakai"
+  definition.en: "national park of Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1972
+  area: 113.45
+}
+
+instance AtagoShrineKyoto < MDC_C002 {
+  code: SPI1011
+  preferred_name.en: "Atago Shrine (Kyoto)"
+  preferred_name.zh-TW: "愛宕神社"
+  preferred_name.ja: "愛宕神社"
+  preferred_name.ko: "아타고 신사"
+  preferred_name.fr: "Atago-jinja (Kyoto)"
+  definition.en: "Shinto shrine in Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+  established_year: 701
+}
+
+instance BandaiAsahiNationalPark < MDC_C002 {
+  code: SPI1012
+  preferred_name.en: "Bandai-Asahi National Park"
+  preferred_name.zh-TW: "磐梯朝日國立公園"
+  preferred_name.ja: "磐梯朝日国立公園"
+  preferred_name.ko: "반다이아사히 국립공원"
+  preferred_name.fr: "Parc national de Bandai-Asahi"
+  preferred_name.it: "Parco nazionale di Bandai-Asahi"
+  definition.en: "national park of Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1950
+}
+
+instance BiwakoQuasiNationalPark < MDC_C002 {
+  code: SPI1013
+  preferred_name.en: "Biwako Quasi-National Park"
+  preferred_name.zh-TW: "琵琶湖國定公園"
+  preferred_name.ja: "琵琶湖国定公園"
+  preferred_name.fr: "Parc quasi national de Biwako"
+  definition.en: "quasi-national park around the Lake Biwa in Shiga and Kyoto prefecture, Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1950
+  area: 976.72
+}
+
+instance BunkyoMuseum < MDC_C002 {
+  code: SPI1014
+  preferred_name.en: "Bunkyo Museum"
+  preferred_name.ja: "文京ふるさと歴史館"
+  definition.en: "City museum in Bunkyō, Japan"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+}
+
+instance CenteroftheTokyoRaidsandWarDamage < MDC_C002 {
+  code: SPI1015
+  preferred_name.en: "Center of the Tokyo Raids and War Damage"
+  preferred_name.ja: "東京大空襲・戦災資料センター"
+  definition.en: "history museum in Tokyo, Japan"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+  established_year: 2002
+}
+
+instance ChichibuTamaKaiNationalPark < MDC_C002 {
+  code: SPI1016
+  preferred_name.en: "Chichibu Tama Kai National Park"
+  preferred_name.zh-TW: "秩父多摩甲斐國立公園"
+  preferred_name.ja: "秩父多摩甲斐国立公園"
+  preferred_name.ko: "지치부타마카이 국립공원"
+  preferred_name.fr: "Parc national de Chichibu Tamakai"
+  preferred_name.it: "Parco nazionale di Chichibu-Tama-Kai"
+  definition.en: "national park of Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1950
+  area: 1216.0
+}
+
+instance Chionin < MDC_C002 {
+  code: SPI1017
+  preferred_name.en: "Chion-in"
+  preferred_name.zh-TW: "知恩院"
+  preferred_name.ja: "知恩院"
+  preferred_name.ko: "지온인"
+  preferred_name.fr: "Chion-in"
+  definition.en: "Buddhist temple in Kyoto Prefecture, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance Chishakuin < MDC_C002 {
+  code: SPI1018
+  preferred_name.en: "Chishaku-in"
+  preferred_name.zh-TW: "智積院"
+  preferred_name.ja: "智積院"
+  definition.en: "Temple in Kyoto, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+  established_year: 1601
+}
+
+instance CurrencyMuseumoftheBankofJapan < MDC_C002 {
+  code: SPI1019
+  preferred_name.en: "Currency Museum of the Bank of Japan"
+  preferred_name.zh-TW: "貨幣博物館 (日本)"
+  preferred_name.ja: "貨幣博物館"
+  preferred_name.ko: "화폐박물관 (일본)"
+  preferred_name.fr: "Musée de la monnaie de la banque du Japon"
+  definition.en: "museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+  established_year: 1985
+}
+
+instance Daigoji < MDC_C002 {
+  code: SPI1020
+  preferred_name.en: "Daigo-ji"
+  preferred_name.zh-TW: "醍醐寺"
+  preferred_name.ja: "醍醐寺"
+  preferred_name.ko: "다이고지"
+  preferred_name.fr: "Daigo-ji"
+  preferred_name.it: "Daigo-ji"
+  definition.en: "Shingon Buddhist temple in Fushimi-ku, Kyoto, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+  established_year: 874
+}
+
+instance Daikakuji < MDC_C002 {
+  code: SPI1021
+  preferred_name.en: "Daikaku-ji"
+  preferred_name.zh-TW: "大覺寺 (京都市)"
+  preferred_name.ja: "大覚寺"
+  preferred_name.fr: "Daikaku-ji"
+  definition.en: "Buddhist temple in Kyoto, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance DaimyoClockMuseum < MDC_C002 {
+  code: SPI1022
+  preferred_name.en: "Daimyo Clock Museum"
+  preferred_name.ja: "大名時計博物館"
+  preferred_name.ko: "다이묘 시계박물관"
+  definition.en: "museum in Taito-ku, Tokyo"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+}
+
+instance DaisenOkiNationalPark < MDC_C002 {
+  code: SPI1023
+  preferred_name.en: "Daisen-Oki National Park"
+  preferred_name.zh-TW: "大山隱岐國立公園"
+  preferred_name.ja: "大山隠岐国立公園"
+  preferred_name.ko: "다이센오키 국립공원"
+  preferred_name.fr: "Parc national de Daisen-Oki"
+  preferred_name.it: "Parco nazionale di Daisen-Oki"
+  definition.en: "national park of Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1936
+}
+
+instance Daitokuji < MDC_C002 {
+  code: SPI1024
+  preferred_name.en: "Daitoku-ji"
+  preferred_name.zh-TW: "大德寺 (日本)"
+  preferred_name.ja: "大徳寺"
+  preferred_name.fr: "Daitoku-ji"
+  definition.en: "Zen Buddhist temple in Kyoto, Japan"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance Danrinji < MDC_C002 {
+  code: SPI1025
+  preferred_name.en: "Danrin-ji"
+  preferred_name.ja: "檀林寺"
+  preferred_name.fr: "Danrin-ji"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Landmark
+}
+
+instance DiplomaticArchivesoftheMinistryofForeignAffairsofJapan < MDC_C002 {
+  code: SPI1026
+  preferred_name.en: "Diplomatic Archives of the Ministry of Foreign Affairs of Japan"
+  preferred_name.ja: "外務省外交史料館"
+  preferred_name.fr: "Bureau des archives du Ministère japonais des affaires étrangères"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: Museum
+}
+
+instance EchizenKagaKaiganQuasiNationalPark < MDC_C002 {
+  code: SPI1027
+  preferred_name.en: "Echizen-Kaga Kaigan Quasi-National Park"
+  preferred_name.zh-TW: "越前加賀海岸國定公園"
+  preferred_name.ja: "越前加賀海岸国定公園"
+  preferred_name.fr: "Parc quasi national d'Echizen-Kaga Kaigan"
+  preferred_name.it: "Parco seminazionale di Echizen-Kaga Kaigan"
+  definition.en: "Quasi-National Park on the coast of Fukui and Ishikawa Prefectures, Japan"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: Japan
+  spot_type: NationalPark
+  established_year: 1968
+}
+
+instance N63Building < MDC_C002 {
+  code: SPI2005
+  preferred_name.en: "63 Building"
+  preferred_name.zh-TW: "63大廈"
+  preferred_name.ja: "63ビル"
+  preferred_name.ko: "63빌딩"
+  preferred_name.fr: "DLI 63 Building"
+  preferred_name.it: "63 Building"
+  definition.en: "skyscraper in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Baegyangsa < MDC_C002 {
+  code: SPI2006
+  preferred_name.en: "Baegyangsa"
+  preferred_name.zh-TW: "白羊寺"
+  preferred_name.ja: "白羊寺"
+  preferred_name.ko: "백양사"
+  definition.en: "Buddhist temple in South Jeolla, South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Baekdamsa < MDC_C002 {
+  code: SPI2007
+  preferred_name.en: "Baekdamsa"
+  preferred_name.ko: "백담사"
+  definition.en: "buddhist temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Baengnyeonsa < MDC_C002 {
+  code: SPI2008
+  preferred_name.en: "Baengnyeonsa"
+  preferred_name.ko: "백련사 (전남 강진군)"
+  definition.en: "Buddhist temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance BankofKoreaMoneyMuseum < MDC_C002 {
+  code: SPI2009
+  preferred_name.en: "Bank of Korea Money Museum"
+  preferred_name.zh-TW: "韩国银行货币博物馆"
+  preferred_name.ja: "韓国銀行貨幣博物館"
+  preferred_name.ko: "한국은행 화폐박물관"
+  definition.en: "economics museum in South Korea"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Museum
+  established_year: 2001
+}
+
+instance Banyasa < MDC_C002 {
+  code: SPI2010
+  preferred_name.en: "Banyasa"
+  preferred_name.ko: "반야사"
+  definition.en: "Buddhist temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Beomeosa < MDC_C002 {
+  code: SPI2011
+  preferred_name.en: "Beomeosa"
+  preferred_name.zh-TW: "梵鱼寺"
+  preferred_name.ja: "梵魚寺"
+  preferred_name.ko: "범어사"
+  definition.en: "temple"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+  established_year: 678
+}
+
+instance Beomnyunsa < MDC_C002 {
+  code: SPI2012
+  preferred_name.en: "Beomnyunsa"
+  preferred_name.ko: "법륜사 (용인시)"
+  definition.en: "Buddhist temple in Yongin city, Gyeonggi-do, South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Beopjusa < MDC_C002 {
+  code: SPI2013
+  preferred_name.en: "Beopjusa"
+  preferred_name.zh-TW: "法住寺 (韓國)"
+  preferred_name.ja: "法住寺 (報恩郡)"
+  preferred_name.ko: "법주사"
+  preferred_name.fr: "Temple de Beopju"
+  definition.en: "temple"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Bongjeongsa < MDC_C002 {
+  code: SPI2014
+  preferred_name.en: "Bongjeongsa"
+  preferred_name.zh-TW: "鳳停寺"
+  preferred_name.ja: "鳳停寺"
+  preferred_name.ko: "봉정사"
+  definition.en: "buddhist temple on the slops of Mt. Cheondeung"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Bongseonsa < MDC_C002 {
+  code: SPI2015
+  preferred_name.en: "Bongseonsa"
+  preferred_name.ja: "奉先寺 (京畿道南楊州市)"
+  preferred_name.ko: "봉선사"
+  definition.en: "Korean temple"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Borimsa < MDC_C002 {
+  code: SPI2016
+  preferred_name.en: "Borimsa"
+  preferred_name.ko: "보림사"
+  definition.en: "temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Boseoksa < MDC_C002 {
+  code: SPI2017
+  preferred_name.en: "Boseoksa"
+  preferred_name.ko: "보석사"
+  definition.en: "Korean Buddhist temple"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Buseoksa < MDC_C002 {
+  code: SPI2018
+  preferred_name.en: "Buseoksa"
+  preferred_name.zh-TW: "浮石寺"
+  preferred_name.ja: "浮石寺"
+  preferred_name.ko: "부석사"
+  definition.en: "Buddhist temple in Yeongju, South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Changdeokgung < MDC_C002 {
+  code: SPI2019
+  preferred_name.en: "Changdeokgung"
+  preferred_name.zh-TW: "昌德宮"
+  preferred_name.ja: "昌徳宮"
+  preferred_name.ko: "창덕궁"
+  preferred_name.fr: "Changdeokgung"
+  preferred_name.it: "Changdeokgung"
+  definition.en: "palace in Seoul, South Korea"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Palace
+}
+
+instance Changgyeonggung < MDC_C002 {
+  code: SPI2020
+  preferred_name.en: "Changgyeonggung"
+  preferred_name.zh-TW: "昌慶宮"
+  preferred_name.ja: "昌慶宮"
+  preferred_name.ko: "창경궁"
+  preferred_name.fr: "Changgyeonggung"
+  preferred_name.it: "Changgyeonggung"
+  definition.en: "palace"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Palace
+}
+
+instance Cheonggyesa < MDC_C002 {
+  code: SPI2021
+  preferred_name.en: "Cheonggyesa"
+  preferred_name.ko: "청계사 (의왕시)"
+  definition.en: "temple"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance ChohongMuseumofFinance < MDC_C002 {
+  code: SPI2022
+  preferred_name.en: "Chohong Museum of Finance"
+  definition.en: "Numismatics museum in Seoul, South Korea"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Museum
+  established_year: 1997
+}
+
+instance Daeheungsa < MDC_C002 {
+  code: SPI2023
+  preferred_name.en: "Daeheungsa"
+  preferred_name.zh-TW: "大興寺 (海南郡)"
+  preferred_name.ja: "大屯寺"
+  preferred_name.ko: "대흥사"
+  definition.en: "temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Daewonsa < MDC_C002 {
+  code: SPI2024
+  preferred_name.en: "Daewonsa"
+  preferred_name.ko: "대원사 (산청군)"
+  definition.en: "Buddhist temple in South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance Deoksugung < MDC_C002 {
+  code: SPI2025
+  preferred_name.en: "Deoksugung"
+  preferred_name.zh-TW: "德壽宮"
+  preferred_name.ja: "徳寿宮"
+  preferred_name.ko: "덕수궁"
+  preferred_name.fr: "Deoksugung"
+  preferred_name.it: "Deoksugung"
+  definition.en: "palace"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Palace
+}
+
+instance Dogapsa < MDC_C002 {
+  code: SPI2026
+  preferred_name.en: "Dogapsa"
+  preferred_name.ko: "도갑사"
+  definition.en: "Buddhist temple in Yeongam, South Korea"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Korea
+  spot_type: Landmark
+}
+
+instance AccademiaNazionalediSantaCeciliaMusicalInstrumentsMuseum < MDC_C002 {
+  code: SPI3003
+  preferred_name.en: "Accademia Nazionale di Santa Cecilia Musical Instruments Museum"
+  preferred_name.it: "Museo degli strumenti musicali dell'Accademia nazionale di Santa Cecilia"
+  definition.en: "museum in Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance CasaGuidi < MDC_C002 {
+  code: SPI3004
+  preferred_name.en: "Casa Guidi"
+  preferred_name.it: "Casa Guidi"
+  definition.en: "building in Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance CasadiGoethe < MDC_C002 {
+  code: SPI3005
+  preferred_name.en: "Casa di Goethe"
+  preferred_name.fr: "Maison de Goethe (Rome)"
+  preferred_name.it: "Casa di Goethe"
+  definition.en: "museum in Rome"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance GardenofArchimedes < MDC_C002 {
+  code: SPI3006
+  preferred_name.en: "Garden of Archimedes"
+  preferred_name.fr: "Giardino di Archimede"
+  preferred_name.it: "Giardino di Archimede"
+  definition.en: "mathematics museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 2004
+}
+
+instance ItalianFootballHallofFame < MDC_C002 {
+  code: SPI3007
+  preferred_name.en: "Italian Football Hall of Fame"
+  preferred_name.fr: "Temple de la renommée du football italien"
+  preferred_name.it: "Hall of Fame del calcio italiano"
+  definition.en: "hall of fame for association football players"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance JewishMuseumofRome < MDC_C002 {
+  code: SPI3008
+  preferred_name.en: "Jewish Museum of Rome"
+  preferred_name.fr: "Musée juif de Rome"
+  preferred_name.it: "Museo ebraico (Roma)"
+  definition.en: "Jewish museum in Via Catalana"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance KircherianMuseum < MDC_C002 {
+  code: SPI3009
+  preferred_name.en: "Kircherian Museum"
+  preferred_name.fr: "Musée Kircher"
+  preferred_name.it: "Museo kircheriano"
+  definition.en: "museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance LaSpecola < MDC_C002 {
+  code: SPI3010
+  preferred_name.en: "La Specola"
+  preferred_name.ja: "スペーコラ美術館"
+  preferred_name.fr: "Musée de la Specola"
+  preferred_name.it: "Museo di storia naturale sezione di zoologia La Specola"
+  definition.en: "zoological museum in Florence"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance LoggiadelBigallo < MDC_C002 {
+  code: SPI3011
+  preferred_name.en: "Loggia del Bigallo"
+  preferred_name.zh-TW: "碧加洛凉廊"
+  preferred_name.fr: "Loggia del Bigallo"
+  preferred_name.it: "Loggia del Bigallo"
+  definition.en: "building in Florence, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MarinoMariniMuseum < MDC_C002 {
+  code: SPI3012
+  preferred_name.en: "Marino Marini Museum"
+  preferred_name.it: "Museo Marino Marini (Firenze)"
+  definition.en: "museum in Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseoCivicodiZoologia < MDC_C002 {
+  code: SPI3013
+  preferred_name.en: "Museo Civico di Zoologia"
+  preferred_name.fr: "Musée civique de Zoologie"
+  preferred_name.it: "Museo civico di zoologia di Roma"
+  definition.en: "Italian museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 1932
+}
+
+instance MuseoGalileo < MDC_C002 {
+  code: SPI3014
+  preferred_name.en: "Museo Galileo"
+  preferred_name.zh-TW: "伽利略博物馆"
+  preferred_name.ja: "ガリレオ博物館"
+  preferred_name.fr: "Musée Galilée"
+  preferred_name.it: "Museo Galileo"
+  definition.en: "Italian museum for the history of science"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseoNazionaleAlinaridellaFotografia < MDC_C002 {
+  code: SPI3015
+  preferred_name.en: "Museo Nazionale Alinari della Fotografia"
+  preferred_name.it: "Museo nazionale Alinari della fotografia"
+  definition.en: "former national museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseoNazionaleRomano < MDC_C002 {
+  code: SPI3016
+  preferred_name.en: "Museo Nazionale Romano"
+  preferred_name.zh-TW: "羅馬國家博物館"
+  preferred_name.ja: "ローマ国立博物館"
+  preferred_name.ko: "로마 국립박물관"
+  preferred_name.fr: "Musée national romain"
+  preferred_name.it: "Museo Nazionale Romano"
+  definition.en: "museum in Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 1889
+}
+
+instance MuseoStoricoNazionaledellArteSanitaria < MDC_C002 {
+  code: SPI3017
+  preferred_name.en: "Museo Storico Nazionale dell'Arte Sanitaria"
+  preferred_name.fr: "Musée historique national de l'Art de la santé"
+  preferred_name.it: "Museo storico nazionale dell'arte sanitaria"
+  definition.en: "Science museum in Roma"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseodelCalcio < MDC_C002 {
+  code: SPI3018
+  preferred_name.en: "Museo del Calcio"
+  preferred_name.it: "Museo del Calcio"
+  definition.en: "sports museum in Florence, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 2000
+}
+
+instance MuseodelleMura < MDC_C002 {
+  code: SPI3019
+  preferred_name.en: "Museo delle Mura"
+  preferred_name.fr: "Musée des murs"
+  preferred_name.it: "Museo delle mura"
+  definition.en: "museum in Rome"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseodelleanimedelPurgatorio < MDC_C002 {
+  code: SPI3020
+  preferred_name.en: "Museo delle anime del Purgatorio"
+  preferred_name.fr: "Musée des âmes du Purgatoire"
+  preferred_name.it: "Museo delle anime del Purgatorio"
+  definition.en: "museum in Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 1917
+}
+
+instance MuseodiRomainTrastevere < MDC_C002 {
+  code: SPI3021
+  preferred_name.en: "Museo di Roma in Trastevere"
+  preferred_name.fr: "Musée de Rome du Trastevere"
+  preferred_name.it: "Museo di Roma in Trastevere"
+  definition.en: "museum in Rome, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseodiStoriaNaturalediFirenze < MDC_C002 {
+  code: SPI3022
+  preferred_name.en: "Museo di Storia Naturale di Firenze"
+  preferred_name.zh-TW: "佛罗伦萨自然史博物馆"
+  preferred_name.ko: "피렌체 자연사 박물관"
+  preferred_name.fr: "Musée d'histoire naturelle de l'université de Florence"
+  preferred_name.it: "Museo di storia naturale (Firenze)"
+  definition.en: "museum in Florence, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 1775
+}
+
+instance Museonazionaledeglistrumentimusicali < MDC_C002 {
+  code: SPI3023
+  preferred_name.en: "Museo nazionale degli strumenti musicali"
+  preferred_name.fr: "Musée national des Instruments de musique de Rome"
+  preferred_name.it: "Museo nazionale degli strumenti musicali"
+  definition.en: "museum in Rome, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+}
+
+instance MuseonazionaledelPalazzodiVenezia < MDC_C002 {
+  code: SPI3024
+  preferred_name.en: "Museo nazionale del Palazzo di Venezia"
+  preferred_name.fr: "Musée national du Palais de Venise"
+  preferred_name.it: "Museo nazionale del Palazzo di Venezia"
+  definition.en: "museum in Rome, Italy"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Italy
+  spot_type: Museum
+  established_year: 1921
+  annual_visitors: 58754.0
+}
+
+instance AirportCoreProgrammeExhibitionCentre < MDC_C002 {
+  code: SPI4003
+  preferred_name.en: "Airport Core Programme Exhibition Centre"
+  preferred_name.zh-HK: "機場核心計劃展覽中心"
+  preferred_name.fr: "Centre d'exposition du Airport Core Programme"
+  definition.en: "building in Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance AlexanderGranthamfireboat < MDC_C002 {
+  code: SPI4004
+  preferred_name.en: "Alexander Grantham (fireboat)"
+  preferred_name.zh-HK: "葛量洪號滅火輪展覽館"
+  preferred_name.fr: "Galerie d'exposition du bateau-pompe Alexander Grantham"
+  definition.en: "fire boat"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance BankofChinaTowerHongKong < MDC_C002 {
+  code: SPI4005
+  preferred_name.en: "Bank of China Tower (Hong Kong)"
+  preferred_name.zh-HK: "中銀大廈 (香港)"
+  preferred_name.ja: "中国銀行タワー"
+  preferred_name.ko: "중국은행 타워 (홍콩)"
+  preferred_name.fr: "Tour de la Bank of China"
+  preferred_name.it: "Bank of China Tower (Hong Kong)"
+  definition.en: "skyscraper in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance CityGalleryHongKong < MDC_C002 {
+  code: SPI4006
+  preferred_name.en: "City Gallery (Hong Kong)"
+  preferred_name.zh-HK: "展城館"
+  preferred_name.fr: "City Gallery (Hong Kong)"
+  definition.en: "exhibition centre in Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance CordisHongKong < MDC_C002 {
+  code: SPI4007
+  preferred_name.en: "Cordis Hong Kong"
+  preferred_name.zh-HK: "香港康得思酒店"
+  preferred_name.fr: "Cordis Hong Kong"
+  definition.en: "building in Hong Kong, China"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance CourtofFinalAppealBuilding < MDC_C002 {
+  code: SPI4008
+  preferred_name.en: "Court of Final Appeal Building"
+  preferred_name.zh-HK: "終審法院大樓"
+  preferred_name.ko: "종심법원대루"
+  preferred_name.fr: "Bâtiment de la Cour d'appel final"
+  definition.en: "building in Central, Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance FanlingEnvironmentalResourceCentre < MDC_C002 {
+  code: SPI4009
+  preferred_name.en: "Fanling Environmental Resource Centre"
+  preferred_name.zh-HK: "粉嶺環境資源中心"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance FormerCentralGovernmentOffices < MDC_C002 {
+  code: SPI4010
+  preferred_name.en: "Former Central Government Offices"
+  preferred_name.zh-HK: "律政中心"
+  definition.en: "office building complex in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance FormerCentralMagistracy < MDC_C002 {
+  code: SPI4011
+  preferred_name.en: "Former Central Magistracy"
+  preferred_name.zh-HK: "中央裁判司署"
+  definition.en: "building in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance FormerFrenchMissionBuilding < MDC_C002 {
+  code: SPI4012
+  preferred_name.en: "Former French Mission Building"
+  preferred_name.zh-HK: "前法國外方傳道會大樓"
+  preferred_name.ko: "전 프랑스 외방전도회 대루"
+  preferred_name.fr: "Ancienne mission française de Hong Kong"
+  definition.en: "Declared monument in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance GateLodge < MDC_C002 {
+  code: SPI4013
+  preferred_name.en: "Gate Lodge"
+  preferred_name.zh-HK: "舊總督山頂別墅守衛室"
+  definition.en: "Former living quarters for the keeper of Mountain Lodge"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HSBCBuildingHongKong < MDC_C002 {
+  code: SPI4014
+  preferred_name.en: "HSBC Building (Hong Kong)"
+  preferred_name.zh-HK: "滙豐總行大廈"
+  preferred_name.ja: "香港上海銀行・香港本店ビル"
+  preferred_name.ko: "HSBC 홍콩 본점 빌딩"
+  preferred_name.fr: "HSBC Main Building"
+  preferred_name.it: "Sede centrale della HSBC"
+  definition.en: "office building in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HappyValleyRacecourse < MDC_C002 {
+  code: SPI4015
+  preferred_name.en: "Happy Valley Racecourse"
+  preferred_name.zh-HK: "跑馬地馬場"
+  preferred_name.ja: "ハッピーバレー競馬場"
+  preferred_name.fr: "Hippodrome de Happy Valley"
+  definition.en: "Racecourse in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance Highcliff < MDC_C002 {
+  code: SPI4016
+  preferred_name.en: "Highcliff"
+  preferred_name.zh-HK: "曉廬"
+  preferred_name.ja: "ハイクリフ"
+  preferred_name.fr: "Highcliff"
+  preferred_name.it: "Highcliff"
+  definition.en: "73-floor skyscraper in Hong Kong, China"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HongKongCentralLibrary < MDC_C002 {
+  code: SPI4017
+  preferred_name.en: "Hong Kong Central Library"
+  preferred_name.zh-HK: "香港中央圖書館"
+  definition.en: "public library in Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+  established_year: 2001
+}
+
+instance HongKongCityHall < MDC_C002 {
+  code: SPI4018
+  preferred_name.en: "Hong Kong City Hall"
+  preferred_name.zh-HK: "香港大會堂"
+  preferred_name.ko: "홍콩 대회당"
+  preferred_name.fr: "Hôtel de ville de Hong Kong"
+  preferred_name.it: "Municipio di Hong Kong"
+  definition.en: "amenity building in Central, Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HongKongColiseum < MDC_C002 {
+  code: SPI4019
+  preferred_name.en: "Hong Kong Coliseum"
+  preferred_name.zh-HK: "香港體育館"
+  preferred_name.ja: "香港コロシアム"
+  preferred_name.fr: "Hong Kong Coliseum"
+  definition.en: "multi-purpose indoor arena, in Hung Hom Bay, Kowloon, Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HongKongConventionandExhibitionCentre < MDC_C002 {
+  code: SPI4020
+  preferred_name.en: "Hong Kong Convention and Exhibition Centre"
+  preferred_name.zh-HK: "香港會議展覽中心"
+  preferred_name.ja: "香港コンベンション・アンド・エキシビション・センター"
+  preferred_name.ko: "홍콩 컨벤션 센터"
+  preferred_name.fr: "Centre de congrès et d'expositions de Hong Kong"
+  preferred_name.it: "Hong Kong Convention and Exhibition Centre"
+  definition.en: "events venue in Wan Chai, Hong Kong"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Landmark
+}
+
+instance HongKongCorrectionalServicesMuseum < MDC_C002 {
+  code: SPI4021
+  preferred_name.en: "Hong Kong Correctional Services Museum"
+  preferred_name.zh-HK: "香港懲教博物館"
+  preferred_name.fr: "Musée des services correctionnels de Hong Kong"
+  definition.en: "Museum in Stanley, Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance HongKongFilmArchive < MDC_C002 {
+  code: SPI4022
+  preferred_name.en: "Hong Kong Film Archive"
+  preferred_name.zh-HK: "香港電影資料館"
+  preferred_name.fr: "Archives du film de Hong Kong"
+  definition.en: "film archive in Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance HongKongHeritageDiscoveryCentre < MDC_C002 {
+  code: SPI4023
+  preferred_name.en: "Hong Kong Heritage Discovery Centre"
+  preferred_name.zh-HK: "香港文物探知館"
+  preferred_name.fr: "Centre de découverte du patrimoine de Hong Kong"
+  definition.en: "museum in Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+}
+
+instance HongKongHeritageMuseum < MDC_C002 {
+  code: SPI4024
+  preferred_name.en: "Hong Kong Heritage Museum"
+  preferred_name.zh-HK: "香港文化博物館"
+  preferred_name.ko: "홍콩 문화박물관"
+  preferred_name.fr: "Musée du patrimoine de Hong Kong"
+  definition.en: "history museum in Man Lam Road, Sha Tin, Hong Kong"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: HongKong
+  spot_type: Museum
+  established_year: 2000
+}
+
+instance MocoMuseum < MDC_C002 {
+  code: SPI5004
+  preferred_name.en: "Moco Museum"
+  definition.en: "museum for modern and contemporary art in Amsterdam and Barcelona"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedKingdom
+  spot_type: Museum
+  established_year: 2016
+  annual_visitors: 769000.0
+}
+
+instance QueerBritain < MDC_C002 {
+  code: SPI5005
+  preferred_name.en: "Queer Britain"
+  definition.en: "LGBTQ+ museum in London"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedKingdom
+  spot_type: Museum
+  established_year: 2022
+}
+
+instance TheLibraryatWillesdenGreen < MDC_C002 {
+  code: SPI5006
+  preferred_name.en: "The Library at Willesden Green"
+  definition.en: "public library in London"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedKingdom
+  spot_type: Museum
+  established_year: 1894
+}
+
+instance ArmyMuseumParis < MDC_C002 {
+  code: SPI6004
+  preferred_name.en: "Army Museum (Paris)"
+  preferred_name.zh-TW: "巴黎軍事博物館"
+  preferred_name.ja: "フランス軍事博物館"
+  preferred_name.fr: "Musée de l'Armée (Paris)"
+  preferred_name.it: "Musée de l'Armée"
+  definition.en: "military museum at the Invalides in Paris"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1905
+}
+
+instance BnFMuseum < MDC_C002 {
+  code: SPI6005
+  preferred_name.en: "BnF Museum"
+  definition.en: "museum containing internationally important collections of coins, engraved gems, and antiquities"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance CatacombsofParis < MDC_C002 {
+  code: SPI6006
+  preferred_name.en: "Catacombs of Paris"
+  preferred_name.zh-TW: "巴黎地下墓穴"
+  preferred_name.ja: "カタコンブ・ド・パリ"
+  preferred_name.fr: "Catacombes de Paris"
+  preferred_name.it: "Catacombe di Parigi"
+  definition.en: "underground ossuary in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1810
+  annual_visitors: 480000.0
+}
+
+instance FrenchsubmarineArgonauteS636 < MDC_C002 {
+  code: SPI6007
+  preferred_name.en: "French submarine Argonaute (S636)"
+  preferred_name.ja: "アルゴノート (S636)"
+  preferred_name.fr: "Argonaute (S636)"
+  definition.en: "1957 Aréthuse-class submarine"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance GaleriesnationalesduGrandPalais < MDC_C002 {
+  code: SPI6008
+  preferred_name.en: "Galeries nationales du Grand Palais"
+  preferred_name.zh-TW: "巴黎大皇宮"
+  preferred_name.ja: "グラン・パレ"
+  preferred_name.ko: "그랑 팔레"
+  preferred_name.fr: "Galeries nationales du Grand Palais"
+  preferred_name.it: "Grand Palais"
+  definition.en: "museum in France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance GalleryofMineralogyandGeology < MDC_C002 {
+  code: SPI6009
+  preferred_name.en: "Gallery of Mineralogy and Geology"
+  preferred_name.fr: "Galerie de Minéralogie et de Géologie"
+  definition.en: "museum in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance GalleryofPaleontologyandComparativeAnatomy < MDC_C002 {
+  code: SPI6010
+  preferred_name.en: "Gallery of Paleontology and Comparative Anatomy"
+  preferred_name.fr: "Galerie de Paléontologie et d'Anatomie comparée"
+  preferred_name.it: "Galerie de Paléontologie et d'Anatomie comparée du Muséum national d'Histoire naturelle"
+  definition.en: "museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1898
+}
+
+instance GrandPalais < MDC_C002 {
+  code: SPI6011
+  preferred_name.en: "Grand Palais"
+  preferred_name.zh-TW: "巴黎大皇宮"
+  preferred_name.ja: "グラン・パレ"
+  preferred_name.ko: "그랑 팔레"
+  preferred_name.fr: "Galeries nationales du Grand Palais"
+  preferred_name.it: "Grand Palais"
+  definition.en: "museum in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1900
+  annual_visitors: 1412060.0
+}
+
+instance InstitutduMondeArabe < MDC_C002 {
+  code: SPI6012
+  preferred_name.en: "Institut du Monde Arabe"
+  preferred_name.ja: "アラブ世界研究所"
+  preferred_name.ko: "아랍 세계 연구소"
+  preferred_name.fr: "Institut du monde arabe"
+  preferred_name.it: "Istituto del mondo arabo"
+  definition.en: "French cultural institute dedicated to the Arab world"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 1987
+  annual_visitors: 411715.0
+}
+
+instance Lacontemporaine < MDC_C002 {
+  code: SPI6013
+  preferred_name.en: "La contemporaine"
+  preferred_name.fr: "La Contemporaine"
+  definition.en: "French library, archive center and museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance MaisondAugusteComte < MDC_C002 {
+  code: SPI6014
+  preferred_name.en: "Maison d'Auguste Comte"
+  preferred_name.zh-TW: "孔德故居"
+  preferred_name.fr: "Maison d'Auguste Comte"
+  definition.en: "museum dedicated to Auguste Comte in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance MaisondeBalzac < MDC_C002 {
+  code: SPI6015
+  preferred_name.en: "Maison de Balzac"
+  preferred_name.fr: "Maison de Balzac"
+  definition.en: "museum dedicated to the famous French writer Balzac"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance MonnaiedeParis < MDC_C002 {
+  code: SPI6016
+  preferred_name.en: "Monnaie de Paris"
+  preferred_name.zh-TW: "巴黎錢幣博物館"
+  preferred_name.ja: "パリ造幣局"
+  preferred_name.fr: "Monnaie de Paris"
+  preferred_name.it: "Monnaie"
+  definition.en: "Mint of France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance Mundolingua < MDC_C002 {
+  code: SPI6017
+  preferred_name.en: "Mundolingua"
+  preferred_name.fr: "Mundolingua"
+  definition.en: "museum of language in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 2013
+}
+
+instance MuseumofEroticism < MDC_C002 {
+  code: SPI6018
+  preferred_name.en: "Museum of Eroticism"
+  preferred_name.zh-TW: "巴黎情色博物館"
+  preferred_name.fr: "Musée de l'érotisme (Paris)"
+  definition.en: "sex museum in Paris"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance PalaisGalliera < MDC_C002 {
+  code: SPI6019
+  preferred_name.en: "Palais Galliera"
+  preferred_name.zh-TW: "巴黎時尚博物館"
+  preferred_name.fr: "Palais Galliera, musée de la Mode de la ville de Paris"
+  preferred_name.it: "Museo della moda e del costume"
+  definition.en: "museum of fashion and fashion history located in Paris"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance ParisSewerMuseum < MDC_C002 {
+  code: SPI6020
+  preferred_name.en: "Paris Sewer Museum"
+  preferred_name.fr: "Musée des Égouts (Paris)"
+  definition.en: "history museum in Paris, France"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance PavillondelArsenal < MDC_C002 {
+  code: SPI6021
+  preferred_name.en: "Pavillon de l'Arsenal"
+  preferred_name.fr: "Pavillon de l'Arsenal"
+  definition.en: "City of Paris centre for information, documentation and urban and architectural exhibitions"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance Pavillondeleau < MDC_C002 {
+  code: SPI6022
+  preferred_name.en: "Pavillon de l'eau"
+  preferred_name.fr: "Pavillon de l'eau"
+  preferred_name.it: "Pavillon de l'eau"
+  definition.en: "museum devoted to water belonging to the City of Paris and managed by Eau de Paris"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+  established_year: 2007
+  annual_visitors: 39000.0
+}
+
+instance TourJeansansPeur < MDC_C002 {
+  code: SPI6023
+  preferred_name.en: "Tour Jean-sans-Peur"
+  preferred_name.fr: "Tour Jean-sans-Peur"
+  preferred_name.it: "Tour Jean-sans-Peur"
+  definition.en: "medieval tower in Paris"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: France
+  spot_type: Museum
+}
+
+instance CaliforniaHistoricalLandmark < MDC_C002 {
+  code: SPI7004
+  preferred_name.en: "California Historical Landmark"
+  preferred_name.fr: "California Historical Landmark"
+  definition.en: "buildings, structures, sites, or places in California determined to have historical significance"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance CanneryRow < MDC_C002 {
+  code: SPI7005
+  preferred_name.en: "Cannery Row"
+  preferred_name.ja: "キャナリー・ロウ"
+  preferred_name.fr: "Cannery Row"
+  definition.en: "historic area in Monterey, California"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance CarsonMansion < MDC_C002 {
+  code: SPI7006
+  preferred_name.en: "Carson Mansion"
+  preferred_name.zh-TW: "卡森莊園"
+  preferred_name.fr: "Carson Mansion"
+  preferred_name.it: "Carson Mansion"
+  definition.en: "building in Eureka, California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance CastleCrags < MDC_C002 {
+  code: SPI7007
+  preferred_name.en: "Castle Crags"
+  preferred_name.zh-TW: "城堡峭壁"
+  preferred_name.fr: "Castle Crags"
+  definition.en: "rock formation in the Castle Grags Wilderness in Shasta County, California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance ColorFactory < MDC_C002 {
+  code: SPI7008
+  preferred_name.en: "Color Factory"
+  definition.en: "museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Museum
+  established_year: 2017
+}
+
+instance Disneyland < MDC_C002 {
+  code: SPI7009
+  preferred_name.en: "Disneyland"
+  preferred_name.zh-TW: "加州迪士尼主題樂園"
+  preferred_name.ja: "ディズニーランド"
+  preferred_name.ko: "디즈니랜드"
+  preferred_name.fr: "Disneyland"
+  preferred_name.it: "Disneyland"
+  definition.en: "American theme park in California owned by The Walt Disney Company"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance ElCaminoRealCalifornia < MDC_C002 {
+  code: SPI7010
+  preferred_name.en: "El Camino Real (California)"
+  preferred_name.zh-TW: "加利福尼亞皇家大道"
+  preferred_name.fr: "El Camino Real"
+  definition.en: "historic commemorative route in California"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance HeavenlyMountainResort < MDC_C002 {
+  code: SPI7011
+  preferred_name.en: "Heavenly Mountain Resort"
+  preferred_name.fr: "Heavenly Valley"
+  preferred_name.it: "Heavenly Valley"
+  definition.en: "ski resort in California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance HollywoodSign < MDC_C002 {
+  code: SPI7012
+  preferred_name.en: "Hollywood Sign"
+  preferred_name.zh-TW: "好萊塢標誌"
+  preferred_name.ja: "ハリウッドサイン"
+  preferred_name.ko: "할리우드 사인"
+  preferred_name.fr: "Panneau Hollywood"
+  preferred_name.it: "Scritta Hollywood"
+  definition.en: "sign reading \\HOLLYWOOD\\ located in Los Angeles, California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance KGBEspionageMuseum < MDC_C002 {
+  code: SPI7013
+  preferred_name.en: "KGB Espionage Museum"
+  definition.en: "New York city museum"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Museum
+  established_year: 2019
+}
+
+instance KingClone < MDC_C002 {
+  code: SPI7014
+  preferred_name.en: "King Clone"
+  preferred_name.ja: "キング・クローン"
+  preferred_name.it: "King Clone"
+  definition.en: "11,700 year old creosote bush in the Mojave Desert of California"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance KnottsBerryFarm < MDC_C002 {
+  code: SPI7015
+  preferred_name.en: "Knott's Berry Farm"
+  preferred_name.ja: "ナッツベリーファーム"
+  preferred_name.ko: "너츠베리팜"
+  preferred_name.fr: "Knott's Berry Farm"
+  definition.en: "amusement park in Buena Park, California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+  annual_visitors: 4228000.0
+}
+
+instance LakeTahoe < MDC_C002 {
+  code: SPI7016
+  preferred_name.en: "Lake Tahoe"
+  preferred_name.zh-TW: "太浩湖"
+  preferred_name.ja: "タホ湖"
+  preferred_name.ko: "타호호"
+  preferred_name.fr: "Lac Tahoe"
+  preferred_name.it: "Lago Tahoe"
+  definition.en: "lake in California and Nevada, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+  elevation: 1897.38
+}
+
+instance MitchellCaverns < MDC_C002 {
+  code: SPI7017
+  preferred_name.en: "Mitchell Caverns"
+  definition.en: "caves in California, United States"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+  annual_visitors: 15.0
+}
+
+instance Mojavephonebooth < MDC_C002 {
+  code: SPI7018
+  preferred_name.en: "Mojave phone booth"
+  preferred_name.fr: "Mojave phone booth"
+  definition.en: "isolated phone booth"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance NationalParkofAmericanSamoa < MDC_C002 {
+  code: SPI7019
+  preferred_name.en: "National Park of American Samoa"
+  preferred_name.zh-TW: "美屬薩摩亞國家公園"
+  preferred_name.ja: "アメリカン・サモア国立公園"
+  preferred_name.ko: "아메리칸사모아 국립공원"
+  preferred_name.fr: "Parc national des Samoa américaines"
+  preferred_name.it: "Parco nazionale delle Samoa americane"
+  definition.en: "United States national park in American Samoa"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: NationalPark
+  established_year: 1988
+}
+
+instance NationalParktoParkHighway < MDC_C002 {
+  code: SPI7020
+  preferred_name.en: "National Park to Park Highway"
+  definition.en: "auto trail"
+  superclass: NationalPark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: NationalPark
+  established_year: 1916
+}
+
+instance ParamountPictures < MDC_C002 {
+  code: SPI7021
+  preferred_name.en: "Paramount Pictures"
+  preferred_name.zh-TW: "派拉蒙影業"
+  preferred_name.ja: "パラマウント・ピクチャーズ"
+  preferred_name.ko: "파라마운트 픽쳐스"
+  preferred_name.fr: "Paramount Pictures"
+  preferred_name.it: "Paramount Pictures"
+  definition.en: "American film studio, subsidiary of Paramount Global"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance ParkerDam < MDC_C002 {
+  code: SPI7022
+  preferred_name.en: "Parker Dam"
+  preferred_name.fr: "Barrage de Parker"
+  preferred_name.it: "Diga Parker"
+  definition.en: "dam on the Colorado River between California and Arizona"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance SantaCruzBeachBoardwalk < MDC_C002 {
+  code: SPI7023
+  preferred_name.en: "Santa Cruz Beach Boardwalk"
+  preferred_name.fr: "Santa Cruz Beach Boardwalk"
+  definition.en: "amusement park in Santa Cruz, California"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance SantaSusanaPassStateHistoricPark < MDC_C002 {
+  code: SPI7024
+  preferred_name.en: "Santa Susana Pass State Historic Park"
+  preferred_name.fr: "Santa Susana Pass State Historic Park"
+  definition.en: "park in California, United States of America"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Landmark
+}
+
+instance StatueofLibertyMuseum < MDC_C002 {
+  code: SPI7025
+  preferred_name.en: "Statue of Liberty Museum"
+  preferred_name.ko: "자유의 여신상 박물관"
+  definition.en: "museum located on Liberty Island in New York City, USA"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: UnitedStates
+  spot_type: Museum
+}
+
+instance BeijingAirandSpaceMuseum < MDC_C002 {
+  code: SPI8001
+  preferred_name.en: "Beijing Air and Space Museum"
+  preferred_name.zh-CN: "中国航空博物馆"
+  preferred_name.ja: "中国空軍航空博物館"
+  preferred_name.fr: "Musée de l'aviation chinoise"
+  definition.en: "museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance BeijingAncientObservatory < MDC_C002 {
+  code: SPI8002
+  preferred_name.en: "Beijing Ancient Observatory"
+  preferred_name.zh-CN: "北京古观象台"
+  preferred_name.ja: "北京古観象台"
+  preferred_name.fr: "Observatoire antique de Pékin"
+  preferred_name.it: "Osservatorio imperiale di Pechino"
+  definition.en: "observatory"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance BeijingAutoMuseum < MDC_C002 {
+  code: SPI8003
+  preferred_name.en: "Beijing Auto Museum"
+  preferred_name.zh-CN: "北京汽车博物馆"
+  preferred_name.it: "Beijing Auto Museum"
+  definition.en: "automotive museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance BeijingExhibitionCenter < MDC_C002 {
+  code: SPI8004
+  preferred_name.en: "Beijing Exhibition Center"
+  preferred_name.zh-CN: "北京展览馆"
+  preferred_name.ja: "北京展覧館"
+  preferred_name.it: "Beijing Exhibition Center"
+  definition.en: "convention center"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance BeijingLiaoandJinCityWallMuseum < MDC_C002 {
+  code: SPI8005
+  preferred_name.en: "Beijing Liao and Jin City Wall Museum"
+  preferred_name.zh-CN: "北京辽金城垣博物馆"
+  definition.en: "historical site, History museum in Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1995
+}
+
+instance BeijingLuXunMuseum < MDC_C002 {
+  code: SPI8006
+  preferred_name.en: "Beijing Lu Xun Museum"
+  preferred_name.zh-CN: "北京鲁迅博物馆"
+  definition.en: "house museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1956
+}
+
+instance BeijingPlanetarium < MDC_C002 {
+  code: SPI8007
+  preferred_name.en: "Beijing Planetarium"
+  preferred_name.zh-CN: "北京天文馆"
+  preferred_name.ja: "北京天文館"
+  definition.en: "planetarium in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance BeijingPlanningExhibitionHall < MDC_C002 {
+  code: SPI8008
+  preferred_name.en: "Beijing Planning Exhibition Hall"
+  preferred_name.zh-CN: "北京市规划展览馆"
+  preferred_name.ja: "北京市規劃展覧館"
+  preferred_name.fr: "Salle d'exposition de planification de Pékin"
+  definition.en: "exhibition center in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 2004
+}
+
+instance BianjingDrumTower < MDC_C002 {
+  code: SPI8009
+  preferred_name.en: "Bianjing Drum Tower"
+  preferred_name.zh-CN: "边靖楼"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Landmark
+}
+
+instance CapitalMuseum < MDC_C002 {
+  code: SPI8010
+  preferred_name.en: "Capital Museum"
+  preferred_name.zh-CN: "首都博物馆"
+  preferred_name.ja: "首都博物館"
+  preferred_name.ko: "수도박물관"
+  preferred_name.fr: "Musée de la capitale"
+  preferred_name.it: "Museo della capitale"
+  definition.en: "museum in Xicheng, Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1981
+  annual_visitors: 1722998.0
+}
+
+instance ChaotianPalace < MDC_C002 {
+  code: SPI8011
+  preferred_name.en: "Chaotian Palace"
+  preferred_name.zh-CN: "南京朝天宫"
+  preferred_name.ja: "朝天宮"
+  preferred_name.ko: "조천궁"
+  definition.en: "in Nanjing, Jiangsu, China"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Palace
+}
+
+instance ChengdeMountainResort < MDC_C002 {
+  code: SPI8012
+  preferred_name.en: "Chengde Mountain Resort"
+  preferred_name.zh-CN: "承德避暑山庄及其周围寺庙"
+  preferred_name.ja: "承徳避暑山荘と外八廟"
+  preferred_name.ko: "피서산장"
+  preferred_name.fr: "Résidence de montagne de Chengde"
+  preferred_name.it: "Località montana di Chengde"
+  definition.en: "UNESCO culture heritage of Chengde, Hebei Province, China"
+  superclass: Palace
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Palace
+}
+
+instance ChinaAerospaceMuseum < MDC_C002 {
+  code: SPI8013
+  preferred_name.en: "China Aerospace Museum"
+  preferred_name.zh-CN: "中华航天博物馆"
+  definition.en: "museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance ChinaAviationMuseum < MDC_C002 {
+  code: SPI8014
+  preferred_name.en: "China Aviation Museum"
+  definition.en: "aviation museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1989
+}
+
+instance ChinaEthnicMuseum < MDC_C002 {
+  code: SPI8015
+  preferred_name.en: "China Ethnic Museum"
+  preferred_name.zh-CN: "中华民族园"
+  definition.en: "museum in Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance ChinaNationalFilmMuseum < MDC_C002 {
+  code: SPI8016
+  preferred_name.en: "China National Film Museum"
+  preferred_name.zh-CN: "中国电影博物馆"
+  definition.en: "Largest professional film museum in the world"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 2005
+}
+
+instance ChinaNumismaticMuseum < MDC_C002 {
+  code: SPI8017
+  preferred_name.en: "China Numismatic Museum"
+  preferred_name.zh-CN: "中国钱币博物馆"
+  definition.en: "museum in Xicheng, Beijing, China"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance ChinaPrintingMuseum < MDC_C002 {
+  code: SPI8018
+  preferred_name.en: "China Printing Museum"
+  preferred_name.zh-CN: "中国印刷博物馆"
+  preferred_name.fr: "Musée de l'imprimerie de Chine"
+  definition.en: "printing museum in Daxing district, Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1996
+}
+
+instance ChinaRailwayMuseum < MDC_C002 {
+  code: SPI8019
+  preferred_name.en: "China Railway Museum"
+  preferred_name.zh-CN: "中国铁道博物馆"
+  preferred_name.ja: "中国鉄道博物館"
+  preferred_name.ko: "중국철도박물관"
+  definition.en: "museum in Chaoyang, Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 2002
+}
+
+instance ChinaScienceandTechnologyMuseum < MDC_C002 {
+  code: SPI8020
+  preferred_name.en: "China Science and Technology Museum"
+  preferred_name.zh-CN: "中国科学技术馆"
+  preferred_name.it: "Museo cinese della scienza e della tecnologia"
+  definition.en: "science museum in Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1988
+}
+
+instance CulturalPalaceofNationalities < MDC_C002 {
+  code: SPI8021
+  preferred_name.en: "Cultural Palace of Nationalities"
+  preferred_name.zh-CN: "民族文化宫"
+  definition.en: "museum and library complex in Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+}
+
+instance DabaotaiWesternHanDynastyMausoleum < MDC_C002 {
+  code: SPI8022
+  preferred_name.en: "Dabaotai Western Han Dynasty Mausoleum"
+  preferred_name.zh-CN: "大葆台汉墓"
+  definition.en: "historical site, history museum in Beijing"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: China
+  spot_type: Museum
+  established_year: 1983
+}
+
+instance AhMeng < MDC_C002 {
+  code: SPI9001
+  preferred_name.en: "Ah Meng"
+  preferred_name.ja: "アーメン (オランウータン)"
+  definition.en: "a female Sumatran orangutan and a tourism icon of Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance BoatQuay < MDC_C002 {
+  code: SPI9002
+  preferred_name.en: "Boat Quay"
+  preferred_name.zh-TW: "駁船碼頭"
+  definition.en: "Boat Quay is a historical quay in Singapore which is situated upstream from the mouth of the Singapore River on its southern bank."
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance BugisJunction < MDC_C002 {
+  code: SPI9003
+  preferred_name.en: "Bugis Junction"
+  preferred_name.fr: "Bugis Junction"
+  definition.en: "shopping center in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance BukitBatokMemorial < MDC_C002 {
+  code: SPI9004
+  preferred_name.en: "Bukit Batok Memorial"
+  preferred_name.ja: "昭南忠霊塔"
+  definition.en: "Memorial in Bukit Batok, Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance BukitTimahrailwaystation < MDC_C002 {
+  code: SPI9005
+  preferred_name.en: "Bukit Timah railway station"
+  preferred_name.zh-TW: "武吉知马站"
+  preferred_name.ja: "ブキッ・ティマ駅"
+  definition.en: "former railway station"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance BurmeseBuddhistTempleSingapore < MDC_C002 {
+  code: SPI9006
+  preferred_name.en: "Burmese Buddhist Temple (Singapore)"
+  definition.en: "buddhist temple in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+  established_year: 1875
+}
+
+instance CHIJMES < MDC_C002 {
+  code: SPI9007
+  preferred_name.en: "CHIJMES"
+  preferred_name.zh-TW: "赞美广场"
+  definition.en: "convent and shopping district in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance CHIJMESHall < MDC_C002 {
+  code: SPI9008
+  preferred_name.en: "CHIJMES Hall"
+  preferred_name.zh-TW: "赞美礼堂"
+  definition.en: "church in Singapore, Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance CathayBuilding < MDC_C002 {
+  code: SPI9009
+  preferred_name.en: "Cathay Building"
+  preferred_name.zh-TW: "國泰大廈 (新加坡)"
+  definition.en: "former skyscraper in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance CathedraloftheGoodShepherd < MDC_C002 {
+  code: SPI9010
+  preferred_name.en: "Cathedral of the Good Shepherd"
+  preferred_name.zh-TW: "善牧主教座堂"
+  preferred_name.it: "Cattedrale del Buon Pastore (Singapore)"
+  definition.en: "church in 'A' Queen Street, Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance ChesedElSynagogue < MDC_C002 {
+  code: SPI9011
+  preferred_name.en: "Chesed-El Synagogue"
+  preferred_name.zh-TW: "圣诺犹太庙"
+  definition.en: "synagogue"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance ChineseHeritageCentre < MDC_C002 {
+  code: SPI9012
+  preferred_name.en: "Chinese Heritage Centre"
+  definition.en: "research centre in Singapore"
+  superclass: Museum
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Museum
+  established_year: 1995
+}
+
+instance CivilianWarMemorial < MDC_C002 {
+  code: SPI9013
+  preferred_name.en: "Civilian War Memorial"
+  preferred_name.zh-TW: "日本占领时期死难人民纪念碑"
+  preferred_name.ja: "日本占領時期死難人民記念碑"
+  preferred_name.ko: "시민 전쟁기념관"
+  definition.en: "Memorial in Singapore to civilians killed during the Japanese occupation of Singapore in World War II"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+  established_year: 1963
+}
+
+instance ClarkeQuay < MDC_C002 {
+  code: SPI9014
+  preferred_name.en: "Clarke Quay"
+  preferred_name.zh-TW: "克拉码头"
+  preferred_name.ko: "클라크키"
+  definition.en: "quay in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance EmpressPlaceBuilding < MDC_C002 {
+  code: SPI9015
+  preferred_name.en: "Empress Place Building"
+  preferred_name.zh-TW: "皇后坊大厦"
+  definition.en: "historic site in Empress Place"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance FortCanningHill < MDC_C002 {
+  code: SPI9016
+  preferred_name.en: "Fort Canning Hill"
+  preferred_name.ja: "フォート・カニング"
+  definition.en: "park in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance FoundersMemorial < MDC_C002 {
+  code: SPI9017
+  preferred_name.en: "Founders' Memorial"
+  preferred_name.zh-TW: "建国先贤纪念园"
+  definition.en: "memorial to the founders of Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance FountainofWealth < MDC_C002 {
+  code: SPI9018
+  preferred_name.en: "Fountain of Wealth"
+  preferred_name.ja: "富の泉"
+  definition.en: "monument in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance GoodwoodParkHotel < MDC_C002 {
+  code: SPI9019
+  preferred_name.en: "Goodwood Park Hotel"
+  preferred_name.zh-TW: "良木園酒店"
+  preferred_name.ja: "グッドウッド・パーク・ホテル"
+  definition.en: "hotel in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance HelixBridge < MDC_C002 {
+  code: SPI9020
+  preferred_name.en: "Helix Bridge"
+  preferred_name.zh-TW: "螺旋桥"
+  preferred_name.ja: "ヘリックスブリッジ"
+  preferred_name.fr: "Helix Bridge"
+  preferred_name.it: "Helix Bridge"
+  definition.en: "bridge in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance HongSanSee < MDC_C002 {
+  code: SPI9021
+  preferred_name.en: "Hong San See"
+  preferred_name.zh-TW: "新加坡鳳山寺"
+  definition.en: "historic site in Mohamed Sultan Road"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+}
+
+instance JalanKuborCemetery < MDC_C002 {
+  code: SPI9022
+  preferred_name.en: "Jalan Kubor Cemetery"
+  definition.en: "cemetery in Singapore"
+  superclass: Landmark
+  class_type: ITEM_CLASS
+  country: Singapore
+  spot_type: Landmark
+  established_year: 1852
 }
