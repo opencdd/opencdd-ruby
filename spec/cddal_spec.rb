@@ -34,87 +34,87 @@ RSpec.describe Opencdd::Cddal do
 
   describe "symbolic name resolution" do
     it "resolves symbolic instance names in superclass" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       expect(vehicle.preferred_name).to eq("Vehicle")
 
-      boat = database.find_by_code("AAA010")
+      boat = database.find_by_code("ORA010")
       expect(boat.parent_irdi).to eq(vehicle.irdi)
-      expect(boat.parent.code).to eq("AAA001")
+      expect(boat.parent.code).to eq("ORA001")
     end
 
     it "resolves symbolic instance names in applicable_properties" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       expect(vehicle.applicable_property_irdis.map(&:code)).to contain_exactly(
-        "AAAP001", "AAAP002", "AAAP003",
+        "ORB001", "ORB002", "ORB003",
       )
     end
 
     it "resolves is_case_of symbolic references" do
-      tm = database.find_by_code("AAA100")
+      tm = database.find_by_code("ORA100")
       expect(tm.is_case_of(database).map(&:code)).to contain_exactly(
-        "AAA010", "AAA020", "AAA030",
+        "ORA010", "ORA020", "ORA030",
       )
     end
 
     it "resolves definition_class to a Klass on each Property" do
-      prop = database.find_by_code("AAAP010")
-      expect(prop.definition_class_irdi.code).to eq("AAA010")
+      prop = database.find_by_code("ORB010")
+      expect(prop.definition_class_irdi.code).to eq("ORA010")
     end
 
     it "resolves sub_class_selection to categorical instances" do
-      configured = database.find_by_code("BBB100")
+      configured = database.find_by_code("ORA400")
       expect(configured.sub_class_selection(database).map(&:code)).to contain_exactly(
-        "AAA202", "AAA212", "AAA222",
+        "ORA202", "ORA212", "ORA222",
       )
     end
   end
 
   describe "class_type semantics" do
     it "marks categorical classes correctly" do
-      engine_type = database.find_by_code("AAA200")
+      engine_type = database.find_by_code("ORA200")
       expect(engine_type).to be_categorical
       expect(engine_type.class_type.to_s).to eq("CATEGORICAL_CLASS")
     end
 
     it "marks item classes correctly" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       expect(vehicle).to be_item
     end
   end
 
   describe "data_type semantics" do
     it "parses CLASS_REFERENCE data types" do
-      prop = database.find_by_code("BBAP001")
+      prop = database.find_by_code("ORB301")
       expect(prop).to be_class_reference
       expect(prop.parsed_data_type.class_identifier).to eq("EngineType")
     end
 
     it "parses ENUM_STRING_TYPE data types" do
-      prop = database.find_by_code("AAAP100")
+      prop = database.find_by_code("ORB100")
       expect(prop).to be_enum
       expect(prop.parsed_data_type.value_list_identifier).to eq("vehicle_mode_enum")
     end
 
     it "parses simple REAL_TYPE data types" do
-      prop = database.find_by_code("AAAP001")
+      prop = database.find_by_code("ORB001")
       expect(prop.parsed_data_type.to_s).to eq("REAL_TYPE")
     end
   end
 
   describe "conditional properties" do
     it "marks CONDITION_DET properties as conditional" do
-      prop = database.find_by_code("AAAP101")
+      prop = database.find_by_code("ORB101")
       expect(prop).to be_conditional
       expect(prop.condition.to_s).to eq("operating_mode == surface_water")
     end
 
     it "marks NON_DEPENDENT_P_DET properties as non-conditional" do
-      prop = database.find_by_code("AAAP001")
+      prop = database.find_by_code("ORB001")
       expect(prop).not_to be_conditional
     end
 
     it "evaluates the condition against a binding hash" do
-      surface_speed = database.find_by_code("AAAP101")
+      surface_speed = database.find_by_code("ORB101")
       expect(surface_speed.active_for?(operating_mode: "surface_water")).to be(true)
       expect(surface_speed.active_for?(operating_mode: "road")).to be(false)
     end

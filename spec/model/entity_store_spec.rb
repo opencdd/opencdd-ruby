@@ -46,7 +46,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
         db2 = Opencdd::Database.load_from_directory(dir)
-        vehicle = db2.find_by_code("AAA001")
+        vehicle = db2.find_by_code("ORA001")
         expect(vehicle).not_to be_nil
         expect(vehicle.preferred_name).to eq("Vehicle")
       end
@@ -56,10 +56,10 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
         db2 = Opencdd::Database.load_from_directory(dir)
-        engine = db2.find_by_code("AAA200")
+        engine = db2.find_by_code("ORA200")
         expect(engine).to be_powertype
         expect(db2.instances_of(engine).map(&:code).sort)
-          .to eq(%w[AAA201 AAA202 AAA203])
+          .to eq(%w[ORA201 ORA202 ORA203])
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
         yaml_files = Dir.glob("#{dir}/**/*.yaml")
-        expect(yaml_files.size).to eq(40)
+        expect(yaml_files.size).to eq(62)
       end
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         store = described_class.new(dir)
         store.save_database(oceanrunner)
-        expect(Dir.glob("#{dir}/**/*.yaml").size).to eq(40)
+        expect(Dir.glob("#{dir}/**/*.yaml").size).to eq(62)
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
         store = described_class.new(dir)
         store.save_database(oceanrunner)
         db = store.load_database
-        expect(db.entities.size).to eq(40)
+        expect(db.entities.size).to eq(62)
       end
     end
   end

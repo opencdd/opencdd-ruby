@@ -17,7 +17,7 @@ module Opencdd
     # categorical constraint.
     #
     # Example: a Property `engine_type: CLASS_REFERENCE(EngineType)`
-    # whose value is "AAA001" (Vehicle) should fail — Vehicle is
+    # whose value is "ORA001" (Vehicle) should fail — Vehicle is
     # not a categorical instance of EngineType. Only SingleDiesel /
     # TwinDiesel / ElectricHybrid (EngineType's subclasses) pass.
     class ClassReferenceRule < Rule

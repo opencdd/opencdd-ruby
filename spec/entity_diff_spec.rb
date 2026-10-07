@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::EntityDiff do
-  let(:irdi) { Opencdd::IRDI.parse("0112/2///TEST#AAA001") }
+  let(:irdi) { Opencdd::IRDI.parse("0112/2///TEST#ORA001") }
 
   def build_entity(properties)
     Opencdd::Klass.new(irdi: irdi, properties: properties)
@@ -115,7 +115,7 @@ RSpec.describe Opencdd::EntityDiff do
         build_entity("MDC_P001" => "Y", "MDC_P002" => "new"),
       )
       summary = diff.to_h
-      expect(summary[:irdi]).to eq("0112/2///TEST#AAA001")
+      expect(summary[:irdi]).to eq("0112/2///TEST#ORA001")
       expect(summary[:added]).to eq(["MDC_P002"])
       expect(summary[:removed]).to eq([])
       expect(summary[:changed].first).to include(field: "MDC_P001", from: "X", to: "Y")

@@ -63,22 +63,22 @@ regardless of which format the data came from.
 
 ```ruby
 # By IRDI (canonical key)
-db.find(Opencdd::IRDI.parse("0112/2///61360_4#AAA001"))
+db.find(Opencdd::IRDI.parse("0112/2///OCEANRUNNER#ORA001"))
 
 # By short code (most common)
-db.find_by_code("AAA001")              # => #<Opencdd::Klass AAA001 "Vehicle">
+db.find_by_code("ORA001")              # => #<Opencdd::Klass ORA001 "Vehicle">
 
 # By preferred name
-db.find_by_name("Boat", type: :class)  # => #<Opencdd::Klass AAA010>
+db.find_by_name("Boat", type: :class)  # => #<Opencdd::Klass ORA010>
 ```
 
 ### Type-partitioned accessors
 
 ```ruby
-db.classes        # => [#<Klass AAA001>, #<Klass AAA010>, ...]
-db.properties     # => [#<Property AAAP001>, ...]
+db.classes        # => [#<Klass ORA001>, #<Klass ORA010>, ...]
+db.properties     # => [#<Property ORB001>, ...]
 db.units          # => [#<Unit ...>]
-db.value_lists    # => [#<ValueList AAAE001>]
+db.value_lists    # => [#<ValueList ORE001>]
 db.value_terms    # => [#<ValueTerm ...>]
 db.relations      # => [#<Relation ...>]
 db.view_controls  # => [#<ViewControl ...>]
@@ -88,14 +88,14 @@ db.entities       # => everything flat
 ### Class hierarchy
 
 ```ruby
-vehicle = db.find_by_code("AAA001")
+vehicle = db.find_by_code("ORA001")
 vehicle.parent_irdi           # => nil (root)
-vehicle.children.map(&:code)  # => ["AAA010", "AAA020", "AAA030", "AAA100"]
+vehicle.children.map(&:code)  # => ["ORA010", "ORA020", "ORA030", "ORA100"]
 vehicle.ancestors             # => [vehicle]  (root)
 vehicle.descendants.map(&:code).size  # => 19
 
-boat = db.find_by_code("AAA010")
-boat.parent.code              # => "AAA001"
+boat = db.find_by_code("ORA010")
+boat.parent.code              # => "ORA001"
 boat.parent.preferred_name    # => "Vehicle"
 ```
 
@@ -103,13 +103,13 @@ boat.parent.preferred_name    # => "Vehicle"
 
 ```ruby
 vehicle.properties_on_class(db).map(&:code)        # declared only
-# => ["AAAP001", "AAAP002", "AAAP003"]
+# => ["ORB001", "ORB002", "ORB003"]
 
 vehicle.effective_properties.map(&:code)           # inherited + declared
-# => ["AAAP001", "AAAP002", "AAAP003"]
+# => ["ORB001", "ORB002", "ORB003"]
 
 # Walks superclass + is_case_of chains, cycle-safe
-transmedium = db.find_by_code("AAA100")
+transmedium = db.find_by_code("ORA100")
 transmedium.effective_properties.map(&:preferred_name).size
 # => 14  (3 own + 3 from Vehicle + 3 from Boat + 3 from Car + 2 from Submarine)
 ```
@@ -120,23 +120,23 @@ This is where CDD gets interesting. A `CATEGORICAL_CLASS` is a
 *class whose instances are themselves classes*.
 
 ```ruby
-engine_type = db.find_by_code("AAA200")
+engine_type = db.find_by_code("ORA200")
 engine_type.powertype?                              # => true
 
 # The powertype instances — EngineType's subclasses that ARE its
 # categorical options
 engine_type.categorical_instances(db).map(&:code)
-# => ["AAA201", "AAA202", "AAA203"]   # SingleDiesel, TwinDiesel, ElectricHybrid
+# => ["ORA201", "ORA202", "ORA203"]   # SingleDiesel, TwinDiesel, ElectricHybrid
 
 # Database-driven entry point (accepts Klass, IRDI, or code String)
 db.instances_of(engine_type).map(&:preferred_name)
 # => ["Single Diesel Engine", "Twin Diesel Engine", "Electric Hybrid Engine"]
 
 # Predicate: is this value a valid option for CLASS_REFERENCE(EngineType)?
-single_diesel = db.find_by_code("AAA201")
+single_diesel = db.find_by_code("ORA201")
 db.valid_class_reference?(engine_type, single_diesel)  # => true
 
-vehicle = db.find_by_code("AAA001")
+vehicle = db.find_by_code("ORA001")
 db.valid_class_reference?(engine_type, vehicle)        # => false
 ```
 
@@ -210,11 +210,11 @@ Opencdd::Exporters::Mermaid.new.to_diagram(db)  # Mermaid markdown
 ```ruby
 errors = Opencdd::Validator.run(db)
 errors.first.rule      # => "R08"
-errors.first.entity_irdi.to_s  # => "0112/2///61360_4#AAA001"
+errors.first.entity_irdi.to_s  # => "0112/2///OCEANRUNNER#ORA001"
 errors.first.message   # => "R08: reference \"UNIVERSE\" does not resolve..."
 
 # Rule predicates — usable directly from the editor's live validator
-Opencdd::Validator.irdi_well_formed?("AAA001")          # => true
+Opencdd::Validator.irdi_well_formed?("ORA001")          # => true
 Opencdd::Validator.irdi_well_formed?("garbage")         # => true (IRDI is permissive)
 Opencdd::Validator.class_hierarchy_acyclic?(db)         # => true
 ```
@@ -239,7 +239,7 @@ import "./engines.cddal" as engines                # qualified
 from "./colors.cddal" import { Red, Blue }         # selective
 
 instance MyProduct < MDC_C002 {
-  code: AAA999
+  code: ORA999
   superclass: Vehicle
   engine_type: CLASS_REFERENCE(EngineType)
   color: Red

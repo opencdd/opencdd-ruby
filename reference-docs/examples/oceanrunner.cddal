@@ -12,6 +12,16 @@
 #
 # Brand:    OceanRunner (submersible boat-car manufacturer)
 # Products: ORCA 30 (compact), ORCA 50 (full-size)
+#
+# Code allocation (OpenCDD house convention):
+#   <stem><T><NNN> — stem is unique per dictionary, T is the entity type:
+#   A class · B property · E value list · T value term · I individual · U unit
+#   OR = oceanrunner: ORA001 Vehicle … ORA200 EngineType (powertype),
+#   ORA300 OceanRunner (brand), ORA400 configured subclass, ORI0001 hull unit.
+#   Blocks: 0xx base hierarchy · 1xx transmedium · 2xx option types ·
+#   3xx brand & product lines · 4xx configured subclasses.
+#   IEC CDD allocates its own opaque blocks (AA, AB, AC, U, KE, KD, SA, C*)
+#   for its dictionaries; OpenCDD stems never collide with them.
 # =============================================================================
 
 import "https://cdd.opencdd.org/dictionaries/rec20-units.cddal"
@@ -97,25 +107,75 @@ meta-class MDC_C009 {
 # =============================================================================
 #
 #   UNIVERSE
-#   └── Vehicle (AAA001)
-#       ├── Boat      (AAA010)
-#       ├── Car       (AAA020)
-#       └── Submarine (AAA030)
+#   └── Vehicle (ORA001)
+#       ├── Boat      (ORA010)
+#       ├── Car       (ORA020)
+#       └── Submarine (ORA030)
 # =============================================================================
 
 instance Vehicle < MDC_C002 {
-  code: AAA001
+  code: ORA001
   preferred_name.en: "Vehicle"
   preferred_name.fr: "Véhicule"
   preferred_name.ja: "車両"
   definition.en: "device that transports people or goods"
   superclass: UNIVERSE
   class_type: ITEM_CLASS
-  applicable_properties: { vehicle_length, vehicle_weight, vehicle_capacity }
+  applicable_properties: { vehicle_length, vehicle_beam, vehicle_height, vehicle_weight, vehicle_capacity, propulsion_power, operating_range, fuel_capacity }
+}
+
+instance vehicle_beam < MDC_C003 {
+  code: ORB004
+  preferred_name.en: "vehicle beam"
+  definition.en: "maximum width of the vehicle at its widest point"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Vehicle
+  data_type: REAL_TYPE
+  unit: metre
+}
+
+instance vehicle_height < MDC_C003 {
+  code: ORB005
+  preferred_name.en: "vehicle height"
+  definition.en: "height of the vehicle from waterline or ground to its highest fixed point"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Vehicle
+  data_type: REAL_TYPE
+  unit: metre
+}
+
+instance propulsion_power < MDC_C003 {
+  code: ORB006
+  preferred_name.en: "propulsion power"
+  definition.en: "combined rated power of all propulsion units"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Vehicle
+  data_type: REAL_TYPE
+  unit: kilowatt
+}
+
+instance operating_range < MDC_C003 {
+  code: ORB007
+  preferred_name.en: "operating range"
+  definition.en: "distance the vehicle can travel on one full load of fuel or energy"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Vehicle
+  data_type: REAL_TYPE
+  unit: nautical_mile
+}
+
+instance fuel_capacity < MDC_C003 {
+  code: ORB008
+  preferred_name.en: "fuel capacity"
+  definition.en: "total volume of fuel or energy carrier stored on board"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Vehicle
+  data_type: REAL_TYPE
+  unit: litre
 }
 
 instance vehicle_length < MDC_C003 {
-  code: AAAP001
+  code: ORB001
   preferred_name.en: "vehicle length"
   definition.en: "overall length of the vehicle, inclusive of all fixed structures"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -125,7 +185,7 @@ instance vehicle_length < MDC_C003 {
 }
 
 instance vehicle_weight < MDC_C003 {
-  code: AAAP002
+  code: ORB002
   preferred_name.en: "vehicle weight"
   definition.en: "mass of the vehicle in ready-to-operate condition"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -135,7 +195,7 @@ instance vehicle_weight < MDC_C003 {
 }
 
 instance vehicle_capacity < MDC_C003 {
-  code: AAAP003
+  code: ORB003
   preferred_name.en: "vehicle capacity"
   definition.en: "maximum number of occupants the vehicle is type-approved to carry"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -148,16 +208,44 @@ instance vehicle_capacity < MDC_C003 {
 # -----------------------------------------------------------------------------
 
 instance Boat < MDC_C002 {
-  code: AAA010
+  code: ORA010
   preferred_name.en: "Boat"
   definition.en: "vehicle that travels on the surface of water"
   superclass: Vehicle
   class_type: ITEM_CLASS
-  applicable_properties: { hull_length, water_displacement, max_speed_knots }
+  applicable_properties: { hull_length, draft, water_displacement, max_speed_knots, hull_form, berth_count }
+}
+
+instance draft < MDC_C003 {
+  code: ORB013
+  preferred_name.en: "draft"
+  definition.en: "depth of the hull below the waterline when fully laden"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Boat
+  data_type: REAL_TYPE
+  unit: metre
+}
+
+instance berth_count < MDC_C003 {
+  code: ORB014
+  preferred_name.en: "berth count"
+  definition.en: "number of sleeping berths fitted below deck"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Boat
+  data_type: INT_TYPE
+}
+
+instance hull_form < MDC_C003 {
+  code: ORB015
+  preferred_name.en: "hull form"
+  definition.en: "arrangement of hull bodies"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Boat
+  data_type: ENUM_STRING_TYPE(hull_form_enum)
 }
 
 instance hull_length < MDC_C003 {
-  code: AAAP010
+  code: ORB010
   preferred_name.en: "hull length"
   definition.en: "overall length of the hull measured at the design waterline"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -167,7 +255,7 @@ instance hull_length < MDC_C003 {
 }
 
 instance water_displacement < MDC_C003 {
-  code: AAAP011
+  code: ORB011
   preferred_name.en: "water displacement"
   definition.en: "mass of water displaced by the hull at rest in fresh water"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -177,7 +265,7 @@ instance water_displacement < MDC_C003 {
 }
 
 instance max_speed_knots < MDC_C003 {
-  code: AAAP012
+  code: ORB012
   preferred_name.en: "maximum speed in knots"
   definition.en: "maximum sustained speed on the water surface"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -191,16 +279,54 @@ instance max_speed_knots < MDC_C003 {
 # -----------------------------------------------------------------------------
 
 instance Car < MDC_C002 {
-  code: AAA020
+  code: ORA020
   preferred_name.en: "Car"
   definition.en: "vehicle that travels on paved roads"
   superclass: Vehicle
   class_type: ITEM_CLASS
-  applicable_properties: { wheelbase, tire_count, road_speed_max }
+  applicable_properties: { wheelbase, ground_clearance, turning_circle, tire_count, seating_capacity, drive_layout, road_speed_max }
+}
+
+instance ground_clearance < MDC_C003 {
+  code: ORB023
+  preferred_name.en: "ground clearance"
+  definition.en: "distance between the lowest fixed point of the vehicle and the road surface"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Car
+  data_type: REAL_TYPE
+  unit: metre
+}
+
+instance seating_capacity < MDC_C003 {
+  code: ORB024
+  preferred_name.en: "seating capacity"
+  definition.en: "number of seated occupants on the road"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Car
+  data_type: INT_TYPE
+}
+
+instance drive_layout < MDC_C003 {
+  code: ORB025
+  preferred_name.en: "drive layout"
+  definition.en: "which wheels are driven by the powertrain on the road"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Car
+  data_type: ENUM_STRING_TYPE(drive_layout_enum)
+}
+
+instance turning_circle < MDC_C003 {
+  code: ORB026
+  preferred_name.en: "turning circle"
+  definition.en: "diameter of the smallest full turn on a paved surface"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Car
+  data_type: REAL_TYPE
+  unit: metre
 }
 
 instance wheelbase < MDC_C003 {
-  code: AAAP020
+  code: ORB020
   preferred_name.en: "wheelbase"
   definition.en: "distance between the centres of the front and rear wheel contact patches"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -210,7 +336,7 @@ instance wheelbase < MDC_C003 {
 }
 
 instance tire_count < MDC_C003 {
-  code: AAAP021
+  code: ORB021
   preferred_name.en: "tire count"
   definition.en: "number of road-contacting tires fitted as standard equipment"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -219,7 +345,7 @@ instance tire_count < MDC_C003 {
 }
 
 instance road_speed_max < MDC_C003 {
-  code: AAAP022
+  code: ORB022
   preferred_name.en: "maximum road speed"
   definition.en: "maximum sustained speed on a paved, level road"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -233,16 +359,46 @@ instance road_speed_max < MDC_C003 {
 # -----------------------------------------------------------------------------
 
 instance Submarine < MDC_C002 {
-  code: AAA030
+  code: ORA030
   preferred_name.en: "Submarine"
   definition.en: "vehicle that travels fully submerged beneath the water surface"
   superclass: Vehicle
   class_type: ITEM_CLASS
-  applicable_properties: { max_depth_rating, submerged_endurance }
+  applicable_properties: { max_depth_rating, test_depth, submerged_endurance, acoustic_signature, ballast_capacity }
+}
+
+instance test_depth < MDC_C003 {
+  code: ORB032
+  preferred_name.en: "test depth"
+  definition.en: "depth at which the pressure hull was certified by trial"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Submarine
+  data_type: REAL_TYPE
+  unit: metre
+}
+
+instance acoustic_signature < MDC_C003 {
+  code: ORB033
+  preferred_name.en: "acoustic signature"
+  definition.en: "broadband radiated noise level at cruise, referenced to 1 micropascal at 1 metre"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Submarine
+  data_type: REAL_TYPE
+  unit: decibel
+}
+
+instance ballast_capacity < MDC_C003 {
+  code: ORB034
+  preferred_name.en: "ballast capacity"
+  definition.en: "total volume of the ballast tanks"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: Submarine
+  data_type: REAL_TYPE
+  unit: litre
 }
 
 instance max_depth_rating < MDC_C003 {
-  code: AAAP030
+  code: ORB030
   preferred_name.en: "maximum depth rating"
   definition.en: "maximum depth at which the vehicle is certified to operate"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -252,7 +408,7 @@ instance max_depth_rating < MDC_C003 {
 }
 
 instance submerged_endurance < MDC_C003 {
-  code: AAAP031
+  code: ORB031
   preferred_name.en: "submerged endurance"
   definition.en: "maximum time the vehicle can remain continuously submerged"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -269,30 +425,51 @@ instance submerged_endurance < MDC_C003 {
 # and Submarine via the is_case_of relationship. It is simultaneously a boat,
 # a car, and a submarine — without triple-inheriting a superclass chain.
 #
-#   Vehicle (AAA001)
-#   ├── Boat      (AAA010)   ─┐
-#   ├── Car       (AAA020)    ├── is_case_of
-#   ├── Submarine (AAA030)   ─┘
-#   └── TransmediumVehicle (AAA100)
+#   Vehicle (ORA001)
+#   ├── Boat      (ORA010)   ─┐
+#   ├── Car       (ORA020)    ├── is_case_of
+#   ├── Submarine (ORA030)   ─┘
+#   └── TransmediumVehicle (ORA100)
 # =============================================================================
 
 instance TransmediumVehicle < MDC_C002 {
-  code: AAA100
+  code: ORA100
   preferred_name.en: "Transmedium Vehicle"
   definition.en: "vehicle capable of operating on the water surface, on paved roads, and fully submerged"
   superclass: Vehicle
   class_type: ITEM_CLASS
   is_case_of: { Boat, Car, Submarine }
-  applicable_properties: { operating_mode, surface_water_speed, road_speed, submerged_speed }
+  applicable_properties: { operating_mode, surface_water_speed, road_speed, submerged_speed, transition_time, crew_size }
 }
 
 # --- Operating mode enumeration ---
 
 instance vehicle_mode_enum < MDC_C005 {
-  code: AAAE001
+  code: ORE001
   preferred_name.en: "vehicle operating mode"
   definition.en: "enumeration of the operating regimes of a transmedium vehicle"
   enumerated_values: { surface_water, road, underwater }
+}
+
+instance hull_form_enum < MDC_C005 {
+  code: ORE002
+  preferred_name.en: "hull form categories"
+  definition.en: "enumeration of the hull body arrangements"
+  enumerated_values: { Monohull, Catamaran, Trimaran }
+}
+
+instance drive_layout_enum < MDC_C005 {
+  code: ORE003
+  preferred_name.en: "drive layout categories"
+  definition.en: "enumeration of road drivetrain layouts"
+  enumerated_values: { Front_wheel_drive, Rear_wheel_drive, All_wheel_drive }
+}
+
+instance navigation_package_enum < MDC_C005 {
+  code: ORE004
+  preferred_name.en: "navigation package categories"
+  definition.en: "enumeration of navigation electronics suites"
+  enumerated_values: { Standard, Chartplotter, Full_avionics }
 }
 
 # --- Driving property: operating_mode ---
@@ -300,7 +477,7 @@ instance vehicle_mode_enum < MDC_C005 {
 # is active on the TransmediumVehicle.
 
 instance operating_mode < MDC_C003 {
-  code: AAAP100
+  code: ORB100
   preferred_name.en: "operating mode"
   definition.en: "current operating regime of the transmedium vehicle"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -314,7 +491,7 @@ instance operating_mode < MDC_C003 {
 # applicability.
 
 instance surface_water_speed < MDC_C003 {
-  code: AAAP101
+  code: ORB101
   preferred_name.en: "surface water speed"
   definition.en: "maximum sustained speed while operating on the water surface"
   property_data_element_type: CONDITION_DET
@@ -325,7 +502,7 @@ instance surface_water_speed < MDC_C003 {
 }
 
 instance road_speed < MDC_C003 {
-  code: AAAP102
+  code: ORB102
   preferred_name.en: "road speed"
   definition.en: "maximum sustained speed while operating on a paved road"
   property_data_element_type: CONDITION_DET
@@ -336,7 +513,7 @@ instance road_speed < MDC_C003 {
 }
 
 instance submerged_speed < MDC_C003 {
-  code: AAAP103
+  code: ORB103
   preferred_name.en: "submerged speed"
   definition.en: "maximum sustained speed while fully submerged"
   property_data_element_type: CONDITION_DET
@@ -344,6 +521,25 @@ instance submerged_speed < MDC_C003 {
   data_type: REAL_TYPE
   unit: knot
   condition: operating_mode == underwater
+}
+
+instance transition_time < MDC_C003 {
+  code: ORB104
+  preferred_name.en: "transition time"
+  definition.en: "time to change between two operating modes, e.g. road to surface water"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: TransmediumVehicle
+  data_type: REAL_TYPE
+  unit: minute
+}
+
+instance crew_size < MDC_C003 {
+  code: ORB105
+  preferred_name.en: "crew size"
+  definition.en: "number of crew required to operate the vehicle"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: TransmediumVehicle
+  data_type: INT_TYPE
 }
 
 # =============================================================================
@@ -374,7 +570,7 @@ instance submerged_speed < MDC_C003 {
 # --- EngineType ---
 
 instance EngineType < MDC_C002 {
-  code: AAA200
+  code: ORA200
   preferred_name.en: "Engine Type"
   definition.en: "categorical class whose subclasses enumerate the propulsion options available on an OceanRunner product"
   superclass: Vehicle
@@ -382,7 +578,7 @@ instance EngineType < MDC_C002 {
 }
 
 instance SingleDieselEngine < MDC_C002 {
-  code: AAA201
+  code: ORA201
   preferred_name.en: "Single Diesel Engine"
   definition.en: "single inline diesel powerplant driving one propeller and one axle"
   superclass: EngineType
@@ -390,7 +586,7 @@ instance SingleDieselEngine < MDC_C002 {
 }
 
 instance TwinDieselEngine < MDC_C002 {
-  code: AAA202
+  code: ORA202
   preferred_name.en: "Twin Diesel Engine"
   definition.en: "paired diesel powerplants, one per hull sponson, driving dual propellers"
   superclass: EngineType
@@ -398,7 +594,7 @@ instance TwinDieselEngine < MDC_C002 {
 }
 
 instance ElectricHybridEngine < MDC_C002 {
-  code: AAA203
+  code: ORA203
   preferred_name.en: "Electric Hybrid Engine"
   definition.en: "battery-electric primary propulsion with diesel range extender"
   superclass: EngineType
@@ -408,7 +604,7 @@ instance ElectricHybridEngine < MDC_C002 {
 # --- InteriorPackage ---
 
 instance InteriorPackage < MDC_C002 {
-  code: AAA210
+  code: ORA210
   preferred_name.en: "Interior Package"
   definition.en: "categorical class whose subclasses enumerate the interior trim levels"
   superclass: Vehicle
@@ -416,7 +612,7 @@ instance InteriorPackage < MDC_C002 {
 }
 
 instance StandardInterior < MDC_C002 {
-  code: AAA211
+  code: ORA211
   preferred_name.en: "Standard Interior"
   definition.en: "marine-grade vinyl trim with analogue instrumentation"
   superclass: InteriorPackage
@@ -424,7 +620,7 @@ instance StandardInterior < MDC_C002 {
 }
 
 instance PremiumInterior < MDC_C002 {
-  code: AAA212
+  code: ORA212
   preferred_name.en: "Premium Interior"
   definition.en: "hand-stitched leather trim with glass cockpit display and rear bench seat"
   superclass: InteriorPackage
@@ -434,7 +630,7 @@ instance PremiumInterior < MDC_C002 {
 # --- HullFinish ---
 
 instance HullFinish < MDC_C002 {
-  code: AAA220
+  code: ORA220
   preferred_name.en: "Hull Finish"
   definition.en: "categorical class whose subclasses enumerate the hull surface treatments"
   superclass: Vehicle
@@ -442,7 +638,7 @@ instance HullFinish < MDC_C002 {
 }
 
 instance GelcoatWhite < MDC_C002 {
-  code: AAA221
+  code: ORA221
   preferred_name.en: "Gelcoat White"
   definition.en: "standard white gelcoat hull with antifouling bottom paint"
   superclass: HullFinish
@@ -450,7 +646,7 @@ instance GelcoatWhite < MDC_C002 {
 }
 
 instance CarbonBlack < MDC_C002 {
-  code: AAA222
+  code: ORA222
   preferred_name.en: "Carbon Black"
   definition.en: "carbon-fibre reinforced hull with black epoxy topcoat"
   superclass: HullFinish
@@ -461,10 +657,10 @@ instance CarbonBlack < MDC_C002 {
 # OceanRunner brand
 # =============================================================================
 #
-#   TransmediumVehicle (AAA100)
-#   └── OceanRunner (BBB001)
-#       ├── ORCA 30 (BBB010)  ← compact product line, 8 m hull
-#       └── ORCA 50 (BBB011)  ← full-size product line, 12 m hull
+#   TransmediumVehicle (ORA100)
+#   └── OceanRunner (ORA300)
+#       ├── ORCA 30 (ORA310)  ← compact product line, 8 m hull
+#       └── ORCA 50 (ORA311)  ← full-size product line, 12 m hull
 #
 # The OceanRunner brand defines four configuration properties that every
 # product line inherits: engine_type, interior_package, hull_finish, and
@@ -472,12 +668,12 @@ instance CarbonBlack < MDC_C002 {
 # =============================================================================
 
 instance OceanRunner < MDC_C002 {
-  code: BBB001
+  code: ORA300
   preferred_name.en: "OceanRunner"
   definition.en: "brand of transmedium vehicles manufactured by OceanRunner Marine"
   superclass: TransmediumVehicle
   class_type: ITEM_CLASS
-  applicable_properties: { engine_type, interior_package, hull_finish, hull_identification_number }
+  applicable_properties: { engine_type, interior_package, hull_finish, hull_identification_number, navigation_package, warranty_period }
 }
 
 # --- OceanRunner configuration properties ---
@@ -485,7 +681,7 @@ instance OceanRunner < MDC_C002 {
 # the named CATEGORICAL_CLASS.
 
 instance engine_type < MDC_C003 {
-  code: BBAP001
+  code: ORB301
   preferred_name.en: "engine type"
   definition.en: "propulsion configuration selected for this OceanRunner product"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -494,7 +690,7 @@ instance engine_type < MDC_C003 {
 }
 
 instance interior_package < MDC_C003 {
-  code: BBAP002
+  code: ORB302
   preferred_name.en: "interior package"
   definition.en: "interior trim level selected for this OceanRunner product"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -503,7 +699,7 @@ instance interior_package < MDC_C003 {
 }
 
 instance hull_finish < MDC_C003 {
-  code: BBAP003
+  code: ORB303
   preferred_name.en: "hull finish"
   definition.en: "hull surface treatment selected for this OceanRunner product"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -512,7 +708,7 @@ instance hull_finish < MDC_C003 {
 }
 
 instance hull_identification_number < MDC_C003 {
-  code: BBAP004
+  code: ORB304
   preferred_name.en: "hull identification number"
   definition.en: "unique serial number stamped on the hull at manufacture"
   property_data_element_type: NON_DEPENDENT_P_DET
@@ -520,12 +716,31 @@ instance hull_identification_number < MDC_C003 {
   data_type: STRING_TYPE
 }
 
+instance navigation_package < MDC_C003 {
+  code: ORB305
+  preferred_name.en: "navigation package"
+  definition.en: "navigation electronics suite fitted as standard"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: OceanRunner
+  data_type: ENUM_STRING_TYPE(navigation_package_enum)
+}
+
+instance warranty_period < MDC_C003 {
+  code: ORB306
+  preferred_name.en: "warranty period"
+  definition.en: "duration of the structural hull warranty"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: OceanRunner
+  data_type: REAL_TYPE
+  unit: month
+}
+
 # =============================================================================
 # Product lines
 # =============================================================================
 
 instance ORCA30 < MDC_C002 {
-  code: BBB010
+  code: ORA310
   preferred_name.en: "ORCA 30"
   short_name.en: "ORCA30"
   definition.en: "compact transmedium vehicle, 8 m hull, 4 occupants, road-towed"
@@ -534,7 +749,7 @@ instance ORCA30 < MDC_C002 {
 }
 
 instance ORCA50 < MDC_C002 {
-  code: BBB011
+  code: ORA311
   preferred_name.en: "ORCA 50"
   short_name.en: "ORCA50"
   definition.en: "full-size transmedium vehicle, 12 m hull, 6 occupants, standalone trailer"
@@ -560,7 +775,7 @@ instance ORCA50 < MDC_C002 {
 # =============================================================================
 
 instance ORCA30_TwinDiesel_Premium_CarbonBlack < MDC_C002 {
-  code: BBB100
+  code: ORA400
   preferred_name.en: "ORCA 30 Twin Diesel Premium Carbon Black"
   short_name.en: "ORCA30-TD-P-CB"
   definition.en: "ORCA 30 configured with twin diesel engines, premium interior, and carbon black hull"
@@ -583,7 +798,7 @@ instance ORCA30_TwinDiesel_Premium_CarbonBlack < MDC_C002 {
 # =============================================================================
 
 instance ORCA30_UNIT_0001 < MDC_C002 {
-  code: BBB900001
+  code: ORI0001
   preferred_name.en: "ORCA 30 Hull #0001"
   definition.en: "individual ORCA 30 Twin Diesel Premium Carbon Black, hull number ORCA30-TH-0001"
   superclass: ORCA30_TwinDiesel_Premium_CarbonBlack

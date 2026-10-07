@@ -108,11 +108,12 @@ module Opencdd
       end
 
       def property_node(prop)
-        entity_payload(prop).merge(
-          type: "property",
-          data_type: prop.parsed_data_type&.to_s,
-          value_list: value_list_irdi_of(prop),
-        ).compact
+        payload = entity_payload(prop)
+        # entity_payload may already carry data_type (string key) from
+        # the entity's own MDC_P022; a symbol key would coexist with it
+        # and JSON generation would reject the duplicate key.
+        payload["data_type"] ||= prop.parsed_data_type&.to_s
+        payload.merge(type: "property", value_list: value_list_irdi_of(prop)).compact
       end
 
       def unit_node(unit)

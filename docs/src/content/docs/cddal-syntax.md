@@ -33,7 +33,7 @@ meta-class MDC_C002 {
 }
 
 instance Vehicle < MDC_C002 {
-  code: AAA001
+  code: ORA001
   preferred_name.en: "Vehicle"
   class_type: ITEM_CLASS
 }
@@ -43,7 +43,7 @@ Parse it:
 
 ```ruby
 db = Opencdd::Cddal.parse(source)
-db.find_by_code("AAA001").preferred_name  # => "Vehicle"
+db.find_by_code("ORA001").preferred_name  # => "Vehicle"
 ```
 
 ## Lexical structure
@@ -86,7 +86,7 @@ Usually you don't write these — the runtime provides defaults.
 
 ```cddal
 instance Vehicle < MDC_C002 {
-  code: AAA001
+  code: ORA001
   preferred_name.en: "Vehicle"
   preferred_name.fr: "Véhicule"
   definition.en: "device that transports people or goods"
@@ -108,7 +108,7 @@ Anonymous form (no `<`):
 
 ```cddal
 instance MDC_C002 {
-  code: AAA001
+  code: ORA001
   preferred_name.en: "Vehicle"
 }
 ```
@@ -149,7 +149,7 @@ Form: `<identifier-or-alias>[:.<language-tag>]: <value>`
 preferred_name.en: "Vehicle"          # language-tagged (English)
 preferred_name.fr: "Véhicule"         # language-tagged (French)
 superclass: Vehicle                    # symbolic reference
-code: AAA001                           # short code
+code: ORA001                           # short code
 data_type: REAL_TYPE                   # type identifier
 applicable_properties: { vehicle_length, vehicle_weight }
 condition: operating_mode == surface_water
@@ -179,8 +179,8 @@ Three equivalent forms for references:
 
 ```cddal
 superclass: Vehicle                    # by symbolic name
-superclass: AAA001                     # by short code
-superclass: 0112/2///61360_4#AAA001    # by full IRDI
+superclass: ORA001                     # by short code
+superclass: 0112/2///OCEANRUNNER#ORA001    # by full IRDI
 ```
 
 Resolution order: full IRDI → symbolic name → code.
@@ -311,7 +311,7 @@ fetcher = Opencdd::Cddal::Fetcher::NetHttp.new(offline: true)
 Every entity created from CDDAL carries a `source_location`:
 
 ```ruby
-entity = db.find_by_code("AAA001")
+entity = db.find_by_code("ORA001")
 entity.source_location.file  # => "/path/to/file.cddal"
 entity.source_location.line  # => 42
 ```
@@ -349,7 +349,7 @@ meta-class MDC_C002 {
 
 # 3. Instance declarations (the meat)
 instance Vehicle < MDC_C002 {
-  code: AAA001
+  code: ORA001
   preferred_name.en: "Vehicle"
   superclass: UNIVERSE
   class_type: ITEM_CLASS
@@ -357,7 +357,7 @@ instance Vehicle < MDC_C002 {
 }
 
 instance vehicle_length < MDC_C003 {
-  code: AAAP001
+  code: ORB001
   preferred_name.en: "vehicle length"
   definition_class: Vehicle
   data_type: REAL_TYPE

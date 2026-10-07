@@ -140,6 +140,15 @@ module Opencdd
         end
 
         if ident = @ss.scan(IDENT_RE)
+          # BCP-47 language subtags in dotted keys (e.g.
+          # `preferred_name.zh-Hant:`) arrive directly after a DOT;
+          # join the hyphenated subtags into a single identifier.
+          # Hyphens elsewhere never adjoin IDENT-DOT-IDENT position, so
+          # this cannot merge arithmetic or reference tokens.
+          if @tokens.last&.kind == :DOT && (subtags = @ss.scan(/(?:-[A-Za-z][A-Za-z0-9]*)+/))
+            ident += subtags
+            @col += subtags.length
+          end
           @col += ident.length
           kind = KEYWORD_MAP[ident] || :IDENT
           return Token.new(kind: kind, value: ident, line: line, column: col)

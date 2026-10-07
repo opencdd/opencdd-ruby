@@ -205,17 +205,17 @@ with semantic names (not wire-format keys):
 
 ```yaml
 ---
-irdi: AAA001
+irdi: ORA001
 type: class
-code: AAA001
+code: ORA001
 preferred_name:
   en: Vehicle
   fr: Véhicule
 class_type: ITEM_CLASS
 superclass: UNIVERSE
 applicable_properties:
-- AAAP001
-- AAAP002
+- ORB001
+- ORB002
 ```
 
 Conversion between the YAML model and the existing Entity model is via

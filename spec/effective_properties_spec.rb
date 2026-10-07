@@ -7,7 +7,7 @@ RSpec.describe Opencdd::EffectiveProperties do
 
   describe "#for" do
     it "returns a Result that exposes properties and sources" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       result = described_class.new(database).for(vehicle)
       expect(result).to be_a(Opencdd::EffectiveProperties::Result)
       expect(result.properties).to all(be_a(Opencdd::Property))
@@ -15,60 +15,60 @@ RSpec.describe Opencdd::EffectiveProperties do
     end
 
     it "is Enumerable" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       result = described_class.new(database).for(vehicle)
       expect(result.size).to eq(result.properties.size)
-      expect(result.map(&:code)).to include("AAAP001", "AAAP002", "AAAP003")
+      expect(result.map(&:code)).to include("ORB001", "ORB002", "ORB003")
     end
 
     it "includes own applicable properties" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       result = described_class.new(database).for(vehicle)
-      expect(result.codes).to contain_exactly("AAAP001", "AAAP002", "AAAP003")
+      expect(result.codes).to contain_exactly("ORB001", "ORB002", "ORB003")
     end
 
     it "includes inherited applicable properties via superclass chain" do
-      boat = database.find_by_code("AAA010")
+      boat = database.find_by_code("ORA010")
       result = described_class.new(database).for(boat)
       expect(result.codes).to contain_exactly(
-        "AAAP001", "AAAP002", "AAAP003",
-        "AAAP010", "AAAP011", "AAAP012",
+        "ORB001", "ORB002", "ORB003",
+        "ORB010", "ORB011", "ORB012",
       )
     end
 
     it "aggregates is_case_of properties across multi-domain powertype" do
-      tm = database.find_by_code("AAA100")
+      tm = database.find_by_code("ORA100")
       result = described_class.new(database).for(tm)
       expect(result.codes).to contain_exactly(
-        "AAAP001", "AAAP002", "AAAP003",
-        "AAAP010", "AAAP011", "AAAP012",
-        "AAAP020", "AAAP021", "AAAP022",
-        "AAAP030", "AAAP031",
-        "AAAP100", "AAAP101", "AAAP102", "AAAP103",
+        "ORB001", "ORB002", "ORB003",
+        "ORB010", "ORB011", "ORB012",
+        "ORB020", "ORB021", "ORB022",
+        "ORB030", "ORB031",
+        "ORB100", "ORB101", "ORB102", "ORB103",
       )
       expect(result.size).to eq(15)
     end
 
     it "cascades through OceanRunner which subclasses TransmediumVehicle" do
-      oceanrunner = database.find_by_code("BBB001")
+      oceanrunner = database.find_by_code("ORA300")
       result = described_class.new(database).for(oceanrunner)
       expect(result.size).to eq(19)
-      expect(result.codes).to include("BBAP001", "BBAP002", "BBAP003", "BBAP004")
+      expect(result.codes).to include("ORB301", "ORB302", "ORB303", "ORB304")
     end
 
     it "deduplicates properties reachable through multiple paths" do
-      tm = database.find_by_code("AAA100")
+      tm = database.find_by_code("ORA100")
       result = described_class.new(database).for(tm)
       irdi_counts = result.properties.map(&:irdi).tally
       expect(irdi_counts.values.uniq).to eq([1])
     end
 
     it "tracks the source class that contributed each property" do
-      boat = database.find_by_code("AAA010")
+      boat = database.find_by_code("ORA010")
       result = described_class.new(database).for(boat)
-      hull_length = database.find_by_code("AAAP010")
+      hull_length = database.find_by_code("ORB010")
       contributing = result.sources[hull_length.irdi.to_s]
-      expect(contributing.map(&:code)).to include("AAA010")
+      expect(contributing.map(&:code)).to include("ORA010")
     end
 
     it "returns empty for an unknown class" do
@@ -82,31 +82,31 @@ RSpec.describe Opencdd::EffectiveProperties do
       db = Opencdd::Database.new
       meta = Opencdd::IRDI.parse("MDC_C002")
       a = Opencdd::Klass.new(
-        irdi: Opencdd::IRDI.parse("AAA001"),
+        irdi: Opencdd::IRDI.parse("ORA001"),
         properties: {
           "MDC_P010" => "AAA002",
           "MDC_P013" => "(AAA002)",
-          "MDC_P014" => "(AAAP001)",
+          "MDC_P014" => "(ORB001)",
         },
         meta_class_irdi: meta,
       )
       b = Opencdd::Klass.new(
         irdi: Opencdd::IRDI.parse("AAA002"),
         properties: {
-          "MDC_P010" => "AAA001",
-          "MDC_P013" => "(AAA001)",
-          "MDC_P014" => "(AAAP002)",
+          "MDC_P010" => "ORA001",
+          "MDC_P013" => "(ORA001)",
+          "MDC_P014" => "(ORB002)",
         },
         meta_class_irdi: meta,
       )
       p1 = Opencdd::Property.new(
-        irdi: Opencdd::IRDI.parse("AAAP001"),
-        properties: { "MDC_P001_6" => "AAAP001" },
+        irdi: Opencdd::IRDI.parse("ORB001"),
+        properties: { "MDC_P001_6" => "ORB001" },
         meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
       p2 = Opencdd::Property.new(
-        irdi: Opencdd::IRDI.parse("AAAP002"),
-        properties: { "MDC_P001_6" => "AAAP002" },
+        irdi: Opencdd::IRDI.parse("ORB002"),
+        properties: { "MDC_P001_6" => "ORB002" },
         meta_class_irdi: Opencdd::IRDI.parse("MDC_C003"),
       )
       db.add_entity(a)
@@ -116,15 +116,15 @@ RSpec.describe Opencdd::EffectiveProperties do
       db.finalize!
 
       result = described_class.new(db).for(a)
-      expect(result.codes).to contain_exactly("AAAP001", "AAAP002")
+      expect(result.codes).to contain_exactly("ORB001", "ORB002")
     end
   end
 
   describe "#codes_for" do
     it "returns the codes of the resolved properties" do
-      vehicle = database.find_by_code("AAA001")
+      vehicle = database.find_by_code("ORA001")
       engine = described_class.new(database)
-      expect(engine.codes_for(vehicle)).to contain_exactly("AAAP001", "AAAP002", "AAAP003")
+      expect(engine.codes_for(vehicle)).to contain_exactly("ORB001", "ORB002", "ORB003")
     end
   end
 end

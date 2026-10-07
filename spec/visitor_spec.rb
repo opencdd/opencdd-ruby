@@ -77,7 +77,7 @@ RSpec.describe Opencdd::Visitor do
       end.new
 
       collector.visit_classes(database)
-      expect(collector.visited).to include("AAA001", "AAA010", "AAA100", "BBB001")
+      expect(collector.visited).to include("ORA001", "ORA010", "ORA100", "ORA300")
     end
   end
 end

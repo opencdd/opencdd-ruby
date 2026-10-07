@@ -25,24 +25,24 @@ RSpec.describe Opencdd::Validator::ClassReferenceRule do
     }
 
     instance EngineType < MDC_C002 {
-      code: AAA200
+      code: ORA200
       preferred_name.en: "Engine Type"
       class_type: CATEGORICAL_CLASS
     }
     instance SingleDiesel < MDC_C002 {
-      code: AAA201
+      code: ORA201
       preferred_name.en: "Single Diesel"
       superclass: EngineType
       class_type: ITEM_CLASS
     }
     instance TwinDiesel < MDC_C002 {
-      code: AAA202
+      code: ORA202
       preferred_name.en: "Twin Diesel"
       superclass: EngineType
       class_type: ITEM_CLASS
     }
     instance Vehicle < MDC_C002 {
-      code: AAA001
+      code: ORA001
       preferred_name.en: "Vehicle"
       class_type: ITEM_CLASS
     }
@@ -57,10 +57,10 @@ RSpec.describe Opencdd::Validator::ClassReferenceRule do
 
   let(:db) { Opencdd::Cddal.parse(cddal) }
 
-  let(:engine_type) { db.find_by_code("AAA200") }
-  let(:single_diesel) { db.find_by_code("AAA201") }
-  let(:twin_diesel) { db.find_by_code("AAA202") }
-  let(:vehicle) { db.find_by_code("AAA001") }
+  let(:engine_type) { db.find_by_code("ORA200") }
+  let(:single_diesel) { db.find_by_code("ORA201") }
+  let(:twin_diesel) { db.find_by_code("ORA202") }
+  let(:vehicle) { db.find_by_code("ORA001") }
   let(:engine_prop) { db.find_by_code("AAAP200") }
 
   def context_for(property, data_type_override = nil)
