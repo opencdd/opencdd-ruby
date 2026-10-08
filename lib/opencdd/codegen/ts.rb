@@ -20,7 +20,7 @@ module Opencdd
       end
 
       # Returns the generated TS source as a string (no filesystem
-      # access). Testable in-memory. See TODO.impl/31.
+      # access). Testable in-memory.
       def render_property_ids
         registry = Opencdd::PropertyIds::REGISTRY
 

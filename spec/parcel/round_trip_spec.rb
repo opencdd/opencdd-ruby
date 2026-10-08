@@ -21,7 +21,7 @@ RSpec.describe "Parcel round-trip", :round_trip do
     # canonical IDs collide with ParcelMaker variant IDs (e.g.
     # canonical MDC_P005 = short_name, but ParcelMaker uses
     # MDC_P005 = definition). Round-trip through Parcel for those
-    # fields is tracked in TODO.impl/06-parcel-format.md.
+    # fields is a known Parcel-format limitation.
     parent = Opencdd::Klass.new(
       irdi: Opencdd::IRDI.parse("0112/2///61360_4#AAA000"),
       properties: {
@@ -48,7 +48,7 @@ RSpec.describe "Parcel round-trip", :round_trip do
   end
 
   # NOTE: These specs previously revealed a Writer → Reader round-trip
-  # drift (TODO.work/10). Root cause was the test fixture using
+  # drift. Root cause was the test fixture using
   # MDC_C001 (Dictionary) as meta_class_irdi instead of MDC_C002
   # (Class). Entities of unknown types get dropped by the Writer's
   # per-type partition, so reread saw zero entities. Fixed by using

@@ -6,8 +6,7 @@ require "fileutils"
 
 # End-to-end round-trip specs for the import pipeline (Phase 1).
 #
-# Covers the six scenarios called out in
-# TODO.full-cdd/15-import-pipeline-and-change-requests.md:
+# Covers the six scenarios:
 #
 # 1. aggregate — multiple parcel paths → single Database
 # 2. split — Database → multiple per-partition parcels

@@ -8,7 +8,7 @@ module Opencdd
   #
   # The exporter scans each entity's +@properties+ hash for
   # +<property_id>.<lang>+ keys to build per-field language maps
-  # (TODO.work/08). This class is the model object that aggregates
+  # This class is the model object that aggregates
   # "what languages does this dictionary have?" — used by the browser
   # to render a language switcher and by the data pipeline to report
   # language coverage.

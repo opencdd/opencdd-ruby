@@ -155,7 +155,7 @@ module Opencdd
       # "where do I find the language-tagged variant of this field").
       # Routed through Entity#read_field when the column maps to a
       # declared field, so any future field-DTL changes apply here
-      # too — see TODO.impl/26.
+      # too.
       def multilingual_lookup(entity, pid)
         entry = Opencdd::PropertyIds::REGISTRY[pid]
         return entity.properties["#{pid}.#{@source_language}"] if entry && entry.multilingual

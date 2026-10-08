@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::PropertyIds, "alias registry integrity" do
-  # Regression guard for the alias-collision audit (TODO.complete/1).
-  # The audit (item A6 in data-private/TODO.full-cdd/17) flagged a
+  # Regression guard for the alias-collision audit.
+  # That audit flagged a
   # hypothetical collision where two REGISTRY entries share an alias
   # and `alias_map` silently keeps whichever was inserted last. As of
   # this snapshot, no such collision exists in the REGISTRY. This

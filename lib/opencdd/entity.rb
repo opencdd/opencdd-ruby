@@ -226,7 +226,7 @@ module Opencdd
     # synthetic-field semantics are consistent across all callers
     # (SheetEmitter, Json exporter, validator, GUID setter, etc.).
     # Callers that index +properties+ directly bypass these and
-    # risk round-trip drift — see TODO.impl/26.
+    # risk round-trip drift.
 
     # Read a declared field by name. Accepts an optional +lang:+ for
     # multilingual fields. Returns the typed value (parsed IRDI,
