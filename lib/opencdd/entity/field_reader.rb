@@ -19,7 +19,8 @@ module Opencdd
           # Synthetic fields defined with a block: evaluate the block
           # in the entity's context via instance_exec. This preserves
           # access to private helper methods without using send to
-          # bypass privacy (encapsulation rule from CLAUDE.md).
+          # bypass privacy (encapsulation rule: never call private
+          # methods from outside).
           return entity.instance_exec(&entry.block) if entry.block?
 
           # Legacy form: synthetic fields name a public reader method.
