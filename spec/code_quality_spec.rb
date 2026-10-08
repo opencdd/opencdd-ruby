@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Code-quality guard. Prevents regressions of the forbidden patterns
-# documented in TODO.work/02 and the global CLAUDE.md:
+# documented in TODO.work/02:
 #
 #   - .send(:private_method) — bypasses encapsulation
 #   - instance_variable_set / instance_variable_get — same

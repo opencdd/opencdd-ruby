@@ -19,8 +19,8 @@ It is the Ruby core of the OpenCDD ecosystem:
 
 ## Why CDD? Why this gem?
 
-CDD is a **four-layer ontology** standardised by IEC/TC 184/SC 4/JWG 24 and
-IEC/SC 3D. It models engineering dictionaries (components, materials,
+CDD is a **four-layer ontology** standardised in IEC 61360 and
+IEC 62656-1. It models engineering dictionaries (components, materials,
 quantities, units) with one distinctive capability that separates it from
 UML, RDF/OWL, and typical object models:
 
@@ -287,6 +287,15 @@ It auto-deploys via GitHub Actions on every push to `main` that touches
 - **IEC 62656-1** — Parcel (Excel) format for CDD content
 - **ISO/IEC 11179-6** — IRDI (registration data identifier)
 
+## AI use
+
+OpenCDD development does not pass IEC private, confidential, or otherwise
+non-public data into AI systems. Our use of AI tooling adheres to the
+joint ISO/IEC guidance [Guidance on the use of Artificial Intelligence
+(AI) for IEC and ISO technical committees][pub100506] (PUB100506).
+
+[pub100506]: https://www.iso.org/publication/PUB100506.html
+
 ## License
 
 MIT. See [`LICENSE`](LICENSE).
@@ -296,9 +305,8 @@ MIT. See [`LICENSE`](LICENSE).
 PRs welcome. Please:
 
 1. Open an issue first for non-trivial changes.
-2. Follow the principles in [`CLAUDE.md`](CLAUDE.md) and
+2. Follow the principles in
    [`docs/architecture.md`](docs/architecture.md).
 3. Add specs for any new behavior — the `code_quality_spec.rb` enforces
    the architectural rules (no `send` to private, no `require_relative`,
    no `instance_variable_set`, etc.).
-4. Do not add AI-attribution trailers to commit messages.
