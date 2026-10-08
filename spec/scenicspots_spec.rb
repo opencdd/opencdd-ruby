@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(305)
+    expect(db.entities.size).to eq(564)
   end
 
   describe "powertypes" do
@@ -26,13 +26,16 @@ RSpec.describe "ScenicSpots dictionary" do
     it "enumerates the spot kinds as extended instances" do
       spot_type = db.find_by_code("SPA100")
       codes = db.instances_of(spot_type).map(&:code).sort
-      expect(codes).to eq(%w[SPA101 SPA102 SPA103 SPA104 SPA105 SPA106 SPA107 SPA108 SPA109 SPA110])
+      expect(codes).to eq(%w[SPA101 SPA102 SPA103 SPA104 SPA105 SPA106 SPA107 SPA108 SPA109 SPA110
+                             SPA111 SPA112])
     end
 
     it "enumerates countries as plain instances" do
       country = db.find_by_code("SPA010")
       expect(db.instances_of(country).map(&:code).sort).to eq(%w[SPA011 SPA012 SPA013 SPA014 SPA015
-                                                             SPA016 SPA017 SPA018 SPA019 SPA020])
+                                                             SPA016 SPA017 SPA018 SPA019 SPA020
+                                                             SPA021 SPA022 SPA023 SPA024 SPA025
+                                                             SPA026 SPA027 SPA028 SPA029 SPA030])
     end
   end
 
@@ -122,7 +125,7 @@ RSpec.describe "ScenicSpots dictionary" do
 
     it "carries a bulk registry of two hundred plus spots across ten countries" do
       indiv = db.entities.map(&:code).grep(/\ASPI/)
-      expect(indiv.size).to be > 200
+      expect(indiv.size).to be > 400
       expect(db.find_by_code("SPA019").preferred_name("zh-CN")).to eq("中國")
     end
   end

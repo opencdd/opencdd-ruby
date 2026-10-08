@@ -67,7 +67,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         oceanrunner.save_to_directory(dir)
         yaml_files = Dir.glob("#{dir}/**/*.yaml")
-        expect(yaml_files.size).to eq(62)
+        expect(yaml_files.size).to eq(65)
       end
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
       Dir.mktmpdir("entity-store") do |dir|
         store = described_class.new(dir)
         store.save_database(oceanrunner)
-        expect(Dir.glob("#{dir}/**/*.yaml").size).to eq(62)
+        expect(Dir.glob("#{dir}/**/*.yaml").size).to eq(65)
       end
     end
 
@@ -91,7 +91,7 @@ RSpec.describe "Per-entity YAML persistence", :yaml do
         store = described_class.new(dir)
         store.save_database(oceanrunner)
         db = store.load_database
-        expect(db.entities.size).to eq(62)
+        expect(db.entities.size).to eq(65)
       end
     end
   end
