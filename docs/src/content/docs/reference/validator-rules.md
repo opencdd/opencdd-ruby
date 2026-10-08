@@ -128,7 +128,7 @@ be acyclic. Uses `Opencdd::EffectiveProperties` for traversal.
 
 ### R16 — CLASS_REFERENCE target validation
 
-Added in audit round 2 ([see A20](https://github.com/opencdd/opencdd-ruby/blob/main/TODO.impl/16-audit-findings.md)).
+Added in audit round 2.
 
 When a property's data type is `CLASS_REFERENCE(CategoricalClass)`,
 the value IRDI must resolve to an entity that is a valid powertype

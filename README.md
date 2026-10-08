@@ -272,7 +272,6 @@ It auto-deploys via GitHub Actions on every push to `main` that touches
 - **[Feature audit](docs/src/content/docs/reference/features.md)** — every feature, its status, and where to find it
 - **[API reference](docs/src/content/docs/reference/api.md)** — key classes and methods
 - **[Validator rules](docs/src/content/docs/reference/validator-rules.md)** — R01–R16 catalogue
-- **[TODO.impl/](TODO.impl/)** — engineering plans, audit findings, open questions
 
 ## Examples
 

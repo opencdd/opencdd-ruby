@@ -4,7 +4,7 @@ module Opencdd
   module Cddal
     # Pure-function value serializer: converts AST value nodes into
     # the CDDAL/Parcel wire string form. Extracted from Builder
-    # (TODO.impl/28) so the builder's property-assembly pipeline
+    # so the builder's property-assembly pipeline
     # is a consumer of this module rather than owning the logic.
     #
     # Stateless — safe to call from any context. The Builder mixes

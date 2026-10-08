@@ -43,7 +43,6 @@ db2 = Opencdd::Database.load("out.xlsx")
 db2.entities.size  # => 20 (only classes; properties + value_lists lost)
 ```
 
-Tracked in [TODO.impl/16-audit-findings.md](https://github.com/opencdd/opencdd-ruby/blob/main/TODO.impl/16-audit-findings.md).
 Pending fix is the row→Hash conversion in `Sheet.from_rows` when the
 sheet has no Workbook context.
 

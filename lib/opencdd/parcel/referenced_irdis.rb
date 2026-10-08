@@ -5,8 +5,7 @@ module Opencdd
     # Walks a sharded downloads directory and collects every IRDI
     # referenced by a class .xls that points to a non-class entity
     # (property, unit, value-list, value-term). The output manifest
-    # drives the per-entity scraper Pass 2 — see
-    # +TODO.cdd-editor/43-scraper-pass-2-per-entity.md+.
+    # drives the per-entity scraper Pass 2.
     #
     # Source columns on the CLASS .xls (parsed by +Opencdd::Klass+):
     #   applicable_property_irdis   (MDC_P014) → property

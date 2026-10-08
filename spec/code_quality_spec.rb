@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# Code-quality guard. Prevents regressions of the forbidden patterns
-# documented in TODO.work/02:
+# Code-quality guard. Prevents regressions of the forbidden patterns:
 #
 #   - .send(:private_method) — bypasses encapsulation
 #   - instance_variable_set / instance_variable_get — same
@@ -40,7 +39,7 @@ RSpec.describe "code quality" do
     #   - explicit method definition when the dispatch set is small
     hits = grep(/[^_a-zA-Z]send\(/)
     expect(hits).to be_empty,
-      ".send found — use public_send or instance_exec (TODO.work/02):\n#{hits.join("\n")}"
+      ".send found — use public_send or instance_exec :\n#{hits.join("\n")}"
   end
 
   it "does not use instance_variable_set / instance_variable_get" do
@@ -52,19 +51,19 @@ RSpec.describe "code quality" do
   it "does not use respond_to? for type checks" do
     hits = grep(/\.respond_to\?\(/)
     expect(hits).to be_empty,
-      "respond_to? found — use is_a? or design the hierarchy (TODO.work/02):\n#{hits.join("\n")}"
+      "respond_to? found — use is_a? or design the hierarchy :\n#{hits.join("\n")}"
   end
 
   it "does not use require_relative" do
     hits = grep(/^\s*require_relative\s/)
     expect(hits).to be_empty,
-      "require_relative found — use autoload in the parent namespace (TODO.work/01):\n#{hits.join("\n")}"
+      "require_relative found — use autoload in the parent namespace :\n#{hits.join("\n")}"
   end
 
   it "does not use require for internal opencdd paths" do
     hits = grep(/^\s*require\s+["']opencdd\//).concat(grep(/^\s*require\s+["']cdd\//))
     expect(hits).to be_empty,
-      "internal require found — use autoload in the parent namespace (TODO.work/01):\n#{hits.join("\n")}"
+      "internal require found — use autoload in the parent namespace :\n#{hits.join("\n")}"
   end
 
   it "autoloads every lib/opencdd/**/*.rb file from its parent namespace" do
