@@ -599,6 +599,7 @@ instance ElectricHybridEngine < MDC_C002 {
   definition.en: "battery-electric primary propulsion with diesel range extender"
   superclass: EngineType
   class_type: ITEM_CLASS
+  applicable_properties: { battery_capacity, charging_power, electric_range }
 }
 
 instance battery_capacity < MDC_C003 {
