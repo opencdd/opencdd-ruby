@@ -10,7 +10,7 @@ RSpec.describe Opencdd::Cddal do
   describe ".parse_file" do
     it "loads classes, properties, and value_lists from a CDDAL source" do
       expect(database.classes.size).to      eq(20)
-      expect(database.properties.size).to   eq(38)
+      expect(database.properties.size).to   eq(41)
       expect(database.value_lists.size).to  eq(4)
     end
 

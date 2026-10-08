@@ -120,7 +120,7 @@ instance ScenicSpot < MDC_C002 {
   definition.en: "a place of interest that tourists visit, typically for its inherent or exhibited natural or cultural value"
   superclass: UNIVERSE
   class_type: ITEM_CLASS
-  applicable_properties: { country, spot_type, official_grade, elevation, area, established_year, admission, opening_period, annual_visitors, listing_criteria }
+  applicable_properties: { country, spot_type, city, official_grade, elevation, area, latitude, longitude, established_year, admission, opening_period, annual_visitors, listing_criteria }
 }
 
 instance annual_visitors < MDC_C003 {
@@ -619,6 +619,221 @@ instance LocalGrade < MDC_C002 {
 }
 
 # =============================================================================
+# Powertype 4 — City (geographic granularity between country and spot)
+#
+# CATEGORICAL_CLASS whose members are the cities carrying spot-level
+# harvest categories; the city CLASS_REFERENCE property on ScenicSpot
+# is sourced from the city-level harvest category an entry came from.
+# =============================================================================
+
+instance City < MDC_C002 {
+  code: SPA140
+  preferred_name.en: "City"
+  preferred_name.zh-TW: "城市"
+  definition.en: "categorical class whose members enumerate the cities a scenic spot can be located in"
+  superclass: ScenicSpot
+  class_type: CATEGORICAL_CLASS
+}
+
+instance Taipei < MDC_C002 {
+  code: SPA163
+  preferred_name.en: "Taipei"
+  preferred_name.zh-TW: "臺北"
+  definition.en: "city of Taipei"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Tokyo < MDC_C002 {
+  code: SPA164
+  preferred_name.en: "Tokyo"
+  preferred_name.zh-TW: "東京"
+  definition.en: "city of Tokyo"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Kyoto < MDC_C002 {
+  code: SPA165
+  preferred_name.en: "Kyoto"
+  preferred_name.zh-TW: "京都"
+  definition.en: "city of Kyoto"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Seoul < MDC_C002 {
+  code: SPA166
+  preferred_name.en: "Seoul"
+  preferred_name.zh-TW: "首爾"
+  definition.en: "city of Seoul"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Rome < MDC_C002 {
+  code: SPA167
+  preferred_name.en: "Rome"
+  preferred_name.zh-TW: "羅馬"
+  definition.en: "city of Rome"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Florence < MDC_C002 {
+  code: SPA168
+  preferred_name.en: "Florence"
+  preferred_name.zh-TW: "佛羅倫斯"
+  definition.en: "city of Florence"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance London < MDC_C002 {
+  code: SPA169
+  preferred_name.en: "London"
+  preferred_name.zh-TW: "倫敦"
+  definition.en: "city of London"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Paris < MDC_C002 {
+  code: SPA170
+  preferred_name.en: "Paris"
+  preferred_name.zh-TW: "巴黎"
+  definition.en: "city of Paris"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance NewYork < MDC_C002 {
+  code: SPA171
+  preferred_name.en: "New York City"
+  preferred_name.zh-TW: "紐約"
+  definition.en: "city of New York City"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Beijing < MDC_C002 {
+  code: SPA172
+  preferred_name.en: "Beijing"
+  preferred_name.zh-TW: "北京"
+  definition.en: "city of Beijing"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Berlin < MDC_C002 {
+  code: SPA173
+  preferred_name.en: "Berlin"
+  preferred_name.zh-TW: "柏林"
+  definition.en: "city of Berlin"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Munich < MDC_C002 {
+  code: SPA174
+  preferred_name.en: "Munich"
+  preferred_name.zh-TW: "慕尼黑"
+  definition.en: "city of Munich"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Madrid < MDC_C002 {
+  code: SPA175
+  preferred_name.en: "Madrid"
+  preferred_name.zh-TW: "馬德里"
+  definition.en: "city of Madrid"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Barcelona < MDC_C002 {
+  code: SPA176
+  preferred_name.en: "Barcelona"
+  preferred_name.zh-TW: "巴塞隆納"
+  definition.en: "city of Barcelona"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Bangkok < MDC_C002 {
+  code: SPA177
+  preferred_name.en: "Bangkok"
+  preferred_name.zh-TW: "曼谷"
+  definition.en: "city of Bangkok"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Hanoi < MDC_C002 {
+  code: SPA178
+  preferred_name.en: "Hanoi"
+  preferred_name.zh-TW: "河內"
+  definition.en: "city of Hanoi"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance KualaLumpur < MDC_C002 {
+  code: SPA179
+  preferred_name.en: "Kuala Lumpur"
+  preferred_name.zh-TW: "吉隆坡"
+  definition.en: "city of Kuala Lumpur"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Sydney < MDC_C002 {
+  code: SPA180
+  preferred_name.en: "Sydney"
+  preferred_name.zh-TW: "雪梨"
+  definition.en: "city of Sydney"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Toronto < MDC_C002 {
+  code: SPA181
+  preferred_name.en: "Toronto"
+  preferred_name.zh-TW: "多倫多"
+  definition.en: "city of Toronto"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Delhi < MDC_C002 {
+  code: SPA182
+  preferred_name.en: "Delhi"
+  preferred_name.zh-TW: "德里"
+  definition.en: "city of Delhi"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Manila < MDC_C002 {
+  code: SPA183
+  preferred_name.en: "Manila"
+  preferred_name.zh-TW: "馬尼拉"
+  definition.en: "city of Manila"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+instance Jakarta < MDC_C002 {
+  code: SPA184
+  preferred_name.en: "Jakarta"
+  preferred_name.zh-TW: "雅加達"
+  definition.en: "city of Jakarta"
+  superclass: City
+  class_type: ITEM_CLASS
+}
+
+# =============================================================================
 # Enumerations
 # =============================================================================
 
@@ -711,6 +926,38 @@ instance elevation < MDC_C003 {
   definition_class: ScenicSpot
   data_type: REAL_TYPE
   unit: metre
+}
+
+instance latitude < MDC_C003 {
+  code: SPB216
+  preferred_name.en: "latitude"
+  preferred_name.zh-TW: "緯度"
+  definition.en: "north-south position of the spot's principal feature in decimal degrees (WGS 84)"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ScenicSpot
+  data_type: REAL_TYPE
+  unit: degree
+}
+
+instance longitude < MDC_C003 {
+  code: SPB217
+  preferred_name.en: "longitude"
+  preferred_name.zh-TW: "經度"
+  definition.en: "east-west position of the spot's principal feature in decimal degrees (WGS 84)"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ScenicSpot
+  data_type: REAL_TYPE
+  unit: degree
+}
+
+instance city < MDC_C003 {
+  code: SPB218
+  preferred_name.en: "city"
+  preferred_name.zh-TW: "城市"
+  definition.en: "city in which the spot is located, between the country and the spot itself"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ScenicSpot
+  data_type: CLASS_REFERENCE(City)
 }
 
 instance area < MDC_C003 {
@@ -1121,6 +1368,9 @@ instance VictoriaPeak < MDC_C002 {
   elevation: 552
   admission: Paid
   opening_period: YearRound
+  city: HongKong
+  latitude: 22.275556
+  longitude: 114.143889
 }
 
 instance WongTaiSinTemple < MDC_C002 {
@@ -1136,6 +1386,9 @@ instance WongTaiSinTemple < MDC_C002 {
   established_year: 1921
   admission: Free
   opening_period: YearRound
+  city: HongKong
+  latitude: 22.342572
+  longitude: 114.193649
 }
 
 instance Kiyomizudera < MDC_C002 {
@@ -1155,6 +1408,9 @@ instance Kiyomizudera < MDC_C002 {
   listing_criteria: Cultural
   admission: Paid
   opening_period: YearRound
+  city: Kyoto
+  latitude: 34.995
+  longitude: 135.785
 }
 
 instance FushimiInariTaisha < MDC_C002 {
@@ -1171,6 +1427,9 @@ instance FushimiInariTaisha < MDC_C002 {
   elevation: 233
   admission: Free
   opening_period: YearRound
+  city: Kyoto
+  latitude: 34.967222
+  longitude: 135.772778
 }
 
 instance Bulguksa < MDC_C002 {
@@ -1191,6 +1450,8 @@ instance Bulguksa < MDC_C002 {
   treasure_count: 7
   admission: Paid
   opening_period: YearRound
+  latitude: 35.79
+  longitude: 129.332222
 }
 
 instance SeongsanIlchulbong < MDC_C002 {
@@ -1207,6 +1468,8 @@ instance SeongsanIlchulbong < MDC_C002 {
   listing_criteria: Natural
   admission: Paid
   opening_period: YearRound
+  latitude: 33.4585
+  longitude: 126.942
 }
 
 instance TowerOfLondon < MDC_C002 {
@@ -1225,6 +1488,9 @@ instance TowerOfLondon < MDC_C002 {
   annual_visitors: 2817852
   admission: Paid
   opening_period: YearRound
+  city: London
+  latitude: 51.508056
+  longitude: -0.076111
 }
 
 instance BritishMuseum < MDC_C002 {
@@ -1240,6 +1506,9 @@ instance BritishMuseum < MDC_C002 {
   annual_visitors: 6440120
   admission: Free
   opening_period: YearRound
+  city: London
+  latitude: 51.5194
+  longitude: -0.1269
 }
 
 instance EiffelTower < MDC_C002 {
@@ -1260,6 +1529,9 @@ instance EiffelTower < MDC_C002 {
   annual_visitors: 5890000
   admission: Paid
   opening_period: YearRound
+  city: Paris
+  latitude: 48.858222
+  longitude: 2.2945
 }
 
 instance Louvre < MDC_C002 {
@@ -1276,6 +1548,9 @@ instance Louvre < MDC_C002 {
   annual_visitors: 9000000
   admission: Paid
   opening_period: YearRound
+  city: Paris
+  latitude: 48.8611
+  longitude: 2.3358
 }
 
 instance ArcDeTriomphe < MDC_C002 {
@@ -1292,6 +1567,9 @@ instance ArcDeTriomphe < MDC_C002 {
   architectural_style: "Neoclassical"
   admission: Paid
   opening_period: YearRound
+  city: Paris
+  latitude: 48.873778
+  longitude: 2.295028
 }
 
 instance StatueOfLiberty < MDC_C002 {
@@ -1310,6 +1588,9 @@ instance StatueOfLiberty < MDC_C002 {
   listing_criteria: Cultural
   admission: Free
   opening_period: YearRound
+  city: NewYork
+  latitude: 40.689167
+  longitude: -74.044444
 }
 
 instance GrandCanyon < MDC_C002 {
@@ -1326,6 +1607,8 @@ instance GrandCanyon < MDC_C002 {
   listing_criteria: Natural
   admission: Paid
   opening_period: YearRound
+  latitude: 36.3
+  longitude: -112.75
 }
 
 instance MetropolitanMuseumOfArt < MDC_C002 {
@@ -1342,6 +1625,9 @@ instance MetropolitanMuseumOfArt < MDC_C002 {
   annual_visitors: 5727258
   admission: Paid
   opening_period: YearRound
+  city: NewYork
+  latitude: 40.7794
+  longitude: -73.9631
 }
 
 # =============================================================================
@@ -1371,6 +1657,9 @@ instance LongshanTemple < MDC_C002 {
   deity: "Guanyin (觀音)"
   admission: Free
   opening_period: YearRound
+  city: Taipei
+  latitude: 25.037222
+  longitude: 121.499444
 }
 
 instance TarokoNationalPark < MDC_C002 {
@@ -1390,6 +1679,8 @@ instance TarokoNationalPark < MDC_C002 {
   trail_count: 34
   admission: Free
   opening_period: YearRound
+  latitude: 24.166667
+  longitude: 121.333333
 }
 
 instance BeitouHotSpring < MDC_C002 {
@@ -1425,6 +1716,9 @@ instance ShilinNightMarket < MDC_C002 {
   established_year: 1909
   opening_period: YearRound
   admission: Free
+  city: Taipei
+  latitude: 25.0866
+  longitude: 121.5254
 }
 
 instance NationalPalaceMuseum < MDC_C002 {
@@ -1442,6 +1736,9 @@ instance NationalPalaceMuseum < MDC_C002 {
   established_year: 1925
   admission: Paid
   opening_period: YearRound
+  city: Taipei
+  latitude: 25.1022
+  longitude: 121.5486
 }
 
 # --- Japan ----------------------------------------------------------------
@@ -1464,6 +1761,9 @@ instance Kinkakuji < MDC_C002 {
   listing_criteria: Cultural
   admission: Paid
   opening_period: YearRound
+  city: Kyoto
+  latitude: 35.0395
+  longitude: 135.7285
 }
 
 instance Fujisan < MDC_C002 {
@@ -1486,6 +1786,8 @@ instance Fujisan < MDC_C002 {
   annual_visitors: 300000
   opening_period: Seasonal
   admission: Free
+  latitude: 35.360833
+  longitude: 138.7275
 }
 
 instance DogoOnsen < MDC_C002 {
@@ -1502,6 +1804,8 @@ instance DogoOnsen < MDC_C002 {
   established_year: 1894
   admission: Paid
   opening_period: YearRound
+  latitude: 33.851944
+  longitude: 132.786389
 }
 
 # --- Korea ----------------------------------------------------------------
@@ -1522,6 +1826,9 @@ instance Gyeongbokgung < MDC_C002 {
   room_count: 755
   admission: Paid
   opening_period: YearRound
+  city: Seoul
+  latitude: 37.579884
+  longitude: 126.9768
 }
 
 instance MyeongdongNightMarket < MDC_C002 {
@@ -1538,6 +1845,9 @@ instance MyeongdongNightMarket < MDC_C002 {
   stall_count: 200
   opening_period: YearRound
   admission: Free
+  city: Seoul
+  latitude: 37.5637
+  longitude: 126.984
 }
 
 # --- Italy ----------------------------------------------------------------
@@ -1560,6 +1870,9 @@ instance Colosseo < MDC_C002 {
   listing_criteria: Cultural
   admission: Paid
   opening_period: YearRound
+  city: Rome
+  latitude: 41.8903
+  longitude: 12.4922
 }
 
 instance UffiziGallery < MDC_C002 {
@@ -1578,6 +1891,9 @@ instance UffiziGallery < MDC_C002 {
   annual_visitors: 2000000
   admission: Paid
   opening_period: YearRound
+  city: Florence
+  latitude: 43.7683
+  longitude: 11.2553
 }
 
 # ==== BEGIN DBPEDIA BULK REGISTRY (generated - do not hand-edit) ====
@@ -1610,7 +1926,10 @@ instance AmaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
   established_year: 2016
+  latitude: 25.060333
+  longitude: 121.509222
 }
 
 instance BeitouHotSpringMuseum < MDC_C002 {
@@ -1621,6 +1940,9 @@ instance BeitouHotSpringMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: HotSpring
+  city: Taipei
+  latitude: 25.136667
+  longitude: 121.507222
 }
 
 instance ChangFoundationMuseum < MDC_C002 {
@@ -1631,6 +1953,7 @@ instance ChangFoundationMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
 }
 
 instance ChengNanjungLibertyMuseum < MDC_C002 {
@@ -1641,6 +1964,9 @@ instance ChengNanjungLibertyMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.061667
+  longitude: 121.545556
 }
 
 instance ChunghwaPostalMuseum < MDC_C002 {
@@ -1651,6 +1977,9 @@ instance ChunghwaPostalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.031667
+  longitude: 121.514806
 }
 
 instance CustomsMuseum < MDC_C002 {
@@ -1661,6 +1990,9 @@ instance CustomsMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.051389
+  longitude: 121.510556
 }
 
 instance DongshaAtollNationalPark < MDC_C002 {
@@ -1672,6 +2004,8 @@ instance DongshaAtollNationalPark < MDC_C002 {
   country: Taiwan
   spot_type: NationalPark
   established_year: 2007
+  latitude: 20.716667
+  longitude: 116.7
 }
 
 instance EvergreenMaritimeMuseum < MDC_C002 {
@@ -1682,6 +2016,9 @@ instance EvergreenMaritimeMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.038611
+  longitude: 121.518889
 }
 
 instance FireSafetyMuseumofTaipeiCityFireDepartment < MDC_C002 {
@@ -1692,6 +2029,9 @@ instance FireSafetyMuseumofTaipeiCityFireDepartment < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.069444
+  longitude: 121.590278
 }
 
 instance FubonArtMuseum < MDC_C002 {
@@ -1702,7 +2042,10 @@ instance FubonArtMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
   established_year: 2024
+  latitude: 25.0394
+  longitude: 121.5711
 }
 
 instance GuanzilingHotSpring < MDC_C002 {
@@ -1713,6 +2056,8 @@ instance GuanzilingHotSpring < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: HotSpring
+  latitude: 23.333333
+  longitude: 120.5
 }
 
 instance Guguanhotspring < MDC_C002 {
@@ -1723,6 +2068,8 @@ instance Guguanhotspring < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: HotSpring
+  latitude: 24.203444
+  longitude: 121.009111
 }
 
 instance HongGahMuseum < MDC_C002 {
@@ -1733,7 +2080,10 @@ instance HongGahMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
   established_year: 1999
+  latitude: 25.125278
+  longitude: 121.499167
 }
 
 instance HotspringsinTaiwan < MDC_C002 {
@@ -1754,6 +2104,9 @@ instance HwaKangMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.137222
+  longitude: 121.540556
 }
 
 instance InsectScienceMuseum < MDC_C002 {
@@ -1764,6 +2117,9 @@ instance InsectScienceMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.042778
+  longitude: 121.523611
 }
 
 instance JingmeiNightMarket < MDC_C002 {
@@ -1774,6 +2130,9 @@ instance JingmeiNightMarket < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: NightMarket
+  city: Taipei
+  latitude: 24.990611
+  longitude: 121.541722
 }
 
 instance KentingNationalPark < MDC_C002 {
@@ -1785,6 +2144,8 @@ instance KentingNationalPark < MDC_C002 {
   country: Taiwan
   spot_type: NationalPark
   established_year: 1984
+  latitude: 21.98
+  longitude: 120.797
 }
 
 instance KinmenNationalPark < MDC_C002 {
@@ -1795,6 +2156,8 @@ instance KinmenNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: NationalPark
+  latitude: 24.447778
+  longitude: 118.364444
 }
 
 instance KuoYuanYeMuseumofCakeandPastry < MDC_C002 {
@@ -1805,6 +2168,7 @@ instance KuoYuanYeMuseumofCakeandPastry < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
 }
 
 instance LandReformMuseum < MDC_C002 {
@@ -1815,6 +2179,9 @@ instance LandReformMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.047675
+  longitude: 121.549314
 }
 
 instance LinAnTaiHistoricalHouseandMuseum < MDC_C002 {
@@ -1825,6 +2192,9 @@ instance LinAnTaiHistoricalHouseandMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.07175
+  longitude: 121.530361
 }
 
 instance MiniaturesMuseumofTaiwan < MDC_C002 {
@@ -1835,7 +2205,10 @@ instance MiniaturesMuseumofTaiwan < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
   established_year: 1997
+  latitude: 25.050278
+  longitude: 121.536389
 }
 
 instance MuseumofAnthropologyTaiwan < MDC_C002 {
@@ -1846,6 +2219,9 @@ instance MuseumofAnthropologyTaiwan < MDC_C002 {
   class_type: ITEM_CLASS
   country: Taiwan
   spot_type: Museum
+  city: Taipei
+  latitude: 25.017778
+  longitude: 121.534722
 }
 
 instance AdMuseumTokyo < MDC_C002 {
@@ -1856,6 +2232,9 @@ instance AdMuseumTokyo < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
+  latitude: 35.664333
+  longitude: 139.762222
 }
 
 instance AdashinoNenbutsuji < MDC_C002 {
@@ -1866,6 +2245,9 @@ instance AdashinoNenbutsuji < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 35.026806
+  longitude: 135.664522
 }
 
 instance AkiyoshidaiQuasiNationalPark < MDC_C002 {
@@ -1877,6 +2259,8 @@ instance AkiyoshidaiQuasiNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1955
+  latitude: 34.232
+  longitude: 131.3027
   area: 45.02
 }
 
@@ -1888,6 +2272,9 @@ instance Anrakujuin < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 34.9525
+  longitude: 135.754861
 }
 
 instance AshizuriUwakaiNationalPark < MDC_C002 {
@@ -1898,6 +2285,8 @@ instance AshizuriUwakaiNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: NationalPark
+  latitude: 32.723333
+  longitude: 133.02
 }
 
 instance AtagoShrineKyoto < MDC_C002 {
@@ -1908,6 +2297,9 @@ instance AtagoShrineKyoto < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 35.06
+  longitude: 135.634444
 }
 
 instance BandaiAsahiNationalPark < MDC_C002 {
@@ -1919,6 +2311,8 @@ instance BandaiAsahiNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1950
+  latitude: 37.816667
+  longitude: 139.733333
 }
 
 instance BiwakoQuasiNationalPark < MDC_C002 {
@@ -1930,6 +2324,8 @@ instance BiwakoQuasiNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1950
+  latitude: 35.358817
+  longitude: 136.171417
 }
 
 instance BunkyoMuseum < MDC_C002 {
@@ -1940,6 +2336,9 @@ instance BunkyoMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
+  latitude: 35.708021
+  longitude: 139.756752
 }
 
 instance CenteroftheTokyoRaidsandWarDamage < MDC_C002 {
@@ -1950,7 +2349,10 @@ instance CenteroftheTokyoRaidsandWarDamage < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
   established_year: 2002
+  latitude: 35.6817
+  longitude: 139.8223
 }
 
 instance ChichibuTamaKaiNationalPark < MDC_C002 {
@@ -1961,6 +2363,8 @@ instance ChichibuTamaKaiNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: NationalPark
+  latitude: 35.9
+  longitude: 138.716667
 }
 
 instance Chionin < MDC_C002 {
@@ -1971,6 +2375,9 @@ instance Chionin < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 35.006389
+  longitude: 135.783889
 }
 
 instance Chishakuin < MDC_C002 {
@@ -1981,7 +2388,10 @@ instance Chishakuin < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
   established_year: 1601
+  latitude: 34.9881
+  longitude: 135.7764
 }
 
 instance CurrencyMuseumoftheBankofJapan < MDC_C002 {
@@ -1992,7 +2402,10 @@ instance CurrencyMuseumoftheBankofJapan < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
   established_year: 1985
+  latitude: 35.685369
+  longitude: 139.771797
 }
 
 instance Daigoji < MDC_C002 {
@@ -2003,6 +2416,9 @@ instance Daigoji < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 34.9515
+  longitude: 135.821778
 }
 
 instance Daikakuji < MDC_C002 {
@@ -2013,6 +2429,9 @@ instance Daikakuji < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 35.028314
+  longitude: 135.677802
 }
 
 instance DaimyoClockMuseum < MDC_C002 {
@@ -2023,6 +2442,9 @@ instance DaimyoClockMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
+  latitude: 35.72128
+  longitude: 139.76627
 }
 
 instance DaisenOkiNationalPark < MDC_C002 {
@@ -2034,6 +2456,8 @@ instance DaisenOkiNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1936
+  latitude: 35.45
+  longitude: 133.766667
 }
 
 instance Daitokuji < MDC_C002 {
@@ -2044,6 +2468,7 @@ instance Daitokuji < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
 }
 
 instance Danrinji < MDC_C002 {
@@ -2053,6 +2478,9 @@ instance Danrinji < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
+  latitude: 35.023722
+  longitude: 135.667444
 }
 
 instance EchizenKagaKaiganQuasiNationalPark < MDC_C002 {
@@ -2064,6 +2492,8 @@ instance EchizenKagaKaiganQuasiNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1968
+  latitude: 36.243889
+  longitude: 136.206667
 }
 
 instance EdoTokyoMuseum < MDC_C002 {
@@ -2074,6 +2504,9 @@ instance EdoTokyoMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
+  latitude: 35.696403
+  longitude: 139.796103
 }
 
 instance EdoTokyoOpenAirArchitecturalMuseum < MDC_C002 {
@@ -2084,7 +2517,10 @@ instance EdoTokyoOpenAirArchitecturalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Museum
+  city: Tokyo
   established_year: 1993
+  latitude: 35.715822
+  longitude: 139.512614
 }
 
 instance FiveMountainSystem < MDC_C002 {
@@ -2095,6 +2531,7 @@ instance FiveMountainSystem < MDC_C002 {
   class_type: ITEM_CLASS
   country: Japan
   spot_type: Landmark
+  city: Kyoto
 }
 
 instance FujiHakoneIzuNationalPark < MDC_C002 {
@@ -2106,6 +2543,8 @@ instance FujiHakoneIzuNationalPark < MDC_C002 {
   country: Japan
   spot_type: NationalPark
   established_year: 1936
+  latitude: 34.666667
+  longitude: 139.0
 }
 
 instance N63Building < MDC_C002 {
@@ -2116,6 +2555,8 @@ instance N63Building < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 37.519722
+  longitude: 126.94
 }
 
 instance Baegyangsa < MDC_C002 {
@@ -2126,6 +2567,8 @@ instance Baegyangsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.4392
+  longitude: 126.883
 }
 
 instance Baekdamsa < MDC_C002 {
@@ -2136,6 +2579,8 @@ instance Baekdamsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 38.164722
+  longitude: 128.373861
 }
 
 instance Baengnyeonsa < MDC_C002 {
@@ -2146,6 +2591,8 @@ instance Baengnyeonsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 34.587723
+  longitude: 126.748208
 }
 
 instance BankofKoreaMoneyMuseum < MDC_C002 {
@@ -2156,6 +2603,7 @@ instance BankofKoreaMoneyMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Museum
+  city: Seoul
   established_year: 2001
 }
 
@@ -2167,6 +2615,8 @@ instance Banyasa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.280694
+  longitude: 127.909361
 }
 
 instance Beomeosa < MDC_C002 {
@@ -2177,6 +2627,8 @@ instance Beomeosa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.283889
+  longitude: 129.068056
 }
 
 instance Beomnyunsa < MDC_C002 {
@@ -2187,6 +2639,8 @@ instance Beomnyunsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 37.169611
+  longitude: 127.2985
 }
 
 instance Beopjusa < MDC_C002 {
@@ -2197,6 +2651,8 @@ instance Beopjusa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 36.542361
+  longitude: 127.83375
 }
 
 instance Bongjeongsa < MDC_C002 {
@@ -2217,6 +2673,8 @@ instance Bongseonsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 37.747222
+  longitude: 127.183333
 }
 
 instance Borimsa < MDC_C002 {
@@ -2237,6 +2695,8 @@ instance Boseoksa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 36.0543
+  longitude: 127.4759
 }
 
 instance Buseoksa < MDC_C002 {
@@ -2247,6 +2707,8 @@ instance Buseoksa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 36.998889
+  longitude: 128.6875
 }
 
 instance Changdeokgung < MDC_C002 {
@@ -2257,6 +2719,9 @@ instance Changdeokgung < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Palace
+  city: Seoul
+  latitude: 37.579444
+  longitude: 126.992778
 }
 
 instance Changgyeonggung < MDC_C002 {
@@ -2267,6 +2732,9 @@ instance Changgyeonggung < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Palace
+  city: Seoul
+  latitude: 37.57843
+  longitude: 126.99598
 }
 
 instance Cheonggyesa < MDC_C002 {
@@ -2277,6 +2745,8 @@ instance Cheonggyesa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 37.4119
+  longitude: 127.035
 }
 
 instance ChohongMuseumofFinance < MDC_C002 {
@@ -2287,7 +2757,10 @@ instance ChohongMuseumofFinance < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Museum
+  city: Seoul
   established_year: 1997
+  latitude: 37.5686
+  longitude: 126.9764
 }
 
 instance Daeheungsa < MDC_C002 {
@@ -2298,6 +2771,8 @@ instance Daeheungsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 34.476472
+  longitude: 126.616861
 }
 
 instance Daewonsa < MDC_C002 {
@@ -2308,6 +2783,8 @@ instance Daewonsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.355
+  longitude: 127.806889
 }
 
 instance Deoksugung < MDC_C002 {
@@ -2318,6 +2795,9 @@ instance Deoksugung < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Palace
+  city: Seoul
+  latitude: 37.5661
+  longitude: 126.975
 }
 
 instance Dogapsa < MDC_C002 {
@@ -2328,6 +2808,8 @@ instance Dogapsa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 34.752944
+  longitude: 126.662944
 }
 
 instance Donghwasa < MDC_C002 {
@@ -2338,6 +2820,8 @@ instance Donghwasa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.993056
+  longitude: 128.704167
 }
 
 instance Dopiansa < MDC_C002 {
@@ -2358,6 +2842,9 @@ instance DosanAhnChanghoMemorialHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Museum
+  city: Seoul
+  latitude: 37.52395
+  longitude: 127.03542
 }
 
 instance Eunhaesa < MDC_C002 {
@@ -2368,6 +2855,8 @@ instance Eunhaesa < MDC_C002 {
   class_type: ITEM_CLASS
   country: Korea
   spot_type: Landmark
+  latitude: 35.992063
+  longitude: 128.789634
 }
 
 instance AccademiaNazionalediSantaCeciliaMusicalInstrumentsMuseum < MDC_C002 {
@@ -2378,6 +2867,9 @@ instance AccademiaNazionalediSantaCeciliaMusicalInstrumentsMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.928931
+  longitude: 12.474794
 }
 
 instance CasadiGoethe < MDC_C002 {
@@ -2388,6 +2880,9 @@ instance CasadiGoethe < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.909
+  longitude: 12.4772
 }
 
 instance GardenofArchimedes < MDC_C002 {
@@ -2398,7 +2893,10 @@ instance GardenofArchimedes < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
   established_year: 2004
+  latitude: 43.773333
+  longitude: 11.196944
 }
 
 instance JewishMuseumofFlorence < MDC_C002 {
@@ -2409,6 +2907,9 @@ instance JewishMuseumofFlorence < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
+  latitude: 43.77322
+  longitude: 11.26573
 }
 
 instance JewishMuseumofRome < MDC_C002 {
@@ -2419,6 +2920,9 @@ instance JewishMuseumofRome < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.89202
+  longitude: 12.47833
 }
 
 instance KircherianMuseum < MDC_C002 {
@@ -2429,6 +2933,9 @@ instance KircherianMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.8989
+  longitude: 12.4845
 }
 
 instance LaSpecola < MDC_C002 {
@@ -2439,6 +2946,9 @@ instance LaSpecola < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
+  latitude: 43.764531
+  longitude: 11.247342
 }
 
 instance LateranMuseum < MDC_C002 {
@@ -2449,6 +2959,7 @@ instance LateranMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
 }
 
 instance MuseoCivicodiZoologia < MDC_C002 {
@@ -2459,7 +2970,10 @@ instance MuseoCivicodiZoologia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
   established_year: 1932
+  latitude: 41.9193
+  longitude: 12.4884
 }
 
 instance MuseoGalileo < MDC_C002 {
@@ -2470,6 +2984,9 @@ instance MuseoGalileo < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
+  latitude: 43.767778
+  longitude: 11.255833
 }
 
 instance MuseoNazionaleAlinaridellaFotografia < MDC_C002 {
@@ -2480,6 +2997,9 @@ instance MuseoNazionaleAlinaridellaFotografia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
+  latitude: 43.773056
+  longitude: 11.249167
 }
 
 instance MuseoNazionaleRomano < MDC_C002 {
@@ -2490,6 +3010,9 @@ instance MuseoNazionaleRomano < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.901253
+  longitude: 12.498294
 }
 
 instance MuseoStoricoNazionaledellArteSanitaria < MDC_C002 {
@@ -2500,6 +3023,9 @@ instance MuseoStoricoNazionaledellArteSanitaria < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.9015
+  longitude: 12.4627
 }
 
 instance MuseodelCalcio < MDC_C002 {
@@ -2510,6 +3036,9 @@ instance MuseodelCalcio < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
+  latitude: 43.777936
+  longitude: 11.3031
 }
 
 instance MuseodelleMura < MDC_C002 {
@@ -2520,6 +3049,9 @@ instance MuseodelleMura < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.8734
+  longitude: 12.5014
 }
 
 instance MuseodelleanimedelPurgatorio < MDC_C002 {
@@ -2530,6 +3062,9 @@ instance MuseodelleanimedelPurgatorio < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.904189
+  longitude: 12.472325
 }
 
 instance MuseodiRomainTrastevere < MDC_C002 {
@@ -2540,6 +3075,9 @@ instance MuseodiRomainTrastevere < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.89
+  longitude: 12.469
 }
 
 instance MuseodiStoriaNaturalediFirenze < MDC_C002 {
@@ -2550,6 +3088,7 @@ instance MuseodiStoriaNaturalediFirenze < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Florence
   established_year: 1775
 }
 
@@ -2561,6 +3100,9 @@ instance Museonazionaledeglistrumentimusicali < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.8889
+  longitude: 12.5147
 }
 
 instance MuseonazionaledelPalazzodiVenezia < MDC_C002 {
@@ -2571,6 +3113,9 @@ instance MuseonazionaledelPalazzodiVenezia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.8963
+  longitude: 12.4817
 }
 
 instance MuseumofRomanCivilization < MDC_C002 {
@@ -2581,6 +3126,9 @@ instance MuseumofRomanCivilization < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.831944
+  longitude: 12.478056
 }
 
 instance MuseumoftheAraPacis < MDC_C002 {
@@ -2591,6 +3139,9 @@ instance MuseumoftheAraPacis < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.90608
+  longitude: 12.47544
 }
 
 instance MuseumoftheLiberationofRome < MDC_C002 {
@@ -2601,6 +3152,9 @@ instance MuseumoftheLiberationofRome < MDC_C002 {
   class_type: ITEM_CLASS
   country: Italy
   spot_type: Museum
+  city: Rome
+  latitude: 41.8886
+  longitude: 12.5063
 }
 
 instance AlexanderGranthamfireboat < MDC_C002 {
@@ -2611,6 +3165,8 @@ instance AlexanderGranthamfireboat < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.28925
+  longitude: 114.219264
 }
 
 instance BankofChinaTowerHongKong < MDC_C002 {
@@ -2621,6 +3177,8 @@ instance BankofChinaTowerHongKong < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.279167
+  longitude: 114.161389
 }
 
 instance CityGalleryHongKong < MDC_C002 {
@@ -2631,6 +3189,8 @@ instance CityGalleryHongKong < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.282456
+  longitude: 114.161961
 }
 
 instance CordisHongKong < MDC_C002 {
@@ -2651,6 +3211,8 @@ instance CourtofFinalAppealBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.280996
+  longitude: 114.160116
 }
 
 instance FormerCentralMagistracy < MDC_C002 {
@@ -2661,6 +3223,8 @@ instance FormerCentralMagistracy < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.281078
+  longitude: 114.154519
 }
 
 instance FormerFrenchMissionBuilding < MDC_C002 {
@@ -2671,6 +3235,8 @@ instance FormerFrenchMissionBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.279375
+  longitude: 114.159642
 }
 
 instance GateLodge < MDC_C002 {
@@ -2681,6 +3247,8 @@ instance GateLodge < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.27434
+  longitude: 114.14572
 }
 
 instance HSBCBuildingHongKong < MDC_C002 {
@@ -2691,6 +3259,8 @@ instance HSBCBuildingHongKong < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.28
+  longitude: 114.159444
 }
 
 instance HappyValleyRacecourse < MDC_C002 {
@@ -2701,6 +3271,8 @@ instance HappyValleyRacecourse < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.272778
+  longitude: 114.182222
 }
 
 instance Highcliff < MDC_C002 {
@@ -2711,6 +3283,8 @@ instance Highcliff < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.265
+  longitude: 114.184167
 }
 
 instance HongKongCentralLibrary < MDC_C002 {
@@ -2721,6 +3295,8 @@ instance HongKongCentralLibrary < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.279964
+  longitude: 114.189528
 }
 
 instance HongKongCityHall < MDC_C002 {
@@ -2731,6 +3307,8 @@ instance HongKongCityHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.2825
+  longitude: 114.161389
 }
 
 instance HongKongColiseum < MDC_C002 {
@@ -2741,6 +3319,8 @@ instance HongKongColiseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.301481
+  longitude: 114.182008
 }
 
 instance HongKongConventionandExhibitionCentre < MDC_C002 {
@@ -2751,6 +3331,8 @@ instance HongKongConventionandExhibitionCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Landmark
+  latitude: 22.283661
+  longitude: 114.172847
 }
 
 instance HongKongCorrectionalServicesMuseum < MDC_C002 {
@@ -2761,6 +3343,8 @@ instance HongKongCorrectionalServicesMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.216267
+  longitude: 114.218009
 }
 
 instance HongKongHeritageDiscoveryCentre < MDC_C002 {
@@ -2771,6 +3355,8 @@ instance HongKongHeritageDiscoveryCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.2993
+  longitude: 114.1697
 }
 
 instance HongKongHeritageMuseum < MDC_C002 {
@@ -2782,6 +3368,8 @@ instance HongKongHeritageMuseum < MDC_C002 {
   country: HongKong
   spot_type: Museum
   established_year: 2000
+  latitude: 22.377122
+  longitude: 114.185405
 }
 
 instance HongKongHousingAuthorityExhibitionCentre < MDC_C002 {
@@ -2792,6 +3380,8 @@ instance HongKongHousingAuthorityExhibitionCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.3163
+  longitude: 114.1819
 }
 
 instance HongKongMaritimeMuseum < MDC_C002 {
@@ -2803,6 +3393,8 @@ instance HongKongMaritimeMuseum < MDC_C002 {
   country: HongKong
   spot_type: Museum
   established_year: 2005
+  latitude: 22.286389
+  longitude: 114.161944
 }
 
 instance HongKongMuseumofEducation < MDC_C002 {
@@ -2813,6 +3405,8 @@ instance HongKongMuseumofEducation < MDC_C002 {
   class_type: ITEM_CLASS
   country: HongKong
   spot_type: Museum
+  latitude: 22.469028
+  longitude: 114.194861
 }
 
 instance HongKongNewsExpo < MDC_C002 {
@@ -2864,6 +3458,9 @@ instance EppingForest < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedKingdom
   spot_type: Landmark
+  city: London
+  latitude: 51.66
+  longitude: 0.05
 }
 
 instance MeanwhileGardens < MDC_C002 {
@@ -2874,6 +3471,9 @@ instance MeanwhileGardens < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedKingdom
   spot_type: Landmark
+  city: London
+  latitude: 51.524575
+  longitude: -0.205236
 }
 
 instance Prodigyhouse < MDC_C002 {
@@ -2894,6 +3494,9 @@ instance QueerBritain < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedKingdom
   spot_type: Museum
+  city: London
+  latitude: 51.5357
+  longitude: -0.1239
 }
 
 instance TheLibraryatWillesdenGreen < MDC_C002 {
@@ -2904,6 +3507,9 @@ instance TheLibraryatWillesdenGreen < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedKingdom
   spot_type: Museum
+  city: London
+  latitude: 51.546667
+  longitude: -0.228889
 }
 
 instance ArmyMuseumParis < MDC_C002 {
@@ -2914,7 +3520,10 @@ instance ArmyMuseumParis < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
   established_year: 1905
+  latitude: 48.856944
+  longitude: 2.312778
 }
 
 instance BnFMuseum < MDC_C002 {
@@ -2925,6 +3534,9 @@ instance BnFMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.8678
+  longitude: 2.3384
 }
 
 instance FrenchsubmarineArgonauteS636 < MDC_C002 {
@@ -2935,6 +3547,9 @@ instance FrenchsubmarineArgonauteS636 < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.894444
+  longitude: 2.389444
 }
 
 instance GaleriesnationalesduGrandPalais < MDC_C002 {
@@ -2945,6 +3560,9 @@ instance GaleriesnationalesduGrandPalais < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.8666
+  longitude: 2.3116
 }
 
 instance GalleryofMineralogyandGeology < MDC_C002 {
@@ -2955,6 +3573,9 @@ instance GalleryofMineralogyandGeology < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.841806
+  longitude: 2.357778
 }
 
 instance GalleryofPaleontologyandComparativeAnatomy < MDC_C002 {
@@ -2965,6 +3586,9 @@ instance GalleryofPaleontologyandComparativeAnatomy < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.843056
+  longitude: 2.362778
 }
 
 instance GrandPalais < MDC_C002 {
@@ -2975,7 +3599,10 @@ instance GrandPalais < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
   established_year: 1900
+  latitude: 48.8661
+  longitude: 2.3125
 }
 
 instance MaisondAugusteComte < MDC_C002 {
@@ -2986,6 +3613,7 @@ instance MaisondAugusteComte < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
 }
 
 instance Mundolingua < MDC_C002 {
@@ -2996,6 +3624,9 @@ instance Mundolingua < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.85019
+  longitude: 2.33465
 }
 
 instance MuseumofEroticism < MDC_C002 {
@@ -3006,6 +3637,9 @@ instance MuseumofEroticism < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.883667
+  longitude: 2.33375
 }
 
 instance PalaisGalliera < MDC_C002 {
@@ -3016,6 +3650,9 @@ instance PalaisGalliera < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.865556
+  longitude: 2.296667
 }
 
 instance ParisSewerMuseum < MDC_C002 {
@@ -3026,6 +3663,9 @@ instance ParisSewerMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.862642
+  longitude: 2.302235
 }
 
 instance Pavillondeleau < MDC_C002 {
@@ -3036,6 +3676,9 @@ instance Pavillondeleau < MDC_C002 {
   class_type: ITEM_CLASS
   country: France
   spot_type: Museum
+  city: Paris
+  latitude: 48.846375
+  longitude: 2.273076
 }
 
 instance CanneryRow < MDC_C002 {
@@ -3046,6 +3689,8 @@ instance CanneryRow < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 36.6165
+  longitude: -121.9006
 }
 
 instance CarsonMansion < MDC_C002 {
@@ -3056,6 +3701,8 @@ instance CarsonMansion < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 40.80562
+  longitude: -124.15848
 }
 
 instance CastleCrags < MDC_C002 {
@@ -3066,6 +3713,8 @@ instance CastleCrags < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 41.175556
+  longitude: -122.339444
 }
 
 instance ColorFactory < MDC_C002 {
@@ -3076,6 +3725,7 @@ instance ColorFactory < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Museum
+  city: NewYork
 }
 
 instance Disneyland < MDC_C002 {
@@ -3086,6 +3736,8 @@ instance Disneyland < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 33.81
+  longitude: -117.92
 }
 
 instance ElCaminoRealCalifornia < MDC_C002 {
@@ -3106,6 +3758,8 @@ instance HeavenlyMountainResort < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 38.9353
+  longitude: -119.94
 }
 
 instance HollywoodSign < MDC_C002 {
@@ -3116,6 +3770,8 @@ instance HollywoodSign < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 34.134061
+  longitude: -118.321592
 }
 
 instance KGBEspionageMuseum < MDC_C002 {
@@ -3126,7 +3782,10 @@ instance KGBEspionageMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Museum
+  city: NewYork
   established_year: 2019
+  latitude: 40.737358
+  longitude: -73.997451
 }
 
 instance KingClone < MDC_C002 {
@@ -3137,6 +3796,8 @@ instance KingClone < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 34.420445
+  longitude: -116.704764
 }
 
 instance KnottsBerryFarm < MDC_C002 {
@@ -3147,6 +3808,8 @@ instance KnottsBerryFarm < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 33.844178
+  longitude: -118.000267
 }
 
 instance LakeTahoe < MDC_C002 {
@@ -3157,6 +3820,8 @@ instance LakeTahoe < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 39.0
+  longitude: -120.0
 }
 
 instance MildredEMathiasBotanicalGarden < MDC_C002 {
@@ -3167,6 +3832,8 @@ instance MildredEMathiasBotanicalGarden < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 34.065788
+  longitude: -118.441157
 }
 
 instance MitchellCaverns < MDC_C002 {
@@ -3177,6 +3844,8 @@ instance MitchellCaverns < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 34.940825
+  longitude: -115.514436
 }
 
 instance NationalParkofAmericanSamoa < MDC_C002 {
@@ -3187,6 +3856,8 @@ instance NationalParkofAmericanSamoa < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: NationalPark
+  latitude: -14.258333
+  longitude: -170.683333
 }
 
 instance NationalParktoParkHighway < MDC_C002 {
@@ -3197,6 +3868,8 @@ instance NationalParktoParkHighway < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: NationalPark
+  latitude: 44.466667
+  longitude: -110.083333
 }
 
 instance ParamountPictures < MDC_C002 {
@@ -3217,6 +3890,8 @@ instance ParkerDam < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Landmark
+  latitude: 34.296389
+  longitude: -114.139722
 }
 
 instance StateScenicHighwaySystemCalifornia < MDC_C002 {
@@ -3237,6 +3912,9 @@ instance StatueofLibertyMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: UnitedStates
   spot_type: Museum
+  city: NewYork
+  latitude: 40.690058
+  longitude: -74.046201
 }
 
 instance BeijingAirandSpaceMuseum < MDC_C002 {
@@ -3247,6 +3925,7 @@ instance BeijingAirandSpaceMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
 }
 
 instance BeijingAutoMuseum < MDC_C002 {
@@ -3257,6 +3936,7 @@ instance BeijingAutoMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
 }
 
 instance BeijingExhibitionCenter < MDC_C002 {
@@ -3267,6 +3947,9 @@ instance BeijingExhibitionCenter < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.9394
+  longitude: 116.3379
 }
 
 instance BeijingLiaoandJinCityWallMuseum < MDC_C002 {
@@ -3277,6 +3960,9 @@ instance BeijingLiaoandJinCityWallMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.861389
+  longitude: 116.352639
 }
 
 instance BeijingLuXunMuseum < MDC_C002 {
@@ -3287,7 +3973,10 @@ instance BeijingLuXunMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1956
+  latitude: 39.925808
+  longitude: 116.358727
 }
 
 instance BeijingPlanningExhibitionHall < MDC_C002 {
@@ -3298,7 +3987,10 @@ instance BeijingPlanningExhibitionHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 2004
+  latitude: 39.898416
+  longitude: 116.39503
 }
 
 instance BianjingDrumTower < MDC_C002 {
@@ -3308,6 +4000,8 @@ instance BianjingDrumTower < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Landmark
+  latitude: 39.0635
+  longitude: 112.948
 }
 
 instance CapitalMuseum < MDC_C002 {
@@ -3318,7 +4012,10 @@ instance CapitalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1981
+  latitude: 39.905
+  longitude: 116.336
 }
 
 instance ChaotianPalace < MDC_C002 {
@@ -3329,6 +4026,8 @@ instance ChaotianPalace < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Palace
+  latitude: 32.035
+  longitude: 118.775
 }
 
 instance ChengdeMountainResort < MDC_C002 {
@@ -3339,6 +4038,8 @@ instance ChengdeMountainResort < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Palace
+  latitude: 40.9875
+  longitude: 117.9375
 }
 
 instance ChinaAerospaceMuseum < MDC_C002 {
@@ -3349,6 +4050,9 @@ instance ChinaAerospaceMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.799
+  longitude: 116.4087
 }
 
 instance ChinaAviationMuseum < MDC_C002 {
@@ -3359,7 +4063,10 @@ instance ChinaAviationMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1989
+  latitude: 40.183167
+  longitude: 116.35675
 }
 
 instance ChinaEthnicMuseum < MDC_C002 {
@@ -3370,6 +4077,9 @@ instance ChinaEthnicMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.983889
+  longitude: 116.390278
 }
 
 instance ChinaNationalFilmMuseum < MDC_C002 {
@@ -3380,7 +4090,10 @@ instance ChinaNationalFilmMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 2005
+  latitude: 39.996205
+  longitude: 116.520936
 }
 
 instance ChinaNumismaticMuseum < MDC_C002 {
@@ -3391,6 +4104,9 @@ instance ChinaNumismaticMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.90075
+  longitude: 116.38875
 }
 
 instance ChinaPrintingMuseum < MDC_C002 {
@@ -3401,6 +4117,7 @@ instance ChinaPrintingMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1996
 }
 
@@ -3412,6 +4129,9 @@ instance ChinaRailwayMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.9963
+  longitude: 116.5103
 }
 
 instance ChinaScienceandTechnologyMuseum < MDC_C002 {
@@ -3422,7 +4142,10 @@ instance ChinaScienceandTechnologyMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1988
+  latitude: 40.004722
+  longitude: 116.392222
 }
 
 instance CulturalPalaceofNationalities < MDC_C002 {
@@ -3433,6 +4156,9 @@ instance CulturalPalaceofNationalities < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.909444
+  longitude: 116.369167
 }
 
 instance DabaotaiWesternHanDynastyMausoleum < MDC_C002 {
@@ -3443,7 +4169,10 @@ instance DabaotaiWesternHanDynastyMausoleum < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
   established_year: 1983
+  latitude: 39.805
+  longitude: 116.290556
 }
 
 instance DamingPalace < MDC_C002 {
@@ -3454,6 +4183,8 @@ instance DamingPalace < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Palace
+  latitude: 34.291389
+  longitude: 108.959444
 }
 
 instance DaqingRadioandTelevisionTower < MDC_C002 {
@@ -3464,6 +4195,8 @@ instance DaqingRadioandTelevisionTower < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Landmark
+  latitude: 46.5975
+  longitude: 125.080833
 }
 
 instance DatongPrincesPalace < MDC_C002 {
@@ -3474,6 +4207,8 @@ instance DatongPrincesPalace < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Palace
+  latitude: 40.095212
+  longitude: 113.297465
 }
 
 instance DigitalBeijingBuilding < MDC_C002 {
@@ -3484,6 +4219,9 @@ instance DigitalBeijingBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: China
   spot_type: Museum
+  city: Beijing
+  latitude: 39.99396
+  longitude: 116.38173
 }
 
 instance AhMeng < MDC_C002 {
@@ -3504,6 +4242,8 @@ instance BoatQuay < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.286847
+  longitude: 103.849511
 }
 
 instance BukitTimahrailwaystation < MDC_C002 {
@@ -3514,6 +4254,8 @@ instance BukitTimahrailwaystation < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.334167
+  longitude: 103.781111
 }
 
 instance BurmeseBuddhistTempleSingapore < MDC_C002 {
@@ -3525,6 +4267,8 @@ instance BurmeseBuddhistTempleSingapore < MDC_C002 {
   country: Singapore
   spot_type: Landmark
   established_year: 1875
+  latitude: 1.328417
+  longitude: 103.846872
 }
 
 instance CHIJMES < MDC_C002 {
@@ -3535,6 +4279,8 @@ instance CHIJMES < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.295139
+  longitude: 103.851806
 }
 
 instance CHIJMESHall < MDC_C002 {
@@ -3545,6 +4291,8 @@ instance CHIJMESHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.295139
+  longitude: 103.851806
 }
 
 instance CathayBuilding < MDC_C002 {
@@ -3555,6 +4303,8 @@ instance CathayBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.299306
+  longitude: 103.847639
 }
 
 instance CathedraloftheGoodShepherd < MDC_C002 {
@@ -3565,6 +4315,8 @@ instance CathedraloftheGoodShepherd < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.29595
+  longitude: 103.85133
 }
 
 instance ChesedElSynagogue < MDC_C002 {
@@ -3575,6 +4327,8 @@ instance ChesedElSynagogue < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.297222
+  longitude: 103.842556
 }
 
 instance CivilianWarMemorial < MDC_C002 {
@@ -3585,6 +4339,8 @@ instance CivilianWarMemorial < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.292939
+  longitude: 103.854839
 }
 
 instance ClarkeQuay < MDC_C002 {
@@ -3595,6 +4351,8 @@ instance ClarkeQuay < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.290017
+  longitude: 103.846089
 }
 
 instance DalhousieObelisk < MDC_C002 {
@@ -3605,6 +4363,8 @@ instance DalhousieObelisk < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.287417
+  longitude: 103.852222
 }
 
 instance EmpressPlaceBuilding < MDC_C002 {
@@ -3615,6 +4375,8 @@ instance EmpressPlaceBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.287222
+  longitude: 103.851667
 }
 
 instance FortCanningHill < MDC_C002 {
@@ -3625,6 +4387,8 @@ instance FortCanningHill < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.294444
+  longitude: 103.846944
 }
 
 instance FoundersMemorial < MDC_C002 {
@@ -3635,6 +4399,8 @@ instance FoundersMemorial < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.29122
+  longitude: 103.86871
 }
 
 instance FountainofWealth < MDC_C002 {
@@ -3645,6 +4411,8 @@ instance FountainofWealth < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.294778
+  longitude: 103.858806
 }
 
 instance HelixBridge < MDC_C002 {
@@ -3655,6 +4423,8 @@ instance HelixBridge < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.287622
+  longitude: 103.860597
 }
 
 instance HongSanSee < MDC_C002 {
@@ -3665,6 +4435,8 @@ instance HongSanSee < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.293194
+  longitude: 103.840861
 }
 
 instance JurongBirdPark < MDC_C002 {
@@ -3675,6 +4447,8 @@ instance JurongBirdPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.318056
+  longitude: 103.707222
 }
 
 instance KentRidgePark < MDC_C002 {
@@ -3685,6 +4459,8 @@ instance KentRidgePark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.283758
+  longitude: 103.79055
 }
 
 instance KwanImThongHoodChoTemple < MDC_C002 {
@@ -3695,6 +4471,8 @@ instance KwanImThongHoodChoTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.300867
+  longitude: 103.853008
 }
 
 instance LimBoSengMemorial < MDC_C002 {
@@ -3706,6 +4484,8 @@ instance LimBoSengMemorial < MDC_C002 {
   country: Singapore
   spot_type: Landmark
   established_year: 1953
+  latitude: 1.2885
+  longitude: 103.853083
 }
 
 instance LongYaMen < MDC_C002 {
@@ -3716,6 +4496,8 @@ instance LongYaMen < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.262517
+  longitude: 103.805189
 }
 
 instance MacRitchieReservoir < MDC_C002 {
@@ -3726,6 +4508,8 @@ instance MacRitchieReservoir < MDC_C002 {
   class_type: ITEM_CLASS
   country: Singapore
   spot_type: Landmark
+  latitude: 1.343611
+  longitude: 103.831111
 }
 
 instance AlliedMuseum < MDC_C002 {
@@ -3736,6 +4520,9 @@ instance AlliedMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.455833
+  longitude: 13.2725
 }
 
 instance AnneFrankZentrum < MDC_C002 {
@@ -3746,6 +4533,7 @@ instance AnneFrankZentrum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
 }
 
 instance BMWMuseum < MDC_C002 {
@@ -3756,6 +4544,7 @@ instance BMWMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
 }
 
 instance BMWWelt < MDC_C002 {
@@ -3766,6 +4555,9 @@ instance BMWWelt < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
+  latitude: 48.176944
+  longitude: 11.556667
 }
 
 instance BavarianForestNationalPark < MDC_C002 {
@@ -3776,6 +4568,8 @@ instance BavarianForestNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: NationalPark
+  latitude: 48.966667
+  longitude: 13.383333
 }
 
 instance BavarianNationalMuseum < MDC_C002 {
@@ -3786,6 +4580,9 @@ instance BavarianNationalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
+  latitude: 48.143056
+  longitude: 11.591111
 }
 
 instance BavarianStateArchaeologicalCollection < MDC_C002 {
@@ -3796,6 +4593,9 @@ instance BavarianStateArchaeologicalCollection < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
+  latitude: 48.143889
+  longitude: 11.591111
 }
 
 instance BavarianStateCollectionofZoology < MDC_C002 {
@@ -3806,6 +4606,9 @@ instance BavarianStateCollectionofZoology < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
+  latitude: 48.1646
+  longitude: 11.482
 }
 
 instance BavarianStatePaintingCollections < MDC_C002 {
@@ -3816,6 +4619,9 @@ instance BavarianStatePaintingCollections < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
+  latitude: 48.149583
+  longitude: 11.571778
 }
 
 instance BeateUhseEroticMuseum < MDC_C002 {
@@ -3826,7 +4632,10 @@ instance BeateUhseEroticMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
   established_year: 1996
+  latitude: 52.505508
+  longitude: 13.331383
 }
 
 instance BeerandOktoberfestMuseum < MDC_C002 {
@@ -3837,7 +4646,10 @@ instance BeerandOktoberfestMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
   established_year: 2005
+  latitude: 48.1353
+  longitude: 11.5803
 }
 
 instance BerchtesgadenNationalPark < MDC_C002 {
@@ -3849,6 +4661,8 @@ instance BerchtesgadenNationalPark < MDC_C002 {
   country: Germany
   spot_type: NationalPark
   established_year: 1978
+  latitude: 47.57
+  longitude: 12.96
 }
 
 instance BerlinDahlemMuseumCentre < MDC_C002 {
@@ -3859,6 +4673,9 @@ instance BerlinDahlemMuseumCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.4559
+  longitude: 13.2923
 }
 
 instance BerlinBotanicalGardenandBotanicalMuseum < MDC_C002 {
@@ -3869,6 +4686,9 @@ instance BerlinBotanicalGardenandBotanicalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.455
+  longitude: 13.3036
 }
 
 instance BerlinMusicalInstrumentMuseum < MDC_C002 {
@@ -3879,6 +4699,9 @@ instance BerlinMusicalInstrumentMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.5103
+  longitude: 13.3709
 }
 
 instance BerlinSpyMuseum < MDC_C002 {
@@ -3889,7 +4712,10 @@ instance BerlinSpyMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
   established_year: 2015
+  latitude: 52.5089
+  longitude: 13.379
 }
 
 instance BlackForestNationalPark < MDC_C002 {
@@ -3901,6 +4727,8 @@ instance BlackForestNationalPark < MDC_C002 {
   country: Germany
   spot_type: NationalPark
   established_year: 2014
+  latitude: 48.561111
+  longitude: 8.221389
 }
 
 instance BrandenburgGateMuseum < MDC_C002 {
@@ -3911,6 +4739,7 @@ instance BrandenburgGateMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
 }
 
 instance CheckpointCharlieMuseum < MDC_C002 {
@@ -3921,6 +4750,9 @@ instance CheckpointCharlieMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.507778
+  longitude: 13.390556
 }
 
 instance DDRMuseum < MDC_C002 {
@@ -3931,6 +4763,9 @@ instance DDRMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.519028
+  longitude: 13.402222
 }
 
 instance DahlemManor < MDC_C002 {
@@ -3941,6 +4776,9 @@ instance DahlemManor < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.459
+  longitude: 13.289
 }
 
 instance DeutscheKinemathek < MDC_C002 {
@@ -3951,6 +4789,9 @@ instance DeutscheKinemathek < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.508583
+  longitude: 13.387194
 }
 
 instance DeutschesCurrywurstMuseum < MDC_C002 {
@@ -3961,6 +4802,9 @@ instance DeutschesCurrywurstMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Berlin
+  latitude: 52.5088
+  longitude: 13.3912
 }
 
 instance DeutschesMuseum < MDC_C002 {
@@ -3971,7 +4815,10 @@ instance DeutschesMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Germany
   spot_type: Museum
+  city: Munich
   established_year: 1903
+  latitude: 48.13
+  longitude: 11.5833
 }
 
 instance AnglicanCathedraloftheRedeemer < MDC_C002 {
@@ -3982,6 +4829,8 @@ instance AnglicanCathedraloftheRedeemer < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Cathedral
+  latitude: 40.4263
+  longitude: -3.6985
 }
 
 instance AtlanticIslandsofGaliciaNationalPark < MDC_C002 {
@@ -3992,6 +4841,8 @@ instance AtlanticIslandsofGaliciaNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: NationalPark
+  latitude: 42.383333
+  longitude: -8.933333
 }
 
 instance BarcelonaRoyalShipyard < MDC_C002 {
@@ -4002,6 +4853,9 @@ instance BarcelonaRoyalShipyard < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.375
+  longitude: 2.1763
 }
 
 instance CabreraArchipelagoMaritimeTerrestrialNationalPark < MDC_C002 {
@@ -4012,6 +4866,8 @@ instance CabreraArchipelagoMaritimeTerrestrialNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: NationalPark
+  latitude: 39.15
+  longitude: 2.95
   area: 908
 }
 
@@ -4023,6 +4879,9 @@ instance CaixaForumBarcelona < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.371331
+  longitude: 2.14975
 }
 
 instance CalderadeTaburienteNationalPark < MDC_C002 {
@@ -4034,6 +4893,8 @@ instance CalderadeTaburienteNationalPark < MDC_C002 {
   country: Spain
   spot_type: NationalPark
   established_year: 1954
+  latitude: 28.716667
+  longitude: -17.866667
 }
 
 instance CanFramisMuseum < MDC_C002 {
@@ -4044,6 +4905,9 @@ instance CanFramisMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.403056
+  longitude: 2.195
 }
 
 instance CathedralBasilicaofOurCrownedMotherofPalmar < MDC_C002 {
@@ -4054,6 +4918,8 @@ instance CathedralBasilicaofOurCrownedMotherofPalmar < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Cathedral
+  latitude: 37.0561
+  longitude: -5.8089
 }
 
 instance CathedralofStAndrewandStDemetrius < MDC_C002 {
@@ -4064,6 +4930,8 @@ instance CathedralofStAndrewandStDemetrius < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Cathedral
+  latitude: 40.457469
+  longitude: -3.672875
 }
 
 instance CerralboMuseum < MDC_C002 {
@@ -4074,6 +4942,9 @@ instance CerralboMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Madrid
+  latitude: 40.423684
+  longitude: -3.714577
 }
 
 instance CosmoCaixaBarcelona < MDC_C002 {
@@ -4084,6 +4955,7 @@ instance CosmoCaixaBarcelona < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
 }
 
 instance FCBarcelonaMuseum < MDC_C002 {
@@ -4094,6 +4966,7 @@ instance FCBarcelonaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
   established_year: 1984
 }
 
@@ -4105,6 +4978,9 @@ instance ForumBuilding < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.411111
+  longitude: 2.220611
 }
 
 instance GarajonayNationalPark < MDC_C002 {
@@ -4116,6 +4992,8 @@ instance GarajonayNationalPark < MDC_C002 {
   country: Spain
   spot_type: NationalPark
   established_year: 1981
+  latitude: 28.126111
+  longitude: -17.237222
   area: 40
 }
 
@@ -4128,6 +5006,8 @@ instance GuadarramaNationalPark < MDC_C002 {
   country: Spain
   spot_type: NationalPark
   established_year: 2013
+  latitude: 40.783333
+  longitude: -3.983333
 }
 
 instance HempMuseumGallery < MDC_C002 {
@@ -4138,7 +5018,10 @@ instance HempMuseumGallery < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
   established_year: 2012
+  latitude: 41.2253
+  longitude: 2.1049
 }
 
 instance HouseMuseumofLopedeVega < MDC_C002 {
@@ -4149,6 +5032,9 @@ instance HouseMuseumofLopedeVega < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Madrid
+  latitude: 40.414338
+  longitude: -3.697664
 }
 
 instance JoanAntoniSamaranchOlympicandSportMuseum < MDC_C002 {
@@ -4159,6 +5045,7 @@ instance JoanAntoniSamaranchOlympicandSportMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
   established_year: 2007
 }
 
@@ -4170,6 +5057,9 @@ instance MaritimeMuseumofBarcelona < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.375556
+  longitude: 2.175833
 }
 
 instance MayoralGallery < MDC_C002 {
@@ -4180,6 +5070,9 @@ instance MayoralGallery < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.3895
+  longitude: 2.16391
 }
 
 instance MocoMuseum < MDC_C002 {
@@ -4190,6 +5083,7 @@ instance MocoMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
   established_year: 2016
 }
 
@@ -4201,6 +5095,9 @@ instance MonasteryofPedralbes < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Barcelona
+  latitude: 41.395556
+  longitude: 2.112222
 }
 
 instance MuseoCasadelaMonedaMadrid < MDC_C002 {
@@ -4211,6 +5108,7 @@ instance MuseoCasadelaMonedaMadrid < MDC_C002 {
   class_type: ITEM_CLASS
   country: Spain
   spot_type: Museum
+  city: Madrid
 }
 
 instance AbhisekDusitThroneHall < MDC_C002 {
@@ -4220,6 +5118,9 @@ instance AbhisekDusitThroneHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.773611
+  longitude: 100.513056
 }
 
 instance AnantaSamakhomThroneHall < MDC_C002 {
@@ -4230,6 +5131,9 @@ instance AnantaSamakhomThroneHall < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.771667
+  longitude: 100.513056
 }
 
 instance AoPhangNgaNationalPark < MDC_C002 {
@@ -4240,6 +5144,8 @@ instance AoPhangNgaNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 8.35
+  longitude: 98.483333
 }
 
 instance AoSiamNationalPark < MDC_C002 {
@@ -4250,6 +5156,8 @@ instance AoSiamNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 11.210278
+  longitude: 99.523167
 }
 
 instance BaanKaoLaoRuengMuseum < MDC_C002 {
@@ -4260,7 +5168,10 @@ instance BaanKaoLaoRuengMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
   established_year: 2011
+  latitude: 13.74254
+  longitude: 100.51
 }
 
 instance BaanKudichinMuseum < MDC_C002 {
@@ -4270,6 +5181,9 @@ instance BaanKudichinMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.73938
+  longitude: 100.49301
 }
 
 instance BangKhunThienMuseum < MDC_C002 {
@@ -4280,6 +5194,9 @@ instance BangKhunThienMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.5277
+  longitude: 100.421
 }
 
 instance BangkokArtandCultureCentre < MDC_C002 {
@@ -4290,6 +5207,9 @@ instance BangkokArtandCultureCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.746667
+  longitude: 100.53
 }
 
 instance BangkokDollMuseum < MDC_C002 {
@@ -4300,6 +5220,9 @@ instance BangkokDollMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.7594
+  longitude: 100.54676
 }
 
 instance BangkokFolkMuseum < MDC_C002 {
@@ -4310,7 +5233,10 @@ instance BangkokFolkMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
   established_year: 2004
+  latitude: 13.728333
+  longitude: 100.518056
 }
 
 instance BangkokNationalMuseum < MDC_C002 {
@@ -4321,7 +5247,10 @@ instance BangkokNationalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
   established_year: 1874
+  latitude: 13.7575
+  longitude: 100.492222
 }
 
 instance BangkokNoirailwaystation < MDC_C002 {
@@ -4332,6 +5261,9 @@ instance BangkokNoirailwaystation < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.759722
+  longitude: 100.486944
 }
 
 instance BankofThailandMuseum < MDC_C002 {
@@ -4341,6 +5273,9 @@ instance BankofThailandMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.768333
+  longitude: 100.499444
 }
 
 instance BerlinPharmaceuticalMuseum < MDC_C002 {
@@ -4351,6 +5286,9 @@ instance BerlinPharmaceuticalMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
+  latitude: 13.7438
+  longitude: 100.5082
 }
 
 instance ChaeSonNationalPark < MDC_C002 {
@@ -4361,6 +5299,8 @@ instance ChaeSonNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 18.836389
+  longitude: 99.470556
 }
 
 instance ChaloemRattanakosinNationalPark < MDC_C002 {
@@ -4371,6 +5311,8 @@ instance ChaloemRattanakosinNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 14.796944
+  longitude: 99.181667
 }
 
 instance DibInternationalContemporaryArtMuseum < MDC_C002 {
@@ -4381,7 +5323,10 @@ instance DibInternationalContemporaryArtMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: Museum
+  city: Bangkok
   established_year: 2025
+  latitude: 13.7128
+  longitude: 100.5796
 }
 
 instance DoiInthanonNationalPark < MDC_C002 {
@@ -4392,6 +5337,8 @@ instance DoiInthanonNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 18.592222
+  longitude: 98.486667
   area: 482
 }
 
@@ -4404,6 +5351,8 @@ instance DoiKhunTanNationalPark < MDC_C002 {
   country: Thailand
   spot_type: NationalPark
   established_year: 1975
+  latitude: 18.470833
+  longitude: 99.284722
   area: 255
 }
 
@@ -4415,6 +5364,8 @@ instance DoiLuangNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 19.2
+  longitude: 99.71
 }
 
 instance DoiPhaHomPokNationalPark < MDC_C002 {
@@ -4425,6 +5376,8 @@ instance DoiPhaHomPokNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 19.987778
+  longitude: 99.146389
   area: 524
 }
 
@@ -4437,6 +5390,8 @@ instance DoiPhuKhaNationalPark < MDC_C002 {
   country: Thailand
   spot_type: NationalPark
   established_year: 1999
+  latitude: 19.200556
+  longitude: 101.068056
 }
 
 instance DoiPhuNangNationalPark < MDC_C002 {
@@ -4447,6 +5402,8 @@ instance DoiPhuNangNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 19.0
+  longitude: 100.16
 }
 
 instance DoiWiangPhaNationalPark < MDC_C002 {
@@ -4457,6 +5414,8 @@ instance DoiWiangPhaNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Thailand
   spot_type: NationalPark
+  latitude: 19.6775
+  longitude: 99.1983
 }
 
 instance ErawanNationalPark < MDC_C002 {
@@ -4468,6 +5427,8 @@ instance ErawanNationalPark < MDC_C002 {
   country: Thailand
   spot_type: NationalPark
   established_year: 1975
+  latitude: 14.383333
+  longitude: 99.116667
 }
 
 instance HanoiMuseum < MDC_C002 {
@@ -4478,6 +5439,9 @@ instance HanoiMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
+  latitude: 21.009167
+  longitude: 105.785833
 }
 
 instance HoChiMinhMuseum < MDC_C002 {
@@ -4488,6 +5452,9 @@ instance HoChiMinhMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
+  latitude: 21.035693
+  longitude: 105.832624
 }
 
 instance KonKaKinhNationalPark < MDC_C002 {
@@ -4499,6 +5466,8 @@ instance KonKaKinhNationalPark < MDC_C002 {
   country: Vietnam
   spot_type: NationalPark
   established_year: 2002
+  latitude: 14.333333
+  longitude: 108.366667
 }
 
 instance VietnamMilitaryHistoryMuseum < MDC_C002 {
@@ -4509,6 +5478,7 @@ instance VietnamMilitaryHistoryMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
   established_year: 1956
 }
 
@@ -4520,6 +5490,9 @@ instance VietnamMuseumofEthnology < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
+  latitude: 21.0406
+  longitude: 105.7987
 }
 
 instance VietnamMuseumofRevolution < MDC_C002 {
@@ -4529,6 +5502,7 @@ instance VietnamMuseumofRevolution < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
 }
 
 instance VietnamNationalMuseumofFineArts < MDC_C002 {
@@ -4539,6 +5513,9 @@ instance VietnamNationalMuseumofFineArts < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
+  latitude: 21.0306
+  longitude: 105.837
 }
 
 instance VietnamNationalMuseumofHistory < MDC_C002 {
@@ -4549,7 +5526,10 @@ instance VietnamNationalMuseumofHistory < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
   established_year: 1958
+  latitude: 21.024722
+  longitude: 105.859722
 }
 
 instance VietnameseWomensMuseum < MDC_C002 {
@@ -4560,6 +5540,7 @@ instance VietnameseWomensMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Vietnam
   spot_type: Museum
+  city: Hanoi
 }
 
 instance CheSuiKhorMoralUpliftingSociety < MDC_C002 {
@@ -4571,6 +5552,8 @@ instance CheSuiKhorMoralUpliftingSociety < MDC_C002 {
   country: Malaysia
   spot_type: Landmark
   established_year: 1981
+  latitude: 5.972167
+  longitude: 116.08275
 }
 
 instance ChengHoonTengTemple < MDC_C002 {
@@ -4581,6 +5564,8 @@ instance ChengHoonTengTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 2.197472
+  longitude: 102.246861
 }
 
 instance ChinSweeCavesTemple < MDC_C002 {
@@ -4591,6 +5576,8 @@ instance ChinSweeCavesTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 3.413204
+  longitude: 101.788373
 }
 
 instance ChingGiapSeeTemple < MDC_C002 {
@@ -4601,6 +5588,8 @@ instance ChingGiapSeeTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 2.039972
+  longitude: 102.569333
 }
 
 instance ChingSanYenTemple < MDC_C002 {
@@ -4611,6 +5600,8 @@ instance ChingSanYenTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 1.646194
+  longitude: 110.485012
 }
 
 instance DhammikaramaBurmeseTemple < MDC_C002 {
@@ -4621,6 +5612,8 @@ instance DhammikaramaBurmeseTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.430929
+  longitude: 100.314263
 }
 
 instance EndauRompinNationalPark < MDC_C002 {
@@ -4631,6 +5624,8 @@ instance EndauRompinNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: NationalPark
+  latitude: 2.438915
+  longitude: 103.272858
   area: 870
 }
 
@@ -4642,7 +5637,10 @@ instance IslamicArtsMuseumMalaysia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
   established_year: 1998
+  latitude: 3.1419
+  longitude: 101.6898
 }
 
 instance JadeDragonTemple < MDC_C002 {
@@ -4653,6 +5651,8 @@ instance JadeDragonTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 2.288789
+  longitude: 112.018204
 }
 
 instance KekLokSi < MDC_C002 {
@@ -4663,6 +5663,8 @@ instance KekLokSi < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.399525
+  longitude: 100.273731
 }
 
 instance KekLookSeahTemple < MDC_C002 {
@@ -4673,6 +5675,8 @@ instance KekLookSeahTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 4.580834
+  longitude: 101.077451
 }
 
 instance KinabaluPark < MDC_C002 {
@@ -4684,6 +5688,8 @@ instance KinabaluPark < MDC_C002 {
   country: Malaysia
   spot_type: NationalPark
   established_year: 1964
+  latitude: 6.15
+  longitude: 116.65
   area: 754
 }
 
@@ -4695,6 +5701,8 @@ instance MahindaramaBuddhistTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.408793
+  longitude: 100.307305
 }
 
 instance NationalHistoryMuseumMalaysia < MDC_C002 {
@@ -4705,6 +5713,9 @@ instance NationalHistoryMuseumMalaysia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
+  latitude: 3.147056
+  longitude: 101.693611
 }
 
 instance NationalMuseumMalaysia < MDC_C002 {
@@ -4715,7 +5726,10 @@ instance NationalMuseumMalaysia < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
   established_year: 1963
+  latitude: 3.13758
+  longitude: 101.68739
 }
 
 instance NationalTextileMuseum < MDC_C002 {
@@ -4726,6 +5740,9 @@ instance NationalTextileMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
+  latitude: 3.14675
+  longitude: 101.694056
 }
 
 instance PeakNamToongTemple < MDC_C002 {
@@ -4736,6 +5753,8 @@ instance PeakNamToongTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.950278
+  longitude: 116.075833
 }
 
 instance PenangNationalPark < MDC_C002 {
@@ -4747,6 +5766,8 @@ instance PenangNationalPark < MDC_C002 {
   country: Malaysia
   spot_type: NationalPark
   established_year: 2003
+  latitude: 5.448
+  longitude: 100.1932
 }
 
 instance Petrosains < MDC_C002 {
@@ -4757,6 +5778,7 @@ instance Petrosains < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
   established_year: 1999
 }
 
@@ -4768,6 +5790,8 @@ instance PuTuoSiTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.992778
+  longitude: 116.116667
 }
 
 instance PusatSainsNegara < MDC_C002 {
@@ -4778,6 +5802,7 @@ instance PusatSainsNegara < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
   established_year: 1996
 }
 
@@ -4789,6 +5814,8 @@ instance PuuJihShihTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.834167
+  longitude: 118.086111
 }
 
 instance RoyalMalaysianPoliceMuseum < MDC_C002 {
@@ -4799,6 +5826,9 @@ instance RoyalMalaysianPoliceMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Museum
+  city: KualaLumpur
+  latitude: 3.141056
+  longitude: 101.688639
 }
 
 instance SabahParks < MDC_C002 {
@@ -4819,6 +5849,8 @@ instance SamPohTongTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 4.56373
+  longitude: 101.115407
 }
 
 instance SnakeTemple < MDC_C002 {
@@ -4829,6 +5861,8 @@ instance SnakeTemple < MDC_C002 {
   class_type: ITEM_CLASS
   country: Malaysia
   spot_type: Landmark
+  latitude: 5.313944
+  longitude: 100.285197
 }
 
 instance AnzacMemorial < MDC_C002 {
@@ -4839,6 +5873,9 @@ instance AnzacMemorial < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.875556
+  longitude: 151.210833
 }
 
 instance AustralianMuseum < MDC_C002 {
@@ -4849,6 +5886,9 @@ instance AustralianMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.8743
+  longitude: 151.2134
 }
 
 instance AustralianNationalMaritimeMuseum < MDC_C002 {
@@ -4859,6 +5899,9 @@ instance AustralianNationalMaritimeMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.869167
+  longitude: 151.198611
 }
 
 instance BelfordNationalPark < MDC_C002 {
@@ -4870,6 +5913,8 @@ instance BelfordNationalPark < MDC_C002 {
   country: Australia
   spot_type: NationalPark
   established_year: 2003
+  latitude: -32.6484
+  longitude: 151.3006
 }
 
 instance MadameTussaudsSydney < MDC_C002 {
@@ -4880,6 +5925,9 @@ instance MadameTussaudsSydney < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.87
+  longitude: 151.202
 }
 
 instance MrsMacquariesChair < MDC_C002 {
@@ -4890,6 +5938,9 @@ instance MrsMacquariesChair < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Landmark
+  city: Sydney
+  latitude: -33.859467
+  longitude: 151.222203
 }
 
 instance MuseumofSydney < MDC_C002 {
@@ -4900,6 +5951,9 @@ instance MuseumofSydney < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.86376
+  longitude: 151.21128
 }
 
 instance PenrithMuseumofPrinting < MDC_C002 {
@@ -4910,6 +5964,9 @@ instance PenrithMuseumofPrinting < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.7572
+  longitude: 150.6884
 }
 
 instance PowerhouseMuseum < MDC_C002 {
@@ -4920,7 +5977,10 @@ instance PowerhouseMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
   established_year: 1879
+  latitude: -33.877898
+  longitude: 151.199573
 }
 
 instance ProspectHillNewSouthWales < MDC_C002 {
@@ -4931,6 +5991,9 @@ instance ProspectHillNewSouthWales < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Landmark
+  city: Sydney
+  latitude: -33.81456
+  longitude: 150.92672
 }
 
 instance SydneyBusMuseum < MDC_C002 {
@@ -4941,6 +6004,7 @@ instance SydneyBusMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
 }
 
 instance SydneyCenotaph < MDC_C002 {
@@ -4951,6 +6015,9 @@ instance SydneyCenotaph < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Landmark
+  city: Sydney
+  latitude: -33.867511
+  longitude: 151.207758
 }
 
 instance SydneyHeritageFleet < MDC_C002 {
@@ -4961,6 +6028,9 @@ instance SydneyHeritageFleet < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.8675
+  longitude: 151.1985
 }
 
 instance SydneyJewishMuseum < MDC_C002 {
@@ -4971,6 +6041,9 @@ instance SydneyJewishMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.879075
+  longitude: 151.220017
 }
 
 instance SydneyObservatory < MDC_C002 {
@@ -4981,6 +6054,9 @@ instance SydneyObservatory < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
+  latitude: -33.8596
+  longitude: 151.2047
 }
 
 instance SydneyOperaHouse < MDC_C002 {
@@ -4991,6 +6067,9 @@ instance SydneyOperaHouse < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Landmark
+  city: Sydney
+  latitude: -33.85681
+  longitude: 151.21514
 }
 
 instance SydneyTramwayMuseum < MDC_C002 {
@@ -5001,6 +6080,7 @@ instance SydneyTramwayMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Australia
   spot_type: Museum
+  city: Sydney
 }
 
 instance TheTwelveApostlesVictoria < MDC_C002 {
@@ -5021,6 +6101,9 @@ instance AgaKhanMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.725278
+  longitude: -79.332222
 }
 
 instance ArtGalleryofOntario < MDC_C002 {
@@ -5031,6 +6114,9 @@ instance ArtGalleryofOntario < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.653611
+  longitude: -79.392778
 }
 
 instance BataShoeMuseum < MDC_C002 {
@@ -5041,6 +6127,9 @@ instance BataShoeMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.667222
+  longitude: -79.400278
 }
 
 instance CBCMuseum < MDC_C002 {
@@ -5051,7 +6140,10 @@ instance CBCMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
   established_year: 1960
+  latitude: 43.644833
+  longitude: -79.388194
 }
 
 instance CanadianLanguageMuseum < MDC_C002 {
@@ -5062,6 +6154,9 @@ instance CanadianLanguageMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.72767
+  longitude: -79.37641
 }
 
 instance CasaLoma < MDC_C002 {
@@ -5072,6 +6167,9 @@ instance CasaLoma < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.6781
+  longitude: -79.4095
 }
 
 instance ColborneLodge < MDC_C002 {
@@ -5082,6 +6180,9 @@ instance ColborneLodge < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.640472
+  longitude: -79.460139
 }
 
 instance DesignExchange < MDC_C002 {
@@ -5092,6 +6193,7 @@ instance DesignExchange < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
 }
 
 instance FeministArtGallery < MDC_C002 {
@@ -5102,6 +6204,9 @@ instance FeministArtGallery < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.65372
+  longitude: -79.39314
 }
 
 instance FirstTorontoPostOffice < MDC_C002 {
@@ -5112,6 +6217,9 @@ instance FirstTorontoPostOffice < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.651847
+  longitude: -79.37065
 }
 
 instance GalleryArcturus < MDC_C002 {
@@ -5122,6 +6230,7 @@ instance GalleryArcturus < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
   established_year: 1994
 }
 
@@ -5133,7 +6242,10 @@ instance GardinerMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
   established_year: 1984
+  latitude: 43.668163
+  longitude: -79.393151
 }
 
 instance HockeyHallofFame < MDC_C002 {
@@ -5144,6 +6256,9 @@ instance HockeyHallofFame < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.6469
+  longitude: -79.3772
 }
 
 instance KofflerCentreoftheArts < MDC_C002 {
@@ -5153,6 +6268,7 @@ instance KofflerCentreoftheArts < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
   established_year: 1977
 }
 
@@ -5164,6 +6280,9 @@ instance MackenzieHouse < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.655665
+  longitude: -79.378291
 }
 
 instance MuseumofContemporaryArtTorontoCanada < MDC_C002 {
@@ -5174,6 +6293,9 @@ instance MuseumofContemporaryArtTorontoCanada < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.65463
+  longitude: -79.445121
 }
 
 instance NationalparksofCanada < MDC_C002 {
@@ -5194,6 +6316,9 @@ instance OntarioScienceCentre < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.638833
+  longitude: -79.382722
 }
 
 instance RoyalOntarioMuseum < MDC_C002 {
@@ -5204,7 +6329,10 @@ instance RoyalOntarioMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
   established_year: 1912
+  latitude: 43.667679
+  longitude: -79.394809
 }
 
 instance SpadinaHouse < MDC_C002 {
@@ -5215,6 +6343,9 @@ instance SpadinaHouse < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.679023
+  longitude: -79.40815
 }
 
 instance TextileMuseumofCanada < MDC_C002 {
@@ -5225,6 +6356,9 @@ instance TextileMuseumofCanada < MDC_C002 {
   class_type: ITEM_CLASS
   country: Canada
   spot_type: Museum
+  city: Toronto
+  latitude: 43.6546
+  longitude: -79.3868
 }
 
 instance EternalGandhiMultimediaMuseum < MDC_C002 {
@@ -5234,6 +6368,9 @@ instance EternalGandhiMultimediaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
+  latitude: 28.601861
+  longitude: 77.214333
 }
 
 instance GandhiSmriti < MDC_C002 {
@@ -5244,6 +6381,9 @@ instance GandhiSmriti < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
+  latitude: 28.6019
+  longitude: 77.2144
 }
 
 instance IndianWarMemorialMuseum < MDC_C002 {
@@ -5253,7 +6393,10 @@ instance IndianWarMemorialMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1919
+  latitude: 28.655767
+  longitude: 77.240988
 }
 
 instance KiranNadarMuseumofArt < MDC_C002 {
@@ -5264,6 +6407,7 @@ instance KiranNadarMuseumofArt < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 2010
 }
 
@@ -5275,7 +6419,10 @@ instance NationalCharkhaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 2017
+  latitude: 28.631426
+  longitude: 77.217402
 }
 
 instance NationalGalleryofModernArt < MDC_C002 {
@@ -5286,7 +6433,10 @@ instance NationalGalleryofModernArt < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1954
+  latitude: 28.610182
+  longitude: 77.234401
 }
 
 instance NationalGandhiMuseum < MDC_C002 {
@@ -5297,7 +6447,10 @@ instance NationalGandhiMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1961
+  latitude: 29.074444
+  longitude: 77.416111
 }
 
 instance NationalHandicraftsandHandloomsMuseum < MDC_C002 {
@@ -5308,6 +6461,7 @@ instance NationalHandicraftsandHandloomsMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
 }
 
 instance NationalMuseumofIndia < MDC_C002 {
@@ -5318,7 +6472,10 @@ instance NationalMuseumofIndia < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1949
+  latitude: 28.611811
+  longitude: 77.219262
 }
 
 instance NongmaichingHill < MDC_C002 {
@@ -5339,7 +6496,10 @@ instance RashtrapatiBhavanMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 2014
+  latitude: 28.614444
+  longitude: 77.199722
 }
 
 instance SanskritiMuseums < MDC_C002 {
@@ -5350,6 +6510,7 @@ instance SanskritiMuseums < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1990
 }
 
@@ -5361,6 +6522,9 @@ instance ShankarsInternationalDollsMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
+  latitude: 28.630278
+  longitude: 77.241667
 }
 
 instance SulabhInternationalMuseumofToilets < MDC_C002 {
@@ -5371,7 +6535,10 @@ instance SulabhInternationalMuseumofToilets < MDC_C002 {
   class_type: ITEM_CLASS
   country: India
   spot_type: Museum
+  city: Delhi
   established_year: 1992
+  latitude: 28.5966
+  longitude: 77.0808
 }
 
 instance AranetaColiseum < MDC_C002 {
@@ -5382,6 +6549,8 @@ instance AranetaColiseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.620556
+  longitude: 121.053333
 }
 
 instance AuroraMemorialNationalPark < MDC_C002 {
@@ -5392,6 +6561,8 @@ instance AuroraMemorialNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: NationalPark
+  latitude: 15.466667
+  longitude: 121.416667
 }
 
 instance BacolodPublicPlaza < MDC_C002 {
@@ -5401,6 +6572,8 @@ instance BacolodPublicPlaza < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 10.676207
+  longitude: 122.95166
 }
 
 instance BaguioCathedral < MDC_C002 {
@@ -5411,6 +6584,8 @@ instance BaguioCathedral < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 16.412744
+  longitude: 120.598435
 }
 
 instance BahayTsinoy < MDC_C002 {
@@ -5421,6 +6596,9 @@ instance BahayTsinoy < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Museum
+  city: Manila
+  latitude: 14.590833
+  longitude: 120.975
 }
 
 instance BanganHillNationalPark < MDC_C002 {
@@ -5432,6 +6610,8 @@ instance BanganHillNationalPark < MDC_C002 {
   country: Philippines
   spot_type: NationalPark
   established_year: 1995
+  latitude: 16.416667
+  longitude: 121.316667
 }
 
 instance BangsamoroGovernmentCenter < MDC_C002 {
@@ -5442,6 +6622,8 @@ instance BangsamoroGovernmentCenter < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 7.197083
+  longitude: 124.245139
 }
 
 instance BataanNationalPark < MDC_C002 {
@@ -5452,6 +6634,8 @@ instance BataanNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: NationalPark
+  latitude: 14.65
+  longitude: 120.6
 }
 
 instance BetisChurch < MDC_C002 {
@@ -5462,6 +6646,8 @@ instance BetisChurch < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.97558
+  longitude: 120.64289
 }
 
 instance BiaknaBatoNationalPark < MDC_C002 {
@@ -5473,6 +6659,8 @@ instance BiaknaBatoNationalPark < MDC_C002 {
   country: Philippines
   spot_type: NationalPark
   established_year: 1937
+  latitude: 15.118879
+  longitude: 121.085081
 }
 
 instance BookStopIntramuros < MDC_C002 {
@@ -5484,6 +6672,8 @@ instance BookStopIntramuros < MDC_C002 {
   country: Philippines
   spot_type: Landmark
   established_year: 2016
+  latitude: 14.592222
+  longitude: 120.973056
 }
 
 instance BudDajo < MDC_C002 {
@@ -5494,6 +6684,8 @@ instance BudDajo < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: NationalPark
+  latitude: 6.013333
+  longitude: 121.056667
 }
 
 instance BurgosCircle < MDC_C002 {
@@ -5504,6 +6696,8 @@ instance BurgosCircle < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.552722
+  longitude: 121.044361
 }
 
 instance CaramoanNationalPark < MDC_C002 {
@@ -5515,6 +6709,8 @@ instance CaramoanNationalPark < MDC_C002 {
   country: Philippines
   spot_type: NationalPark
   established_year: 1938
+  latitude: 13.783333
+  longitude: 123.75
 }
 
 instance CarbonMarket < MDC_C002 {
@@ -5525,6 +6721,8 @@ instance CarbonMarket < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 10.2914
+  longitude: 123.8989
 }
 
 instance CasecnanProtectedLandscape < MDC_C002 {
@@ -5536,6 +6734,8 @@ instance CasecnanProtectedLandscape < MDC_C002 {
   country: Philippines
   spot_type: NationalPark
   established_year: 1987
+  latitude: 16.033056
+  longitude: 121.449167
 }
 
 instance CassamataHillNationalPark < MDC_C002 {
@@ -5547,6 +6747,8 @@ instance CassamataHillNationalPark < MDC_C002 {
   country: Philippines
   spot_type: NationalPark
   established_year: 1974
+  latitude: 17.983333
+  longitude: 120.866667
 }
 
 instance CathedralMuseumofCebu < MDC_C002 {
@@ -5557,6 +6759,8 @@ instance CathedralMuseumofCebu < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 10.296064
+  longitude: 123.903439
 }
 
 instance CebuInternationalConventionCenter < MDC_C002 {
@@ -5567,6 +6771,8 @@ instance CebuInternationalConventionCenter < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 10.326397
+  longitude: 123.935903
 }
 
 instance CebuMetropolitanCathedral < MDC_C002 {
@@ -5577,6 +6783,8 @@ instance CebuMetropolitanCathedral < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 10.295814
+  longitude: 123.902869
 }
 
 instance CentrodeTurismoIntramuros < MDC_C002 {
@@ -5587,6 +6795,7 @@ instance CentrodeTurismoIntramuros < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Museum
+  city: Manila
   established_year: 2024
 }
 
@@ -5598,6 +6807,8 @@ instance CoconutPalace < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.55522
+  longitude: 120.980013
 }
 
 instance EDSAShrine < MDC_C002 {
@@ -5608,6 +6819,8 @@ instance EDSAShrine < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.592222
+  longitude: 121.058611
 }
 
 instance EnchantedKingdom < MDC_C002 {
@@ -5618,6 +6831,8 @@ instance EnchantedKingdom < MDC_C002 {
   class_type: ITEM_CLASS
   country: Philippines
   spot_type: Landmark
+  latitude: 14.281947
+  longitude: 121.095394
 }
 
 instance ForestLakeMemorialParks < MDC_C002 {
@@ -5639,6 +6854,8 @@ instance AketajaweLolobataNationalPark < MDC_C002 {
   country: Indonesia
   spot_type: NationalPark
   established_year: 2004
+  latitude: 1.15
+  longitude: 128.266667
 }
 
 instance AlasPurwoNationalPark < MDC_C002 {
@@ -5649,6 +6866,8 @@ instance AlasPurwoNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -8.683333
+  longitude: 114.466667
 }
 
 instance BaluranNationalPark < MDC_C002 {
@@ -5659,6 +6878,8 @@ instance BaluranNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -7.833333
+  longitude: 114.366667
 }
 
 instance BankIndonesiaMuseum < MDC_C002 {
@@ -5669,7 +6890,10 @@ instance BankIndonesiaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
   established_year: 2009
+  latitude: -6.137333
+  longitude: 106.812816
 }
 
 instance BasoekiAbdullahMuseum < MDC_C002 {
@@ -5680,6 +6904,9 @@ instance BasoekiAbdullahMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.2897
+  longitude: 106.7934
 }
 
 instance BatangGadisNationalPark < MDC_C002 {
@@ -5690,6 +6917,8 @@ instance BatangGadisNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: 0.983333
+  longitude: 99.383333
 }
 
 instance BerbakNationalPark < MDC_C002 {
@@ -5700,6 +6929,8 @@ instance BerbakNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -1.383333
+  longitude: 104.333333
 }
 
 instance BetawiMuseum < MDC_C002 {
@@ -5710,6 +6941,7 @@ instance BetawiMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
 }
 
 instance BetungKerihunNationalPark < MDC_C002 {
@@ -5721,6 +6953,8 @@ instance BetungKerihunNationalPark < MDC_C002 {
   country: Indonesia
   spot_type: NationalPark
   established_year: 1995
+  latitude: 1.220833
+  longitude: 113.353056
 }
 
 instance BlendukChurch < MDC_C002 {
@@ -5731,6 +6965,8 @@ instance BlendukChurch < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Landmark
+  latitude: -6.968133
+  longitude: 110.427494
 }
 
 instance BoganiNaniWartaboneNationalPark < MDC_C002 {
@@ -5742,6 +6978,8 @@ instance BoganiNaniWartaboneNationalPark < MDC_C002 {
   country: Indonesia
   spot_type: NationalPark
   established_year: 1991
+  latitude: 0.560556
+  longitude: 123.68
 }
 
 instance BromoTenggerSemeruNationalPark < MDC_C002 {
@@ -5753,6 +6991,8 @@ instance BromoTenggerSemeruNationalPark < MDC_C002 {
   country: Indonesia
   spot_type: NationalPark
   established_year: 1982
+  latitude: -8.016667
+  longitude: 112.916667
 }
 
 instance BukitBakaBukitRayaNationalPark < MDC_C002 {
@@ -5763,6 +7003,8 @@ instance BukitBakaBukitRayaNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -0.783333
+  longitude: 112.616667
 }
 
 instance BukitBarisanSelatanNationalPark < MDC_C002 {
@@ -5773,6 +7015,8 @@ instance BukitBarisanSelatanNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -5.433333
+  longitude: 104.333333
 }
 
 instance BukitDuabelasNationalPark < MDC_C002 {
@@ -5783,6 +7027,8 @@ instance BukitDuabelasNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -1.85
+  longitude: 102.866667
 }
 
 instance BukitTigapuluhNationalPark < MDC_C002 {
@@ -5793,6 +7039,8 @@ instance BukitTigapuluhNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: -1.0
+  longitude: 102.5
 }
 
 instance BunakenNationalPark < MDC_C002 {
@@ -5804,6 +7052,8 @@ instance BunakenNationalPark < MDC_C002 {
   country: Indonesia
   spot_type: NationalPark
   established_year: 1991
+  latitude: 1.666667
+  longitude: 124.65
 }
 
 instance FormulationofProclamationTextMuseum < MDC_C002 {
@@ -5814,6 +7064,9 @@ instance FormulationofProclamationTextMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.2004
+  longitude: 106.8311
 }
 
 instance GandangDewataNationalPark < MDC_C002 {
@@ -5834,6 +7087,9 @@ instance GeneralAbdulHarisNasutionMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.193
+  longitude: 106.832878
 }
 
 instance GreatMosqueofCentralJava < MDC_C002 {
@@ -5844,6 +7100,8 @@ instance GreatMosqueofCentralJava < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Landmark
+  latitude: -6.9839
+  longitude: 110.4458
 }
 
 instance GunungLeuserNationalPark < MDC_C002 {
@@ -5854,6 +7112,8 @@ instance GunungLeuserNationalPark < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: NationalPark
+  latitude: 3.5
+  longitude: 97.5
 }
 
 instance HiroharaShrine < MDC_C002 {
@@ -5864,6 +7124,8 @@ instance HiroharaShrine < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Temple
+  latitude: 3.580446
+  longitude: 98.670985
 }
 
 instance IndonesiaMuseum < MDC_C002 {
@@ -5874,6 +7136,9 @@ instance IndonesiaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.301111
+  longitude: 106.891389
 }
 
 instance IndonesianHakkaMuseum < MDC_C002 {
@@ -5884,6 +7149,9 @@ instance IndonesianHakkaMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.305389
+  longitude: 106.904
 }
 
 instance JakartaHistoryMuseum < MDC_C002 {
@@ -5894,6 +7162,9 @@ instance JakartaHistoryMuseum < MDC_C002 {
   class_type: ITEM_CLASS
   country: Indonesia
   spot_type: Museum
+  city: Jakarta
+  latitude: -6.135
+  longitude: 106.813056
 }
 # ==== END DBPEDIA BULK REGISTRY ====
 

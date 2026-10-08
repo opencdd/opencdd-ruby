@@ -601,6 +601,36 @@ instance ElectricHybridEngine < MDC_C002 {
   class_type: ITEM_CLASS
 }
 
+instance battery_capacity < MDC_C003 {
+  code: ORB307
+  preferred_name.en: "battery capacity"
+  definition.en: "usable energy capacity of the propulsion battery pack"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ElectricHybridEngine
+  data_type: REAL_TYPE
+  unit: kilowatt_hour
+}
+
+instance charging_power < MDC_C003 {
+  code: ORB308
+  preferred_name.en: "charging power"
+  definition.en: "maximum shore-power charging rate the battery pack accepts"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ElectricHybridEngine
+  data_type: REAL_TYPE
+  unit: kilowatt
+}
+
+instance electric_range < MDC_C003 {
+  code: ORB309
+  preferred_name.en: "electric range"
+  definition.en: "distance the vessel covers on battery power alone at cruising speed"
+  property_data_element_type: NON_DEPENDENT_P_DET
+  definition_class: ElectricHybridEngine
+  data_type: REAL_TYPE
+  unit: kilometre
+}
+
 # --- InteriorPackage ---
 
 instance InteriorPackage < MDC_C002 {

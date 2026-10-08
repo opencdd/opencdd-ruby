@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(538)
+    expect(db.entities.size).to eq(564)
   end
 
   describe "powertypes" do
@@ -123,7 +123,7 @@ RSpec.describe "ScenicSpots dictionary" do
       expect(inari.preferred_name(:ja)).to eq("伏見稲荷大社")
     end
 
-    it "carries a bulk registry of four hundred plus spots across twenty countries" do
+    it "carries a bulk registry of two hundred plus spots across ten countries" do
       indiv = db.entities.map(&:code).grep(/\ASPI/)
       expect(indiv.size).to be > 400
       expect(db.find_by_code("SPA019").preferred_name("zh-CN")).to eq("中國")
