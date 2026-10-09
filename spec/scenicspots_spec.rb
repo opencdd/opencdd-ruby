@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(564)
+    expect(db.entities.size).to eq(805)
   end
 
   describe "powertypes" do
@@ -35,7 +35,9 @@ RSpec.describe "ScenicSpots dictionary" do
       expect(db.instances_of(country).map(&:code).sort).to eq(%w[SPA011 SPA012 SPA013 SPA014 SPA015
                                                              SPA016 SPA017 SPA018 SPA019 SPA020
                                                              SPA021 SPA022 SPA023 SPA024 SPA025
-                                                             SPA026 SPA027 SPA028 SPA029 SPA030])
+                                                             SPA026 SPA027 SPA028 SPA029 SPA030
+                                                             SPA031 SPA032 SPA033 SPA034 SPA035
+                                                             SPA036 SPA037 SPA038 SPA039 SPA040])
     end
   end
 
