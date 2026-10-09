@@ -4,7 +4,8 @@ require "spec_helper"
 require "tempfile"
 
 RSpec.describe Opencdd::Cddal do
-  let(:example_path) { REFERENCE_DOCS.join("examples/oceanrunner.cddal") }
+  before { require_fixture OCEANRUNNER }
+  let(:example_path) { OCEANRUNNER }
   let(:database) { described_class.parse_file(example_path) }
 
   describe ".parse_file" do
@@ -173,14 +174,14 @@ end
 
 RSpec.describe "Opencdd::Database#semantically_equal?" do
   it "compares two databases parsed from the same source as equal" do
-    path = REFERENCE_DOCS.join("examples/oceanrunner.cddal")
+    path = OCEANRUNNER
     a = Opencdd::Cddal.parse_file(path)
     b = Opencdd::Cddal.parse_file(path)
     expect(a.semantically_equal?(b)).to be(true)
   end
 
   it "detects inequality when one database is missing entities" do
-    path = REFERENCE_DOCS.join("examples/oceanrunner.cddal")
+    path = OCEANRUNNER
     a = Opencdd::Cddal.parse_file(path)
     b = Opencdd::Database.new
     expect(a.semantically_equal?(b)).to be(false)

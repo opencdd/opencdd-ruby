@@ -385,6 +385,6 @@ and property defined by IEC 61360-1.
 ## Further reading
 
 - [Normative CDDAL specification](https://github.com/opencdd/cddal-spec)
-- [OceanRunner worked example](../reference-docs/examples/oceanrunner.cddal)
+- [OceanRunner worked example](https://github.com/opencdd/data-oceanrunner/blob/main/reference-docs/examples/oceanrunner.cddal)
 - [Kagoshima bare-instance example](../reference-docs/202003-kagoshima-iec-def-sample.cddal)
 - [Parcel format guide](parcel-format.md)

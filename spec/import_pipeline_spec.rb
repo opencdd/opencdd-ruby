@@ -130,7 +130,7 @@ RSpec.describe "Import pipeline round-trips" do
   end
 
   describe "scenario 4: cddal → parcel → cddal (round-trip)" do
-    let(:source_cddal) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+    let(:source_cddal) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
     it "preserves semantic equality through a parcel detour" do
       parcel_path = write_parcel(source_cddal, parcel_id: "OCDDRT4")
@@ -172,7 +172,7 @@ RSpec.describe "Import pipeline round-trips" do
   end
 
   describe "scenario 6: import cddal into an existing Database (upsert)" do
-    let(:source_cddal) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+    let(:source_cddal) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
     it "merges a CDDAL-parsed database into an existing one" do
       target = Opencdd::Database.new

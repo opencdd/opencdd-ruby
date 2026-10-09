@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::EffectiveProperties do
-  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  before { require_fixture OCEANRUNNER }
+  let(:database) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe "#for" do
     it "returns a Result that exposes properties and sources" do

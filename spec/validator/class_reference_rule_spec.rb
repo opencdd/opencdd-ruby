@@ -156,7 +156,7 @@ RSpec.describe Opencdd::Validator::ClassReferenceRule do
     # The OceanRunner fixture exercises CLASS_REFERENCE extensively
     # (engine_type, interior_package, hull_finish). All declared
     # Property CLASS_REFERENCEs point to valid categorical classes.
-    let(:ocean) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+    let(:ocean) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
     it "R16 produces no errors on valid OceanRunner data" do
       errors = Opencdd::Validator.run(ocean)

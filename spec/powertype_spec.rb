@@ -16,7 +16,7 @@ require "spec_helper"
 #       └── ElectricHybridEngine (ITEM_CLASS) — categorical instance
 
 RSpec.describe "Powertype API (4-layer ontology)", :cddal do
-  let(:db) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  let(:db) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   let(:engine_type)      { db.find_by_code("ORA200") }
   let(:interior_package) { db.find_by_code("ORA210") }

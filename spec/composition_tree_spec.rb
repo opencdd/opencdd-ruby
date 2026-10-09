@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::CompositionTree do
-  let(:oceanrunner_db) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  before { require_fixture OCEANRUNNER }
+  let(:oceanrunner_db) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe Opencdd::CompositionTree::Node do
     it "is a Struct exposing entity and children" do

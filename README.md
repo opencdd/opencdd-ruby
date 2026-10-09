@@ -275,7 +275,7 @@ It auto-deploys via GitHub Actions on every push to `main` that touches
 
 ## Examples
 
-- [`reference-docs/examples/oceanrunner.cddal`](reference-docs/examples/oceanrunner.cddal) — the canonical powertype demo (40 entities, 20 classes)
+- [`oceanrunner.cddal`](https://github.com/opencdd/data-oceanrunner/blob/main/reference-docs/examples/oceanrunner.cddal) (in data-oceanrunner) — the canonical powertype demo
 - [`reference-docs/202003-kagoshima-iec-def-sample.cddal`](reference-docs/202003-kagoshima-iec-def-sample.cddal) — minimal bare-`instance` form
 
 ## Standards background

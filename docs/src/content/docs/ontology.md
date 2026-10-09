@@ -138,7 +138,7 @@ The powertype pattern is modeled explicitly:
 ```ruby
 require "opencdd"
 
-db = Opencdd::Cddal.parse_file("reference-docs/examples/oceanrunner.cddal")
+db = Opencdd::Cddal.parse_file("oceanrunner.cddal") # from opencdd/data-oceanrunner
 
 engine_type = db.find_by_code("ORA200")
 single_diesel = db.find_by_code("ORA201")
@@ -202,7 +202,7 @@ explicit.
 
 ## Worked example: OceanRunner
 
-Read [`reference-docs/examples/oceanrunner.cddal`](../reference-docs/examples/oceanrunner.cddal)
+Read [`oceanrunner.cddal` in data-oceanrunner](https://github.com/opencdd/data-oceanrunner/blob/main/reference-docs/examples/oceanrunner.cddal)
 alongside this section. It exercises:
 
 - **M2 layer**: the `meta-class MDC_C002 { ... }` declarations register

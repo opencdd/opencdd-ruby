@@ -4,7 +4,7 @@ require "spec_helper"
 require "tmpdir"
 
 RSpec.describe "Per-entity YAML persistence", :yaml do
-  let(:oceanrunner) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  let(:oceanrunner) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe "Database#save_to_directory / load_from_directory" do
     it "writes one YAML file per entity (via lutaml-store DatabaseStore)" do
