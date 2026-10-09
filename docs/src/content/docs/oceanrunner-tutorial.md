@@ -1,7 +1,9 @@
 ---
-title: "OceanRunner modelling tutorial"
-section: "Tutorials"
-order: 6
+title: OceanRunner modelling tutorial
+description: A step-by-step walkthrough of the modelling tutorial fixture — option power-types, configured products, and the M0 individual.
+published: 2026-10-09
+section: Concepts
+order: 60
 ---
 
 The OceanRunner dictionary is OpenCDD's **modelling tutorial**: a
