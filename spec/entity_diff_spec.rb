@@ -123,7 +123,8 @@ RSpec.describe Opencdd::EntityDiff do
   end
 
   describe "with real entities from the oceanrunner fixture" do
-    let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+    before { require_fixture OCEANRUNNER }
+  let(:database) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
     let(:klass) { database.classes.first }
 
     it "produces an empty diff between an entity and itself" do

@@ -5,7 +5,8 @@ require "json"
 require "yaml"
 
 RSpec.describe Opencdd::Exporters do
-  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  before { require_fixture OCEANRUNNER }
+  let(:database) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe Opencdd::Exporters::Json do
     it "produces parseable JSON with class, property, and value_list nodes" do

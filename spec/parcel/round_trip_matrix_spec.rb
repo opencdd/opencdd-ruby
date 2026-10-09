@@ -12,7 +12,7 @@ require "tmpdir"
 # the canonical model.
 
 RSpec.describe "Round-trip matrix", :round_trip do
-  let(:oceanrunner_path) { REFERENCE_DOCS.join("examples/oceanrunner.cddal") }
+  let(:oceanrunner_path) { OCEANRUNNER }
   let(:kagoshima_path)   { REFERENCE_DOCS.join("202003-kagoshima-iec-def-sample.cddal") }
 
   let(:oceanrunner) { Opencdd::Cddal.parse_file(oceanrunner_path.to_s) }

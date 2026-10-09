@@ -49,7 +49,7 @@ powertype pattern:
 ```ruby
 require "opencdd"
 
-db = Opencdd::Cddal.parse_file("reference-docs/examples/oceanrunner.cddal")
+db = Opencdd::Cddal.parse_file("oceanrunner.cddal") # from opencdd/data-oceanrunner
 # => #<Opencdd::Database classes=20 properties=19 ...>
 ```
 
@@ -259,5 +259,5 @@ end-to-end. See [cddal-syntax.md](cddal-syntax.md).
   structure, header layout, and round-trip semantics
 - **[architecture.md](architecture.md)** — how the gem is structured
   internally, where to extend it
-- **The fixtures** at `reference-docs/examples/oceanrunner.cddal`
+- **The fixture** in [opencdd/data-oceanrunner](https://github.com/opencdd/data-oceanrunner)
   (read it — it's heavily commented and exercises every feature)

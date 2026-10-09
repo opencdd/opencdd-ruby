@@ -8,7 +8,7 @@ require "spec_helper"
 # wire-format keys (MDC_P004, MDC_P010).
 
 RSpec.describe "CDD-native YAML model", :yaml do
-  let(:oceanrunner) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  let(:oceanrunner) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe "Database#to_yaml → Database.from_yaml round-trip" do
     it "produces valid YAML" do

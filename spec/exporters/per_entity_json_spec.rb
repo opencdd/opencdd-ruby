@@ -4,7 +4,8 @@ require "spec_helper"
 require "json"
 
 RSpec.describe Opencdd::Exporters::Json do
-  let(:example_path) { REFERENCE_DOCS.join("examples/oceanrunner.cddal") }
+  before { require_fixture OCEANRUNNER }
+  let(:example_path) { OCEANRUNNER }
   let(:database) { Opencdd::Cddal.parse_file(example_path) }
   let(:exporter) { described_class.new }
 

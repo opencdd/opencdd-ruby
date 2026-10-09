@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::Cddal::Serializer do
-  let(:example_path) { REFERENCE_DOCS.join("examples/oceanrunner.cddal") }
+  before { require_fixture OCEANRUNNER }
+  let(:example_path) { OCEANRUNNER }
   let(:database) { Opencdd::Cddal.parse_file(example_path) }
   let(:serializer) { described_class.new(database) }
 

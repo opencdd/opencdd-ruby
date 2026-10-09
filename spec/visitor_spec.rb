@@ -3,7 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Opencdd::Visitor do
-  let(:database) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/oceanrunner.cddal")) }
+  before { require_fixture OCEANRUNNER }
+  let(:database) { Opencdd::Cddal.parse_file(OCEANRUNNER) }
 
   describe "#visit_database" do
     it "visits every class, property, and value_list in the database" do

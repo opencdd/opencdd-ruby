@@ -15,11 +15,30 @@ PARCEL_MAKER_XLSX = PRIVATE_REFERENCE_DOCS.join("export_CDD_IEC62683 in ParcelMa
 NUTS_XLSX         = PRIVATE_REFERENCE_DOCS.join("parcelmaker/(ParcelMaker)example_nut.xlsx")
 KAGOSHIMA_CDDAL   = REFERENCE_DOCS.join("202003-kagoshima-iec-def-sample.cddal")
 LEGACY_XLS_DIR    = PRIVATE_REFERENCE_DOCS.join("export_CDD_IEC62368 in EXCEL format")
-# Generated demo dictionaries (scenicspots, antiques) are data, not
-# implementation: they are harvested, verified, and machine-rewritten
-# by data-private's pipeline, so they live in that repo.
-SCENICSPOTS = PRIVATE_REFERENCE_DOCS.join("examples/scenicspots.cddal")
-ANTIQUES    = PRIVATE_REFERENCE_DOCS.join("examples/antiques.cddal")
+
+# Dictionary fixtures are DATA and live in their own repositories
+# (data-oceanrunner, data-scenicspots, data-antiques, data-poi).
+# Resolution order: sibling checkout, then a cached download from the
+# public repository (so CI stays covered without sibling checkouts).
+def public_fixture(repo, name)
+  local = Pathname.new(File.expand_path("../../#{repo}/reference-docs/examples/#{name}", __dir__))
+  return local if local.exist?
+
+  require "open-uri"
+  cache = Pathname.new(Dir.tmpdir) / "opencdd-fixtures" / repo / name
+  return cache if cache.exist?
+
+  cache.dirname.mkpath
+  source = "https://raw.githubusercontent.com/opencdd/#{repo}/main/reference-docs/examples/#{name}"
+  cache.write(URI.open(source).read)
+  cache
+rescue StandardError, OpenURI::HTTPError
+  Pathname.new("/nonexistent/#{repo}/#{name}")
+end
+
+OCEANRUNNER  = public_fixture("data-oceanrunner", "oceanrunner.cddal")
+SCENICSPOTS  = public_fixture("data-scenicspots", "scenicspots.cddal")
+ANTIQUES     = public_fixture("data-antiques", "antiques.cddal")
 LEGACY_SINGLE_XLS = PRIVATE_REFERENCE_DOCS.join("export_CDD_ISO ICS in EXCEL format.xls")
 
 module FixtureGuard
