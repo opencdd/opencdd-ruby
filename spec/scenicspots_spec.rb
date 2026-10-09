@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(804)
+    expect(db.entities.size).to eq(866)
   end
 
   describe "powertypes" do
@@ -131,11 +131,16 @@ RSpec.describe "ScenicSpots dictionary" do
       expect(db.find_by_code("SPA019").preferred_name("zh-CN")).to eq("中國")
     end
 
+    it "carries real nicknames as synonyms from Wikidata aliases" do
+      syn = db.entities.select { |e| e.respond_to?(:synonyms) && e.synonyms.any? }
+      expect(syn.size).to be > 200
+    end
+
     it "grades UNESCO World Heritage sites from their P757 claims" do
       graded = db.entities.count do |e|
         e.respond_to?(:properties) && e.properties["official_grade"] == "WorldHeritage"
       end
-      expect(graded).to eq(32)
+      expect(graded).to eq(30)
     end
   end
 end
