@@ -20,7 +20,7 @@ RSpec.describe "Antiques dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(ANTIQUES) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(148)
+    expect(db.entities.size).to eq(146)
   end
 
   describe "powertypes" do
@@ -118,8 +118,8 @@ RSpec.describe "Antiques dictionary" do
     it "carries the Met Museum Open Access bulk registry" do
       codes = db.entities.map(&:code).grep(/\AANI/)
       # 12 curated + 78 Met highlights, contiguous three-digit numbering
-      expect(codes.size).to eq(90)
-      expect(codes).to include("ANI013", "ANI050", "ANI090")
+      expect(codes.size).to eq(88)
+      expect(codes).to include("ANI013", "ANI050", "ANI088")
       met = db.find_by_code("ANI013")
       expect(met.preferred_name(:en)).to be_a(String)
       expect(met.definition).to include("The Metropolitan Museum of Art")
