@@ -14,9 +14,9 @@ require "spec_helper"
 # Authored by OpenCDD from standard art-historical vocabulary; the
 # public department listings of international auction houses were
 # consulted as reference only (notes in the private data repo).
-ANTIQUES = REFERENCE_DOCS.join("examples/antiques.cddal")
 
 RSpec.describe "Antiques dictionary" do
+  before { require_fixture ANTIQUES }
   let(:db) { Opencdd::Cddal.parse_file(ANTIQUES) }
 
   it "loads every entity" do

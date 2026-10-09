@@ -9,7 +9,8 @@ require "json"
 # ScenicSpots fixture is the first CDDAL dictionary whose properties
 # carry MDC_P022, so it exercises the collision.
 RSpec.describe Opencdd::Exporters::Json do
-  let(:db) { Opencdd::Cddal.parse_file(REFERENCE_DOCS.join("examples/scenicspots.cddal")) }
+  before { require_fixture SCENICSPOTS }
+  let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "round-trips a database whose properties declare data types" do
     json = described_class.new.to_json(db)

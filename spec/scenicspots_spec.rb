@@ -7,9 +7,9 @@ require "spec_helper"
 # (ScenicSpotType members carrying own applicable properties),
 # configured subclasses (BuddhistTemple), and registered individuals
 # (real scenic spots) with native multilingual names.
-SCENICSPOTS = REFERENCE_DOCS.join("examples/scenicspots.cddal")
 
 RSpec.describe "ScenicSpots dictionary" do
+  before { require_fixture SCENICSPOTS }
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
