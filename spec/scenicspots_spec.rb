@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(164)
+    expect(db.entities.size).to eq(804)
   end
 
   describe "powertypes" do
@@ -125,10 +125,17 @@ RSpec.describe "ScenicSpots dictionary" do
       expect(inari.preferred_name(:ja)).to eq("伏見稲荷大社")
     end
 
-    it "is the curated learning dictionary — the bulk registry lives in data-poi" do
+    it "is one real dataset: the full verified registry, no curated subset" do
       indiv = db.entities.map(&:code).grep(/\ASPI/)
-      expect(indiv.size).to eq(26)
+      expect(indiv.size).to be > 600
       expect(db.find_by_code("SPA019").preferred_name("zh-CN")).to eq("中國")
+    end
+
+    it "grades UNESCO World Heritage sites from their P757 claims" do
+      graded = db.entities.count do |e|
+        e.respond_to?(:properties) && e.properties["official_grade"] == "WorldHeritage"
+      end
+      expect(graded).to eq(32)
     end
   end
 end
