@@ -13,7 +13,7 @@ RSpec.describe "ScenicSpots dictionary" do
   let(:db) { Opencdd::Cddal.parse_file(SCENICSPOTS) }
 
   it "loads every entity" do
-    expect(db.entities.size).to eq(866)
+    expect(db.entities.size).to eq(1046)
   end
 
   describe "powertypes" do
@@ -32,12 +32,9 @@ RSpec.describe "ScenicSpots dictionary" do
 
     it "enumerates countries as plain instances" do
       country = db.find_by_code("SPA010")
-      expect(db.instances_of(country).map(&:code).sort).to eq(%w[SPA011 SPA012 SPA013 SPA014 SPA015
-                                                             SPA016 SPA017 SPA018 SPA019 SPA020
-                                                             SPA021 SPA022 SPA023 SPA024 SPA025
-                                                             SPA026 SPA027 SPA028 SPA029 SPA030
-                                                             SPA031 SPA032 SPA033 SPA034 SPA035
-                                                             SPA036 SPA037 SPA038 SPA039 SPA040])
+      expect(db.instances_of(country).map(&:code).sort).to eq(
+        (11..50).map { |n| format("SPA%03d", n) }
+      )
     end
   end
 
@@ -133,14 +130,14 @@ RSpec.describe "ScenicSpots dictionary" do
 
     it "carries real nicknames as synonyms from Wikidata aliases" do
       syn = db.entities.select { |e| e.respond_to?(:synonyms) && e.synonyms.any? }
-      expect(syn.size).to be > 200
+      expect(syn.size).to be > 300
     end
 
     it "grades UNESCO World Heritage sites from their P757 claims" do
       graded = db.entities.count do |e|
         e.respond_to?(:properties) && e.properties["official_grade"] == "WorldHeritage"
       end
-      expect(graded).to eq(30)
+      expect(graded).to eq(33)
     end
   end
 end
